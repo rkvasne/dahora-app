@@ -3,15 +3,14 @@ from PyInstaller.utils.hooks import collect_all
 
 datas = []
 binaries = []
-# Adiciona o arquivo de ícone aos dados do executável
-datas.append(('icon.ico', '.'))
-
-hiddenimports = ['pystray', 'pyperclip', 'keyboard', 'winotify', 'PIL', 'PIL.Image', 'PIL.ImageDraw', 'PIL.ImageFont']
+hiddenimports = ['pystray', 'pyperclip', 'keyboard', 'winotify', 'win32api', 'win32con', 'win32event', 'tkinter', 'PIL', 'PIL.Image', 'PIL.ImageDraw', 'PIL.ImageFont']
 tmp_ret = collect_all('pystray')
 datas += tmp_ret[0]; binaries += tmp_ret[1]; hiddenimports += tmp_ret[2]
 tmp_ret = collect_all('PIL')
 datas += tmp_ret[0]; binaries += tmp_ret[1]; hiddenimports += tmp_ret[2]
 tmp_ret = collect_all('keyboard')
+datas += tmp_ret[0]; binaries += tmp_ret[1]; hiddenimports += tmp_ret[2]
+tmp_ret = collect_all('winotify')
 datas += tmp_ret[0]; binaries += tmp_ret[1]; hiddenimports += tmp_ret[2]
 
 
@@ -49,5 +48,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon='icon.ico',
+    icon=['icon.ico'],
 )

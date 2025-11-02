@@ -139,3 +139,23 @@ Exemplos:
 - **Clipboard history:** Monitora automaticamente a área de transferência
 - **Ícone personalizado:** Mesmo ícone da bandeja está incluso no executável .exe
 
+
+## Armazenamento de dados
+
+- O aplicativo salva o contador de uso e o histórico de clipboard na pasta de dados do usuário: %APPDATA%\DahoraApp.
+- Arquivos: dahora_counter.txt e clipboard_history.json.
+
+## Prefixo configurável
+
+- É possível definir um prefixo que será incluído no texto de data/hora copiado.
+- Como usar:
+  - Clique com o botão direito no ícone da bandeja.
+  - Selecione a opção `Definir Prefixo...` e digite o texto desejado.
+  - O prefixo é salvo e passa a compor o formato de saída.
+- Formato resultante:
+  - Sem prefixo: `[DD.MM.AAAA-HH:MM]`
+  - Com prefixo (ex.: "dahora"): `[dahora-DD.MM.AAAA-HH:MM]`
+- Persistência:
+  - O prefixo é salvo em `%APPDATA%\DahoraApp\settings.json`.
+- Dica:
+  - Para remover, defina o prefixo como vazio.
