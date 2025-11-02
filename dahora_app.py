@@ -405,15 +405,23 @@ def get_recent_clipboard_items(limit=10):
 def monitor_clipboard():
     """Monitora as mudanças na clipboard"""
     global last_clipboard_content
+    logging.info("Monitor de clipboard iniciado")
 
+    attempt = 0
     while True:
+        attempt += 1
         try:
             current_content = pyperclip.paste()
+
+            # Sempre loga o estado atual a cada 10 tentativas
+            if attempt % 10 == 0:
+                logging.info(f"Verificação #{attempt} - Clipboard atual: '{current_content[:30] if current_content else 'vazio'}'")
 
             # Verifica se há conteúdo novo e não vazio
             if current_content and current_content.strip():
                 # Se for diferente do último conteúdo ou se for o primeiro
                 if current_content != last_clipboard_content:
+                    logging.info(f"Clipboard mudou de '{last_clipboard_content[:30] if last_clipboard_content else 'vazio'}' para '{current_content[:30]}...'")
                     # Adiciona ao histórico
                     add_to_clipboard_history(current_content)
                     last_clipboard_content = current_content
@@ -689,10 +697,12 @@ def main():
         # Configura a hotkey em uma thread separada
         hotkey_thread = threading.Thread(target=setup_hotkey_listener, daemon=True)
         hotkey_thread.start()
+        logging.info("Thread de hotkey iniciada")
 
         # Inicia o monitoramento de clipboard em uma thread separada
         monitor_thread = threading.Thread(target=monitor_clipboard, daemon=True)
         monitor_thread.start()
+        logging.info("Thread de monitoramento de clipboard iniciada")
 
         # Inicia o ícone da bandeja
         icon = setup_icon()

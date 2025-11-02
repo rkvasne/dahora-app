@@ -94,8 +94,9 @@ def build_executable():
     cmd = [
         'pyinstaller',
         '--onefile',
-        '--name=dahora_app',
+        f'--name={exe_name}',
         '--icon=icon.ico',
+        '--add-data=icon.ico;.',
         '--hidden-import=pystray',
         '--hidden-import=pyperclip',
         '--hidden-import=keyboard',
@@ -109,7 +110,6 @@ def build_executable():
         '--hidden-import=PIL.ImageDraw',
         '--hidden-import=PIL.ImageFont',
         '--collect-all=pystray',
-        '--collect-all=PIL',
         '--collect-all=keyboard',
         '--collect-all=winotify',
         'dahora_app.py'
