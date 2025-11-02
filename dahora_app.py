@@ -389,10 +389,17 @@ def add_to_clipboard_history(text):
 def clear_clipboard_history(icon=None, item=None):
     """Limpa todo o histórico"""
     global clipboard_history
+    logging.info("Iniciando limpeza do histórico de clipboard")
     with history_lock:
         total_items = len(clipboard_history)
         clipboard_history = []
-        _atomic_write_json(history_file, clipboard_history)
+        try:
+            _atomic_write_json(history_file, clipboard_history)
+            logging.info(f"Histórico limpo com sucesso! {total_items} itens removidos")
+        except Exception as e:
+            logging.error(f"Falha ao salvar histórico limpo: {e}")
+            # Tenta carregar novamente para garantir consistência
+            load_clipboard_history()
 
     # Mostra notificação de confirmação
     show_toast_notification("Dahora App", f"Histórico limpo!\n{total_items} itens removidos")
@@ -413,8 +420,8 @@ def monitor_clipboard():
         try:
             current_content = pyperclip.paste()
 
-            # Sempre loga o estado atual a cada 10 tentativas
-            if attempt % 10 == 0:
+            # Sempre loga o estado atual a cada 6 tentativas (a cada 18 segundos)
+            if attempt % 6 == 0:
                 logging.info(f"Verificação #{attempt} - Clipboard atual: '{current_content[:30] if current_content else 'vazio'}'")
 
             # Verifica se há conteúdo novo e não vazio
@@ -430,8 +437,8 @@ def monitor_clipboard():
         except Exception as e:
             logging.warning(f"Erro ao monitorar clipboard: {e}")
 
-        # Espera 1 segundo antes de verificar novamente (mais frequente)
-        time.sleep(1)
+        # Espera 3 segundos antes de verificar novamente
+        time.sleep(3)
 
 def copy_from_history(text):
     """Copia um item do histórico para a clipboard"""
