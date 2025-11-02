@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.2] - 2025-01-02
+
+### Added
+- **Melhoria no monitoramento de clipboard**: O histórico agora é atualizado instantaneamente sempre que o clipboard é modificado, não apenas ao iniciar o aplicativo
+- **Melhoria no intervalo de monitoramento**: Reduzido de 2 para 1 segundo para detecção mais rápida de mudanças
+- **Logging aprimorado**: Adicionado logs detalhados para monitoramento do clipboard em `dahora.log`
+- **Inicialização aprimorada**: O aplicativo agora inicializa o estado atual do clipboard ao iniciar para evitar duplicações
+
+### Fixed
+- **Corrigido bug de histórico de clipboard**: O histórico só era atualizado ao abrir o aplicativo, não em tempo real
+- **Corrigida inicialização do estado do clipboard**: Agora captura o estado atual do clipboard ao iniciar para comparação correta
+- **Melhorado tratamento de erros**: Logging detalhado para depuração de problemas de clipboard
+- **Otimizado desempenho**: Menor intervalo de verificação (1s) com melhor tratamento de erros
+
+---
+
 ## [0.0.1] - 2025-01-02
 
 ### Added

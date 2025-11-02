@@ -35,7 +35,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='dahora_app_v0.0.1',
+    name='dahora_app_v0.0.2',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

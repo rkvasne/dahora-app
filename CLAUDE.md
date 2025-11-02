@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Dahora App is a Windows system tray application that copies the current date and time to the clipboard in the format `[DD.MM.AAAA-HH:MM]`. Version 0.0.1. The application features an intuitive interface with toast notifications, single instance prevention, clipboard history, and follows modern Windows design patterns.
+Dahora App is a Windows system tray application that copies the current date and time to the clipboard in the format `[DD.MM.AAAA-HH:MM]`. Version 0.0.2. The application features an intuitive interface with toast notifications, single instance prevention, clipboard history, and follows modern Windows design patterns.
 
 ## Architecture
 

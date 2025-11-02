@@ -410,16 +410,20 @@ def monitor_clipboard():
         try:
             current_content = pyperclip.paste()
 
-            if current_content != last_clipboard_content and current_content.strip():
-                # Adiciona ao histórico
-                add_to_clipboard_history(current_content)
-                last_clipboard_content = current_content
+            # Verifica se há conteúdo novo e não vazio
+            if current_content and current_content.strip():
+                # Se for diferente do último conteúdo ou se for o primeiro
+                if current_content != last_clipboard_content:
+                    # Adiciona ao histórico
+                    add_to_clipboard_history(current_content)
+                    last_clipboard_content = current_content
+                    logging.info(f"Clipboard atualizado: {current_content[:50]}...")
 
-        except Exception:
-            pass
+        except Exception as e:
+            logging.warning(f"Erro ao monitorar clipboard: {e}")
 
-        # Espera 2 segundos antes de verificar novamente
-        time.sleep(2)
+        # Espera 1 segundo antes de verificar novamente (mais frequente)
+        time.sleep(1)
 
 def copy_from_history(text):
     """Copia um item do histórico para a clipboard"""
@@ -471,7 +475,7 @@ def _copy_datetime_menu(icon, item):
 def show_about(icon, item):
     """Mostra informações sobre o aplicativo"""
     about_text = (
-        "Dahora App v1.0\n\n"
+        "Dahora App v0.0.2\n\n"
         "Aplicativo para copiar data e hora\n"
         "Formato: [DD.MM.AAAA-HH:MM]\n\n"
         f"Total de acionamentos: {counter} vezes\n"
@@ -670,6 +674,13 @@ def main():
     load_counter()
     load_clipboard_history()
     load_settings()
+    # Inicializa o estado atual da clipboard
+    try:
+        last_clipboard_content = pyperclip.paste()
+        logging.info(f"Clipboard inicializado com: {last_clipboard_content[:50] if last_clipboard_content else 'vazio'}")
+    except Exception as e:
+        logging.warning(f"Erro ao inicializar clipboard: {e}")
+        last_clipboard_content = ""
     # Verifica se já existe uma instância rodando
     if not check_single_instance():
         sys.exit(0)
