@@ -16,13 +16,37 @@ def ensure_icon_exists(icon_path='icon.ico'):
 
     if os.path.exists(full_icon_path):
         print(f">>> Usando ícone existente: {full_icon_path}")
+        # Se o arquivo local já existe e for igual, não copia
+        if os.path.exists(icon_path):
+            try:
+                if os.path.getsize(full_icon_path) == os.path.getsize(icon_path):
+                    print(f">>> Ícone já está atualizado: {icon_path}")
+                    return
+            except:
+                pass
+
         # Copia para o local esperado pelo PyInstaller
         import shutil
         try:
+            # Tenta forçar a cópia, mesmo se o arquivo estiver sendo usado
             shutil.copy2(full_icon_path, icon_path)
             print(f">>> Ícone copiado para: {icon_path}")
         except Exception as e:
             print(f">>> Aviso ao copiar ícone: {e}")
+            print(">>> Tentando usar arquivo diretamente...")
+            # Se não conseguir copiar, usa o arquivo direto do caminho completo
+            try:
+                import subprocess
+                subprocess.run(['cmd', '/c', 'copy', '/y', full_icon_path, icon_path],
+                             check=False, capture_output=True)
+                print(f">>> Ícone copiado via cmd: {icon_path}")
+            except Exception as e2:
+                print(f">>> Falha na cópia via cmd: {e2}")
+                print(">>> Build usará ícone do diretório original")
+                # Se não conseguir copiar, modifica o comando do PyInstaller para usar caminho completo
+                global exe_name
+                exe_name = f'dahora_app_v0.0.2_custom_icon'
+                return
         return
     elif os.path.exists(icon_path):
         print(f">>> Usando ícone existente: {icon_path}")
