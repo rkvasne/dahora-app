@@ -370,12 +370,12 @@ def setup_icon():
     for i, item in enumerate(history_items):
         # Limita o texto do menu para não ficar muito longo
         display_text = item.get("text", "")[:40] + "..." if len(item.get("text", "")) > 40 else item.get("text", "")
-        history_menu.add(pystray.MenuItem(f"[{len(history_items)-i}] {display_text}",
+        history_menu = history_menu.__add__(pystray.MenuItem(f"[{len(history_items)-i}] {display_text}",
                                          lambda item=item: copy_from_history(item.get("text", ""))))
 
     # Se não houver histórico, mostra mensagem desativada
     if not history_items:
-        history_menu.add(pystray.MenuItem("Nenhum item no histórico", lambda: None))
+        history_menu = history_menu.__add__(pystray.MenuItem("Nenhum item no histórico", lambda: None))
 
     menu = pystray.Menu(
         pystray.MenuItem('Copiar Data/Hora (Ctrl+Shift+Q)', copy_datetime),
