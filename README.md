@@ -7,12 +7,16 @@ Aplicativo Windows que fica na bandeja do sistema (system tray) para copiar a da
 - ✅ **Bandeja do sistema (system tray)** com ícone de calendário/relógio personalizado
 - ✅ **Clique esquerdo**: Mostra instruções de uso
 - ✅ **Clique direito**: Abre menu completo de opções
-- ✅ **Tecla de atalho global:** `Ctrl+Shift+D` para copiar de qualquer lugar
+- ✅ **Tecla de atalho global:** `Ctrl+Shift+Q` para copiar de qualquer lugar
 - ✅ **Formato:** `[DD.MM.AAAA-HH:MM]` (exemplo: `[25.12.2024-14:30]`)
 - ✅ **Notificações toast** de 2 segundos com auto-dismiss
 - ✅ **Prevenção de múltiplas instâncias** com mensagem clara
 - ✅ **Janela "Sobre" modal** que fica aberta até o usuário fechar
 - ✅ **Interface intuitiva** e profissional
+- 📊 **Contador de uso** - quantas vezes o app foi acionado
+- 📋 **Histórico de clipboard** - mantém últimos 100 itens copiados
+- 🔍 **Monitoramento automático** - detecta mudanças na área de transferência
+- 🎨 **Ícone personalizado** incluso no executável .exe
 
 ## Instalação
 
@@ -64,10 +68,10 @@ python build.py
 
 - **Clique esquerdo no ícone** → Mostra instruções ("Menu de opções disponível")
 - **Clique direito no ícone** → Abre menu completo:
-  - **Copiar Data/Hora (Ctrl+Shift+D)**: Copia a data/hora atual
+  - **Copiar Data/Hora (Ctrl+Shift+Q)**: Copia a data/hora atual
   - **Sobre**: Abre janela com informações do aplicativo
   - **Sair**: Fecha o aplicativo
-- **Tecla de atalho:** `Ctrl+Shift+D` → Copia de qualquer aplicativo instantaneamente
+- **Tecla de atalho:** `Ctrl+Shift+Q` → Copia de qualquer aplicativo instantaneamente
 
 ## Formato de Saída
 
@@ -87,6 +91,8 @@ Exemplos:
 - Pillow (ícone personalizado)
 - winotify (toast notifications)
 - pywin32 (Win32 API integration)
+- JSON (histórico de clipboard)
+- threading (concorrência)
 
 ## Solução de Problemas
 
@@ -101,11 +107,11 @@ Exemplos:
 ### Tecla de atalho não funciona
 - No Windows, pode ser necessário executar como administrador para hotkeys globais
 - Alguns antivírus podem bloquear hotkeys globais
-- Verifique se `Ctrl+Shift+D` não está sendo usado por outro aplicativo
+- Verifique se `Ctrl+Shift+Q` não está sendo usado por outro aplicativo
 
 ### Não consigo copiar via clique esquerdo
 - **Comportamento normal:** Clique esquerdo mostra instruções, não copia
-- Use clique direito para menu ou atalho `Ctrl+Shift+D` para copiar
+- Use clique direito para menu ou atalho `Ctrl+Shift+Q` para copiar
 
 ### O menu "Sobre" não fecha
 - **Comportamento normal:** A janela "Sobre" é modal e fica aberta até você fechá-la
@@ -116,6 +122,11 @@ Exemplos:
 - O aplicativo usa toast notifications que podem estar desativadas
 - As mensagens duram 2 segundos e desaparecem automaticamente
 
+### Histórico de clipboard não atualizado
+- O histórico é salvo automaticamente a cada mudança detectada
+- O histórico mantém os últimos 100 itens copiados
+- Você pode limpar o histórico manualmente através do menu
+
 ## Notas
 
 - **Instância única:** O aplicativo impede múltiplas instâncias com mensagem clara
@@ -124,4 +135,7 @@ Exemplos:
 - **Executável:** O .exe não requer Python instalado no computador de destino
 - **Segurança:** Todas as notificações são seguras e não exigem permissões especiais
 - **Interface profissional:** Segui padrões do Windows moderno com tooltips claros
+- **Contador de uso:** Acompanha quantas vezes o app foi acionado
+- **Clipboard history:** Monitora automaticamente a área de transferência
+- **Ícone personalizado:** Mesmo ícone da bandeja está incluso no executável .exe
 

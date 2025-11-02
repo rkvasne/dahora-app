@@ -461,6 +461,21 @@ def main():
     """Função principal"""
     global mutex_handle
 
+    # Cria o arquivo de ícone para o executável (se não existir)
+    try:
+        import os
+        if not os.path.exists('icon.ico'):
+            # Se Python estiver disponível, tenta criar o ícone
+            try:
+                from PIL import Image, ImageDraw
+                icon_image = create_image()
+                icon_image.save('icon.ico', format='ICO')
+                print("✅ Arquivo icon.ico criado com sucesso!")
+            except Exception:
+                print("⚠️  Não foi possível criar o arquivo icon.ico")
+    except:
+        pass
+
     # Carrega o contador e o histórico ao iniciar
     load_counter()
     load_clipboard_history()

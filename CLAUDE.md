@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Dahora App is a Windows system tray application that copies the current date and time to the clipboard in the format `[DD.MM.AAAA-HH:MM]`. The application features an intuitive interface with toast notifications, single instance prevention, and follows modern Windows design patterns.
+Dahora App is a Windows system tray application that copies the current date and time to the clipboard in the format `[DD.MM.AAAA-HH:MM]`. Version 0.0.1. The application features an intuitive interface with toast notifications, single instance prevention, clipboard history, and follows modern Windows design patterns.
 
 ## Architecture
 
@@ -12,23 +12,28 @@ The application is built as a single Python script (`dahora_app.py`) with the fo
 
 ### Core Functionality
 - **System Tray Integration**: Uses `pystray` to create a system tray icon with a custom-drawn clock design
-- **Global Hotkey**: Implements global keyboard shortcuts using `keyboard` library
+- **Global Hotkey**: Implements global keyboard shortcuts using `keyboard` library (Ctrl+Shift+Q)
 - **Clipboard Operations**: Uses `pyperclip` for clipboard management
 - **Notifications**: 2-second Windows toast notifications that auto-dismiss
+- **Clipboard History**: Maintains last 100 clipboard items with timestamp tracking
+- **Usage Counter**: Tracks how many times the app has been triggered
 
 ### Key Functions
 - `generate_datetime_string()`: Creates formatted datetime string
 - `copy_datetime()`: Copies to clipboard and triggers notifications with source detection
 - `show_toast_notification()`: Handles 2-second toast notifications with auto-dismiss
-- `setup_icon()`: Creates system tray icon with menu structure
+- `setup_icon()`: Creates system tray icon with menu structure including clipboard history
 - `setup_hotkey_listener()`: Configures global hotkey in separate thread
 - `check_single_instance()`: Prevents multiple instances with Windows mutex
 - `show_about()`: Shows modal window with application information
+- `monitor_clipboard()`: Monitors clipboard changes and adds to history
+- `get_recent_clipboard_items()`: Returns recent items for menu integration
 
 ### Platform-Specific Features
 - **Windows Integration**: Uses `win32api`, `win32con`, `win32event` for Windows-specific functionality
 - **Single Instance Prevention**: Robust instance detection using Windows mutex with user notification
 - **Notification Fallbacks**: Priority order: win32gui modal (About) → winotify toast → pystray notification → console output
+- **Icon Generation**: Automatic creation of icon.ico file for executable packaging
 
 ## Build and Development Commands
 
@@ -94,12 +99,21 @@ The application runs in the system tray and responds to:
 - **No Double Click Action**: Removed in current version (fallback to copy only)
 
 ### Menu Options
-- **Copiar Data/Hora (Ctrl+Shift+D)**: Copies current date/time with notification
+- **Copiar Data/Hora (Ctrl+Shift+Q)**: Copies current date/time with notification
+- **Histórico de Clipboard**: Submenu with recent 5 clipboard items (click to copy)
+- **Limpar Histórico**: Clears clipboard history
 - **Sobre**: Opens modal window with application information
 - **Sair**: Exits the application
 
 ### Global Hotkey
-- **Ctrl+Shift+D**: Copies date/time from any application with notification
+- **Ctrl+Shift+Q**: Copies date/time from any application with notification
+
+### Clipboard History
+- Maintains last 100 clipboard items with timestamps
+- Auto-monitors clipboard changes
+- Shows recent 5 items in right-click menu
+- Click menu items to copy from history
+- Clear history option in menu
 
 ### Output Format
 Always `[DD.MM.AAAA-HH:MM]` (e.g., `[25.12.2024-14:30]`)

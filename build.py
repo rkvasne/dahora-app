@@ -68,6 +68,7 @@ def build_executable():
         '--onefile',
         '--windowed',
         '--name=dahora_app',
+        '--icon=icon.ico',
         '--hidden-import=pystray',
         '--hidden-import=pyperclip',
         '--hidden-import=keyboard',
