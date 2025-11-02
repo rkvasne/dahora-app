@@ -11,7 +11,20 @@ import time
 
 
 def ensure_icon_exists(icon_path='icon.ico'):
-    if os.path.exists(icon_path):
+    # Usa o caminho completo especificado pelo usuário
+    full_icon_path = 'E:\\Dahora\\dahora-app\\icon.ico'
+
+    if os.path.exists(full_icon_path):
+        print(f">>> Usando ícone existente: {full_icon_path}")
+        # Copia para o local esperado pelo PyInstaller
+        import shutil
+        try:
+            shutil.copy2(full_icon_path, icon_path)
+            print(f">>> Ícone copiado para: {icon_path}")
+        except Exception as e:
+            print(f">>> Aviso ao copiar ícone: {e}")
+        return
+    elif os.path.exists(icon_path):
         print(f">>> Usando ícone existente: {icon_path}")
         return
     print("\n>>> Criando icon.ico...")
