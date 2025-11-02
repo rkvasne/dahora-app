@@ -33,7 +33,7 @@ The application is built as a single Python script (`dahora_app.py`) with the fo
 - **Windows Integration**: Uses `win32api`, `win32con`, `win32event` for Windows-specific functionality
 - **Single Instance Prevention**: Robust instance detection using Windows mutex with user notification
 - **Notification Fallbacks**: Priority order: win32gui modal (About) → winotify toast → pystray notification → console output
-- **Icon Generation**: Automatic creation of icon.ico file for executable packaging
+- **Icon Generation**: Uses existing `icon.ico` file from project root with fallback creation if missing
 
 ## Build and Development Commands
 
@@ -100,7 +100,7 @@ The application runs in the system tray and responds to:
 
 ### Menu Options
 - **Copiar Data/Hora (Ctrl+Shift+Q)**: Copies current date/time with notification
-- **Histórico de Clipboard**: Submenu with recent 5 clipboard items (click to copy)
+- **--- Histórico Recente ---**: Direct menu items with recent 5 clipboard items (click to copy)
 - **Limpar Histórico**: Clears clipboard history
 - **Sobre**: Opens modal window with application information
 - **Sair**: Exits the application

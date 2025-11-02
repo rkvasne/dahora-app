@@ -14,9 +14,9 @@ Aplicativo Windows que fica na bandeja do sistema (system tray) para copiar a da
 - ✅ **Janela "Sobre" modal** que fica aberta até o usuário fechar
 - ✅ **Interface intuitiva** e profissional
 - 📊 **Contador de uso** - quantas vezes o app foi acionado
-- 📋 **Histórico de clipboard** - mantém últimos 100 itens copiados
+- 📋 **Histórico de clipboard** - mantém últimos 100 itens copiados com acesso rápido no menu
 - 🔍 **Monitoramento automático** - detecta mudanças na área de transferência
-- 🎨 **Ícone personalizado** incluso no executável .exe
+- 🎨 **Ícone personalizado** (icon.ico) incluso no executável .exe
 
 ## Instalação
 
@@ -56,7 +56,9 @@ pip install pyinstaller
 python build.py
 ```
 
-3. O executável estará em `dist/dahora_app.exe`
+**Importante:** O build usará automaticamente o arquivo `icon.ico` existente no projeto. Se o arquivo não existir, o script tentará criar um ícone padrão.
+
+3. O executável estará em `dist/dahora_app_v0.0.1.exe`
 
 ## Uso
 
@@ -69,6 +71,8 @@ python build.py
 - **Clique esquerdo no ícone** → Mostra instruções ("Menu de opções disponível")
 - **Clique direito no ícone** → Abre menu completo:
   - **Copiar Data/Hora (Ctrl+Shift+Q)**: Copia a data/hora atual
+  - **--- Histórico Recente ---**: Itens do clipboard copiados recentemente (clione para copiar)
+  - **Limpar Histórico**: Remove todos os itens do histórico
   - **Sobre**: Abre janela com informações do aplicativo
   - **Sair**: Fecha o aplicativo
 - **Tecla de atalho:** `Ctrl+Shift+Q` → Copia de qualquer aplicativo instantaneamente
@@ -133,11 +137,12 @@ Exemplos:
 - **Recursos mínimos:** Consuma pouca memória e CPU
 - **Segundo plano:** Roda silenciosamente sem interferir em outros apps
 - **Executável:** O .exe não requer Python instalado no computador de destino
+- **Versão:** v0.0.1 - Executável nomeado como `dahora_app_v0.0.1.exe`
 - **Segurança:** Todas as notificações são seguras e não exigem permissões especiais
 - **Interface profissional:** Segui padrões do Windows moderno com tooltips claros
 - **Contador de uso:** Acompanha quantas vezes o app foi acionado
 - **Clipboard history:** Monitora automaticamente a área de transferência
-- **Ícone personalizado:** Mesmo ícone da bandeja está incluso no executável .exe
+- **Ícone personalizado:** O aplicativo usa o arquivo `icon.ico` específico do projeto incluso no executável .exe
 
 
 ## Armazenamento de dados

@@ -517,28 +517,17 @@ def setup_icon():
     """Configura o ícone da bandeja do sistema"""
     global global_icon, last_click_time
 
-    # Cria submenu para histórico de clipboard
-    recent = get_recent_clipboard_items(5)  # Mostra últimos 5 itens
-    history_menu_items = []
-    if recent:
-        # Cria funções específicas para cada item do histórico
-        copy_functions = [_copy_history_item1, _copy_history_item2, _copy_history_item3, _copy_history_item4, _copy_history_item5]
+    # Tenta carregar o arquivo icon.ico existente, senão cria um novo
+    try:
+        if os.path.exists('icon.ico'):
+            image = Image.open('icon.ico')
+        else:
+            image = external_create_image() if external_create_image else create_image()
+    except Exception:
+        image = external_create_image() if external_create_image else create_image()
 
-        for idx, (entry, copy_func) in enumerate(zip(reversed(recent), copy_functions), start=1):
-            text = entry.get("text", "") or ""
-            display_text = (text[:40] + "...") if len(text) > 40 else text
-            history_menu_items.append(
-                pystray.MenuItem(
-                    f"[{idx}] {display_text}",
-                    copy_func
-                )
-            )
-    else:
-        history_menu_items.append(
-            pystray.MenuItem("Nenhum item no histórico", None, enabled=False)
-        )
-
-    history_menu = pystray.Menu(*history_menu_items)
+    # Pega itens recentes do histórico
+    recent = get_recent_clipboard_items(5)
 
     # Prefix controls
     prefix_label = pystray.MenuItem(
@@ -569,19 +558,41 @@ def setup_icon():
         except Exception as e:
             logging.warning(f"Falha ao definir prefixo: {e}")
     set_prefix_item = pystray.MenuItem('Definir Prefixo...', set_prefix_action)
-    menu = pystray.Menu(
+    # Cria menu base
+    menu_items = [
         pystray.MenuItem('Copiar Data/Hora (Ctrl+Shift+Q)', _copy_datetime_menu, default=True),
         prefix_label,
         set_prefix_item,
-        pystray.MenuItem('Histórico de Clipboard', None, menu=history_menu),
+    ]
+
+    # Adiciona itens do histórico ao menu
+    if recent:
+        # Adiciona histórico como itens diretos no menu
+        menu_items.append(pystray.MenuItem('--- Histórico Recente ---', None, enabled=False))
+        for idx, entry in enumerate(reversed(recent), start=1):
+            text = entry.get("text", "") or ""
+            display_text = (text[:40] + "...") if len(text) > 40 else text
+
+            # Cria função dinamicamente para cada item
+            def make_copy_func(text):
+                return lambda icon, item: copy_from_history(text)
+
+            copy_func = make_copy_func(text)
+            menu_items.append(pystray.MenuItem(f"[{idx}] {display_text}", copy_func))
+    else:
+        menu_items.append(pystray.MenuItem('Nenhum item no histórico', None, enabled=False))
+
+    # Adiciona resto do menu
+    menu_items.extend([
+        pystray.Menu.SEPARATOR,
         pystray.MenuItem('Limpar Histórico', clear_clipboard_history),
         pystray.Menu.SEPARATOR,
         pystray.MenuItem('Sobre', show_about),
         pystray.Menu.SEPARATOR,
         pystray.MenuItem('Sair', on_exit)
-    )
+    ])
 
-    image = external_create_image() if external_create_image else create_image()
+    menu = pystray.Menu(*menu_items)
 
     # Handler para clique esquerdo - detecta clique duplo
     def on_left_click(icon, item):
@@ -647,18 +658,11 @@ def main():
     """Função principal"""
     global mutex_handle
 
-    # Cria o arquivo de ícone para o executável (se não existir)
+    # Verifica se o arquivo de ícone existe
     try:
         import os
         if not os.path.exists('icon.ico'):
-            # Se Python estiver disponível, tenta criar o ícone
-            try:
-                from PIL import Image, ImageDraw
-                icon_image = create_image()
-                icon_image.save('icon.ico', format='ICO')
-                print("✅ Arquivo icon.ico criado com sucesso!")
-            except Exception:
-                print("⚠️  Não foi possível criar o arquivo icon.ico")
+            print("⚠️  Arquivo icon.ico não encontrado. O app usará ícone padrão.")
     except:
         pass
 

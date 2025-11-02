@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bibliotecas: pystray, pyperclip, keyboard, Pillow, winotify, pywin32
 - Arquivo .gitignore para controle de versão
 - Repositório GitHub: https://github.com/rkvasne/dahora-app
+- Executável nomeado como `dahora_app_v0.0.1.exe` com identificação de versão
 
 ### Fixed
 - Corrigido erro de menu em `pystray` usando método `__add__` ao invés de `add`
