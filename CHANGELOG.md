@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.3] - 2025-11-02
+
+### Added
+- **Melhoria no monitoramento de clipboard**: Intervalo atualizado de 1 para 3 segundos para melhor performance
+- **Funcionalidade de limpeza de histórico**: Opção "Limpar Histórico" no menu de clique direito para remover todo o histórico de clipboard
+- **Histórico persistente**: Agora o histórico é salvo em `clipboard_history.json` e mantém entre reinicializações
+- **Monitoramento ativo**: Clipboard é monitorado automaticamente a cada 3 segundos, detectando novas cópias
+- **Interface aprimorada**: Melhor feedback visual e notificações ao limpar histórico
+
+### Fixed
+- **Corrigido bug de limpeza de histórico**: A função de limpar histórico agora funciona corretamente, removendo permanentemente todos os itens do arquivo
+- **Corrigido bug de menu recursivo**: Eliminada recursão infinita ao atualizar menu após definir prefixo
+- **Corrigido ícone de bandeja**: O ícone personalizado agora é carregado corretamente no executável sem erros
+- **Melhorado tratamento de erros**: Logging robusto com fallbacks ao remover arquivo de histórico
+- **Otimizado desempenho**: Intervalo de monitoramento reduzido para 3 segundos com melhor tratamento de exceções
+- **Corrigido estado consistente**: Após limpar histórico, o aplicativo recarrega estado do arquivo para garantir consistência
+
+---
+
 ## [0.0.2] - 2025-01-02
 
 ### Added

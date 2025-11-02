@@ -394,12 +394,21 @@ def clear_clipboard_history(icon=None, item=None):
         total_items = len(clipboard_history)
         clipboard_history = []
         try:
-            _atomic_write_json(history_file, clipboard_history)
+            # Força a escrita do arquivo vazio
+            _atomic_write_json(history_file, [])
             logging.info(f"Histórico limpo com sucesso! {total_items} itens removidos")
         except Exception as e:
             logging.error(f"Falha ao salvar histórico limpo: {e}")
-            # Tenta carregar novamente para garantir consistência
-            load_clipboard_history()
+            try:
+                # Tenta remover o arquivo completamente como fallback
+                if os.path.exists(history_file):
+                    os.remove(history_file)
+                    logging.info("Arquivo de histórico removido como fallback")
+            except Exception as e2:
+                logging.error(f"Falha ao remover arquivo de histórico: {e2}")
+
+    # Recarrega o histórico do arquivo para garantir consistência
+    load_clipboard_history()
 
     # Mostra notificação de confirmação
     show_toast_notification("Dahora App", f"Histórico limpo!\n{total_items} itens removidos")
@@ -490,7 +499,7 @@ def _copy_datetime_menu(icon, item):
 def show_about(icon, item):
     """Mostra informações sobre o aplicativo"""
     about_text = (
-        "Dahora App v0.0.2\n\n"
+        "Dahora App v0.0.3\n\n"
         "Aplicativo para copiar data e hora\n"
         "Formato: [DD.MM.AAAA-HH:MM]\n\n"
         f"Total de acionamentos: {counter} vezes\n"
@@ -498,8 +507,9 @@ def show_about(icon, item):
         "Atalho: Ctrl+Shift+Q\n\n"
         "Menu de opções via clique direito\n\n"
         "Histórico mantém últimos 100 itens\n"
-        "Monitora automaticamente clipboard\n"
-        "Clique em itens do histórico para copiar"
+        "Monitora clipboard a cada 3 segundos\n"
+        "Clique em itens do histórico para copiar\n"
+        "Opção 'Limpar Histórico' disponível"
     )
     # Mostra toast modal (dura 10 segundos para permitir leitura)
     show_toast_notification("Sobre - Dahora App", about_text, duration=10)
@@ -532,7 +542,7 @@ def setup_hotkey_listener():
         print("💡 O aplicativo continuará funcionando, mas a hotkey pode não estar disponível")
 
 
-def setup_icon():
+def setup_icon(reload=False):
     """Configura o ícone da bandeja do sistema"""
     global global_icon, last_click_time
 
@@ -569,7 +579,8 @@ def setup_icon():
             save_settings()
             show_toast_notification("Dahora App", f"Prefixo atualizado: {date_prefix or '(vazio)'}")
             try:
-                icon.menu = setup_icon().menu
+                # Recarrega o menu atualizado sem recursão
+                icon.menu = setup_icon(reload=True)
                 if hasattr(icon, 'update_menu'):
                     icon.update_menu()
             except Exception:

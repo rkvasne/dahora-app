@@ -15,7 +15,9 @@ Aplicativo Windows que fica na bandeja do sistema (system tray) para copiar a da
 - ✅ **Interface intuitiva** e profissional
 - 📊 **Contador de uso** - quantas vezes o app foi acionado
 - 📋 **Histórico de clipboard** - mantém últimos 100 itens copiados com acesso rápido no menu
-- 🔍 **Monitoramento automático** - detecta mudanças na área de transferência
+- 🔍 **Monitoramento automático** - detecta mudanças na área de transferência a cada 3 segundos
+- 🗑️ **Limpar histórico** - opção para remover todo o histórico de clipboard manualmente
+- 💾 **Histórico persistente** - salva automaticamente entre reinicializações
 - 🎨 **Ícone personalizado** (icon.ico) incluso no executável .exe
 
 ## Instalação
@@ -58,7 +60,7 @@ python build.py
 
 **Importante:** O build usará automaticamente o arquivo `icon.ico` existente no projeto. Se o arquivo não existir, o script tentará criar um ícone padrão.
 
-3. O executável estará em `dist/dahora_app_v0.0.2.exe`
+3. O executável estará em `dist/dahora_app_v0.0.3.exe`
 
 ## Uso
 
@@ -71,8 +73,8 @@ python build.py
 - **Clique esquerdo no ícone** → Mostra instruções ("Menu de opções disponível")
 - **Clique direito no ícone** → Abre menu completo:
   - **Copiar Data/Hora (Ctrl+Shift+Q)**: Copia a data/hora atual
-  - **--- Histórico Recente ---**: Itens do clipboard copiados recentemente (clione para copiar)
-  - **Limpar Histórico**: Remove todos os itens do histórico
+  - **--- Histórico Recente ---**: Itens do clipboard copiados recentemente (clique para copiar)
+  - **Limpar Histórico**: Remove permanentemente todo o histórico de clipboard
   - **Sobre**: Abre janela com informações do aplicativo
   - **Sair**: Fecha o aplicativo
 - **Tecla de atalho:** `Ctrl+Shift+Q` → Copia de qualquer aplicativo instantaneamente
@@ -127,9 +129,9 @@ Exemplos:
 - As mensagens duram 2 segundos e desaparecem automaticamente
 
 ### Histórico de clipboard não atualizado
-- O histórico é salvo automaticamente a cada mudança detectada
+- O histórico é salvo automaticamente a cada 3 segundos de monitoramento
 - O histórico mantém os últimos 100 itens copiados
-- Você pode limpar o histórico manualmente através do menu
+- Você pode limpar o histórico manualmente através do menu opção "Limpar Histórico"
 
 ## Notas
 
@@ -137,7 +139,7 @@ Exemplos:
 - **Recursos mínimos:** Consuma pouca memória e CPU
 - **Segundo plano:** Roda silenciosamente sem interferir em outros apps
 - **Executável:** O .exe não requer Python instalado no computador de destino
-- **Versão:** v0.0.2 - Executável nomeado como `dahora_app_v0.0.2.exe`
+- **Versão:** v0.0.3 - Executável nomeado como `dahora_app_v0.0.3.exe`
 - **Segurança:** Todas as notificações são seguras e não exigem permissões especiais
 - **Interface profissional:** Segui padrões do Windows moderno com tooltips claros
 - **Contador de uso:** Acompanha quantas vezes o app foi acionado

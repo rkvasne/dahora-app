@@ -79,7 +79,7 @@ def build_executable():
     print(">>> Verificando dependências...")
 
     # Define o nome do executável com versão
-    exe_name = 'dahora_app_v0.0.2'
+    exe_name = 'dahora_app_v0.0.3'
 
     # Verifica dependências
     try:

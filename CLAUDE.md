@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Dahora App is a Windows system tray application that copies the current date and time to the clipboard in the format `[DD.MM.AAAA-HH:MM]`. Version 0.0.2. The application features an intuitive interface with toast notifications, single instance prevention, clipboard history, and follows modern Windows design patterns.
+Dahora App is a Windows system tray application that copies the current date and time to the clipboard in the format `[DD.MM.AAAA-HH:MM]`. Version 0.0.3. The application features an intuitive interface with toast notifications, single instance prevention, clipboard history, and follows modern Windows design patterns.
 
 ## Architecture
 
@@ -26,8 +26,9 @@ The application is built as a single Python script (`dahora_app.py`) with the fo
 - `setup_hotkey_listener()`: Configures global hotkey in separate thread
 - `check_single_instance()`: Prevents multiple instances with Windows mutex
 - `show_about()`: Shows modal window with application information
-- `monitor_clipboard()`: Monitors clipboard changes and adds to history
+- `monitor_clipboard()`: Monitors clipboard changes every 3 seconds and adds to history
 - `get_recent_clipboard_items()`: Returns recent items for menu integration
+- `clear_clipboard_history()`: Clears all clipboard history with persistent file removal
 
 ### Platform-Specific Features
 - **Windows Integration**: Uses `win32api`, `win32con`, `win32event` for Windows-specific functionality
@@ -110,10 +111,10 @@ The application runs in the system tray and responds to:
 
 ### Clipboard History
 - Maintains last 100 clipboard items with timestamps
-- Auto-monitors clipboard changes
+- Auto-monitors clipboard changes every 3 seconds
 - Shows recent 5 items in right-click menu
 - Click menu items to copy from history
-- Clear history option in menu
+- Clear history option removes all items permanently
 
 ### Output Format
 Always `[DD.MM.AAAA-HH:MM]` (e.g., `[25.12.2024-14:30]`)
