@@ -1,0 +1,36 @@
+# Build artifacts
+build/
+dist/
+*.exe
+*.pyz
+*.zip
+
+# Arquivos temporários e logs
+*.log
+*.tmp
+*.temp
+
+# Arquivos de estado do app
+dahora_counter.txt
+clipboard_history.json
+
+# IDE e arquivos de sistema
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Configurações do usuário
+settings.local.json
+
+# Cache e temp files
+__pycache__/
+*.pyc
+*.pyo
+.Python
+env/
+venv/
+
+# PyInstaller
+*.manifest
+*.spec

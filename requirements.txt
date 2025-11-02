@@ -1,0 +1,7 @@
+pystray>=0.19.5
+pyperclip>=1.8.2
+Pillow>=10.0.0
+keyboard>=0.13.5
+winotify>=0.15
+pywin32>=306
+
