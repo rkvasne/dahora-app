@@ -17,6 +17,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.0.5] - 2025-11-02
+
+### Added
+- **Monitoramento inteligente de clipboard**: Sistema adaptativo que reduz sobrecarga do sistema
+- **Detecção de Ctrl+C**: Captura automaticamente quando usuário pressiona Ctrl+C
+- **Polling adaptativo**: Intervalos dinâmicos de 0.5s a 10s baseados em atividade
+- **Otimização de recursos**: Maior intervalo quando clipboard está ocioso (>30s)
+
+### Changed
+- **Performance clipboard monitoring**: Substituído polling constante por detecção inteligente
+- **Eficiência do sistema**: Reduz consumo de CPU quando não há atividade no clipboard
+- **Hotkeys expandidas**: Agora captura Ctrl+Shift+Q e Ctrl+C globalmente
+
+### Technical
+- **Intelligent polling**: 0.5s resposta rápida com atividade, até 10s quando ocioso
+- **Activity detection**: Detecta mudanças reais no clipboard em vez de verificação constante
+- **Ctrl+C interception**: Adiciona conteúdo ao histórico quando Ctrl+C é pressionado
+- **Idle optimization**: Aumenta intervalos automaticamente quando sistema está ocioso
+
+---
+
 ## [0.0.3] - 2025-11-02
 
 ### Added

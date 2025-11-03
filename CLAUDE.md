@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Dahora App is a Windows system tray application that copies the current date and time to the clipboard in the format `[DD.MM.AAAA-HH:MM]`. Version 0.0.3. The application features an intuitive interface with toast notifications, single instance prevention, clipboard history, and follows modern Windows design patterns.
+Dahora App is a Windows system tray application that copies the current date and time to the clipboard in the format `[DD.MM.AAAA-HH:MM]`. Version 0.0.4. The application features an intuitive interface with toast notifications, single instance prevention, smart clipboard monitoring, and follows modern Windows design patterns.
 
 ## Architecture
 
@@ -16,6 +16,7 @@ The application is built as a single Python script (`dahora_app.py`) with the fo
 - **Clipboard Operations**: Uses `pyperclip` for clipboard management
 - **Notifications**: 2-second Windows toast notifications that auto-dismiss
 - **Clipboard History**: Maintains last 100 clipboard items with timestamp tracking
+- **Smart Clipboard Monitoring**: Activity-based detection with adaptive polling intervals
 - **Usage Counter**: Tracks how many times the app has been triggered
 
 ### Key Functions
@@ -23,10 +24,11 @@ The application is built as a single Python script (`dahora_app.py`) with the fo
 - `copy_datetime()`: Copies to clipboard and triggers notifications with source detection
 - `show_toast_notification()`: Handles 2-second toast notifications with auto-dismiss
 - `setup_icon()`: Creates system tray icon with menu structure including clipboard history
-- `setup_hotkey_listener()`: Configures global hotkey in separate thread
+- `setup_hotkey_listener()`: Configures global hotkeys (Ctrl+Shift+Q, Ctrl+C) in separate thread
+- `monitor_clipboard_smart()`: Smart clipboard monitoring with adaptive polling intervals
 - `check_single_instance()`: Prevents multiple instances with Windows mutex
 - `show_about()`: Shows modal window with application information
-- `monitor_clipboard()`: Monitors clipboard changes every 3 seconds and adds to history
+- `monitor_clipboard_smart()`: Monitors clipboard changes with adaptive intervals (0.5-10s based on activity)
 - `get_recent_clipboard_items()`: Returns recent items for menu integration
 - `clear_clipboard_history()`: Clears all clipboard history with persistent file removal
 
@@ -111,7 +113,9 @@ The application runs in the system tray and responds to:
 
 ### Clipboard History
 - Maintains last 100 clipboard items with timestamps
-- Auto-monitors clipboard changes every 3 seconds
+- **Smart Monitoring**: Activity-based detection with adaptive intervals (0.5s-10s)
+- **Ctrl+C Detection**: Captures clipboard changes when Ctrl+C is pressed
+- **Auto-monitors clipboard changes** with intelligent polling based on activity
 - Shows recent 5 items in right-click menu
 - Click menu items to copy from history
 - Clear history option removes all items permanently

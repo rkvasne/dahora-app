@@ -529,6 +529,88 @@ def on_hotkey_triggered():
     """Função chamada quando a hotkey é pressionada"""
     copy_datetime(source="Atalho")
 
+def on_ctrl_c_triggered():
+    """Função chamada quando Ctrl+C é pressionado - adiciona ao clipboard history"""
+    try:
+        current_content = pyperclip.paste()
+        if current_content and current_content.strip():
+            add_to_clipboard_history(current_content)
+            logging.info(f"Ctrl+C detectado: {current_content[:50]}...")
+    except Exception as e:
+        logging.warning(f"Falha ao processar Ctrl+C: {e}")
+
+def setup_ctrl_c_listener():
+    """Configura listener para Ctrl+C globalmente"""
+    try:
+        # Adiciona listener para Ctrl+C
+        keyboard.add_hotkey('ctrl+c', on_ctrl_c_triggered, args=())
+        logging.info("✅ Listener Ctrl+C configurado")
+    except Exception as e:
+        logging.warning(f"⚠️  Não foi possível configurar listener Ctrl+C: {e}")
+
+def monitor_clipboard_smart():
+    """Monitora inteligente do clipboard - atividade-first, polling-second"""
+    global last_clipboard_content
+    logging.info("Monitor inteligente de clipboard iniciado")
+
+    # Primeiro, tente obter o conteúdo atual
+    try:
+        last_clipboard_content = pyperclip.paste()
+        logging.info(f"Clipboard inicializado: '{last_clipboard_content[:30] if last_clipboard_content else 'vazio'}'")
+    except Exception as e:
+        logging.warning(f"Erro ao inicializar clipboard: {e}")
+        last_clipboard_content = ""
+
+    attempt = 0
+    last_activity_time = time.time()
+    idle_threshold = 30  # segundos sem atividade antes de aumentar intervalo
+
+    while True:
+        attempt += 1
+        current_time = time.time()
+
+        try:
+            # Verifica se há conteúdo no clipboard
+            current_content = pyperclip.paste()
+
+            # Log a cada 6 tentativas (para logging, não para verificação)
+            if attempt % 6 == 0:
+                time_idle = current_time - last_activity_time
+                logging.info(f"Verificação #{attempt} - Clipboard: '{current_content[:30] if current_content else 'vazio'}' (ocioso há {time_idle:.1f}s)")
+
+            # Verifica se há conteúdo novo e não vazio
+            if current_content and current_content.strip():
+                # Se for diferente do último conteúdo
+                if current_content != last_clipboard_content:
+                    logging.info(f"Clipboard mudou de '{last_clipboard_content[:30] if last_clipboard_content else 'vazio'}' para '{current_content[:30]}...'")
+                    # Adiciona ao histórico
+                    add_to_clipboard_history(current_content)
+                    last_clipboard_content = current_content
+                    last_activity_time = current_time  # Atualiza tempo de atividade
+                    logging.info(f"Clipboard atualizado: {current_content[:50]}...")
+
+                # Se há atividade recente, usa intervalo curto (responsivo)
+                time_idle = current_time - last_activity_time
+                if time_idle < idle_threshold:
+                    sleep_time = 0.5  # Responde rápido quando há atividade
+                else:
+                    sleep_time = 5.0  # Intervalo maior quando ocioso
+
+            else:
+                # Clipboard vazio - aumenta intervalo para economizar recursos
+                time_idle = current_time - last_activity_time
+                if time_idle > idle_threshold:
+                    sleep_time = min(10.0, 2 + time_idle * 0.1)  # Intervalo crescente com ociosidade
+                else:
+                    sleep_time = 2.0
+
+        except Exception as e:
+            logging.warning(f"Erro ao monitorar clipboard: {e}")
+            sleep_time = 3.0  # Intervalo padrão em caso de erro
+
+        # Espera baseado na atividade (intervalo adaptativo)
+        time.sleep(sleep_time)
+
 
 def setup_hotkey_listener():
     """Configura o listener da tecla de atalho global"""
@@ -540,6 +622,9 @@ def setup_hotkey_listener():
     except Exception as e:
         print(f"⚠️  Aviso: Não foi possível configurar a tecla de atalho: {e}")
         print("💡 O aplicativo continuará funcionando, mas a hotkey pode não estar disponível")
+
+    # Configura listener para Ctrl+C
+    setup_ctrl_c_listener()
 
 
 def setup_icon(reload=False):
@@ -717,10 +802,10 @@ def main():
         hotkey_thread.start()
         logging.info("Thread de hotkey iniciada")
 
-        # Inicia o monitoramento de clipboard em uma thread separada
-        monitor_thread = threading.Thread(target=monitor_clipboard, daemon=True)
+        # Inicia o monitoramento de clipboard inteligente em uma thread separada
+        monitor_thread = threading.Thread(target=monitor_clipboard_smart, daemon=True)
         monitor_thread.start()
-        logging.info("Thread de monitoramento de clipboard iniciada")
+        logging.info("Thread de monitoramento inteligente de clipboard iniciada")
 
         # Inicia o ícone da bandeja
         icon = setup_icon()
