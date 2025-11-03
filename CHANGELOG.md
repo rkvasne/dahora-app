@@ -17,6 +17,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.0.6] - 2025-11-03
+
+### Added
+- **Rebranding completo**: Alteração de nome do projeto de "Dahora App" para "Qopas App"
+- **Novo nome**: Qopas (Q = letra do atalho Ctrl+Shift+Q, op = de cOPy, pas = parte de "paste")
+- **Executável atualizado**: Novo executável `qopas_app_v0.0.6.exe` com nome do projeto atualizado
+
+### Changed
+- **Referências internas**: Todas as menções a "Dahora App" foram substituídas por "Qopas App"
+- **Documentação completa**: README.md, CHANGELOG.md e CLAUDE.md atualizados com o novo nome
+- **Build script atualizado**: build.py agora gera executáveis com prefixo "qopas_app"
+
+### Technical
+- **Arquivo principal renomeado**: `dahora_app.py` → `qopas_app.py`
+- **Atualização de branding**: Interface do aplicativo, notificações e identificadores atualizados
+- **Mantendo compatibilidade**: Todas as funcionalidades mantidas apenas com rebranding visual
+
+---
+
 ## [0.0.5] - 2025-11-02
 
 ### Added
@@ -76,7 +95,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.0.1] - 2025-01-02
 
 ### Added
-- Versão inicial do Dahora App 0.0.1
+- Versão inicial do Qopas App 0.0.1
 - Sistema de bandeja do Windows (system tray) com ícone de relógio personalizado
 - Copia data e hora para a área de transferência no formato `[DD.MM.AAAA-HH:MM]`
 - Tecla de atalho global: `Ctrl+Shift+Q` para copiar de qualquer lugar
@@ -105,7 +124,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bibliotecas: pystray, pyperclip, keyboard, Pillow, winotify, pywin32
 - Arquivo .gitignore para controle de versão
 - Repositório GitHub: https://github.com/rkvasne/dahora-app
-- Executável nomeado como `dahora_app_v0.0.1.exe` com identificação de versão
+- Executável nomeado como `qopas_app_v0.0.1.exe` com identificação de versão
 
 ### Fixed
 - Corrigido erro de menu em `pystray` usando método `__add__` ao invés de `add`

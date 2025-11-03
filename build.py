@@ -75,11 +75,11 @@ def ensure_icon_exists(icon_path='icon.ico'):
 
 def build_executable():
     """Gera o executável usando PyInstaller"""
-    print(">>> Iniciando build do Dahora App...")
+    print(">>> Iniciando build do Qopas App...")
     print(">>> Verificando dependências...")
 
     # Define o nome do executável com versão
-    exe_name = 'dahora_app_v0.0.5'
+    exe_name = 'qopas_app_v0.0.5'
 
     # Verifica dependências
     try:
@@ -149,7 +149,7 @@ def build_executable():
         '--collect-all=pystray',
         '--collect-all=keyboard',
         '--collect-all=winotify',
-        'dahora_app.py'
+        'qopas_app.py'
     ]
     if console_build:
         cmd.append('--console')

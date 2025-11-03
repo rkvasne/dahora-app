@@ -1,4 +1,4 @@
-# Dahora App - Sistema de Bandeja do Windows
+# Qopas App - Sistema de Bandeja do Windows
 
 Aplicativo Windows que fica na bandeja do sistema (system tray) para copiar a data e hora atual para a área de transferência no formato `[DD.MM.AAAA-HH:MM]`.
 
@@ -15,7 +15,7 @@ Aplicativo Windows que fica na bandeja do sistema (system tray) para copiar a da
 - ✅ **Interface intuitiva** e profissional
 - 📊 **Contador de uso** - quantas vezes o app foi acionado
 - 📋 **Histórico de clipboard** - mantém últimos 100 itens copiados com acesso rápido no menu
-- 🔍 **Monitoramento automático** - detecta mudanças na área de transferência a cada 3 segundos
+- 🔍 **Monitoramento inteligente** - detecta mudanças com polling adaptativo (0.5s-10s) e Ctrl+C
 - 🗑️ **Limpar histórico** - opção para remover todo o histórico de clipboard manualmente
 - 💾 **Histórico persistente** - salva automaticamente entre reinicializações
 - 🎨 **Ícone personalizado** (icon.ico) incluso no executável .exe
@@ -43,7 +43,7 @@ pip install -r requirements.txt
 
 3. Execute o aplicativo:
 ```bash
-python dahora_app.py
+python qopas_app.py
 ```
 
 ### Opção 3: Criar executável Windows (.exe)
@@ -60,12 +60,12 @@ python build.py
 
 **Importante:** O build usará automaticamente o arquivo `icon.ico` existente no projeto. Se o arquivo não existir, o script tentará criar um ícone padrão.
 
-3. O executável estará em `dist/dahora_app_v0.0.4.exe`
+3. O executável estará em `dist/qopas_app_v0.0.5.exe`
 
 ## Uso
 
 1. **Primeiro, instale as dependências** (veja seção Instalação acima)
-2. Execute o aplicativo: `python dahora_app.py` (ou o arquivo .exe)
+2. Execute o aplicativo: `python qopas_app.py` (ou o arquivo .exe)
 3. O ícone de calendário/relógio aparecerá na bandeja do sistema (canto inferior direito, próximo ao relógio)
 
 ### Formas de usar o aplicativo:
@@ -129,7 +129,8 @@ Exemplos:
 - As mensagens duram 2 segundos e desaparecem automaticamente
 
 ### Histórico de clipboard não atualizado
-- O histórico é salvo automaticamente a cada 3 segundos de monitoramento
+- O histórico usa monitoramento inteligente com polling adaptativo (0.5s-10s)
+- **Ctrl+C Detection**: O histórico captura automaticamente quando Ctrl+C é pressionado
 - O histórico mantém os últimos 100 itens copiados
 - Você pode limpar o histórico manualmente através do menu opção "Limpar Histórico"
 
@@ -139,7 +140,7 @@ Exemplos:
 - **Recursos mínimos:** Consuma pouca memória e CPU
 - **Segundo plano:** Roda silenciosamente sem interferir em outros apps
 - **Executável:** O .exe não requer Python instalado no computador de destino
-- **Versão:** v0.0.4 - Executável nomeado como `dahora_app_v0.0.4.exe`
+- **Versão:** v0.0.5 - Executável nomeado como `qopas_app_v0.0.5.exe`
 - **Segurança:** Todas as notificações são seguras e não exigem permissões especiais
 - **Interface profissional:** Segui padrões do Windows moderno com tooltips claros
 - **Contador de uso:** Acompanha quantas vezes o app foi acionado

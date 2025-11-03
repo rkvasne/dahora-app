@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Dahora App is a Windows system tray application that copies the current date and time to the clipboard in the format `[DD.MM.AAAA-HH:MM]`. Version 0.0.4. The application features an intuitive interface with toast notifications, single instance prevention, smart clipboard monitoring, and follows modern Windows design patterns.
+Qopas App is a Windows system tray application that copies the current date and time to the clipboard in the format `[DD.MM.AAAA-HH:MM]`. Version 0.0.4. The application features an intuitive interface with toast notifications, single instance prevention, smart clipboard monitoring, and follows modern Windows design patterns.
 
 ## Architecture
 
-The application is built as a single Python script (`dahora_app.py`) with the following key components:
+The application is built as a single Python script (`qopas_app.py`) with the following key components:
 
 ### Core Functionality
 - **System Tray Integration**: Uses `pystray` to create a system tray icon with a custom-drawn clock design
@@ -52,7 +52,7 @@ pip install -r requirements.txt
 ### Running the Application
 ```bash
 # Run from source
-python dahora_app.py
+python qopas_app.py
 
 # Build executable
 python build.py
