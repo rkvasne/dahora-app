@@ -47,6 +47,16 @@ try:
     ctypes.windll.kernel32.SetConsoleCP(65001)
 except Exception:
     pass
+
+# Carrega o ícone personalizado
+try:
+    if os.path.exists('icon.ico'):
+        icon_image = Image.open('icon.ico')
+    else:
+        icon_image = external_create_image() if external_create_image else create_image()
+except Exception:
+    icon_image = external_create_image() if external_create_image else create_image()
+
 try:
     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
     sys.stderr.reconfigure(encoding='utf-8', errors='replace')
@@ -623,6 +633,8 @@ def monitor_clipboard_smart():
                         logging.info("Menu atualizado periodicamente")
                     except Exception as e:
                         logging.warning(f"Erro ao atualizar menu: {e}")
+                else:
+                    logging.warning("Icon ou update_menu não disponíveis para atualização periódica")
 
         except Exception as e:
             logging.warning(f"Erro ao monitorar clipboard: {e}")
@@ -742,6 +754,17 @@ def setup_icon(reload=False):
     def update_menu():
         """Atualiza o menu com o histórico mais recente"""
         try:
+            # Evita atualizações recursivas limitando a uma atualização por chamada
+            if not hasattr(update_menu, '_last_update'):
+                update_menu._last_update = 0
+
+            current_time = time.time()
+            # Limita a uma atualização por segundo para evitar recursão
+            if current_time - update_menu._last_update < 1.0:
+                return
+
+            update_menu._last_update = current_time
+
             icon.menu = create_dynamic_menu()
             logging.info("Menu atualizado com histórico mais recente")
         except Exception as e:
