@@ -1,6 +1,17 @@
-# Qopas App - Sistema de Bandeja do Windows
+# Dahora App - Sistema de Bandeja do Windows
 
 Aplicativo Windows que fica na bandeja do sistema (system tray) para copiar a data e hora atual para a área de transferência no formato `[DD.MM.AAAA-HH:MM]`.
+
+## Landing Page
+
+Este repositório inclui uma landing page informativa do Dahora App.
+
+- Arquivo principal: `index.html`
+- Assets: pasta `landing/` contendo `styles.css`, `dark-sections.css`, `script.js`, `animations-dark.js` e `lottie-init.js`
+- Tipografia: prioriza `Segoe UI Variable` com fallback para `Segoe UI`, `Inter`, `system-ui`
+- Microinterações: Lottie via CDN aplicadas nos ícones dos cards; se indisponível, os ícones permanecem estáticos
+
+Para visualizar, abra `index.html` no navegador ou utilize um servidor HTTP local na raiz do projeto e acesse `http://localhost:5500/` (se estiver usando `001_serve.ps1`).
 
 ## Características
 
@@ -43,7 +54,7 @@ pip install -r requirements.txt
 
 3. Execute o aplicativo:
 ```bash
-python qopas_app.py
+python dahora_app.py
 ```
 
 ### Opção 3: Criar executável Windows (.exe)
@@ -60,12 +71,12 @@ python build.py
 
 **Importante:** O build usará automaticamente o arquivo `icon.ico` existente no projeto. Se o arquivo não existir, o script tentará criar um ícone padrão.
 
-3. O executável estará em `dist/qopas_app_v0.0.5.exe`
+3. O executável estará em `dist/dahora_app_v0.0.6.exe`
 
 ## Uso
 
 1. **Primeiro, instale as dependências** (veja seção Instalação acima)
-2. Execute o aplicativo: `python qopas_app.py` (ou o arquivo .exe)
+2. Execute o aplicativo: `python dahora_app.py` (ou o arquivo .exe)
 3. O ícone de calendário/relógio aparecerá na bandeja do sistema (canto inferior direito, próximo ao relógio)
 
 ### Formas de usar o aplicativo:
@@ -78,6 +89,7 @@ python build.py
   - **Sobre**: Abre janela com informações do aplicativo
   - **Sair**: Fecha o aplicativo
 - **Tecla de atalho:** `Ctrl+Shift+Q` → Copia de qualquer aplicativo instantaneamente
+ - **Atalho interno:** `Ctrl+Shift+R` → Recarrega itens do menu de bandeja
 
 ## Formato de Saída
 
@@ -100,6 +112,11 @@ Exemplos:
 - JSON (histórico de clipboard)
 - threading (concorrência)
 
+### Tecnologias da landing
+- HTML, CSS, JavaScript
+- Lottie (`lottie-web`) via CDN
+- Fontes variáveis do Windows (`Segoe UI Variable`) quando disponíveis
+
 ## Solução de Problemas
 
 ### Erro: "ModuleNotFoundError: No module named 'pystray'"
@@ -118,6 +135,12 @@ Exemplos:
 ### Não consigo copiar via clique esquerdo
 - **Comportamento normal:** Clique esquerdo mostra instruções, não copia
 - Use clique direito para menu ou atalho `Ctrl+Shift+Q` para copiar
+
+### Clique direito não abre o menu
+- Confirme que o app está em execução (ícone visível na bandeja).
+- Verifique dependências em `requirements.txt` (usa `pystray==0.19.5`).
+- Os separadores do menu usam `pystray.Menu.SEPARATOR` para compatibilidade — reinicie o app se atualizou recentemente.
+- Em caso de falha, veja `%APPDATA%\DahoraApp\dahora.log`.
 
 ### O menu "Sobre" não fecha
 - **Comportamento normal:** A janela "Sobre" é modal e fica aberta até você fechá-la
@@ -140,7 +163,7 @@ Exemplos:
 - **Recursos mínimos:** Consuma pouca memória e CPU
 - **Segundo plano:** Roda silenciosamente sem interferir em outros apps
 - **Executável:** O .exe não requer Python instalado no computador de destino
-- **Versão:** v0.0.5 - Executável nomeado como `qopas_app_v0.0.5.exe`
+- **Versão:** v0.0.6 - Executável nomeado como `dahora_app_v0.0.6.exe`
 - **Segurança:** Todas as notificações são seguras e não exigem permissões especiais
 - **Interface profissional:** Segui padrões do Windows moderno com tooltips claros
 - **Contador de uso:** Acompanha quantas vezes o app foi acionado

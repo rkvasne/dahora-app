@@ -75,11 +75,65 @@ def ensure_icon_exists(icon_path='icon.ico'):
 
 def build_executable():
     """Gera o executável usando PyInstaller"""
-    print(">>> Iniciando build do Qopas App...")
+    print(">>> Iniciando build do Dahora App...")
     print(">>> Verificando dependências...")
 
+    # LIMPEZA COMPLETA DO CACHE - Força uso do ícone correto
+    print(">>> Limpando cache do PyInstaller...")
+    import shutil
+
+    if os.path.exists('build'):
+        try:
+            shutil.rmtree('build')
+            print(">>> Cache build removido")
+        except Exception as e:
+            print(f">>> Aviso: Não foi possível remover cache build: {e}")
+
+    if os.path.exists('dist'):
+        try:
+            shutil.rmtree('dist')
+            print(">>> Cache dist removido")
+        except Exception as e:
+            print(f">>> Aviso: Não foi possível remover cache dist: {e}")
+            # Tenta remover arquivos individualmente se o diretório estiver em uso
+            try:
+                subprocess.run(['cmd', '/c', 'rd /s /q dist'], check=False, capture_output=True)
+                print(">>> Cache dist removido com cmd")
+            except Exception:
+                print(">>> Continuando sem limpar cache dist")
+
+    # Garante que está usando o ícone correto
+    if os.path.exists('icone.ico'):
+        if os.path.exists('icon.ico'):
+            os.remove('icon.ico')
+        shutil.copy2('icone.ico', 'icon.ico')
+        print(">>> Ícone correto icone.ico copiado para icon.ico")
+
+    # Limpa cache de ícones do Windows
+    try:
+        import subprocess
+        print(">>> Limpando cache de ícones do Windows...")
+        subprocess.run(['ie4uinit.exe', '-show'], capture_output=True, timeout=5)
+        print(">>> Cache de ícones do Windows limpo")
+    except Exception as e:
+        print(f">>> Aviso: Não foi possível limpar cache de ícones: {e}")
+
+    # Remove arquivos temporários de ícones
+    icon_temp_files = ['IconCache.db', 'thumbcache.db']
+    for temp_file in icon_temp_files:
+        try:
+            import glob
+            for cache_file in glob.glob(f"**/{temp_file}", recursive=True):
+                try:
+                    os.remove(cache_file)
+                    print(f">>> Arquivo de cache removido: {cache_file}")
+                except Exception:
+                    pass
+        except Exception:
+            pass
+
     # Define o nome do executável com versão
-    exe_name = 'qopas_app_v0.0.5'
+    exe_name = 'dahora_app_v0.0.6'
 
     # Verifica dependências
     try:
@@ -149,7 +203,7 @@ def build_executable():
         '--collect-all=pystray',
         '--collect-all=keyboard',
         '--collect-all=winotify',
-        'qopas_app.py'
+        'dahora_app.py'
     ]
     if console_build:
         cmd.append('--console')

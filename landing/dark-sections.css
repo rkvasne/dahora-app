@@ -1,0 +1,145 @@
+/* Dahora App - Seções escuras e cards interativos
+   Inspirado nos princípios Fluent de cor, elevação e movimento */
+
+/* Paleta e tokens específicos desta camada */
+:root {
+  --dark-bg-1: #0f172a; /* slate-900 */
+  --dark-bg-2: #111827; /* gray-900 */
+  --dark-surface: rgba(17, 24, 39, 0.72);
+  --dark-border: rgba(255, 255, 255, 0.08);
+  --dark-text: #e5e7eb;
+  --accent-azure: #3b82f6; /* Windows-like accent */
+  --accent-indigo: #6366f1;
+  --accent-violet: #8b5cf6;
+  /* Espaçamento específico para seções escuras */
+  --space-y-section-dark: clamp(4rem, 2.4vw + 2rem, 7rem);
+}
+
+/* Seção escura com gradiente sutil e foco radial (controlado via CSS vars) */
+.section--dark {
+  position: relative;
+  padding: var(--space-y-section-dark) 0;
+  color: var(--dark-text);
+  background:
+    radial-gradient(900px circle at var(--mx, 50%) var(--my, 50%), rgba(99,102,241,0.15), transparent 40%),
+    linear-gradient(180deg, var(--dark-bg-1) 0%, var(--dark-bg-2) 100%);
+  overflow: hidden;
+}
+
+.section--dark .section-title { color: #fff; }
+.section--dark .section-subtitle { color: #cbd5e1; }
+
+/* Grade simétrica para cards */
+.cards-grid--symm {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+@media (min-width: 1280px) {
+  .cards-grid--symm { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .cards-grid--symm { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 540px) {
+  .cards-grid--symm { grid-template-columns: 1fr; }
+}
+
+/* Card escuro com elevação e efeito hover */
+.dark-card {
+  background: var(--dark-surface);
+  border: 1px solid var(--dark-border);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+  padding: 1.5rem;
+  transition: transform .2s ease, box-shadow .25s ease, border-color .2s ease;
+  backdrop-filter: saturate(140%) blur(10px);
+}
+
+.dark-card h3 { color: #fff; margin-bottom: .5rem; }
+.dark-card p { color: #cbd5e1; }
+
+.dark-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(99,102,241,0.35);
+  box-shadow: 0 18px 40px rgba(59,130,246,0.25);
+}
+
+/* Ícone dentro do card escuro */
+.dark-card .card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent-indigo), var(--accent-violet));
+}
+
+/* Efeito de "bloom" direcional ao passar o mouse */
+.hover-bloom {
+  position: relative;
+  overflow: hidden;
+}
+
+.hover-bloom::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(500px circle at var(--x, 50%) var(--y, 50%), rgba(59,130,246,0.18), transparent 55%);
+  opacity: 0;
+  transition: opacity .15s ease;
+}
+
+.hover-bloom:hover::before { opacity: 1; }
+
+/* Bloco de screenshots com moldura estilo janela do Windows */
+.mock-window {
+  border-radius: 16px;
+  border: 1px solid var(--dark-border);
+  background: linear-gradient(180deg, rgba(17,24,39,0.85), rgba(17,24,39,0.65));
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+  overflow: hidden;
+}
+
+.mock-window .titlebar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 12px;
+  background: linear-gradient(180deg, rgba(31,41,55,0.85), rgba(31,41,55,0.6));
+  border-bottom: 1px solid var(--dark-border);
+}
+
+.titlebar .dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #64748b;
+}
+
+.mock-window .content {
+  padding: 16px;
+  min-height: 160px;
+  color: var(--dark-text);
+}
+
+/* Overrides leves para simetria em algumas seções existentes */
+@media (min-width: 1024px) {
+  .features .features-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.features .feature-card:hover {
+  box-shadow: 0 18px 40px rgba(99,102,241,0.25);
+}
+
+/* Pequenos badges escuros para o hero (já existiam, reforço visual) */
+.badge--dark {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
+  color: #fff;
+}

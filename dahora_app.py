@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Qopas App - Sistema de Bandeja do Windows
+Dahora App - Sistema de Bandeja do Windows
 Gera data e hora no formato [DD.MM.AAAA-HH:MM] e copia para área de transferência
 """
 
@@ -17,6 +17,147 @@ import json
 import os
 import logging
 from threading import Lock
+
+# Import para interface gráfica (janela de prefixo)
+try:
+    import tkinter as tk
+    TKINTER_AVAILABLE = True
+except ImportError:
+    TKINTER_AVAILABLE = False
+
+
+def set_prefix_action():
+    """Ação para definir prefixo"""
+    logging.info("set_prefix_action() chamada - Iniciando janela de prefixo")
+
+    if not TKINTER_AVAILABLE:
+        logging.error("Tkinter não disponível")
+        show_toast_notification("Dahora App", "Tkinter não disponível. Não é possível definir prefixo.")
+        return
+
+    # Executa em thread separada para evitar conflitos com pystray
+    import threading
+
+    def show_prefix_dialog():
+        try:
+            logging.info("Criando janela Tkinter (estilo Windows 11) em thread separada")
+
+            # Importa ttk e fontes
+            from tkinter import ttk, font as tkFont
+
+            # Janela principal
+            root = tk.Tk()
+            root.title("Dahora App - Definir Prefixo")
+            root.resizable(False, False)
+            root.focus_force()
+
+            # Tema moderno do Windows (vista)
+            try:
+                style = ttk.Style()
+                style.theme_use('vista')
+            except Exception:
+                style = ttk.Style()
+
+            # Fonte preferida
+            def get_available_font():
+                try:
+                    available_fonts = tkFont.families()
+                    preferred_fonts = ["Segoe UI", "Segoe UI Variable", "Arial", "Tahoma", "Microsoft Sans Serif", "Verdana"]
+                    for f in preferred_fonts:
+                        if f in available_fonts:
+                            return f
+                    return "TkDefaultFont"
+                except Exception:
+                    return "TkDefaultFont"
+
+            default_font = get_available_font()
+            logging.info(f"Usando fonte: {default_font}")
+
+            # Conteúdo
+            main = ttk.Frame(root, padding=(20, 16, 20, 16))
+            main.pack(fill=tk.BOTH, expand=True)
+
+            # Cabeçalho simples (sem barra colorida)
+            ttk.Label(
+                main,
+                text="Prefixo de data/hora",
+                font=(default_font, 11, "bold")
+            ).pack(anchor=tk.W, pady=(0, 2))
+
+            ttk.Label(
+                main,
+                text="Digite um prefixo para personalizar a cópia de data/hora.",
+                font=(default_font, 9)
+            ).pack(anchor=tk.W, pady=(2, 12))
+
+            # Campo de entrada
+            var = tk.StringVar(value=date_prefix)
+            ttk.Label(main, text="Prefixo", font=(default_font, 9)).pack(anchor=tk.W)
+            entry = ttk.Entry(main, textvariable=var, width=36)
+            entry.pack(fill=tk.X, pady=(6, 10))
+            entry.focus()
+            entry.select_range(0, tk.END)
+
+            # Exemplo dinâmico
+            example_label = ttk.Label(main, font=(default_font, 8))
+            example_label.pack(anchor=tk.W)
+
+            def render_example():
+                base = datetime.now().strftime('%d.%m.%Y-%H:%M')
+                p = var.get().strip()
+                prefix_part = f"{p}-" if p else ""
+                example_label.configure(text=f"Exemplo: [{prefix_part}{base}]")
+
+            render_example()
+            try:
+                var.trace_add('write', lambda *args: render_example())
+            except Exception:
+                pass
+
+            # Ações
+            def on_ok():
+                new_prefix = var.get().strip()
+                global date_prefix
+                date_prefix = new_prefix
+                save_settings()
+                show_toast_notification("Dahora App", f"Prefixo atualizado!\n{date_prefix or '(vazio)'}")
+                logging.info(f"Prefixo atualizado para: {date_prefix}")
+                root.destroy()
+
+            def on_cancel():
+                root.destroy()
+
+            # Botões alinhados à direita
+            buttons = ttk.Frame(main)
+            buttons.pack(fill=tk.X, pady=(16, 0))
+            # Ordem moderna: Cancelar à esquerda, Salvar à direita
+            ttk.Button(buttons, text="Salvar", command=on_ok).pack(side=tk.RIGHT)
+            ttk.Button(buttons, text="Cancelar", command=on_cancel).pack(side=tk.RIGHT, padx=(8, 0))
+
+            # Bind de teclas
+            root.bind('<Return>', lambda e: on_ok())
+            root.bind('<Escape>', lambda e: on_cancel())
+
+            # Centraliza janela após medir
+            root.update_idletasks()
+            width = max(420, root.winfo_width())
+            height = max(200, root.winfo_height())
+            x = (root.winfo_screenwidth() // 2) - (width // 2)
+            y = (root.winfo_screenheight() // 2) - (height // 2)
+            root.geometry(f'{width}x{height}+{x}+{y}')
+
+            # Loop
+            root.mainloop()
+            logging.info("Janela de prefixo fechada")
+
+        except Exception as e:
+            logging.error(f"Erro ao abrir janela de prefixo: {e}")
+            show_toast_notification("Dahora App", f"Erro: {e}")
+
+    # Inicia a thread da janela
+    thread = threading.Thread(target=show_prefix_dialog, daemon=True)
+    thread.start()
+    logging.info("Thread da janela de prefixo iniciada")
 
 try:
     # Reutiliza a função de criação de ícone para evitar duplicação
@@ -85,7 +226,7 @@ def show_toast_notification(title, message, duration=2):
             try:
                 mapped_duration = "short" if duration <= 5 else "long"
                 toast = Notification(
-                    app_id="Qopas App",
+                    app_id="Dahora App",
                     title=title,
                     msg=message,
                     duration=mapped_duration
@@ -153,9 +294,9 @@ def copy_datetime(icon=None, item=None, source=None):
 
     # Mostra mensagem com contador (sem repetir atalho para menu)
     if source.startswith("Menu:"):
-        show_toast_notification("Qopas App", f"Copiado com sucesso via {source}!\n{dt_string}\nTotal: {counter}ª vez")
+        show_toast_notification("Dahora App", f"Copiado com sucesso via {source}!\n{dt_string}\nTotal: {counter}ª vez")
     else:
-        show_toast_notification("Qopas App", f"Copiado com sucesso via {source}!\n{dt_string}\nTotal: {counter}ª vez")
+        show_toast_notification("Dahora App", f"Copiado com sucesso via {source}!\n{dt_string}\nTotal: {counter}ª vez")
 
 
 def create_image():
@@ -237,7 +378,7 @@ global_icon = None
 mutex_handle = None
 
 # Diretório de dados do usuário para arquivos persistentes
-APP_NAME = "QopasApp"
+APP_NAME = "DahoraApp"
 
 def _get_data_dir():
     base = os.getenv('APPDATA') or os.path.expanduser("~")
@@ -389,12 +530,15 @@ def add_to_clipboard_history(text):
         new_item = {
             "text": text,
             "timestamp": datetime.now().isoformat(),
-            "app": "Qopas App"
+            "app": "Dahora App"
         }
         clipboard_history.append(new_item)
         if len(clipboard_history) > MAX_HISTORY_ITEMS:
             clipboard_history = clipboard_history[-MAX_HISTORY_ITEMS:]
         _atomic_write_json(history_file, clipboard_history)
+        logging.info(f"Histórico atualizado: total={len(clipboard_history)}; último='{text[:50]}...'")
+        # Não atualiza menu aqui: evita travar UI (pystray/WNDPROC) com chamadas
+        # de threads externas. O menu é recalculado apenas na abertura.
 
 def clear_clipboard_history(icon=None, item=None):
     """Limpa todo o histórico"""
@@ -421,7 +565,15 @@ def clear_clipboard_history(icon=None, item=None):
     load_clipboard_history()
 
     # Mostra notificação de confirmação
-    show_toast_notification("Qopas App", f"Histórico limpo!\n{total_items} itens removidos")
+    show_toast_notification("Dahora App", f"Histórico limpo!\n{total_items} itens removidos")
+
+    # Atualiza o menu dinamicamente para refletir o histórico limpo
+    try:
+        if 'atualizar_menu_dinamico' in globals():
+            atualizar_menu_dinamico()
+            logging.info("Menu atualizado após limpar histórico")
+    except Exception as e:
+        logging.warning(f"Erro ao atualizar menu após limpar histórico: {e}")
 
 def get_recent_clipboard_items(limit=10):
     """Retorna os itens mais recentes do histórico"""
@@ -465,7 +617,24 @@ def copy_from_history(text):
     # Incrementa o contador principal
     increment_counter()
     # Mostra notificação
-    show_toast_notification("Qopas App", f"Copiado do histórico!\n{text}\nTotal: {counter}ª vez")
+    show_toast_notification("Dahora App", f"Copiado do histórico!\n{text}\nTotal: {counter}ª vez")
+
+def copy_history_item(text):
+    """Copia um item específico do histórico"""
+    try:
+        pyperclip.copy(text)
+        increment_counter()
+        show_toast_notification("Dahora App", f"Copiado do histórico!\n{text[:50]}...\nTotal: {counter}ª vez")
+    except Exception as e:
+        logging.warning(f"Erro ao copiar item do histórico: {e}")
+
+def clear_history(icon=None, item=None):
+    """Limpa o histórico do clipboard"""
+    global clipboard_history
+    with history_lock:
+        clipboard_history.clear()
+    show_toast_notification("Dahora App", "Histórico limpo!")
+    logging.info("Histórico do clipboard limpo")
 
 def _copy_history_item1(icon, item):
     """Copia o primeiro item do histórico (função separada para pystray)"""
@@ -509,7 +678,7 @@ def _copy_datetime_menu(icon, item):
 def show_about(icon, item):
     """Mostra informações sobre o aplicativo"""
     about_text = (
-        "Qopas App v0.0.3\n\n"
+        "Dahora App v0.0.3\n\n"
         "Aplicativo para copiar data e hora\n"
         "Formato: [DD.MM.AAAA-HH:MM]\n\n"
         f"Total de acionamentos: {counter} vezes\n"
@@ -522,7 +691,7 @@ def show_about(icon, item):
         "Opção 'Limpar Histórico' disponível"
     )
     # Mostra toast modal (dura 10 segundos para permitir leitura)
-    show_toast_notification("Sobre - Qopas App", about_text, duration=10)
+    show_toast_notification("Sobre - Dahora App", about_text, duration=10)
 
 
 def on_exit(icon, item):
@@ -539,6 +708,16 @@ def on_hotkey_triggered():
     """Função chamada quando a hotkey é pressionada"""
     copy_datetime(source="Atalho")
 
+def on_refresh_hotkey_triggered():
+    """Hotkey para recarregar itens do menu (aciona ação segura)"""
+    try:
+        logging.info("[Hotkey] Recarregar Itens acionado (CTRL+SHIFT+R)")
+        # Usa a mesma ação do item de menu para manter execução segura
+        if 'refresh_menu_action' in globals():
+            refresh_menu_action(global_icon, None)
+    except Exception as e:
+        logging.warning(f"[Hotkey] Erro ao atualizar menu: {e}")
+
 def on_ctrl_c_triggered():
     """Função chamada quando Ctrl+C é pressionado - adiciona ao clipboard history"""
     try:
@@ -554,9 +733,9 @@ def setup_ctrl_c_listener():
     try:
         # Adiciona listener para Ctrl+C
         keyboard.add_hotkey('ctrl+c', on_ctrl_c_triggered, args=())
-        logging.info("✅ Listener Ctrl+C configurado")
+        logging.info("[OK] Listener Ctrl+C configurado")
     except Exception as e:
-        logging.warning(f"⚠️  Não foi possível configurar listener Ctrl+C: {e}")
+        logging.warning(f"[AVISO] Nao foi possivel configurar listener Ctrl+C: {e}")
 
 def monitor_clipboard_smart():
     """Monitora inteligente do clipboard - atividade-first, polling-second"""
@@ -601,14 +780,6 @@ def monitor_clipboard_smart():
                     last_activity_time = current_time  # Atualiza tempo de atividade
                     logging.info(f"Clipboard atualizado: {current_content[:50]}...")
 
-                    # Atualiza menu imediatamente quando há novo item
-                    if global_icon and hasattr(global_icon, 'update_menu'):
-                        try:
-                            global_icon.update_menu()
-                            logging.info("Menu atualizado imediatamente após nova cópia")
-                        except Exception as e:
-                            logging.warning(f"Erro ao atualizar menu: {e}")
-
                 # Se há atividade recente, usa intervalo curto (responsivo)
                 time_idle = current_time - last_activity_time
                 if time_idle < idle_threshold:
@@ -624,18 +795,6 @@ def monitor_clipboard_smart():
                 else:
                     sleep_time = 2.0
 
-            # Atualiza o menu periodicamente mesmo sem atividade
-            if current_time - last_menu_update >= menu_update_interval:
-                if global_icon and hasattr(global_icon, 'update_menu'):
-                    try:
-                        global_icon.update_menu()
-                        last_menu_update = current_time
-                        logging.info("Menu atualizado periodicamente")
-                    except Exception as e:
-                        logging.warning(f"Erro ao atualizar menu: {e}")
-                else:
-                    logging.warning("Icon ou update_menu não disponíveis para atualização periódica")
-
         except Exception as e:
             logging.warning(f"Erro ao monitorar clipboard: {e}")
             sleep_time = 3.0  # Intervalo padrão em caso de erro
@@ -650,136 +809,160 @@ def setup_hotkey_listener():
     hotkey = 'ctrl+shift+q'
     try:
         keyboard.add_hotkey(hotkey, on_hotkey_triggered)
-        print(f"✅ Tecla de atalho configurada: {hotkey.upper()}")
+        print(f"[OK] Tecla de atalho configurada: {hotkey.upper()}")
     except Exception as e:
-        print(f"⚠️  Aviso: Não foi possível configurar a tecla de atalho: {e}")
-        print("💡 O aplicativo continuará funcionando, mas a hotkey pode não estar disponível")
+        print(f"[AVISO] Nao foi possivel configurar a tecla de atalho: {e}")
+        print("[INFO] O aplicativo continuara funcionando, mas a hotkey pode nao estar disponivel")
+
+    # Hotkey para recarregar itens do menu
+    refresh_hotkey = 'ctrl+shift+r'
+    try:
+        keyboard.add_hotkey(refresh_hotkey, on_refresh_hotkey_triggered)
+        print(f"[OK] Tecla de atalho configurada: {refresh_hotkey.upper()} (recarregar itens do menu)")
+    except Exception as e:
+        print(f"[AVISO] Nao foi possivel configurar a hotkey de recarga: {e}")
 
     # Configura listener para Ctrl+C
     setup_ctrl_c_listener()
 
 
-def setup_icon(reload=False):
-    """Configura o ícone da bandeja com menu dinâmico"""
+def copy_from_history(text):
+    """Copia item do histórico para clipboard"""
+    try:
+        pyperclip.copy(text)
+        increment_counter()
+        show_toast_notification("Dahora App", f"Copiado do histórico!\n{text}\nTotal: {counter}ª vez")
+    except Exception as e:
+        logging.warning(f"Erro ao copiar do histórico: {e}")
 
-    def copy_from_history(text):
-        """Copia item do histórico para clipboard"""
+def _copy_datetime_menu(icon, item):
+    """Função para o menu de copiar data/hora"""
+    copy_datetime(source="menu")
+
+def quit_app(icon, item):
+    """Função para encerrar o aplicativo corretamente"""
+    try:
+        logging.info("Encerrando Dahora App...")
+        if 'mutex_handle' in globals() and mutex_handle:
+            win32api.CloseHandle(mutex_handle)
+        keyboard.unhook_all()
+        icon.stop()
+    except Exception as e:
+        logging.error(f"Erro ao encerrar app: {e}")
+    finally:
+        sys.exit(0)
+
+def refresh_menu_action(icon, item):
+    """Atualiza manualmente o menu; usada quando o menu está aberto"""
+    try:
+        logging.info("Atualização manual do menu solicitada pelo usuário (menu aberto)")
+        atualizar_menu_dinamico()
+        # Informar ao usuário que precisará reabrir o menu para ver as mudanças
+        show_toast_notification("Dahora App", "Menu atualizado! Feche e abra novamente para ver.")
+    except Exception as e:
+        logging.warning(f"Erro ao atualizar menu manualmente: {e}")
+
+def create_menu_dinamico():
+    """Cria um menu dinâmico que atualiza o histórico a cada abertura"""
+    logging.info("Gerando menu dinâmico com histórico atualizado")
+    
+    def get_dynamic_menu():
+        """Função que retorna o menu atualizado"""
+        menu_items = []
         try:
-            pyperclip.copy(text)
-            show_toast_notification("Qopas App", f"Copiado do histórico!\n{text}\nTotal: {counter}ª vez")
-        except Exception as e:
-            logging.warning(f"Erro ao copiar do histórico: {e}")
+            logging.info("[Menu] Calculando itens dinâmicos (abertura do menu)")
+        except Exception:
+            pass
 
-    def _copy_datetime_menu(icon, item):
-        """Função para o menu de copiar data/hora"""
-        copy_datetime(source="menu")
-
-    def set_prefix_action():
-        """Ação para definir prefixo"""
-        root = tk.Tk()
-        root.withdraw()  # Esconde a janela principal
-        root.title("Definir Prefixo")
-
-        # Cria janela simples
-        frame = tk.Frame(root)
-        frame.pack(padx=20, pady=20)
-
-        tk.Label(frame, text="Prefixo para data/hora:").pack()
-
-        var = tk.StringVar(value=date_prefix)
-        entry = tk.Entry(frame, textvariable=var, width=30)
-        entry.pack(pady=10)
-        entry.focus()
-        entry.select_range(0, tk.END)
-
-        def on_ok():
-            root.destroy()
-            global date_prefix
-            date_prefix = var.get()
-            save_settings()
-            show_toast_notification("Qopas App", f"Prefixo atualizado: {date_prefix or '(vazio)'}")
-
-        def on_cancel():
-            root.destroy()
-
-        button_frame = tk.Frame(frame)
-        button_frame.pack(pady=10)
-
-        tk.Button(button_frame, text="OK", command=on_ok).pack(side=tk.LEFT, padx=5)
-        tk.Button(button_frame, text="Cancelar", command=on_cancel).pack(side=tk.LEFT, padx=5)
-
-        # Bind Enter para OK e Escape para Cancelar
-        root.bind('<Return>', lambda e: on_ok())
-        root.bind('<Escape>', lambda e: on_cancel())
-
-        root.mainloop()
-
-    # Cria menu dinâmico que pode ser atualizado
-    def create_dynamic_menu():
-        """Cria menu dinâmico com base no histórico atual"""
-        menu_items = [
-            pystray.MenuItem('Copiar Data/Hora (Ctrl+Shift+Q)', _copy_datetime_menu, default=True),
-            pystray.MenuItem('', None, enabled=False),  # Separador
-            pystray.MenuItem('Definir Prefixo...', set_prefix_action),
-        ]
-
-        # Pega itens recentes do histórico
+        # Opções principais
+        menu_items.append(pystray.MenuItem('Copiar Data/Hora', _copy_datetime_menu, default=True))
+        menu_items.append(pystray.MenuItem('Definir Prefixo', set_prefix_action))
+        # Ação de recarga rápida posicionada acima do histórico
+        menu_items.append(pystray.MenuItem('Recarregar Itens', refresh_menu_action))
+        
+        # Separador
+        menu_items.append(pystray.Menu.SEPARATOR)
+        
+        # Histórico dinâmico (últimos 5 itens atualizados em tempo real)
         recent = get_recent_clipboard_items(5)
-
-        # Adiciona itens do histórico ao menu
         if recent:
-            menu_items.append(pystray.MenuItem('--- Histórico Recente ---', None, enabled=False))
             for idx, entry in enumerate(reversed(recent), start=1):
                 text = entry.get("text", "") or ""
                 display_text = (text[:40] + "...") if len(text) > 40 else text
-
-                # Cria função dinamicamente para cada item
-                def make_copy_func(text):
-                    return lambda icon, item: copy_from_history(text)
-
+                display_text = display_text.replace('\n', ' ').replace('\r', ' ')
+                
+                # Cria função para copiar item do histórico
+                def make_copy_func(txt):
+                    return lambda icon, item: copy_from_history(txt)
+                
                 copy_func = make_copy_func(text)
-                menu_items.append(pystray.MenuItem(f"[{idx}] {display_text}", copy_func))
+                menu_items.append(pystray.MenuItem(f"{idx}. {display_text}", copy_func))
         else:
-            menu_items.append(pystray.MenuItem('Nenhum item no histórico', None, enabled=False))
-
-        menu_items.append(pystray.MenuItem('', None, enabled=False))  # Separador
+            menu_items.append(pystray.MenuItem('(Histórico vazio)', None, enabled=False))
+        
+        # Separador
+        menu_items.append(pystray.Menu.SEPARATOR)
+        
+        # Opções finais
         menu_items.append(pystray.MenuItem('Limpar Histórico', clear_clipboard_history))
-        menu_items.append(pystray.MenuItem('', None, enabled=False))  # Separador
         menu_items.append(pystray.MenuItem('Sobre', show_about))
-        menu_items.append(pystray.MenuItem('Sair', lambda icon, item: sys.exit(0)))
+        menu_items.append(pystray.MenuItem('Sair', quit_app))
 
-        return pystray.Menu(*menu_items)
-
-    # Função para atualizar o menu
-    def update_menu():
-        """Atualiza o menu com o histórico mais recente"""
+        logging.info(f"Menu gerado com {len(recent) if recent else 0} itens do histórico")
+        return menu_items
+    
+    # Retorna um menu dinâmico recalculado a cada abertura (modo estável)
+    # Usamos um gerador para forçar reavaliação no evento de abertura
+    def dynamic_items():
         try:
-            # Evita atualizações recursivas limitando a uma atualização por chamada
-            if not hasattr(update_menu, '_last_update'):
-                update_menu._last_update = 0
-
-            current_time = time.time()
-            # Limita a uma atualização por segundo para evitar recursão
-            if current_time - update_menu._last_update < 1.0:
-                return
-
-            update_menu._last_update = current_time
-
-            icon.menu = create_dynamic_menu()
-            logging.info("Menu atualizado com histórico mais recente")
+            items = get_dynamic_menu()
+            logging.info(f"[Menu] Itens calculados: {len(items)}")
+            for it in items:
+                yield it
         except Exception as e:
-            logging.warning(f"Erro ao atualizar menu: {e}")
+            logging.warning(f"Falha ao gerar itens do menu dinâmico: {e}")
+            # Fallback mínimo para não quebrar o menu
+            yield pystray.MenuItem('(Erro ao gerar menu)', None, enabled=False)
+    return pystray.Menu(dynamic_items)
 
-    # Cria ícone com menu dinâmico
+
+def atualizar_menu_dinamico():
+    """Atualiza o menu do ícone com o histórico mais recente"""
+    try:
+        if global_icon:
+            logging.info("Atualizando menu dinamicamente")
+            # Recria o menu completamente
+            global_icon.menu = create_menu_dinamico()
+            logging.info("Menu atualizado com sucesso")
+        else:
+            logging.warning("Não foi possível atualizar menu - ícone não disponível")
+    except Exception as e:
+        logging.warning(f"Erro ao atualizar menu dinamicamente: {e}")
+
+
+def setup_icon(reload=False):
+    """Configura o ícone da bandeja com menu estático e estável"""
+
+    # Carrega o ícone personalizado
+    try:
+        if os.path.exists('icon.ico'):
+            icon_image = Image.open('icon.ico')
+        else:
+            icon_image = external_create_image() if external_create_image else create_image()
+    except Exception:
+        icon_image = external_create_image() if external_create_image else create_image()
+
+    # Cria ícone com menu dinâmico que atualiza a cada abertura
     icon = pystray.Icon(
-        "Qopas App",
+        "Dahora App",
         icon_image,
-        "Qopas App",
-        create_dynamic_menu()
+        "Dahora App - Sistema de Data/Hora",
+        menu=create_menu_dinamico()
     )
 
-    # Armazena função de atualização para uso futuro
-    icon.update_menu = update_menu
+    # Armazena referência global
+    global global_icon
+    global_icon = icon
 
     return icon
 
@@ -791,7 +974,7 @@ def check_single_instance():
     if not WIN32_AVAILABLE:
         return True  # Se não tiver Win32, deixa passar
 
-    mutex_name = "Global\\QopasAppSingleInstance"
+    mutex_name = "Global\\DahoraAppSingleInstance"
     try:
         # Tenta criar um mutex nomeado global
         mutex_handle = win32event.CreateMutex(None, False, mutex_name)
@@ -801,8 +984,8 @@ def check_single_instance():
         if result == 183:  # ERROR_ALREADY_EXISTS
             notification_thread = threading.Thread(
                 target=show_toast_notification,
-                args=("Qopas App Já em Execução",
-                      "O Qopas App já está rodando na bandeja do sistema!"),
+                args=("Dahora App Já em Execução",
+                      "O Dahora App já está rodando na bandeja do sistema!"),
                 daemon=False
             )
             notification_thread.start()
@@ -827,7 +1010,7 @@ def main():
     try:
         import os
         if not os.path.exists('icon.ico'):
-            print("⚠️  Arquivo icon.ico não encontrado. O app usará ícone padrão.")
+            print("[AVISO] Arquivo icon.ico nao encontrado. O app usara icone padrao.")
     except:
         pass
 
@@ -863,29 +1046,38 @@ def main():
 
         # Mostra mensagem de boas-vindas com contador, histórico e prefixo
         total_history = len(clipboard_history)
-        show_toast_notification("Qopas App", f"App iniciado com sucesso!\nAtalho: Ctrl+Shift+Q\nPrefixo: {date_prefix or '(vazio)'}\nMenu: clique direito no ícone\nJá acionado {counter} vezes • Histórico: {total_history} itens")
+        print(f">>> App iniciado! Counter: {counter}, Histórico: {total_history}, Prefixo: {date_prefix or '(vazio)'}")
+        show_toast_notification("Dahora App", f"App iniciado com sucesso!\nAtalho: Ctrl+Shift+Q\nPrefixo: {date_prefix or '(vazio)'}\nMenu: clique direito no ícone\nJá acionado {counter} vezes • Histórico: {total_history} itens")
 
         # Executa o ícone (bloqueia até fechar)
+        print(">>> Iniciando ícone da bandeja...")
+        logging.info("Iniciando icon.run()")
         icon.run()
+        print(">>> Ícone da bandeja finalizado")
 
     except KeyboardInterrupt:
-        print("Qopas App encerrado pelo usuário")
+        print("Dahora App encerrado pelo usuário")
     except Exception as e:
         try:
             import traceback
             logging.error("Erro inesperado:\n" + traceback.format_exc())
         except Exception:
             pass
-        show_fatal_error("Qopas App - Erro", f"Ocorreu um erro inesperado:\n{e}\n\nConsulte o log em: {os.path.join(DATA_DIR, 'qopas.log')}")
+        show_fatal_error("Dahora App - Erro", f"Ocorreu um erro inesperado:\n{e}\n\nConsulte o log em: {os.path.join(DATA_DIR, 'dahora.log')}")
     finally:
         # Limpa recursos ao fechar
         try:
-            if mutex_handle:
+            logging.info("Limpando recursos...")
+            if 'mutex_handle' in globals() and mutex_handle:
                 win32api.CloseHandle(mutex_handle)
+                logging.info("Mutex liberado")
             keyboard.unhook_all()
+            logging.info("Hotkeys liberados")
             print("Recursos liberados com sucesso")
-        except:
-            pass
+        except Exception as e:
+            logging.error(f"Erro ao limpar recursos: {e}")
+        finally:
+            logging.info("Dahora App encerrado completamente")
 
 
 if __name__ == '__main__':

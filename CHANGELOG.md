@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.6] - 2025-11-03
+
+### Added
+- Janela “Definir Prefixo” atualizada com visual próximo ao Windows 11 (ttk, tema `vista`)
+- Atalho interno `Ctrl+Shift+R` para “Recarregar Itens” no menu da bandeja
+- Item do menu renomeado para “Recarregar Itens” e posicionado acima do histórico
+
+### Changed
+- Documentação revisada e unificada (README e CHANGELOG)
+- Correção de referências antigas para `dahora_app.py`
+- README atualizado com executável correto `dahora_app_v0.0.6.exe`
+- Ordem dos botões na janela de prefixo ajustada para “Cancelar | Salvar”
+
+### Removed
+- Documentos redundantes/obsoletos: `CLAUDE.md` e `SUGESTOES_NOMES.md`
+
+### Technical
+- `build.py` atualizado para gerar `dahora_app_v0.0.6.exe`
+- Mantida estratégia segura de atualização de menu via ação dedicada
+
 ## [0.0.4] - 2025-11-02
 
 ### Added
@@ -16,23 +36,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Versão incrementada**: Atualizada de v0.0.3 para v0.0.4 para refletir nova versão do ícone
 
 ---
-
-## [0.0.6] - 2025-11-03
-
-### Added
-- **Rebranding completo**: Alteração de nome do projeto de "Dahora App" para "Qopas App"
-- **Novo nome**: Qopas (Q = letra do atalho Ctrl+Shift+Q, op = de cOPy, pas = parte de "paste")
-- **Executável atualizado**: Novo executável `qopas_app_v0.0.6.exe` com nome do projeto atualizado
-
-### Changed
-- **Referências internas**: Todas as menções a "Dahora App" foram substituídas por "Qopas App"
-- **Documentação completa**: README.md, CHANGELOG.md e CLAUDE.md atualizados com o novo nome
-- **Build script atualizado**: build.py agora gera executáveis com prefixo "qopas_app"
-
-### Technical
-- **Arquivo principal renomeado**: `dahora_app.py` → `qopas_app.py`
-- **Atualização de branding**: Interface do aplicativo, notificações e identificadores atualizados
-- **Mantendo compatibilidade**: Todas as funcionalidades mantidas apenas com rebranding visual
 
 ---
 
