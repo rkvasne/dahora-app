@@ -60,7 +60,7 @@ python build.py
 
 **Importante:** O build usará automaticamente o arquivo `icon.ico` existente no projeto. Se o arquivo não existir, o script tentará criar um ícone padrão.
 
-3. O executável estará em `dist/dahora_app_v0.0.3.exe`
+3. O executável estará em `dist/dahora_app_v0.0.4.exe`
 
 ## Uso
 
@@ -139,7 +139,7 @@ Exemplos:
 - **Recursos mínimos:** Consuma pouca memória e CPU
 - **Segundo plano:** Roda silenciosamente sem interferir em outros apps
 - **Executável:** O .exe não requer Python instalado no computador de destino
-- **Versão:** v0.0.3 - Executável nomeado como `dahora_app_v0.0.3.exe`
+- **Versão:** v0.0.4 - Executável nomeado como `dahora_app_v0.0.4.exe`
 - **Segurança:** Todas as notificações são seguras e não exigem permissões especiais
 - **Interface profissional:** Segui padrões do Windows moderno com tooltips claros
 - **Contador de uso:** Acompanha quantas vezes o app foi acionado
