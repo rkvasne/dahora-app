@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.7-3] - 2025-11-04
+
+### Purpose
+- Release de teste para validar YAML e fix do passo de hash
+
+### Fixed
+- Indentação corrigida do passo "Compute SHA-256" no workflow para permanecer dentro de `steps`
+- Geração correta do nome do arquivo `.sha256` usando variável simples (`$basename`)
+
+### Technical
+- Workflow acionado por tags `v*` com build em Windows e criação de release
+- Upload de `.exe` e `.sha256.txt` e extração de notas do `CHANGELOG.md`
+- Usa `softprops/action-gh-release@v1`
+
 ## [0.0.7-2] - 2025-11-04
 
 ### Purpose
