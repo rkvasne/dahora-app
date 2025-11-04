@@ -544,6 +544,89 @@
         .faq-item.active .faq-answer {
             display: block;
         }
+
+        /* Developer Section */
+        .developer {
+            background: var(--light-bg);
+            padding: 5rem 2rem;
+        }
+
+        .developer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .developer-card {
+            background: var(--bg-white);
+            padding: 3rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .developer-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .developer-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .developer-title {
+            font-size: 1.25rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+        }
+
+        .developer-bio {
+            font-size: 1.125rem;
+            color: var(--text-gray);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .developer-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .developer-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--light-bg);
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+        }
+
+        .developer-link:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
     </style>
 </head>
 <body>
@@ -979,6 +1062,38 @@
         </div>
     </section>
 
+    <!-- Developer Section -->
+    <section class="developer">
+        <div class="developer-content">
+            <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
+                <h2 class="section-title">👨‍💻 Sobre o Desenvolvedor</h2>
+                <p class="section-subtitle">Conheça quem está por trás do Dahora App</p>
+            </div>
+
+            <div class="developer-card">
+                <div class="developer-avatar">RK</div>
+                <h3 class="developer-name">Raphael Kvasne</h3>
+                <p class="developer-title">Desenvolvedor & Criador do Dahora App</p>
+                <p class="developer-bio">
+                    Desenvolvedor apaixonado por criar ferramentas que aumentam produtividade.
+                    O Dahora App nasceu da necessidade de ter um gerenciador de clipboard moderno,
+                    leve e 100% privado para Windows. Acredito em software open-source e transparente.
+                </p>
+                <div class="developer-links">
+                    <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" class="developer-link">
+                        🌐 kvasne.com
+                    </a>
+                    <a href="mailto:rkvasne@gmail.com" class="developer-link">
+                        ✉️ rkvasne@gmail.com
+                    </a>
+                    <a href="https://github.com/rkvasne" target="_blank" rel="noopener noreferrer" class="developer-link">
+                        🐙 GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-links">
@@ -989,8 +1104,9 @@
             <a href="https://github.com/rkvasne/dahora-app/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="footer-link">Licença MIT</a>
         </div>
         <div class="footer-copyright">
-            <p>© 2025 Dahora App v0.1.0 MVP • Feito com ❤️ e Python</p>
+            <p>© 2025 Dahora App v0.1.0 MVP • Desenvolvido por <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a></p>
             <p style="margin-top: 0.5rem; opacity: 0.7;">100% Open Source • Zero Telemetria • Offline First</p>
+            <p style="margin-top: 0.5rem; opacity: 0.7;">Contato: <a href="mailto:rkvasne@gmail.com" style="color: var(--text-light); text-decoration: none;">rkvasne@gmail.com</a></p>
         </div>
     </footer>
 
