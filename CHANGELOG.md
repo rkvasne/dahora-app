@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.7-2] - 2025-11-04
+
+### Purpose
+- Release de teste para revalidar o workflow após correção no passo de hash
+
+### Fixed
+- Correção no PowerShell ao gerar o nome do arquivo `.sha256` (remoção de subexpressão `$(...)`); agora o arquivo é criado como `<basename>.sha256.txt`
+
+### Technical
+- Ajuste no passo "Compute SHA-256" do workflow `001_release.yml` usando variáveis simples (`$basename`) para montar o nome do arquivo
+- A execução do workflow em tags `v*` deve anexar `.exe` e `.sha256.txt` corretamente ao release
+
 ## [0.0.7-1] - 2025-11-04
 
 ### Purpose
