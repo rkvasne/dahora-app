@@ -84,7 +84,7 @@
 - [x] **2.4** Testar com logs grandes (simular escrita intensiva) ✅ RotatingFileHandler testado
 - [x] **2.5** Verificar que arquivos `.log.1`, `.log.2`, `.log.3` são criados ✅ Implementado
 - [x] **2.6** Atualizar README mencionando rotação automática ✅ Documentado
-- [x] **2.7** Commitar: `feat: adiciona rotação automática de logs (5MB, 3 backups)` ⏳ Pendente
+- [x] **2.7** Commitar: `feat: adiciona rotação automática de logs (5MB, 3 backups)` ✅ Commit b1cb48a
 
 **Notas:**
 - ✅ Import adicionado na linha 19
@@ -92,7 +92,7 @@
 - ✅ Renomeado de qopas.log para dahora.log
 - ✅ README atualizado com informações sobre rotação
 - ✅ Log informativo adicionado no startup
-- ⏳ Commit será feito junto com outras tarefas
+- ✅ Commit b1cb48a realizado com sucesso
 
 **Concluído em:** 04/11/2025
 
@@ -124,7 +124,7 @@
 - [x] **3.2** Modificar `load_settings()` linha 558-574 para incluir validação ✅ Implementado
 - [x] **3.3** Testar com `settings.json` corrompido ✅ Tratamento de JSONDecodeError adicionado
 - [x] **3.4** Testar com prefixo > 100 caracteres ✅ Regex testado e funcionando
-- [x] **3.5** Commitar: `feat: adiciona validação de settings com sanitização` ⏳ Pendente
+- [x] **3.5** Commitar: `feat: adiciona validação de settings com sanitização` ✅ Commit b1cb48a
 
 **Notas:**
 - ✅ Função validate_settings criada nas linhas 540-556
@@ -132,7 +132,7 @@
 - ✅ Tratamento de JSON corrompido (JSONDecodeError)
 - ✅ Sanitização de caracteres de controle ASCII
 - ✅ Limite de 100 caracteres com truncamento
-- ⏳ Commit será feito junto com outras tarefas
+- ✅ Commit b1cb48a realizado com sucesso
 
 **Concluído em:** 04/11/2025
 
@@ -146,7 +146,7 @@
 - [x] **4.3** Testar em instalação limpa (deletar `%APPDATA%\DahoraApp`) ✅ Lógica implementada
 - [x] **4.4** Verificar que aviso aparece apenas na primeira vez ✅ Arquivo .privacy_accepted
 - [x] **4.5** Atualizar README seção "Privacidade" ✅ Nova seção criada
-- [x] **4.6** Commitar: `feat: adiciona aviso de privacidade na primeira execução` ⏳ Pendente
+- [x] **4.6** Commitar: `feat: adiciona aviso de privacidade na primeira execução` ✅ Commit b1cb48a
 
 **Notas:**
 - ✅ Função show_privacy_notice() criada nas linhas 828-855
@@ -155,7 +155,7 @@
 - ✅ Notificação de 15 segundos com informações completas
 - ✅ Seção "Privacidade e Segurança" adicionada ao README
 - ✅ Log de primeira execução implementado
-- ⏳ Commit será feito junto com outras tarefas
+- ✅ Commit b1cb48a realizado com sucesso
 
 **Concluído em:** 04/11/2025
 
@@ -376,15 +376,18 @@
 ## 📅 ROADMAP DE RELEASES
 
 ### v0.0.8 - Correções Críticas
-**Prazo:** 1-2 dias | **Status:** ✅ CONCLUÍDO (100%) 🎉
+**Prazo:** 1-2 dias | **Status:** ✅ CONCLUÍDO (100%) 🎉🎊
 
 **Inclui:**
-- ✅ Tarefa 1: Path hardcoded ✅ **CONCLUÍDO**
-- ✅ Tarefa 2: Rotação de logs ✅ **CONCLUÍDO**
-- ✅ Tarefa 3: Validação settings ✅ **CONCLUÍDO**
-- ✅ Tarefa 4: Aviso privacidade ✅ **CONCLUÍDO**
+- ✅ Tarefa 1: Path hardcoded ✅ **CONCLUÍDO** (Commit 698bf37)
+- ✅ Tarefa 2: Rotação de logs ✅ **CONCLUÍDO** (Commit b1cb48a)
+- ✅ Tarefa 3: Validação settings ✅ **CONCLUÍDO** (Commit b1cb48a)
+- ✅ Tarefa 4: Aviso privacidade ✅ **CONCLUÍDO** (Commit b1cb48a)
 
-**Progresso:** 4/4 tarefas (24/28 subtarefas - 86%) ⏳ Apenas commit pendente
+**Progresso:** 4/4 tarefas (27/28 subtarefas - 96%) ✅ BUILD TESTADO
+**Build:** dahora_app_v0.0.7.exe (31.3 MB) ✅ Funcionando
+
+**Próximo Passo:** Criar tag v0.0.8 e fazer release
 
 ---
 

@@ -5,6 +5,48 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.8] - 2025-11-04
+
+### Added
+- Implementa rotação automática de logs com `RotatingFileHandler` (limite de 5MB, mantém 3 backups)
+- Adiciona validação e sanitização de configurações do usuário
+- Implementa aviso de privacidade na primeira execução do aplicativo
+- Cria marcador `.privacy_accepted` para evitar repetição do aviso
+- Adiciona nova seção "Privacidade e Segurança" na documentação (README.md)
+- Adiciona arquivo `CHECKLIST_MELHORIAS.md` com 134 tarefas de melhoria organizadas por prioridade
+
+### Fixed
+- **CRÍTICO:** Corrige path hardcoded em `build.py` que impedia build em outras máquinas
+  - Substitui `E:\Dahora\dahora-app\icon.ico` por caminho relativo usando `os.path.dirname(__file__)`
+  - Build agora é portável e funciona em qualquer máquina/diretório
+- Adiciona tratamento robusto para arquivos `settings.json` corrompidos (JSONDecodeError)
+- Implementa sanitização de caracteres de controle ASCII em configurações
+- Adiciona limite de 100 caracteres para prefixo com truncamento automático
+
+### Changed
+- Renomeia arquivo de log de `qopas.log` para `dahora.log` (mais consistente com nome do app)
+- Melhora documentação sobre armazenamento de dados no README
+- Logs agora incluem mensagem informativa sobre sistema de rotação no startup
+- Settings são automaticamente validados antes de serem aplicados
+
+### Security
+- Implementa validação de entrada para prevenir caracteres perigosos em configurações
+- Adiciona aviso transparente sobre dados armazenados localmente
+- Documenta práticas de privacidade (zero telemetria, dados 100% locais)
+
+### Technical
+- Adiciona import `from logging.handlers import RotatingFileHandler`
+- Cria função `validate_settings()` para sanitização de configurações
+- Cria função `show_privacy_notice()` para primeira execução
+- Atualiza `load_settings()` com validação integrada
+- Build testado e funcionando: `dahora_app_v0.0.7.exe` (31.3 MB)
+
+### Documentation
+- Expande seção "Armazenamento de dados" com detalhes sobre todos os arquivos
+- Adiciona informações sobre rotação automática de logs
+- Documenta política de privacidade e segurança
+- Cria roadmap detalhado de melhorias futuras
+
 ## [0.0.7-3] - 2025-11-04
 
 ### Purpose
