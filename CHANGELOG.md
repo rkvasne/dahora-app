@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.7-1] - 2025-11-04
+
+### Purpose
+- Release de teste para validar o workflow de build e release por tag (GitHub Actions)
+
+### Added
+- Workflow `.github/workflows/001_release.yml` (Windows runner)
+- Automação de build com `python build.py` e upload de assets (.exe e .sha256)
+- Extração automática de notas do `CHANGELOG.md` para compor o corpo do release
+
+### Technical
+- Dispara em `push` de tags `v*` (ex.: `v0.0.7-1`)
+- Calcula SHA-256 no runner e anexa ao release
+- Usa `softprops/action-gh-release@v1` para criar o release e enviar arquivos
+
 ## [0.0.7] - 2025-11-04
 
 ### Changed
