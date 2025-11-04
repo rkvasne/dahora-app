@@ -39,16 +39,16 @@ jobs:
           echo "artifact=$exe" | Out-File -Append $Env:GITHUB_OUTPUT
           echo "basename=$(Split-Path $exe -Leaf)" | Out-File -Append $Env:GITHUB_OUTPUT
 
-    - name: Compute SHA-256
-      id: hash
-      shell: pwsh
-      run: |
-        $exe = "${{ steps.locate.outputs.artifact }}"
-        $basename = "${{ steps.locate.outputs.basename }}"
-        $hash = (Get-FileHash $exe -Algorithm SHA256).Hash
-        $out = Join-Path (Split-Path $exe -Parent) "$basename.sha256.txt"
-        "$hash  $basename" | Set-Content $out
-        "hashfile=$out" | Out-File -Append $Env:GITHUB_OUTPUT
+      - name: Compute SHA-256
+        id: hash
+        shell: pwsh
+        run: |
+          $exe = "${{ steps.locate.outputs.artifact }}"
+          $basename = "${{ steps.locate.outputs.basename }}"
+          $hash = (Get-FileHash $exe -Algorithm SHA256).Hash
+          $out = Join-Path (Split-Path $exe -Parent) "$basename.sha256.txt"
+          "$hash  $basename" | Set-Content $out
+          "hashfile=$out" | Out-File -Append $Env:GITHUB_OUTPUT
 
       - name: Extract release notes from CHANGELOG
         id: notes
