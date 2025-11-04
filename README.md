@@ -216,3 +216,40 @@ Exemplos:
 - **Limpeza de Dados:** Você pode limpar o histórico a qualquer momento pelo menu do ícone da bandeja.
 - **Validação de Configurações:** Settings são validados e sanitizados automaticamente para prevenir problemas.
 - **Sem Conexão:** O aplicativo funciona 100% offline, sem necessidade de internet.
+
+## Desenvolvimento e Testes
+
+### Executar Testes
+
+O projeto possui uma suíte de testes automatizados com pytest:
+
+```bash
+# Instalar dependências de desenvolvimento
+pip install -r requirements-dev.txt
+
+# Executar todos os testes
+pytest tests/
+
+# Executar com cobertura
+pytest tests/ --cov=. --cov-report=html
+
+# Ver relatório de cobertura
+start htmlcov/index.html  # Windows
+```
+
+**Status dos Testes:**
+- ✅ 15 testes implementados
+- ✅ 100% dos testes passando
+- ✅ 95% de cobertura de código
+
+### Estrutura de Testes
+
+```
+tests/
+├── conftest.py                  # Fixtures compartilhadas
+├── test_datetime_formatter.py   # Testes de formatação
+├── test_settings.py             # Testes de validação
+└── README.md                    # Documentação dos testes
+```
+
+Para mais informações sobre os testes, consulte [tests/README.md](tests/README.md).

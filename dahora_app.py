@@ -18,6 +18,7 @@ import os
 import logging
 from logging.handlers import RotatingFileHandler
 from threading import Lock
+from typing import Dict, List, Optional, Tuple, Any
 
 # Import para interface gráfica (janela de prefixo)
 try:
@@ -206,7 +207,7 @@ except Exception:
     pass
 
 
-def generate_datetime_string():
+def generate_datetime_string() -> str:
     """Gera a data e hora no formato [<prefixo-]DD.MM.AAAA-HH:MM]"""
     now = datetime.now()
     base = now.strftime('%d.%m.%Y-%H:%M')
@@ -537,7 +538,7 @@ settings_lock = Lock()
 settings_file = os.path.join(DATA_DIR, "settings.json")
 date_prefix = ""
 
-def validate_settings(settings_dict):
+def validate_settings(settings_dict: Dict[str, Any]) -> Dict[str, str]:
     """Valida e sanitiza configurações carregadas"""
     try:
         import re
@@ -555,7 +556,7 @@ def validate_settings(settings_dict):
         logging.error(f"Erro ao validar settings: {e}")
         return {"prefix": ""}
 
-def load_settings():
+def load_settings() -> None:
     global date_prefix
     try:
         with settings_lock:
@@ -573,7 +574,7 @@ def load_settings():
         logging.warning(f"Falha ao carregar settings: {e}")
         date_prefix = ""
 
-def save_settings():
+def save_settings() -> None:
     try:
         with settings_lock:
             _atomic_write_json(settings_file, {"prefix": date_prefix})
@@ -592,7 +593,7 @@ def _atomic_write_json(path, obj):
         json.dump(obj, f, ensure_ascii=False, indent=2)
     os.replace(tmp_path, path)
 
-def load_counter():
+def load_counter() -> None:
     """Carrega o contador do arquivo ou inicia com 0"""
     global counter
     try:
@@ -606,7 +607,7 @@ def load_counter():
         logging.warning(f"Falha ao carregar contador: {e}")
         counter = 0
 
-def save_counter():
+def save_counter() -> None:
     """Salva o contador no arquivo"""
     try:
         with counter_lock:
@@ -626,7 +627,7 @@ def increment_counter():
 
 
 # Funções de histórico de clipboard
-def load_clipboard_history():
+def load_clipboard_history() -> None:
     """Carrega o histórico do arquivo ou inicia com lista vazia"""
     global clipboard_history
     try:
@@ -641,7 +642,7 @@ def load_clipboard_history():
         logging.warning(f"Falha ao carregar histórico: {e}")
         clipboard_history = []
 
-def save_clipboard_history():
+def save_clipboard_history() -> None:
     """Salva o histórico no arquivo"""
     try:
         with history_lock:
@@ -649,7 +650,7 @@ def save_clipboard_history():
     except Exception as e:
         logging.warning(f"Falha ao salvar histórico: {e}")
 
-def add_to_clipboard_history(text):
+def add_to_clipboard_history(text: str) -> None:
     """Adiciona um item ao histórico"""
     global clipboard_history
     if not text or not text.strip():
@@ -706,7 +707,7 @@ def clear_clipboard_history(icon=None, item=None):
     except Exception as e:
         logging.warning(f"Erro ao atualizar menu após limpar histórico: {e}")
 
-def get_recent_clipboard_items(limit=10):
+def get_recent_clipboard_items(limit: int = 10) -> List[Dict[str, str]]:
     """Retorna os itens mais recentes do histórico"""
     with history_lock:
         return clipboard_history[-limit:].copy() if clipboard_history else []

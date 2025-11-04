@@ -35,3 +35,11 @@ venv/
 *.manifest
 *.spec
 !001_pyinstaller.spec
+
+# Testes e cobertura
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+*.cover
+.hypothesis/

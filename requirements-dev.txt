@@ -1,0 +1,16 @@
+# Dependências de desenvolvimento para Dahora App
+
+# Testes
+pytest>=7.4.0
+pytest-cov>=4.1.0         # Cobertura de testes
+pytest-mock>=3.11.1       # Mocking para testes
+pytest-timeout>=2.1.0     # Timeout para testes
+
+# Análise de código
+mypy>=1.5.0               # Type checking
+black>=23.7.0             # Formatação de código
+flake8>=6.1.0             # Linting
+pylint>=2.17.0            # Análise estática
+
+# Ferramentas auxiliares
+ipython>=8.14.0           # REPL melhorado para debugging
