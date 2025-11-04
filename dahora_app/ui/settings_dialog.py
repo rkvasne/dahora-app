@@ -220,16 +220,16 @@ class SettingsDialog:
             buttons = ttk.Frame(main)
             buttons.pack(fill=tk.X, pady=(0, 0))
             ttk.Button(buttons, text="Restaurar Padrões", command=on_reset).pack(side=tk.LEFT)
-            ttk.Button(buttons, text="Cancelar", command=on_cancel).pack(side=tk.RIGHT)
-            ttk.Button(buttons, text="Salvar", command=on_save).pack(side=tk.RIGHT, padx=(8, 0))
+            ttk.Button(buttons, text="Salvar", command=on_save).pack(side=tk.RIGHT)
+            ttk.Button(buttons, text="Cancelar", command=on_cancel).pack(side=tk.RIGHT, padx=(0, 8))
             
             # Bind de teclas
             root.bind('<Escape>', lambda e: on_cancel())
             
             # Centraliza janela
             root.update_idletasks()
-            width = max(550, root.winfo_width())
-            height = max(400, root.winfo_height())
+            width = max(480, root.winfo_width())
+            height = max(320, root.winfo_height())
             x = (root.winfo_screenwidth() // 2) - (width // 2)
             y = (root.winfo_screenheight() // 2) - (height // 2)
             root.geometry(f'{width}x{height}+{x}+{y}')

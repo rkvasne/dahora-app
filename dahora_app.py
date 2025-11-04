@@ -1,23 +1,81 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Dahora App - Sistema de Bandeja do Windows (ARQUIVO DEPRECIADO)
-Gera data e hora no formato [DD.MM.AAAA-HH:MM] e copia para área de transferência
+⚠️⚠️⚠️ ARQUIVO DEPRECIADO - NÃO USE! ⚠️⚠️⚠️
 
-⚠️  AVISO DE DEPRECATION ⚠️
-Este arquivo está DEPRECIADO desde v0.0.9 e será removido em v0.1.0
+Dahora App - Sistema de Bandeja do Windows (VERSÃO ANTIGA v0.0.9)
 
-Use o novo arquivo main.py que utiliza a arquitetura modular:
-    python main.py
+⛔ ESTE ARQUIVO ESTÁ OBSOLETO! ⛔
 
-A nova arquitetura oferece:
-- Código modular e organizado em 13 módulos especializados
-- Melhor testabilidade e manutenibilidade
-- Responsabilidade única por componente
-- Documentação completa em dahora_app/README.md
+Este arquivo foi DEPRECIADO desde v0.0.9 e mantido apenas para compatibilidade.
+A versão atual é v0.1.0 MVP com arquitetura modular completa.
 
-Para mais informações, consulte CHANGELOG.md
+🔴 PROBLEMAS DESTA VERSÃO:
+- Não tem busca no histórico
+- Não tem configurações avançadas
+- Menu não atualiza (versão antiga)
+- Código monolítico (1100+ linhas em 1 arquivo)
+- Sem testes automatizados
+
+✅ USE A VERSÃO ATUAL:
+    py main.py
+
+🎯 VERSÃO v0.1.0 MVP OFERECE:
+- ✅ Busca no histórico (Ctrl+Shift+F)
+- ✅ Configurações avançadas (4 abas)
+- ✅ Arquitetura modular (14 módulos)
+- ✅ 15/15 testes passando
+- ✅ Documentação completa
+
+📚 Para mais informações:
+- README.md (raiz do projeto)
+- dahora_app/README.md (arquitetura)
+- CHANGELOG.md (mudanças)
 """
+
+import tkinter.messagebox as msgbox
+import sys
+
+# Mostra aviso ao usuário
+print("=" * 70)
+print("⚠️  AVISO: ARQUIVO DEPRECIADO!")
+print("=" * 70)
+print("Você está executando a versão ANTIGA (v0.0.9)")
+print("A versão atual é v0.1.0 MVP com novas features!")
+print("")
+print("Execute ao invés:")
+print("    py main.py")
+print("")
+print("Novas features da v0.1.0:")
+print("  • Busca no histórico (Ctrl+Shift+F)")
+print("  • Configurações avançadas")
+print("  • Arquitetura modular testada")
+print("=" * 70)
+print("")
+
+# Pop-up de confirmação
+try:
+    resposta = msgbox.askyesno(
+        "⚠️ Arquivo Depreciado",
+        "AVISO: Você está executando a versão ANTIGA (v0.0.9)\n\n"
+        "A versão atual é v0.1.0 MVP com:\n"
+        "• Busca no histórico (Ctrl+Shift+F)\n"
+        "• Configurações avançadas\n"
+        "• Melhorias de estabilidade\n\n"
+        "Deseja continuar com a versão antiga mesmo assim?\n\n"
+        "(Recomendado: Use 'py main.py' ao invés)"
+    )
+    
+    if not resposta:
+        print("Execução cancelada pelo usuário.")
+        print("Execute: py main.py")
+        sys.exit(0)
+    
+    print("⚠️ Continuando com versão antiga (não recomendado)...")
+    print("")
+except:
+    # Se falhar, continua silenciosamente
+    pass
 
 import warnings
 warnings.warn(
