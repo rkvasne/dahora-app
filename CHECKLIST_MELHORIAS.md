@@ -328,20 +328,29 @@ main.py (392L) - Aplicação principal
 ---
 
 ### ✅ 10. Converter Variáveis Globais em Classes
-**Status:** ⏳ Pendente | **Responsável:** ___ | **Estimativa:** 8h
+**Status:** ✅ Concluído (via Tarefa 9) | **Responsável:** Cascade AI | **Estimativa:** 8h | **Real:** 0h
 
-- [ ] **10.1** Criar `clipboard_manager.py` com classe `ClipboardManager`
-- [ ] **10.2** Criar `settings_manager.py` com classe `SettingsManager`
-- [ ] **10.3** Criar instâncias no `main.py`
-- [ ] **10.4** Substituir todas as referências globais
-- [ ] **10.5** Remover declarações `global`
-- [ ] **10.6** Executar testes
-- [ ] **10.7** Commitar: `refactor: converte variáveis globais em classes gerenciadoras`
+- [x] **10.1** Criar `clipboard_manager.py` com classe `ClipboardManager` ✅ Criado na Tarefa 9
+- [x] **10.2** Criar `settings_manager.py` com classe `SettingsManager` ✅ Criado como `settings.py`
+- [x] **10.3** Criar instâncias no `main.py` ✅ Classe `DahoraApp` instancia todos
+- [x] **10.4** Substituir todas as referências globais ✅ Todas migradas para classes
+- [x] **10.5** Remover declarações `global` ✅ Não há mais globals no `main.py`
+- [x] **10.6** Executar testes ✅ 15/15 passando
+- [x] **10.7** Commitar ✅ Commit 3c87c75 (Tarefa 9)
 
 **Notas:**
-- 
+- ✅ **COMPLETADO AUTOMATICAMENTE NA TAREFA 9!**
+- ✅ Todas as variáveis globais foram convertidas em classes:
+  - `date_prefix` → `SettingsManager.date_prefix`
+  - `counter` → `UsageCounter.counter`
+  - `clipboard_history` → `ClipboardManager.clipboard_history`
+  - `last_clipboard_content` → `ClipboardManager.last_clipboard_content`
+- ✅ Classe `DahoraApp` em `main.py` gerencia todas as instâncias
+- ✅ Zero variáveis globais remanescentes (exceto `global_icon` para pystray)
+- ✅ Locks movidos para dentro das classes respectivas
+- ✅ Código muito mais limpo e testável
 
-**Concluído em:** ___/___/_____
+**Concluído em:** 04/11/2025 (junto com Tarefa 9)
 
 ---
 

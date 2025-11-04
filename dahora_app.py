@@ -1,9 +1,31 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Dahora App - Sistema de Bandeja do Windows
+Dahora App - Sistema de Bandeja do Windows (ARQUIVO DEPRECIADO)
 Gera data e hora no formato [DD.MM.AAAA-HH:MM] e copia para área de transferência
+
+⚠️  AVISO DE DEPRECATION ⚠️
+Este arquivo está DEPRECIADO desde v0.0.9 e será removido em v0.1.0
+
+Use o novo arquivo main.py que utiliza a arquitetura modular:
+    python main.py
+
+A nova arquitetura oferece:
+- Código modular e organizado em 13 módulos especializados
+- Melhor testabilidade e manutenibilidade
+- Responsabilidade única por componente
+- Documentação completa em dahora_app/README.md
+
+Para mais informações, consulte CHANGELOG.md
 """
+
+import warnings
+warnings.warn(
+    "dahora_app.py está depreciado desde v0.0.9. "
+    "Use 'main.py' ao invés. Este arquivo será removido em v0.1.0.",
+    DeprecationWarning,
+    stacklevel=2
+)
 
 import pystray
 import pyperclip
