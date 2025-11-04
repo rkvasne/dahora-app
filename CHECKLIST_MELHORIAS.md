@@ -490,6 +490,27 @@ main.py (392L) - Aplicação principal
 
 ---
 
+### ✅ LIMPEZA: Remover Backups Desnecessários
+**Status:** ✅ Concluído | **Responsável:** Cascade AI | **Data:** 04/11/2025
+
+**Arquivos removidos:**
+- ❌ `dahora_app/README_old.md` (660 linhas - backup)
+- ❌ `index_old.html` (860 linhas - backup)
+
+**Arquivos mantidos:**
+- ✅ `dahora_app.py` (com aviso forte de deprecação)
+  - Será removido em v0.2.0
+  - Permite transição gradual
+  - Pop-up educativo para usuários
+
+**.gitignore atualizado:**
+- Ignora `*_old.*`, `*_backup.*`, `*.bak`, etc.
+- Previne backups acidentais no futuro
+
+**Resultado:** -1025 linhas de código morto removidas! 🎉
+
+---
+
 ### ✅ 15. Adicionar Assinatura Digital [PÓS MVP]
 **Status:** ⏳ Pendente | **Responsável:** ___ | **Estimativa:** 4h + custo certificado
 
