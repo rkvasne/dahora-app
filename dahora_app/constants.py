@@ -5,7 +5,7 @@ import os
 
 # Informações do aplicativo
 APP_NAME = "DahoraApp"
-APP_VERSION = "0.0.9"
+APP_VERSION = "0.1.0"
 APP_TITLE = "Dahora App - Sistema de Data/Hora"
 
 # Diretório de dados do usuário

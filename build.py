@@ -134,7 +134,7 @@ def build_executable():
             pass
 
     # Define o nome do executável com versão
-    exe_name = 'dahora_app_v0.0.7'
+    exe_name = 'dahora_app_v0.1.0'
 
     # Verifica dependências
     try:
