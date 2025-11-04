@@ -386,17 +386,12 @@ main.py (392L) - Aplicação principal
 - ✅ Validação completa de todas as entradas
 - ✅ 15/15 testes passando
 
-**CORREÇÃO IMPLEMENTADA:**
-- ✅ Menu agora ATUALIZA AUTOMATICAMENTE quando histórico muda!
-- ✅ Callback `on_history_updated_callback` adicionado ao ClipboardManager
-- ✅ Método `_on_history_updated()` força atualização do menu
-- ✅ Funciona para: Ctrl+C, copy_datetime, monitor automático
-- ✅ Não precisa mais clicar "Recarregar Itens" manualmente!
-- ✅ "Recarregar Itens" mantido para refresh manual via hotkey
-
-**NOTA ANTERIOR (INCORRETA - CORRIGIDA):**
-- ❌ pystray.Menu faz CACHE do menu (não atualiza sozinho)
-- ✅ Solução: forçar atualização via `icon.menu = ...` quando histórico mudar
+**LIMITAÇÃO TÉCNICA DO PYSTRAY:**
+- ⚠️  pystray NÃO suporta atualização do menu em tempo real
+- ⚠️  Menu só atualiza quando usuário FECHA e ABRE novamente
+- ✅ Solução: Usar "Recarregar Itens" ou Ctrl+Shift+R para refresh
+- ✅ Alternativa: Fechar menu e abrir novamente para ver novos itens
+- 📝 Tentativa de callback automático foi removida (não funciona)
 
 **Concluído em:** 04/11/2025
 
