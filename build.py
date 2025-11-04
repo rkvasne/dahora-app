@@ -204,7 +204,9 @@ def build_executable():
         '--collect-all=pystray',
         '--collect-all=keyboard',
         '--collect-all=winotify',
-        'dahora_app.py'
+        '--hidden-import=dahora_app',
+        '--hidden-import=dahora_app.ui',
+        'main.py'
     ]
     if console_build:
         cmd.append('--console')

@@ -8,17 +8,14 @@ import json
 # Adiciona o diretório raiz ao path
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
+# Importa o módulo de settings
+from dahora_app.settings import SettingsManager
+
 
 def test_validate_settings_basic(sample_settings):
     """Testa validação básica de settings"""
-    # Mock da função validate_settings (será importada quando dahora_app for modular)
-    def validate_settings(settings_dict):
-        import re
-        prefix = str(settings_dict.get("prefix", ""))
-        if len(prefix) > 100:
-            prefix = prefix[:100]
-        prefix = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', prefix)
-        return {"prefix": prefix}
+    settings_manager = SettingsManager()
+    validate_settings = settings_manager.validate_settings
     
     result = validate_settings(sample_settings)
     
@@ -28,13 +25,8 @@ def test_validate_settings_basic(sample_settings):
 
 def test_validate_settings_truncates_long_prefix():
     """Testa que prefixo longo é truncado para 100 caracteres"""
-    def validate_settings(settings_dict):
-        import re
-        prefix = str(settings_dict.get("prefix", ""))
-        if len(prefix) > 100:
-            prefix = prefix[:100]
-        prefix = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', prefix)
-        return {"prefix": prefix}
+    settings_manager = SettingsManager()
+    validate_settings = settings_manager.validate_settings
     
     long_prefix = "A" * 150  # 150 caracteres
     result = validate_settings({"prefix": long_prefix})
@@ -44,14 +36,9 @@ def test_validate_settings_truncates_long_prefix():
 
 
 def test_validate_settings_removes_control_chars():
-    """Testa remoção de caracteres de controle ASCII"""
-    def validate_settings(settings_dict):
-        import re
-        prefix = str(settings_dict.get("prefix", ""))
-        if len(prefix) > 100:
-            prefix = prefix[:100]
-        prefix = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', prefix)
-        return {"prefix": prefix}
+    """Testa que caracteres de controle são removidos"""
+    settings_manager = SettingsManager()
+    validate_settings = settings_manager.validate_settings
     
     dangerous_prefix = "test\x00\x1f\x7fvalue"
     result = validate_settings({"prefix": dangerous_prefix})
@@ -63,28 +50,18 @@ def test_validate_settings_removes_control_chars():
 
 
 def test_validate_settings_handles_empty_prefix():
-    """Testa que prefixo vazio é permitido"""
-    def validate_settings(settings_dict):
-        import re
-        prefix = str(settings_dict.get("prefix", ""))
-        if len(prefix) > 100:
-            prefix = prefix[:100]
-        prefix = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', prefix)
-        return {"prefix": prefix}
+    """Testa que prefixo vazio é tratado corretamente"""
+    settings_manager = SettingsManager()
+    validate_settings = settings_manager.validate_settings
     
     result = validate_settings({"prefix": ""})
     assert result["prefix"] == ""
 
 
 def test_validate_settings_handles_missing_prefix():
-    """Testa que prefixo ausente resulta em string vazia"""
-    def validate_settings(settings_dict):
-        import re
-        prefix = str(settings_dict.get("prefix", ""))
-        if len(prefix) > 100:
-            prefix = prefix[:100]
-        prefix = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', prefix)
-        return {"prefix": prefix}
+    """Testa que prefixo ausente retorna vazio"""
+    settings_manager = SettingsManager()
+    validate_settings = settings_manager.validate_settings
     
     result = validate_settings({})  # Sem campo "prefix"
     assert result["prefix"] == ""
@@ -121,14 +98,9 @@ def test_corrupted_json_handling(create_corrupted_json_file):
 
 
 def test_validate_settings_special_characters():
-    """Testa que caracteres especiais permitidos são mantidos"""
-    def validate_settings(settings_dict):
-        import re
-        prefix = str(settings_dict.get("prefix", ""))
-        if len(prefix) > 100:
-            prefix = prefix[:100]
-        prefix = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', prefix)
-        return {"prefix": prefix}
+    """Testa que caracteres especiais válidos são mantidos"""
+    settings_manager = SettingsManager()
+    validate_settings = settings_manager.validate_settings
     
     # Caracteres especiais que DEVEM ser permitidos
     special_prefix = "Test-Prefix_123 @#$%"
@@ -138,14 +110,9 @@ def test_validate_settings_special_characters():
 
 
 def test_validate_settings_unicode():
-    """Testa que caracteres Unicode são preservados"""
-    def validate_settings(settings_dict):
-        import re
-        prefix = str(settings_dict.get("prefix", ""))
-        if len(prefix) > 100:
-            prefix = prefix[:100]
-        prefix = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', prefix)
-        return {"prefix": prefix}
+    """Testa que caracteres unicode são preservados"""
+    settings_manager = SettingsManager()
+    validate_settings = settings_manager.validate_settings
     
     unicode_prefix = "Prefixo-Ñoño-日本語"
     result = validate_settings({"prefix": unicode_prefix})

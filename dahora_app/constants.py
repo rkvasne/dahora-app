@@ -1,0 +1,48 @@
+"""
+Constantes e configurações globais do Dahora App
+"""
+import os
+
+# Informações do aplicativo
+APP_NAME = "DahoraApp"
+APP_VERSION = "0.0.9"
+APP_TITLE = "Dahora App - Sistema de Data/Hora"
+
+# Diretório de dados do usuário
+def get_data_dir() -> str:
+    """Retorna o diretório de dados do aplicativo"""
+    base = os.getenv('APPDATA') or os.path.expanduser("~")
+    path = os.path.join(base, APP_NAME)
+    try:
+        os.makedirs(path, exist_ok=True)
+    except Exception:
+        pass
+    return path
+
+DATA_DIR = get_data_dir()
+
+# Arquivos de dados
+COUNTER_FILE = os.path.join(DATA_DIR, "dahora_counter.txt")
+HISTORY_FILE = os.path.join(DATA_DIR, "clipboard_history.json")
+SETTINGS_FILE = os.path.join(DATA_DIR, "settings.json")
+LOG_FILE = os.path.join(DATA_DIR, "dahora.log")
+PRIVACY_MARKER_FILE = os.path.join(DATA_DIR, ".privacy_accepted")
+
+# Configurações de histórico
+MAX_HISTORY_ITEMS = 100
+
+# Configurações de hotkeys
+HOTKEY_COPY_DATETIME = 'ctrl+shift+q'
+HOTKEY_REFRESH_MENU = 'ctrl+shift+r'
+HOTKEY_CTRL_C = 'ctrl+c'
+
+# Configurações de log
+LOG_MAX_BYTES = 5 * 1024 * 1024  # 5MB
+LOG_BACKUP_COUNT = 3
+
+# Configurações de monitoramento de clipboard
+CLIPBOARD_MONITOR_INTERVAL = 3  # segundos
+CLIPBOARD_IDLE_THRESHOLD = 30  # segundos sem atividade
+
+# Formato de data/hora
+DATETIME_FORMAT = '%d.%m.%Y-%H:%M'

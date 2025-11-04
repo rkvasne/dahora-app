@@ -1,13 +1,16 @@
 """
-Testes para funções de formatação de data/hora do Dahora App
+Testes para formatação de data e hora
 """
 import sys
 import os
 import re
 from datetime import datetime
 
-# Adiciona o diretório raiz ao path para importar dahora_app
+# Adiciona o diretório raiz ao path
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+
+# Importa o formatador
+from dahora_app.datetime_formatter import DateTimeFormatter
 
 # Import da função principal (será necessário ajustar dahora_app.py para permitir import)
 # Por enquanto, vamos testar o formato esperado

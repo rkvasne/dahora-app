@@ -612,3 +612,91 @@ notificationStyle.textContent = `
     }
 `;
 document.head.appendChild(notificationStyle);
+
+// ===== FAQ ACCORDION =====
+
+// Função global para toggle FAQ
+function toggleFAQ(element) {
+    const faqItem = element.closest('.faq-item');
+    const wasActive = faqItem.classList.contains('active');
+
+    // Fechar todos os itens
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    // Abrir o item clicado se não estava ativo
+    if (!wasActive) {
+        faqItem.classList.add('active');
+
+        // Scroll suave para o item
+        setTimeout(() => {
+            faqItem.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest'
+            });
+        }, 100);
+    }
+}
+
+// Inicializar FAQ accordion
+document.addEventListener('DOMContentLoaded', function() {
+    // Adicionar interatividade aos itens FAQ
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const header = item.querySelector('.faq-header');
+
+        if (header) {
+            header.addEventListener('click', function() {
+                toggleFAQ(header);
+            });
+        }
+
+        // Adicionar suporte a teclado
+        header.setAttribute('tabindex', '0');
+        header.setAttribute('role', 'button');
+        header.setAttribute('aria-expanded', 'false');
+
+        header.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleFAQ(header);
+            }
+        });
+    });
+
+    // Atualizar ARIA quando mudar estado
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(mutation => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                const item = mutation.target;
+                const header = item.querySelector('.faq-header');
+                const isActive = item.classList.contains('active');
+
+                if (header) {
+                    header.setAttribute('aria-expanded', isActive);
+                }
+            }
+        });
+    });
+
+    faqItems.forEach(item => {
+        observer.observe(item, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+    });
+
+    // Abrir primeiro FAQ por padrão (opcional)
+    const firstFaq = document.querySelector('.faq-item');
+    if (firstFaq && window.innerWidth > 768) {
+        setTimeout(() => {
+            firstFaq.classList.add('active');
+            const firstHeader = firstFaq.querySelector('.faq-header');
+            if (firstHeader) {
+                firstHeader.setAttribute('aria-expanded', 'true');
+            }
+        }, 500);
+    }
+});

@@ -329,79 +329,116 @@
     <!-- Download Section -->
     <section id="download" class="download">
         <div class="container">
-            <div class="download-content">
-                <div class="download-info">
-                    <h2 class="section-title">Download Gratuito</h2>
-                    <p class="section-subtitle">Baixe e instale o Dahora App em poucos minutos</p>
-                    
-                    <div class="download-options">
-                        <div class="download-option">
-                            <div class="option-icon">
-                                <i class="fas fa-magic"></i>
-                            </div>
-                            <div class="option-content">
-                                <h3>Instalação Automática</h3>
-                                <p>Execute o arquivo <code>instalar.bat</code> para instalar automaticamente todas as dependências.</p>
-                                <a href="instalar.bat" class="btn btn-primary" download>
-                                    <i class="fas fa-download"></i>
-                                    Baixar Instalador
-                                </a>
-                            </div>
-                        </div>
-                        
-                        <div class="download-option">
-                            <div class="option-icon">
-                                <i class="fas fa-file-archive"></i>
-                            </div>
-                            <div class="option-content">
-                                <h3>Executável Windows</h3>
-                                <p>Arquivo .exe pronto para usar, sem necessidade de instalar Python ou dependências.</p>
-                                <a href="#" class="btn btn-secondary">
-                                    <i class="fas fa-download"></i>
-                                    Baixar .EXE
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+            <div class="section-header">
+                <h2 class="section-title">Download Gratuito</h2>
+                <p class="section-subtitle">Baixe e instale o Dahora App em poucos minutos</p>
+            </div>
 
-                    <div class="system-requirements">
-                        <h3>Requisitos do Sistema</h3>
-                        <ul>
-                            <li><i class="fab fa-windows"></i> Windows 10 ou superior</li>
-                            <li><i class="fas fa-microchip"></i> Python 3.8+ (para versão script)</li>
-                            <li><i class="fas fa-memory"></i> 50MB de espaço livre</li>
-                            <li><i class="fas fa-shield-alt"></i> Permissões de administrador (primeira execução)</li>
-                        </ul>
+            <!-- Download Options -->
+            <div class="download-options">
+                <div class="download-option animate-on-scroll">
+                    <div class="option-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <div class="option-content">
+                        <h3>Instalação Automática</h3>
+                        <p>Execute o arquivo <code>instalar.bat</code> para instalar automaticamente todas as dependências. Ideal para maioria dos usuários.</p>
+                        <a href="instalar.bat" class="btn btn-primary" download>
+                            <i class="fas fa-download"></i>
+                            Baixar Instalador
+                        </a>
                     </div>
                 </div>
-                
-                <div class="installation-steps">
+
+                <div class="download-option animate-on-scroll">
+                    <div class="option-icon">
+                        <i class="fas fa-file-archive"></i>
+                    </div>
+                    <div class="option-content">
+                        <h3>Executável Windows</h3>
+                        <p>Arquivo .exe pronto para usar, sem necessidade de instalar Python ou dependências. Pronto para executar.</p>
+                        <a href="#" class="btn btn-secondary">
+                            <i class="fas fa-download"></i>
+                            Baixar .EXE
+                        </a>
+                    </div>
+                </div>
+
+                <div class="download-option animate-on-scroll">
+                    <div class="option-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="option-content">
+                        <h3>Código-Fonte</h3>
+                        <p>Para desenvolvedores. Clone o repositório e instale manualmente as dependências com <code>pip install -r requirements.txt</code>.</p>
+                        <a href="#" class="btn btn-secondary">
+                            <i class="fab fa-github"></i>
+                            Ver no GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Requirements -->
+            <div class="requirements-card animate-on-scroll">
+                <div class="req-icon">
+                    <i class="fas fa-desktop"></i>
+                </div>
+                <div class="req-content">
+                    <h3>Requisitos do Sistema</h3>
+                    <div class="requirements-grid">
+                        <div class="req-item">
+                            <i class="fab fa-windows"></i>
+                            <span>Windows 10 ou superior</span>
+                        </div>
+                        <div class="req-item">
+                            <i class="fas fa-microchip"></i>
+                            <span>Python 3.8+ (versão script)</span>
+                        </div>
+                        <div class="req-item">
+                            <i class="fas fa-memory"></i>
+                            <span>50MB de espaço livre</span>
+                        </div>
+                        <div class="req-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Permissões de administrador (primeira execução)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Installation Steps -->
+            <div class="installation-card animate-on-scroll">
+                <div class="install-icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="install-content">
                     <h3>Passos de Instalação</h3>
-                    <div class="steps-list">
-                        <div class="step">
-                            <div class="step-icon">1</div>
-                            <div class="step-text">
+                    <div class="steps-timeline">
+                        <div class="timeline-step">
+                            <div class="step-marker">1</div>
+                            <div class="step-info">
                                 <strong>Baixe o instalador</strong>
                                 <p>Clique no botão "Baixar Instalador" acima</p>
                             </div>
                         </div>
-                        <div class="step">
-                            <div class="step-icon">2</div>
-                            <div class="step-text">
+                        <div class="timeline-step">
+                            <div class="step-marker">2</div>
+                            <div class="step-info">
                                 <strong>Execute como administrador</strong>
                                 <p>Clique com botão direito → "Executar como administrador"</p>
                             </div>
                         </div>
-                        <div class="step">
-                            <div class="step-icon">3</div>
-                            <div class="step-text">
+                        <div class="timeline-step">
+                            <div class="step-marker">3</div>
+                            <div class="step-info">
                                 <strong>Aguarde a instalação</strong>
                                 <p>O script instalará automaticamente todas as dependências</p>
                             </div>
                         </div>
-                        <div class="step">
-                            <div class="step-icon">4</div>
-                            <div class="step-text">
+                        <div class="timeline-step">
+                            <div class="step-marker">4</div>
+                            <div class="step-info">
                                 <strong>Execute o aplicativo</strong>
                                 <p>Execute <code>python dahora_app.py</code> ou o arquivo .exe</p>
                             </div>
@@ -415,119 +452,315 @@
     <!-- About Section -->
     <section id="sobre" class="about">
         <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2 class="section-title">Sobre o Dahora App</h2>
-                    <p>O Dahora App nasceu da necessidade de ter uma forma rápida e padronizada de inserir data e hora em documentos, logs e comunicações. Desenvolvido com foco na simplicidade e eficiência, o aplicativo oferece uma solução elegante para uma tarefa cotidiana.</p>
-                    
-                    <div class="about-stats">
-                        <div class="stat">
-                            <div class="stat-number">100%</div>
-                            <div class="stat-label">Gratuito</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number">< 50MB</div>
-                            <div class="stat-label">Tamanho</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number">0</div>
-                            <div class="stat-label">Anúncios</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number">24/7</div>
-                            <div class="stat-label">Disponível</div>
-                        </div>
-                    </div>
+            <div class="section-header">
+                <h2 class="section-title">Sobre o Dahora App</h2>
+                <p class="section-subtitle">A solução elegante para gerenciar data e hora no seu dia a dia</p>
+            </div>
 
-                    <div class="tech-stack">
-                        <h3>Tecnologias Utilizadas</h3>
-                        <div class="tech-tags">
-                            <span class="tech-tag">Python 3.8+</span>
-                            <span class="tech-tag">PyStray</span>
-                            <span class="tech-tag">PyPerClip</span>
-                            <span class="tech-tag">Pillow</span>
-                            <span class="tech-tag">Keyboard</span>
-                            <span class="tech-tag">WinNotify</span>
-                            <span class="tech-tag">PyWin32</span>
-                        </div>
+            <div class="about-story animate-on-scroll">
+                <div class="story-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="story-content">
+                    <h3>Nossa História</h3>
+                    <p>O Dahora App nasceu da necessidade de ter uma forma rápida e padronizada de inserir data e hora em documentos, logs e comunicações. Desenvolvido com foco na simplicidade e eficiência, o aplicativo oferece uma solução elegante para uma tarefa cotidiana.</p>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Gratuito</div>
                     </div>
                 </div>
-                
-                <div class="about-features">
-                    <h3>Por que escolher o Dahora App?</h3>
-                    <div class="feature-list">
-                        <div class="feature-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Interface limpa e intuitiva</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Consumo mínimo de recursos</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Sem coleta de dados pessoais</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Código aberto e transparente</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Atualizações regulares</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Suporte ativo da comunidade</span>
-                        </div>
+
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-icon">
+                        <i class="fas fa-compress"></i>
                     </div>
+                    <div class="stat-info">
+                        <div class="stat-number">< 50MB</div>
+                        <div class="stat-label">Tamanho</div>
+                    </div>
+                </div>
+
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-icon">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Anúncios</div>
+                    </div>
+                </div>
+
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Disponível</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="about-features-section">
+                <div class="section-header">
+                    <h3>Por que escolher o Dahora App?</h3>
+                    <p class="section-subtitle">Benefícios que fazem a diferença no seu trabalho</p>
+                </div>
+
+                <div class="features-grid-2">
+                    <div class="feature-card-2 animate-on-scroll">
+                        <div class="feature-icon-2">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h4>Interface Limpa</h4>
+                        <p>Design intuitivo e sem complicações para máxima produtividade</p>
+                    </div>
+
+                    <div class="feature-card-2 animate-on-scroll">
+                        <div class="feature-icon-2">
+                            <i class="fas fa-battery-full"></i>
+                        </div>
+                        <h4>Consumo Mínimo</h4>
+                        <p>Executa leve em background sem impactar o desempenho do sistema</p>
+                    </div>
+
+                    <div class="feature-card-2 animate-on-scroll">
+                        <div class="feature-icon-2">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Privacidade Total</h4>
+                        <p>Sem coleta de dados pessoais ou telemetria alguma</p>
+                    </div>
+
+                    <div class="feature-card-2 animate-on-scroll">
+                        <div class="feature-icon-2">
+                            <i class="fas fa-code-branch"></i>
+                        </div>
+                        <h4>Código Aberto</h4>
+                        <p>Transparência total com código-fonte disponível para inspeção</p>
+                    </div>
+
+                    <div class="feature-card-2 animate-on-scroll">
+                        <div class="feature-icon-2">
+                            <i class="fas fa-sync"></i>
+                        </div>
+                        <h4>Atualizações Regulares</h4>
+                        <p>Melhorias constantes baseadas no feedback da comunidade</p>
+                    </div>
+
+                    <div class="feature-card-2 animate-on-scroll">
+                        <div class="feature-icon-2">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Suporte Ativo</h4>
+                        <p>Comunidade engajada e suporte responsivo para dúvidas</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tech Stack Simplified -->
+            <div class="tech-card animate-on-scroll">
+                <div class="tech-icon">
+                    <i class="fas fa-microchip"></i>
+                </div>
+                <div class="tech-content">
+                    <h3>Tecnologias Principais</h3>
+                    <div class="tech-tags-simplified">
+                        <span class="tech-tag-main">Python 3.8+</span>
+                        <span class="tech-tag-main">PyStray</span>
+                        <span class="tech-tag-main">Keyboard</span>
+                        <span class="tech-tag-main">Pillow</span>
+                    </div>
+                    <p class="tech-description">Construído com tecnologias robustas e bem documentadas da comunidade Python</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section id="faq" class="faq">
+    <!-- Dark FAQ Section -->
+    <section id="faq" class="section--dark">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Perguntas Frequentes</h2>
                 <p class="section-subtitle">Respostas rápidas sobre instalação, uso e segurança</p>
             </div>
-            <div class="faq-list">
-                <div class="faq-item animate-on-scroll">
-                    <h3>O aplicativo coleta algum dado?</h3>
-                    <p>Não. O Dahora App não envia informações para servidores. Histórico e configurações ficam salvos localmente.</p>
+            <div class="faq-accordion">
+                <div class="faq-item dark-card hover-bloom animate-on-scroll">
+                    <div class="faq-header" onclick="toggleFAQ(this)">
+                        <div class="faq-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="faq-question">
+                            <h3>O aplicativo coleta dados?</h3>
+                            <p>Privacidade e armazenamento local</p>
+                        </div>
+                        <div class="faq-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="faq-content">
+                        <p>Não. O app funciona offline e não envia informações para servidores. Todos os dados ficam salvos localmente em <code>%APPDATA%/DahoraApp</code> com controle total do usuário.</p>
+                    </div>
                 </div>
-                <div class="faq-item animate-on-scroll">
-                    <h3>Funciona sem Python instalado?</h3>
-                    <p>Sim, ao usar a versão .exe (quando disponível). A versão script exige Python 3.8+.</p>
+
+                <div class="faq-item dark-card hover-bloom animate-on-scroll">
+                    <div class="faq-header" onclick="toggleFAQ(this)">
+                        <div class="faq-icon">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <div class="faq-question">
+                            <h3>Funciona sem Python?</h3>
+                            <p>Requisitos e versões disponíveis</p>
+                        </div>
+                        <div class="faq-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="faq-content">
+                        <p>Sim. Use a versão .exe compilada que não requer instalação. A versão script exige Python 3.8+ e dependências do arquivo <code>requirements.txt</code>.</p>
+                    </div>
                 </div>
-                <div class="faq-item animate-on-scroll">
-                    <h3>Qual é o atalho global?</h3>
-                    <p><strong>Ctrl+Shift+Q</strong> copia a data/hora de qualquer aplicativo.</p>
+
+                <div class="faq-item dark-card hover-bloom animate-on-scroll">
+                    <div class="faq-header" onclick="toggleFAQ(this)">
+                        <div class="faq-icon">
+                            <i class="fas fa-keyboard"></i>
+                        </div>
+                        <div class="faq-question">
+                            <h3>Qual é o atalho global?</h3>
+                            <p>Uso e personalização de atalhos</p>
+                        </div>
+                        <div class="faq-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="faq-content">
+                        <p>O atalho padrão é <strong>Ctrl+Shift+Q</strong>. Funciona em qualquer aplicativo Windows e pode ser personalizado no arquivo de configuração se necessário.</p>
+                    </div>
                 </div>
-                <div class="faq-item animate-on-scroll">
-                    <h3>Posso personalizar o formato?</h3>
-                    <p>O formato atual é fixo para padronização. Futuras versões podem oferecer opções de personalização.</p>
+
+                <div class="faq-item dark-card hover-bloom animate-on-scroll">
+                    <div class="faq-header" onclick="toggleFAQ(this)">
+                        <div class="faq-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="faq-question">
+                            <h3>Posso personalizar o formato?</h3>
+                            <p>Padrão e planos futuros</p>
+                        </div>
+                        <div class="faq-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="faq-content">
+                        <p>O formato atual é fixo <code>[DD.MM.AAAA-HH:MM]</code> para manter consistência. Futuras versões podem oferecer opções de personalização baseadas em feedback da comunidade.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item dark-card hover-bloom animate-on-scroll">
+                    <div class="faq-header" onclick="toggleFAQ(this)">
+                        <div class="faq-icon">
+                            <i class="fas fa-hdd"></i>
+                        </div>
+                        <div class="faq-question">
+                            <h3>Onde ficam salvos os dados?</h3>
+                            <p>Armazenamento e backup</p>
+                        </div>
+                        <div class="faq-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="faq-content">
+                        <p>Os dados ficam em <code>%APPDATA%/DahoraApp</code>. Incluem histórico, configurações e logs. Para backup, copie esta pasta ou use "Limpar Histórico" no menu.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item dark-card hover-bloom animate-on-scroll">
+                    <div class="faq-header" onclick="toggleFAQ(this)">
+                        <div class="faq-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="faq-question">
+                            <h3>Como resolver problemas?</h3>
+                            <p>Troubleshooting e suporte</p>
+                        </div>
+                        <div class="faq-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="faq-content">
+                        <p>Verifique o arquivo <code>qopas.log</code> na pasta de dados. Use "Limpar Histórico" no menu ou reinicie o aplicativo para resolver a maioria dos problemas.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Privacy Section -->
-    <section id="privacidade" class="privacy">
+    <!-- Dark Privacy Section -->
+    <section id="privacidade" class="section--dark">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Privacidade & Dados</h2>
                 <p class="section-subtitle">Transparência total sobre armazenamento local e segurança</p>
             </div>
-            <div class="privacy-card animate-on-scroll">
-                <ul class="privacy-list">
-                    <li><i class="fas fa-database"></i> Histórico de clipboard armazenado em <code>%APPDATA%/DahoraApp</code>.</li>
-                    <li><i class="fas fa-file-alt"></i> Logs para diagnóstico em <code>qopas.log</code> (somente local).</li>
-                    <li><i class="fas fa-user-shield"></i> Sem telemetria, anúncios ou rastreamento.</li>
-                    <li><i class="fas fa-lock"></i> Você controla os dados — opção "Limpar Histórico" no menu.</li>
-                </ul>
+            <div class="cards-grid--symm">
+                <div class="dark-card hover-bloom animate-on-scroll">
+                    <div class="card-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Armazenamento Local</h3>
+                    <p>Histórico de clipboard armazenado exclusivamente em <code>%APPDATA%/DahoraApp</code>. Dados nunca saem do seu computador.</p>
+                </div>
+
+                <div class="dark-card hover-bloom animate-on-scroll">
+                    <div class="card-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Logs de Diagnóstico</h3>
+                    <p>Arquivos <code>qopas.log</code> criados localmente para troubleshooting. Sem envio de informações externas.</p>
+                </div>
+
+                <div class="dark-card hover-bloom animate-on-scroll">
+                    <div class="card-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h3>Zero Telemetria</h3>
+                    <p>Sem rastreamento, analytics, anúncios ou coleta de dados. Aplicativo funciona completamente offline.</p>
+                </div>
+
+                <div class="dark-card hover-bloom animate-on-scroll">
+                    <div class="card-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Controle Total</h3>
+                    <p>Você tem controle completo. Use "Limpar Histórico" no menu para apagar todos os dados quando quiser.</p>
+                </div>
+
+                <div class="dark-card hover-bloom animate-on-scroll">
+                    <div class="card-icon">
+                        <i class="fas fa-folder-shield"></i>
+                    </div>
+                    <h3>Backup Simples</h3>
+                    <p>Basta copiar a pasta <code>%APPDATA%/DahoraApp</code> para backup completo de histórico e configurações.</p>
+                </div>
+
+                <div class="dark-card hover-bloom animate-on-scroll">
+                    <div class="card-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>Código Aberto</h3>
+                    <p>Transparência total. Você pode inspecionar o código-fonte e verificar por si só a segurança implementada.</p>
+                </div>
             </div>
         </div>
     </section>
