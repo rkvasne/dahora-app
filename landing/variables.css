@@ -1,0 +1,40 @@
+/* ============================================
+   CSS VARIABLES - DAHORA APP LANDING PAGE
+   Migrado de index.html inline (linhas 18-50)
+   Data: 04/11/2025
+   ============================================ */
+
+:root {
+    /* ===== CORES PRIMÁRIAS ===== */
+    --primary-color: #0078D4;
+    --primary-light: #2B88D8;
+    --primary-dark: #005A9E;
+    --secondary-color: #0C5DAA;
+    
+    /* ===== GRADIENTE LARANJA → VERMELHO (CUSTOMIZAÇÃO) ===== */
+    --gradient-orange-red: linear-gradient(135deg, #FF6B00 0%, #FF4500 100%);
+    --gradient-orange-red-hover: linear-gradient(135deg, #FF4500 0%, #CC3700 100%);
+    
+    /* ===== TEXTOS ===== */
+    --text-dark: #1A1A1A;
+    --text-gray: #64748b;
+    --text-light: #cbd5e1;
+    
+    /* ===== FUNDOS ===== */
+    --bg-white: #ffffff;
+    --border-color: #e2e8f0;
+    --light-bg: #f8fafc;
+    --dark-bg: #0f172a;
+    --dark-card: #1e293b;
+    
+    /* ===== SOMBRAS ===== */
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    
+    /* ===== HERO (AZUL ESCURO ORIGINAL - CUSTOMIZAÇÃO) ===== */
+    --hero-dark-1: #0B1E3C;
+    --hero-dark-2: #0F2E5C;
+    --hero-dark-3: #0956A3;
+    --glass-bg: rgba(255,255,255,0.14);
+    --glass-border: rgba(255,255,255,0.28);
+}

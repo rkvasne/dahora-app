@@ -3,21 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dahora App v0.1.1 MVP - Gerenciador de Clipboard com Data/Hora</title>
-    <meta name="description" content="Aplicativo Windows profissional para gerenciamento de clipboard com busca inteligente, configurações avançadas e atalhos globais. MVP v0.1.1 completo!">
+    <title>Dahora App v0.1.0 MVP - Gerenciador de Clipboard com Data/Hora</title>
+    <meta name="description" content="Aplicativo Windows profissional para gerenciamento de clipboard com busca inteligente, configurações avançadas e atalhos globais. MVP v0.1.0 completo!">
     <meta name="keywords" content="Windows, clipboard, data hora, busca, configurações, histórico, MVP, pystray">
     <link rel="icon" type="image/x-icon" href="icon.ico">
-    
-    <!-- Google Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap">
-    
-    <!-- ✅ FASE 2: CSS EXTERNO (TESTANDO) -->
-    <link rel="stylesheet" href="landing/variables.css">
-    <link rel="stylesheet" href="landing/styles.css">
-    <link rel="stylesheet" href="landing/dark-sections.css">
-    <link rel="stylesheet" href="landing/responsive.css">
-    
-    <!-- CSS Inline (temporário para compatibilidade durante testes) -->
     <style>
         /* CACHE BUSTER: v2.0.6 - 2025-11-04-14:06 */
         * {
@@ -802,7 +791,7 @@
     <!-- Hero Section -->
     <section id="inicio" class="hero">
         <div class="hero-container animate-fade-in">
-            <div class="hero-version">🎉 MVP v0.1.1 COMPLETO!</div>
+            <div class="hero-version">🎉 MVP v0.1.0 COMPLETO!</div>
             <img src="icon.ico" alt="Dahora App Icon" class="hero-icon">
             <h1 class="hero-title">Dahora App</h1>
             <p class="hero-subtitle">
@@ -915,7 +904,7 @@
     <section id="novidades" class="section section-dark">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">🎉 Novidades do MVP v0.1.1</h2>
+                <h2 class="section-title">🎉 Novidades do MVP v0.1.0</h2>
                 <p class="section-subtitle">Features implementadas nesta versão</p>
             </div>
             <div class="features-grid">
@@ -1096,7 +1085,7 @@
                     <div class="feature-icon install-number" style="margin: 0 auto 1.5rem; font-size: 3rem;">1️⃣</div>
                     <h3>Download</h3>
                     <p>
-                        Baixe o arquivo <code>dahora_app_v0.1.1.exe</code> do GitHub Releases.
+                        Baixe o arquivo <code>dahora_app_v0.1.0.exe</code> do GitHub Releases.
                         Apenas 31MB, sem instaladores complexos.
                     </p>
                 </div>
@@ -1138,9 +1127,9 @@
     <section id="download" class="download">
         <div class="download-box">
             <h2>📥 Download Grátis</h2>
-            <p>MVP v0.1.1 - Completo e pronto para uso!</p>
+            <p>MVP v0.1.0 - Completo e pronto para uso!</p>
             <a href="https://github.com/rkvasne/dahora-app/releases" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="font-size: 1.3rem; padding: 1.2rem 3rem;">
-                💾 Baixar dahora_app_v0.1.1.exe
+                💾 Baixar dahora_app_v0.1.0.exe
             </a>
             <div class="download-info">
                 <div class="download-detail">
@@ -1307,7 +1296,7 @@
             <a href="https://github.com/rkvasne/dahora-app/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="footer-link">Licença MIT</a>
         </div>
         <div class="footer-copyright">
-            <p>© 2025 Dahora App v0.1.1 MVP • Desenvolvido por <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a></p>
+            <p>© 2025 Dahora App v0.1.0 MVP • Desenvolvido por <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a></p>
             <p style="margin-top: 0.5rem; opacity: 0.7;">100% Open Source • Zero Telemetria • Offline First</p>
             <p style="margin-top: 0.5rem; opacity: 0.7;">Contato: <a href="mailto:rkvasne@gmail.com" style="color: var(--text-light); text-decoration: none;">rkvasne@gmail.com</a></p>
         </div>

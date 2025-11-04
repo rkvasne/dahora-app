@@ -1,0 +1,28 @@
+/* ============================================
+   RESPONSIVE - DAHORA APP LANDING PAGE
+   Media queries para mobile
+   Migrado de index.html inline (linhas 560-580)
+   Data: 04/11/2025
+   ============================================ */
+
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .screenshots-grid {
+        grid-template-columns: 1fr;
+    }
+}
