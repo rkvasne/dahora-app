@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.7] - 2025-11-04
+
+### Changed
+- Notificação rápida via Tkinter ajustada para ~1.5s e visual próximo ao Windows
+- Clique esquerdo no ícone aciona a mesma notificação curta do atalho
+- README atualizado (versões, comportamento das notificações e clique esquerdo)
+- `build.py` atualizado para gerar `dahora_app_v0.0.7.exe`
+
+### Added
+- Exceção no `.gitignore` para versionar `001_pyinstaller.spec`
+
+### Removed
+- Arquivo obsoleto `qopas_app_v0.0.5.spec` (limpeza)
+
+### Technical
+- `001_pyinstaller.spec` canônico incluído no repositório
+
 ## [0.0.6] - 2025-11-03
 
 ### Added

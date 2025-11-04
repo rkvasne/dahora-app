@@ -34,3 +34,4 @@ venv/
 # PyInstaller
 *.manifest
 *.spec
+!001_pyinstaller.spec

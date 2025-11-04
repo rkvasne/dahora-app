@@ -262,6 +262,94 @@ def show_toast_notification(title, message, duration=2):
     time.sleep(0.05)
 
 
+def show_quick_notification(title, message, duration=1):
+    """Exibe uma notificação leve e moderna por ~1–2s usando Tkinter."""
+    if not 'TKINTER_AVAILABLE' in globals():
+        # Fallback se variável não existir
+        return show_toast_notification(title, message, duration=duration)
+
+    if not TKINTER_AVAILABLE:
+        return show_toast_notification(title, message, duration=duration)
+
+    def _show_quick():
+        try:
+            import tkinter as tk
+            root = tk.Tk()
+            root.withdraw()
+
+            top = tk.Toplevel(root)
+            top.overrideredirect(True)
+            try:
+                top.attributes('-topmost', True)
+            except Exception:
+                pass
+
+            # Dimensões e posição (canto inferior direito)
+            
+            # Tamanho e posição (canto inferior direito)
+            try:
+                root.update_idletasks()
+                sw = root.winfo_screenwidth()
+                sh = root.winfo_screenheight()
+            except Exception:
+                sw, sh = 1366, 768
+
+            width, height = 340, 110
+            x = sw - width - 16
+            y = sh - height - 48
+            top.geometry(f"{width}x{height}+{x}+{y}")
+
+            # Canvas com “card” arredondado para parecer toast do Windows
+            canvas = tk.Canvas(top, width=width, height=height, bg='black', highlightthickness=0)
+            canvas.pack(fill='both', expand=True)
+
+            # Função para retângulo arredondado
+            def round_rect(x1, y1, x2, y2, r=12, **kwargs):
+                points = [
+                    x1+r, y1,
+                    x2-r, y1,
+                    x2, y1,
+                    x2, y1+r,
+                    x2, y2-r,
+                    x2, y2,
+                    x2-r, y2,
+                    x1+r, y2,
+                    x1, y2,
+                    x1, y2-r,
+                    x1, y1+r,
+                    x1, y1
+                ]
+                return canvas.create_polygon(points, smooth=True, **kwargs)
+
+            # Fundo
+            round_rect(2, 2, width-2, height-2, r=14, fill='#2b2b2b', outline='#3c3c3c')
+
+            # Título e mensagem
+            try:
+                title_font = ('Segoe UI Variable', 10, 'bold')
+                msg_font = ('Segoe UI Variable', 9)
+            except Exception:
+                title_font = ('Segoe UI', 10, 'bold')
+                msg_font = ('Segoe UI', 9)
+
+            # Use widgets transparentes sobre o canvas com place
+            frame = tk.Frame(top, bg='#2b2b2b')
+            frame.place(x=0, y=0, width=width, height=height)
+            lbl_title = tk.Label(frame, text=title, fg='#c5e1ff', bg='#2b2b2b', font=title_font)
+            lbl_title.place(x=16, y=12)
+            lbl_msg = tk.Label(frame, text=message, fg='#ffffff', bg='#2b2b2b', font=msg_font, justify='left')
+            lbl_msg.place(x=16, y=36)
+
+            # Fecha após duração
+            top.after(int(max(1, duration) * 1000), root.destroy)
+            root.mainloop()
+        except Exception:
+            # Fallback se Tk falhar
+            show_toast_notification(title, message, duration=duration)
+
+    threading.Thread(target=_show_quick, daemon=True).start()
+
+
 def show_fatal_error(title, message):
     """Exibe um MessageBox modal em caso de erro fatal no .exe"""
     try:
@@ -296,9 +384,18 @@ def copy_datetime(icon=None, item=None, source=None):
     if source.startswith("Menu:"):
         show_toast_notification("Dahora App", f"Copiado com sucesso via {source}!\n{dt_string}\nTotal: {counter}ª vez")
     else:
-        # Para atalho, usa duração menor de 1 segundo
-        dur = 1 if source == "Atalho" else 2
-        show_toast_notification("Dahora App", f"Copiado com sucesso via {source}!\n{dt_string}\nTotal: {counter}ª vez", duration=dur)
+        # Para atalho, tenta notificação rápida real via Tkinter (~1.5s)
+        dur = 1.5 if source == "Atalho" else 2
+        try:
+            if source == "Atalho" and TKINTER_AVAILABLE:
+                show_quick_notification("Dahora App", f"Copiado com sucesso via {source}!\n{dt_string}\nTotal: {counter}ª vez", duration=dur)
+            elif source == "Atalho" and global_icon:
+                global_icon.notify(f"Copiado com sucesso via {source}!\n{dt_string}\nTotal: {counter}ª vez", "Dahora App")
+                time.sleep(dur)
+            else:
+                show_toast_notification("Dahora App", f"Copiado com sucesso via {source}!\n{dt_string}\nTotal: {counter}ª vez", duration=dur)
+        except Exception:
+            show_toast_notification("Dahora App", f"Copiado com sucesso via {source}!\n{dt_string}\nTotal: {counter}ª vez", duration=dur)
 
 
 def create_image():
@@ -838,8 +935,11 @@ def copy_from_history(text):
         logging.warning(f"Erro ao copiar do histórico: {e}")
 
 def _copy_datetime_menu(icon, item):
-    """Função para o menu de copiar data/hora"""
-    copy_datetime(source="menu")
+    """Aciona copiar data/hora. Se vier de clique esquerdo, usa estilo do atalho."""
+    # Deixamos que copy_datetime identifique a origem:
+    # - item None (clique esquerdo default) => "Atalho" (mensagem rápida)
+    # - item presente (menu) => "Menu: <texto>" (toast padrão)
+    copy_datetime(icon, item)
 
 def quit_app(icon, item):
     """Função para encerrar o aplicativo corretamente"""
@@ -945,10 +1045,17 @@ def atualizar_menu_dinamico():
 def setup_icon(reload=False):
     """Configura o ícone da bandeja com menu estático e estável"""
 
+    # Resolve caminho correto do ícone (suporta execução via PyInstaller)
+    try:
+        base_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
+    except Exception:
+        base_dir = os.path.abspath(os.path.dirname(__file__))
+    icon_path = os.path.join(base_dir, 'icon.ico')
+
     # Carrega o ícone personalizado
     try:
-        if os.path.exists('icon.ico'):
-            icon_image = Image.open('icon.ico')
+        if os.path.exists(icon_path):
+            icon_image = Image.open(icon_path)
         else:
             icon_image = external_create_image() if external_create_image else create_image()
     except Exception:

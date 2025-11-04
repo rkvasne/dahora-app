@@ -71,7 +71,7 @@ python build.py
 
 **Importante:** O build usará automaticamente o arquivo `icon.ico` existente no projeto. Se o arquivo não existir, o script tentará criar um ícone padrão.
 
-3. O executável estará em `dist/dahora_app_v0.0.6.exe`
+3. O executável estará em `dist/dahora_app_v0.0.7.exe`
 
 ### Alternativa: usar o .spec canônico
 
@@ -91,7 +91,7 @@ Isso gerará `dist/dahora_app.exe` (sem versão no nome). O build principal reco
 
 ### Formas de usar o aplicativo:
 
-- **Clique esquerdo no ícone** → Mostra instruções ("Menu de opções disponível")
+- **Clique esquerdo no ícone** → Exibe a mesma notificação curta (1.5s) do atalho e copia a data/hora
 - **Clique direito no ícone** → Abre menu completo:
   - **Copiar Data/Hora (Ctrl+Shift+Q)**: Copia a data/hora atual
   - **--- Histórico Recente ---**: Itens do clipboard copiados recentemente (clique para copiar)
@@ -158,8 +158,9 @@ Exemplos:
 
 ### Mensagens de notificação não aparecem
 - Verifique as configurações de notificações do Windows
-- O aplicativo usa toast notifications que podem estar desativadas
-- As mensagens duram 2 segundos e desaparecem automaticamente
+- O aplicativo usa dois tipos de mensagens:
+  - Notificação rápida (Tkinter) de ~1.5s para atalho e clique esquerdo
+  - Toast nativo do Windows de ~7–8s para ações via menu
 
 ### Histórico de clipboard não atualizado
 - O histórico usa monitoramento inteligente com polling adaptativo (0.5s-10s)
@@ -173,7 +174,7 @@ Exemplos:
 - **Recursos mínimos:** Consuma pouca memória e CPU
 - **Segundo plano:** Roda silenciosamente sem interferir em outros apps
 - **Executável:** O .exe não requer Python instalado no computador de destino
-- **Versão:** v0.0.6 - Executável nomeado como `dahora_app_v0.0.6.exe`
+- **Versão:** v0.0.7 - Executável nomeado como `dahora_app_v0.0.7.exe`
 - **Segurança:** Todas as notificações são seguras e não exigem permissões especiais
 - **Interface profissional:** Segui padrões do Windows moderno com tooltips claros
 - **Contador de uso:** Acompanha quantas vezes o app foi acionado
