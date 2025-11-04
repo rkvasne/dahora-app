@@ -36,6 +36,7 @@ from dahora_app import (
     PrefixDialog,
     IconManager,
     MenuBuilder,
+    SettingsDialog,
 )
 from dahora_app.constants import (
     APP_TITLE,
@@ -94,6 +95,7 @@ class DahoraApp:
         self.notification_manager = NotificationManager()
         self.hotkey_manager = HotkeyManager()
         self.prefix_dialog = PrefixDialog()
+        self.settings_dialog = SettingsDialog()
         self.menu_builder = MenuBuilder()
         self.icon = None
     
@@ -127,6 +129,11 @@ class DahoraApp:
         self.prefix_dialog.set_on_save_callback(self._on_prefix_saved)
         self.prefix_dialog.notification_callback = self.notification_manager.show_toast
         
+        # Settings dialog
+        self.settings_dialog.set_current_settings(self.settings_manager.get_all())
+        self.settings_dialog.set_on_save_callback(self._on_settings_saved)
+        self.settings_dialog.notification_callback = self.notification_manager.show_toast
+        
         # Hotkeys
         self.hotkey_manager.set_copy_datetime_callback(lambda: self.copy_datetime(source="Atalho"))
         self.hotkey_manager.set_refresh_menu_callback(self._on_refresh_menu)
@@ -135,6 +142,7 @@ class DahoraApp:
         # Menu builder
         self.menu_builder.set_copy_datetime_callback(self._copy_datetime_menu)
         self.menu_builder.set_set_prefix_callback(self._show_prefix_dialog)
+        self.menu_builder.set_show_settings_callback(self._show_settings_dialog)
         self.menu_builder.set_refresh_menu_callback(self._refresh_menu_action)
         self.menu_builder.set_get_recent_items_callback(self.clipboard_manager.get_recent_items)
         self.menu_builder.set_copy_from_history_callback(self._copy_from_history)
@@ -147,6 +155,34 @@ class DahoraApp:
         self.settings_manager.set_prefix(prefix)
         self.datetime_formatter.set_prefix(prefix)
         self.prefix_dialog.set_prefix(prefix)
+    
+    def _on_settings_saved(self, settings: dict):
+        """Callback quando configurações são salvas"""
+        # Atualiza o settings_manager
+        self.settings_manager.update_all(settings)
+        
+        # Sincroniza componentes que dependem das configurações
+        self.datetime_formatter.set_prefix(settings.get("prefix", ""))
+        
+        # Avisa que algumas mudanças requerem restart
+        needs_restart = False
+        current_settings = self.settings_manager.get_all()
+        
+        # Verifica se hotkeys mudaram
+        if (settings.get("hotkey_copy_datetime") != current_settings.get("hotkey_copy_datetime") or
+            settings.get("hotkey_refresh_menu") != current_settings.get("hotkey_refresh_menu")):
+            needs_restart = True
+        
+        if needs_restart:
+            self.notification_manager.show_toast(
+                "Dahora App", 
+                "Configurações salvas!\n\n⚠️ Reinicie o aplicativo para aplicar mudanças em atalhos.",
+                duration=5
+            )
+        else:
+            self.notification_manager.show_toast("Dahora App", "Configurações salvas com sucesso!")
+        
+        logging.info(f"Configurações atualizadas: {settings}")
     
     def _on_refresh_menu(self):
         """Callback para refresh do menu via hotkey"""
@@ -201,6 +237,12 @@ class DahoraApp:
     def _show_prefix_dialog(self):
         """Mostra diálogo de prefixo"""
         self.prefix_dialog.show()
+    
+    def _show_settings_dialog(self):
+        """Mostra diálogo de configurações avançadas"""
+        # Atualiza configurações antes de mostrar
+        self.settings_dialog.set_current_settings(self.settings_manager.get_all())
+        self.settings_dialog.show()
     
     def _refresh_menu_action(self, icon, item):
         """Atualiza o menu manualmente"""
