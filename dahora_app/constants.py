@@ -30,11 +30,14 @@ PRIVACY_MARKER_FILE = os.path.join(DATA_DIR, ".privacy_accepted")
 
 # Configurações de histórico
 MAX_HISTORY_ITEMS = 100
+DEFAULT_MAX_HISTORY_ITEMS = 100
 
 # Configurações de hotkeys
 HOTKEY_COPY_DATETIME = 'ctrl+shift+q'
 HOTKEY_REFRESH_MENU = 'ctrl+shift+r'
 HOTKEY_CTRL_C = 'ctrl+c'
+DEFAULT_HOTKEY_COPY_DATETIME = 'ctrl+shift+q'
+DEFAULT_HOTKEY_REFRESH_MENU = 'ctrl+shift+r'
 
 # Configurações de log
 LOG_MAX_BYTES = 5 * 1024 * 1024  # 5MB
@@ -43,6 +46,13 @@ LOG_BACKUP_COUNT = 3
 # Configurações de monitoramento de clipboard
 CLIPBOARD_MONITOR_INTERVAL = 3  # segundos
 CLIPBOARD_IDLE_THRESHOLD = 30  # segundos sem atividade
+DEFAULT_CLIPBOARD_MONITOR_INTERVAL = 3
+DEFAULT_CLIPBOARD_IDLE_THRESHOLD = 30
 
 # Formato de data/hora
 DATETIME_FORMAT = '%d.%m.%Y-%H:%M'
+DEFAULT_DATETIME_FORMAT = '%d.%m.%Y-%H:%M'
+
+# Configurações de notificação
+DEFAULT_NOTIFICATION_DURATION = 2  # segundos
+DEFAULT_NOTIFICATION_ENABLED = True
