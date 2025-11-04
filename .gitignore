@@ -43,3 +43,11 @@ htmlcov/
 .tox/
 *.cover
 .hypothesis/
+
+# Backups e arquivos temporários
+*_old.*
+*_backup.*
+*.bak
+*.old
+*.orig
+*~
