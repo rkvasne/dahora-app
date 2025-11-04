@@ -15,19 +15,25 @@
         }
 
         :root {
-            --primary-color: #2563eb;
-            --secondary-color: #0ea5e9;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
+            --primary-color: #0078D4;
+            --primary-light: #2B88D8;
+            --primary-dark: #005A9E;
+            --secondary-color: #0C5DAA;
+            --text-dark: #1e293b;
+            --text-gray: #64748b;
+            --text-light: #cbd5e1;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --light-bg: #f8fafc;
             --dark-bg: #0f172a;
             --dark-card: #1e293b;
-            --light-bg: #f8fafc;
-            --text-dark: #1e293b;
-            --text-light: #64748b;
-            --border-color: #e2e8f0;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --win-blue-900: #0B1E3C;
+            --win-blue-800: #0F2E5C;
+            --win-blue-600: #0956A3;
+            --glass-bg: rgba(255,255,255,0.14);
+            --glass-border: rgba(255,255,255,0.28);
         }
 
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
@@ -97,12 +103,13 @@
         /* Hero Section */
         .hero {
             background: 
-                linear-gradient(135deg, rgba(99, 102, 241, 0.95) 0%, rgba(139, 92, 246, 0.92) 50%, rgba(59, 130, 246, 0.95) 100%),
-                url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+                radial-gradient(900px 600px at 15% -10%, rgba(43,136,216,0.25) 0%, rgba(0,120,212,0.18) 40%, transparent 65%),
+                linear-gradient(135deg, var(--win-blue-900) 0%, var(--win-blue-800) 55%, var(--win-blue-600) 100%);
             padding: 6rem 2rem;
             text-align: center;
             position: relative;
             overflow: hidden;
+            color: white;
         }
 
         .hero::before {
@@ -112,15 +119,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
-                        radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.22;
             pointer-events: none;
-            animation: heroGlow 8s ease-in-out infinite alternate;
-        }
-
-        @keyframes heroGlow {
-            0% { opacity: 0.8; }
-            100% { opacity: 1; }
         }
 
         .hero-container {
@@ -176,15 +177,14 @@
         }
 
         .badge {
-            background: rgba(255, 255, 255, 0.2);
+            background: var(--glass-bg);
             color: white;
             padding: 0.5rem 1rem;
             border-radius: 2rem;
             font-size: 0.9rem;
             font-weight: 500;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
         }
 
         .hero-buttons {
@@ -265,20 +265,11 @@
         }
 
         .section-dark {
-            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            background: radial-gradient(900px circle at var(--mx, 50%) var(--my, 50%), rgba(99,102,241,0.15), transparent 40%),
+                        linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
             color: white;
             position: relative;
-        }
-
-        .section-dark::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
-            pointer-events: none;
+            overflow: hidden;
         }
 
         .section-dark .section-title,
@@ -297,6 +288,10 @@
             margin-bottom: 4rem;
         }
 
+        .section-header .section-subtitle {
+            margin: 0 auto;
+        }
+
         .section-title {
             font-size: 2.5rem;
             font-weight: 800;
@@ -305,8 +300,9 @@
 
         .section-subtitle {
             font-size: 1.2rem;
-            color: var(--text-light);
+            color: var(--text-gray);
             max-width: 700px;
+            margin: 0 auto;
         }
 
         /* Features Grid */
@@ -335,12 +331,12 @@
             right: 0;
             bottom: 0;
             background: radial-gradient(
-                500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-                rgba(59, 130, 246, 0.15),
+                500px circle at var(--x, 50%) var(--y, 50%),
+                rgba(59, 130, 246, 0.18),
                 transparent 55%
             );
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.15s ease;
             pointer-events: none;
             z-index: 0;
         }
@@ -401,7 +397,7 @@
         }
 
         .feature-card p {
-            color: var(--text-light);
+            color: var(--text-gray);
             line-height: 1.7;
         }
 
@@ -1024,6 +1020,56 @@
         </div>
     </section>
 
+    <!-- Installation Section -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🚀 Como Instalar</h2>
+                <p class="section-subtitle">3 passos simples para começar a usar o Dahora App</p>
+            </div>
+            <div class="features-grid" style="grid-template-columns: repeat(3, 1fr); max-width: 1000px; margin: 0 auto;">
+                <div class="feature-card" style="text-align: center;">
+                    <div class="feature-icon" style="margin: 0 auto 1.5rem; font-size: 3rem;">1️⃣</div>
+                    <h3>Download</h3>
+                    <p>
+                        Baixe o arquivo <code>dahora_app_v0.1.0.exe</code> do GitHub Releases.
+                        Apenas 31MB, sem instaladores complexos.
+                    </p>
+                </div>
+
+                <div class="feature-card" style="text-align: center;">
+                    <div class="feature-icon" style="margin: 0 auto 1.5rem; font-size: 3rem;">2️⃣</div>
+                    <h3>Executar</h3>
+                    <p>
+                        Clique duas vezes no arquivo .exe.
+                        O Windows pode perguntar - clique "Executar mesmo assim".
+                    </p>
+                </div>
+
+                <div class="feature-card" style="text-align: center;">
+                    <div class="feature-icon" style="margin: 0 auto 1.5rem; font-size: 3rem;">3️⃣</div>
+                    <h3>Pronto!</h3>
+                    <p>
+                        O ícone aparece na bandeja do Windows.
+                        Pressione <code>Ctrl+Shift+Q</code> para copiar data/hora.
+                    </p>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem; padding: 2rem; background: white; border-radius: 1rem; border: 1px solid var(--border-color); max-width: 800px; margin-left: auto; margin-right: auto; box-shadow: var(--shadow);">
+                <h3 style="margin-bottom: 1rem; color: var(--text-dark);">⚠️ Aviso de Segurança do Windows</h3>
+                <p style="color: var(--text-gray); line-height: 1.7; margin-bottom: 1rem;">
+                    O Windows pode mostrar "Aplicativo não reconhecido" porque o executável não tem assinatura digital
+                    (que custa ~$500/ano). <strong>Isso é normal e seguro!</strong>
+                </p>
+                <p style="color: var(--text-gray); line-height: 1.7;">
+                    <strong>Solução:</strong> Clique em "Mais informações" → "Executar assim mesmo". 
+                    Ou compile o código você mesmo usando <code>python build.py</code> para ter certeza absoluta.
+                </p>
+            </div>
+        </div>
+    </section>
+
     <!-- Download Section -->
     <section id="download" class="download">
         <div class="download-box">
@@ -1220,23 +1266,31 @@
             }
         }
 
-        // Efeito spotlight seguindo o mouse nos cards
+        // Efeito spotlight seguindo o mouse nos cards (EXATO do original)
         document.addEventListener('DOMContentLoaded', () => {
+            // Spotlight nos cards
             const cards = document.querySelectorAll('.feature-card');
-            
             cards.forEach(card => {
                 card.addEventListener('mousemove', (e) => {
                     const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
+                    const x = ((e.clientX - rect.left) / rect.width) * 100 + '%';
+                    const y = ((e.clientY - rect.top) / rect.height) * 100 + '%';
                     
-                    card.style.setProperty('--mouse-x', `${x}px`);
-                    card.style.setProperty('--mouse-y', `${y}px`);
+                    card.style.setProperty('--x', x);
+                    card.style.setProperty('--y', y);
                 });
-                
-                card.addEventListener('mouseleave', () => {
-                    card.style.setProperty('--mouse-x', '50%');
-                    card.style.setProperty('--mouse-y', '50%');
+            });
+
+            // Spotlight nas seções dark
+            const darkSections = document.querySelectorAll('.section-dark');
+            darkSections.forEach(section => {
+                section.addEventListener('mousemove', (e) => {
+                    const rect = section.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100 + '%';
+                    const y = ((e.clientY - rect.top) / rect.height) * 100 + '%';
+                    
+                    section.style.setProperty('--mx', x);
+                    section.style.setProperty('--my', y);
                 });
             });
         });
