@@ -94,10 +94,22 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 50%, #ddd6fe 100%);
             padding: 6rem 2rem;
             text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
         }
 
         .hero-container {
@@ -109,24 +121,28 @@
             font-size: 3.5rem;
             font-weight: 800;
             margin-bottom: 1rem;
-            line-height: 1.2;
+            color: var(--text-dark);
+            position: relative;
         }
 
         .hero-subtitle {
             font-size: 1.5rem;
-            opacity: 0.95;
+            color: var(--text-gray);
             margin-bottom: 2rem;
-            line-height: 1.6;
+            position: relative;
         }
 
         .hero-version {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
+            background: var(--bg-white);
             padding: 0.5rem 1.5rem;
-            border-radius: 50px;
+            border-radius: 2rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            margin-bottom: 1.5rem;
-            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            box-shadow: var(--shadow);
+            position: relative;
         }
 
         .hero-badges {
@@ -464,6 +480,70 @@
         .animate-fade-in {
             animation: fadeInUp 0.6s ease-out;
         }
+
+        /* FAQ Section */
+        .faq {
+            background: var(--bg-white);
+            padding: 5rem 2rem;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--light-bg);
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary-color);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .faq-icon {
+            transition: transform 0.3s;
+            font-size: 1.25rem;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-gray);
+            line-height: 1.7;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -471,15 +551,15 @@
     <header class="header">
         <nav class="nav">
             <a href="#inicio" class="nav-brand">
-                <img src="dahora_icon.png" alt="Dahora App Icon">
+                <img src="icon.ico" alt="Dahora App Icon">
                 <span>Dahora App</span>
             </a>
             <ul class="nav-menu">
                 <li><a href="#recursos" class="nav-link">Recursos</a></li>
                 <li><a href="#novidades" class="nav-link">Novidades</a></li>
-                <li><a href="#screenshots" class="nav-link">Screenshots</a></li>
                 <li><a href="#download" class="nav-link">Download</a></li>
-                <li><a href="https://github.com/rkvasne/dahora-app" class="nav-link">GitHub</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+                <li><a href="https://github.com/rkvasne/dahora-app" target="_blank" rel="noopener noreferrer" class="nav-link">GitHub</a></li>
             </ul>
         </nav>
     </header>
@@ -488,7 +568,7 @@
     <section id="inicio" class="hero">
         <div class="hero-container animate-fade-in">
             <div class="hero-version">🎉 MVP v0.1.0 COMPLETO!</div>
-            <h1 class="hero-title">📅 Dahora App</h1>
+            <h1 class="hero-title"><img src="icon.ico" alt="" style="width: 80px; height: 80px; vertical-align: middle; margin-right: 1rem;">Dahora App</h1>
             <p class="hero-subtitle">
                 Gerenciador de Clipboard com Data/Hora<br>
                 Busca inteligente • Configurações avançadas • 100% privado
@@ -504,38 +584,13 @@
                 <a href="#download" class="btn btn-primary">
                     💾 Download Grátis
                 </a>
-                <a href="https://github.com/rkvasne/dahora-app" class="btn btn-secondary">
+                <a href="https://github.com/rkvasne/dahora-app" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
                     🔗 GitHub
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="stats-grid">
-            <div class="stat-item">
-                <h3>2500+</h3>
-                <p>Linhas de Código</p>
-            </div>
-            <div class="stat-item">
-                <h3>14</h3>
-                <p>Módulos Python</p>
-            </div>
-            <div class="stat-item">
-                <h3>15/15</h3>
-                <p>Testes Passando</p>
-            </div>
-            <div class="stat-item">
-                <h3>95%</h3>
-                <p>Cobertura de Código</p>
-            </div>
-            <div class="stat-item">
-                <h3>v0.1.0</h3>
-                <p>MVP Completo</p>
-            </div>
-        </div>
-    </section>
 
     <!-- Main Features Section -->
     <section id="recursos" class="section">
@@ -675,6 +730,30 @@
                         <strong>Inclui:</strong> Guia de desenvolvimento, testes e arquitetura.
                     </p>
                 </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Interface Moderna</h3>
+                    <p>
+                        Janelas Tkinter com design limpo e profissional. Ordem correta dos botões (Cancelar/Salvar),
+                        validação em tempo real e feedback visual.
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        <strong>UX otimizada:</strong> Tamanhos ajustados, atalhos de teclado e responsividade.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Performance Otimizada</h3>
+                    <p>
+                        Apenas ~31MB, inicia em menos de 1 segundo, usa <1% CPU em idle.
+                        Monitoramento adaptativo do clipboard para economia de recursos.
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        <strong>Leve e rápido:</strong> Ideal para uso contínuo no dia a dia.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -739,6 +818,32 @@
                         • Escalável
                     </p>
                 </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Segurança & Privacidade</h3>
+                    <p>
+                        • Zero telemetria<br>
+                        • 100% offline<br>
+                        • Dados locais (%APPDATA%)<br>
+                        • Atomic writes (anti-corrupção)<br>
+                        • Validação automática<br>
+                        • Open-source auditável
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Performance</h3>
+                    <p>
+                        • Build: ~31MB<br>
+                        • Startup: <1s<br>
+                        • Memória: ~30MB<br>
+                        • CPU idle: <1%<br>
+                        • Monitoramento adaptativo<br>
+                        • Otimizado para uso contínuo
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -748,7 +853,7 @@
         <div class="download-box">
             <h2>📥 Download Grátis</h2>
             <p>MVP v0.1.0 - Completo e pronto para uso!</p>
-            <a href="https://github.com/rkvasne/dahora-app/releases" class="btn btn-primary" style="font-size: 1.3rem; padding: 1.2rem 3rem;">
+            <a href="https://github.com/rkvasne/dahora-app/releases" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="font-size: 1.3rem; padding: 1.2rem 3rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
                 💾 Baixar dahora_app_v0.1.0.exe
             </a>
             <div class="download-info">
@@ -774,19 +879,136 @@
         </div>
     </section>
 
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="faq-container">
+            <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
+                <h2 class="section-title">❓ Perguntas Frequentes</h2>
+                <p class="section-subtitle">Tudo que você precisa saber sobre o Dahora App</p>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    <span>O Dahora App é grátis?</span>
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Sim! O Dahora App é 100% gratuito e open-source. Você pode baixar, usar e modificar sem custos. O código está disponível no GitHub sob licença MIT.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Precisa de instalação?</span>
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Não! O Dahora App é um executável único (.exe) que você pode baixar e executar diretamente. Não há instaladores complexos ou configurações complicadas. Basta baixar e usar.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Meus dados ficam salvos onde?</span>
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Todos os dados são armazenados localmente no seu computador em <code>%APPDATA%\DahoraApp</code>. Isso inclui configurações (settings.json), histórico do clipboard (clipboard_history.json) e logs. Nada é enviado para a internet. Zero telemetria, 100% privado.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Como funciona o histórico do clipboard?</span>
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    O app monitora automaticamente tudo que você copia (Ctrl+C) e salva em um histórico de até 1000 itens (configurável). Você pode acessar os últimos 5 itens direto no menu da bandeja, ou usar Ctrl+Shift+F para buscar em todo o histórico com busca instantânea.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Posso personalizar os atalhos?</span>
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Sim! Na janela de Configurações (clique direito no ícone → Configurações), você pode personalizar todos os atalhos globais na aba "Atalhos". Nota: é necessário reiniciar o app após alterar atalhos, pois hotkeys globais precisam ser re-registradas no Windows.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    <span>O menu da bandeja não atualiza automaticamente?</span>
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    É uma limitação técnica da biblioteca <code>pystray</code>. O menu só atualiza quando você fecha e abre novamente. Soluções: (1) Pressione Ctrl+Shift+R para recarregar manualmente, (2) Feche e abra o menu novamente, ou (3) Use a busca (Ctrl+Shift+F) que sempre mostra dados atualizados em tempo real.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    <span>É seguro? Tem vírus?</span>
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Sim, é totalmente seguro! O código é 100% open-source e pode ser auditado no GitHub. Não há telemetria, não coleta dados, não faz conexões externas. O Windows pode mostrar um aviso de "aplicativo não reconhecido" porque o executável não tem assinatura digital (que custa ~$500/ano). Você pode compilar o código você mesmo para ter certeza absoluta.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Funciona no Windows 11?</span>
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Sim! O Dahora App foi testado e funciona perfeitamente no Windows 10 e Windows 11. Todos os recursos (bandeja do sistema, hotkeys globais, notificações toast) são totalmente compatíveis com ambas as versões.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Como contribuir com o projeto?</span>
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Adoramos contribuições! Você pode: (1) Reportar bugs abrindo uma <a href="https://github.com/rkvasne/dahora-app/issues" target="_blank" rel="noopener noreferrer">issue no GitHub</a>, (2) Sugerir novas features, (3) Fazer um fork e enviar pull requests, (4) Melhorar a documentação, (5) Dar uma ⭐ no repositório. Confira o README.md para mais detalhes sobre desenvolvimento.
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-links">
-            <a href="https://github.com/rkvasne/dahora-app" class="footer-link">GitHub</a>
-            <a href="https://github.com/rkvasne/dahora-app/blob/main/README.md" class="footer-link">Documentação</a>
-            <a href="https://github.com/rkvasne/dahora-app/blob/main/CHANGELOG.md" class="footer-link">Changelog</a>
-            <a href="https://github.com/rkvasne/dahora-app/issues" class="footer-link">Issues</a>
-            <a href="https://github.com/rkvasne/dahora-app/blob/main/LICENSE" class="footer-link">Licença MIT</a>
+            <a href="https://github.com/rkvasne/dahora-app" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+            <a href="https://github.com/rkvasne/dahora-app/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="footer-link">Documentação</a>
+            <a href="https://github.com/rkvasne/dahora-app/blob/main/CHANGELOG.md" target="_blank" rel="noopener noreferrer" class="footer-link">Changelog</a>
+            <a href="https://github.com/rkvasne/dahora-app/issues" target="_blank" rel="noopener noreferrer" class="footer-link">Issues</a>
+            <a href="https://github.com/rkvasne/dahora-app/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="footer-link">Licença MIT</a>
         </div>
         <div class="footer-copyright">
             <p>© 2025 Dahora App v0.1.0 MVP • Feito com ❤️ e Python</p>
             <p style="margin-top: 0.5rem; opacity: 0.7;">100% Open Source • Zero Telemetria • Offline First</p>
         </div>
     </footer>
+
+    <script>
+        function toggleFAQ(button) {
+            const faqItem = button.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Fecha todos os outros itens
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Toggle do item clicado
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
