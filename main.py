@@ -134,6 +134,9 @@ class DahoraApp:
         self.settings_dialog.set_on_save_callback(self._on_settings_saved)
         self.settings_dialog.notification_callback = self.notification_manager.show_toast
         
+        # Clipboard manager
+        self.clipboard_manager.on_history_updated_callback = self._on_history_updated
+        
         # Hotkeys
         self.hotkey_manager.set_copy_datetime_callback(lambda: self.copy_datetime(source="Atalho"))
         self.hotkey_manager.set_refresh_menu_callback(self._on_refresh_menu)
@@ -195,6 +198,16 @@ class DahoraApp:
         if current_content and current_content.strip():
             self.clipboard_manager.add_to_history(current_content)
             logging.info(f"Ctrl+C detectado: {current_content[:50]}...")
+    
+    def _on_history_updated(self):
+        """Callback quando o histórico do clipboard é atualizado"""
+        try:
+            if self.icon:
+                # Força atualização do menu
+                self._update_menu()
+                logging.info("Menu atualizado automaticamente após mudança no histórico")
+        except Exception as e:
+            logging.warning(f"Erro ao atualizar menu automaticamente: {e}")
     
     def copy_datetime(self, icon=None, item=None, source=None):
         """Copia a data e hora para a área de transferência"""

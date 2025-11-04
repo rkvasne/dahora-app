@@ -157,10 +157,10 @@ class MenuBuilder:
         """
         Cria um menu dinâmico que atualiza a cada abertura
         
-        ✨ ATUALIZAÇÃO AUTOMÁTICA: O menu usa um generator que recalcula
-        os itens TODA VEZ que o usuário clica com botão direito no ícone!
-        Isso significa que o histórico se atualiza automaticamente sem
-        precisar usar "Recarregar Itens". 
+        ✨ ATUALIZAÇÃO AUTOMÁTICA: O menu é atualizado automaticamente
+        quando o histórico do clipboard muda através de um callback.
+        Sempre que um novo item é adicionado ao histórico, o menu é
+        regenerado para mostrar os itens mais recentes.
         
         O item "Recarregar Itens" ainda é útil para forçar refresh via hotkey.
         

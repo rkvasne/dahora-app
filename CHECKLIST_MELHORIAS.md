@@ -386,11 +386,17 @@ main.py (392L) - Aplicação principal
 - ✅ Validação completa de todas as entradas
 - ✅ 15/15 testes passando
 
-**DESCOBERTA IMPORTANTE:**
-- 🎉 O histórico JÁ SE ATUALIZA AUTOMATICAMENTE ao abrir menu!
-- O pystray.Menu usa generator que recalcula itens toda vez
-- Não precisa mais usar "Recarregar Itens" manualmente!
-- "Recarregar Itens" ainda útil para refresh via hotkey
+**CORREÇÃO IMPLEMENTADA:**
+- ✅ Menu agora ATUALIZA AUTOMATICAMENTE quando histórico muda!
+- ✅ Callback `on_history_updated_callback` adicionado ao ClipboardManager
+- ✅ Método `_on_history_updated()` força atualização do menu
+- ✅ Funciona para: Ctrl+C, copy_datetime, monitor automático
+- ✅ Não precisa mais clicar "Recarregar Itens" manualmente!
+- ✅ "Recarregar Itens" mantido para refresh manual via hotkey
+
+**NOTA ANTERIOR (INCORRETA - CORRIGIDA):**
+- ❌ pystray.Menu faz CACHE do menu (não atualiza sozinho)
+- ✅ Solução: forçar atualização via `icon.menu = ...` quando histórico mudar
 
 **Concluído em:** 04/11/2025
 
@@ -398,7 +404,7 @@ main.py (392L) - Aplicação principal
 
 ## 🟢 PRIORIDADE BAIXA (v0.2.0 - Features)
 
-### ✅ 12. Adicionar Criptografia Opcional para Histórico
+### ✅ 12. Adicionar Criptografia Opcional para Histórico [PÓS MVP]
 **Status:** ⏳ Pendente | **Responsável:** ___ | **Estimativa:** 6h
 
 - [ ] **12.1** Instalar `cryptography`: adicionar ao `requirements.txt`

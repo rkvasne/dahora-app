@@ -23,6 +23,7 @@ class ClipboardManager:
         self.history_lock = Lock()
         self.clipboard_history: List[Dict[str, str]] = []
         self.last_clipboard_content = ""
+        self.on_history_updated_callback = None  # Callback para notificar mudanças
     
     def load_history(self) -> None:
         """Carrega o histórico do arquivo ou inicia com lista vazia"""
@@ -76,6 +77,13 @@ class ClipboardManager:
             
             atomic_write_json(HISTORY_FILE, self.clipboard_history)
             logging.info(f"Histórico atualizado: total={len(self.clipboard_history)}; último='{text[:50]}...'")
+            
+            # Notifica callback se definido
+            if self.on_history_updated_callback:
+                try:
+                    self.on_history_updated_callback()
+                except Exception as e:
+                    logging.warning(f"Erro ao chamar callback de histórico atualizado: {e}")
     
     def clear_history(self) -> int:
         """
