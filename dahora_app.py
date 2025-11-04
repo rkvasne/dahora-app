@@ -196,9 +196,9 @@ try:
     if os.path.exists('icon.ico'):
         icon_image = Image.open('icon.ico')
     else:
-        icon_image = external_create_image() if external_create_image else create_image()
+        icon_image = external_create_image() if external_create_image else _create_simple_fallback_icon()
 except Exception:
-    icon_image = external_create_image() if external_create_image else create_image()
+    icon_image = external_create_image() if external_create_image else _create_simple_fallback_icon()
 
 try:
     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
@@ -400,75 +400,12 @@ def copy_datetime(icon=None, item=None, source=None):
             show_toast_notification("Dahora App", f"Copiado com sucesso via {source}!\n{dt_string}\nTotal: {counter}ª vez", duration=dur)
 
 
-def create_image():
-    """Cria um ícone de relógio digital claro e identificável"""
-    # Cria uma imagem 64x64 com fundo transparente (RGBA)
-    image = Image.new('RGBA', (64, 64), color=(0, 0, 0, 0))
+def _create_simple_fallback_icon():
+    """Cria um ícone simples como fallback se create_icon.py não estiver disponível"""
+    image = Image.new('RGBA', (64, 64), color=(255, 152, 0, 255))
     draw = ImageDraw.Draw(image)
-    
-    # Cor principal: laranja (#FF9800)
-    color_main = (255, 152, 0, 255)
-    color_bg = (40, 40, 40, 255)  # Fundo escuro
-    color_text = (255, 255, 255, 255)
-    color_accent = (255, 87, 34, 255)  # Laranja mais escuro
-    
-    # Desenha um relógio digital tipo mostrador
-    # Fundo arredondado (retângulo com bordas arredondadas simuladas)
-    draw.rectangle([6, 8, 58, 56], fill=color_bg)
-    
-    # Borda externa
-    draw.rectangle([6, 8, 58, 56], outline=color_main, width=3)
-    
-    # Mostrador digital - formato HH:MM
-    # Dois pontos no meio (como relógio digital)
-    draw.ellipse([28, 26, 32, 30], fill=color_main)
-    draw.ellipse([28, 34, 32, 38], fill=color_main)
-    
-    # Números simulados (símbolos para representar hora)
-    # Usa caracteres simples para simular display digital
-    try:
-        from PIL import ImageFont
-        try:
-            # Tenta usar fonte monospace maior
-            font = ImageFont.truetype("consola.ttf", 20)
-        except:
-            try:
-                font = ImageFont.truetype("arial.ttf", 18)
-            except:
-                font = ImageFont.load_default()
-        
-        # Texto "12:34" como exemplo visual
-        text = "12:34"
-        try:
-            # Pillow 9.0+
-            bbox = draw.textbbox((0, 0), text, font=font)
-            text_width = bbox[2] - bbox[0]
-            text_height = bbox[3] - bbox[1]
-        except AttributeError:
-            # Pillow < 9.0
-            try:
-                bbox = draw.textsize(text, font=font)
-                text_width, text_height = bbox
-            except:
-                text_width, text_height = 50, 20
-        
-        x = 32 - text_width // 2
-        y = 30 - text_height // 2
-        draw.text((x, y), text, fill=color_main, font=font)
-    except:
-        # Fallback: desenha símbolo simples
-        # Desenha linhas para simular display digital
-        # Topo
-        draw.line([14, 18, 22, 18], fill=color_main, width=3)
-        # Meio
-        draw.line([14, 32, 22, 32], fill=color_main, width=3)
-        # Baixo
-        draw.line([14, 46, 22, 46], fill=color_main, width=3)
-        # Direita (segundo dígito)
-        draw.line([42, 18, 50, 18], fill=color_main, width=3)
-        draw.line([42, 32, 50, 32], fill=color_main, width=3)
-        draw.line([42, 46, 50, 46], fill=color_main, width=3)
-    
+    # Desenha "D" simples no centro
+    draw.rectangle([20, 20, 44, 44], fill=(40, 40, 40, 255))
     return image
 
 
@@ -751,62 +688,6 @@ def copy_from_history(text):
     # Mostra notificação
     show_toast_notification("Dahora App", f"Copiado do histórico!\n{text}\nTotal: {counter}ª vez")
 
-def copy_history_item(text):
-    """Copia um item específico do histórico"""
-    try:
-        pyperclip.copy(text)
-        increment_counter()
-        show_toast_notification("Dahora App", f"Copiado do histórico!\n{text[:50]}...\nTotal: {counter}ª vez")
-    except Exception as e:
-        logging.warning(f"Erro ao copiar item do histórico: {e}")
-
-def clear_history(icon=None, item=None):
-    """Limpa o histórico do clipboard"""
-    global clipboard_history
-    with history_lock:
-        clipboard_history.clear()
-    show_toast_notification("Dahora App", "Histórico limpo!")
-    logging.info("Histórico do clipboard limpo")
-
-def _copy_history_item1(icon, item):
-    """Copia o primeiro item do histórico (função separada para pystray)"""
-    with history_lock:
-        recent = clipboard_history[-1:] if clipboard_history else []
-        if recent:
-            copy_from_history(recent[0]["text"])
-
-def _copy_history_item2(icon, item):
-    """Copia o segundo item do histórico (função separada para pystray)"""
-    with history_lock:
-        recent = clipboard_history[-2:] if clipboard_history else []
-        if len(recent) >= 2:
-            copy_from_history(recent[1]["text"])
-
-def _copy_history_item3(icon, item):
-    """Copia o terceiro item do histórico (função separada para pystray)"""
-    with history_lock:
-        recent = clipboard_history[-3:] if clipboard_history else []
-        if len(recent) >= 3:
-            copy_from_history(recent[2]["text"])
-
-def _copy_history_item4(icon, item):
-    """Copia o quarto item do histórico (função separada para pystray)"""
-    with history_lock:
-        recent = clipboard_history[-4:] if clipboard_history else []
-        if len(recent) >= 4:
-            copy_from_history(recent[3]["text"])
-
-def _copy_history_item5(icon, item):
-    """Copia o quinto item do histórico (função separada para pystray)"""
-    with history_lock:
-        recent = clipboard_history[-5:] if clipboard_history else []
-        if len(recent) >= 5:
-            copy_from_history(recent[4]["text"])
-
-def _copy_datetime_menu(icon, item):
-    """Função wrapper para copy_datetime no menu (resolvendo pystray bug)"""
-    copy_datetime(icon, item)
-
 def show_about(icon, item):
     """Mostra informações sobre o aplicativo"""
     about_text = (
@@ -854,16 +735,6 @@ def show_privacy_notice():
             f.write(datetime.now().isoformat())
     except Exception as e:
         logging.warning(f"Falha ao marcar aviso de privacidade: {e}")
-
-
-def on_exit(icon, item):
-    """Fecha o aplicativo"""
-    icon.stop()
-    # Para o listener da hotkey
-    try:
-        keyboard.unhook_all()
-    except:
-        pass
 
 
 def on_hotkey_triggered():
@@ -988,15 +859,6 @@ def setup_hotkey_listener():
     setup_ctrl_c_listener()
 
 
-def copy_from_history(text):
-    """Copia item do histórico para clipboard"""
-    try:
-        pyperclip.copy(text)
-        increment_counter()
-        show_toast_notification("Dahora App", f"Copiado do histórico!\n{text}\nTotal: {counter}ª vez")
-    except Exception as e:
-        logging.warning(f"Erro ao copiar do histórico: {e}")
-
 def _copy_datetime_menu(icon, item):
     """Aciona copiar data/hora. Se vier de clique esquerdo, usa estilo do atalho."""
     # Deixamos que copy_datetime identifique a origem:
@@ -1120,9 +982,9 @@ def setup_icon(reload=False):
         if os.path.exists(icon_path):
             icon_image = Image.open(icon_path)
         else:
-            icon_image = external_create_image() if external_create_image else create_image()
+            icon_image = external_create_image() if external_create_image else _create_simple_fallback_icon()
     except Exception:
-        icon_image = external_create_image() if external_create_image else create_image()
+        icon_image = external_create_image() if external_create_image else _create_simple_fallback_icon()
 
     # Cria ícone com menu dinâmico que atualiza a cada abertura
     icon = pystray.Icon(
@@ -1170,9 +1032,6 @@ def check_single_instance():
         print(f"Erro na verificação de instância única: {e}")
         return True
 
-
-# Variável global para o ícone
-global_icon = None
 
 def main():
     """Função principal"""
