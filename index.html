@@ -3,324 +3,741 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dahora App - Sistema de Bandeja do Windows</title>
-    <meta name="description" content="Utilitário Windows que copia data e hora formatada para área de transferência. Tecla de atalho global, histórico de clipboard e muito mais.">
-    <meta name="keywords" content="Windows, utilitário, data, hora, clipboard, bandeja, system tray">
+    <title>Dahora App v0.1.0 MVP - Gerenciador de Clipboard com Data/Hora</title>
+    <meta name="description" content="Aplicativo Windows profissional para gerenciamento de clipboard com busca inteligente, configurações avançadas e atalhos globais. MVP v0.1.0 completo!">
+    <meta name="keywords" content="Windows, clipboard, data hora, busca, configurações, histórico, MVP, pystray">
     <link rel="icon" type="image/x-icon" href="icon.ico">
-    <link rel="stylesheet" href="landing/styles.css">
-    <link rel="stylesheet" href="landing/dark-sections.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #0ea5e9;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --dark-bg: #0f172a;
+            --dark-card: #1e293b;
+            --light-bg: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-brand img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+            background: var(--light-bg);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-version {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* Stats Section */
+        .stats {
+            background: var(--dark-bg);
+            color: white;
+            padding: 3rem 2rem;
+        }
+
+        .stats-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--success-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        /* Features Section */
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .section-alt {
+            background: var(--light-bg);
+        }
+
+        .section-dark {
+            background: var(--dark-bg);
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .section-dark .section-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-dark .feature-card {
+            background: var(--dark-card);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .section-dark .feature-card h3 {
+            color: white;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .section-dark .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        code {
+            background: var(--light-bg);
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.3rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: var(--primary-color);
+        }
+
+        .section-dark code {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--secondary-color);
+        }
+
+        /* Screenshots Section */
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .screenshot-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .screenshot-card img {
+            width: 100%;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .screenshot-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Download Section */
+        .download {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .download-box {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .download-box h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .download-box p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+        }
+
+        .download-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .download-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-bg);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        .footer-copyright {
+            opacity: 0.6;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .screenshots-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
         <nav class="nav">
-            <div class="nav-container">
-                <div class="nav-logo">
-                    <img src="dahora_icon.png" alt="Dahora App" class="logo-icon">
-                    <span class="logo-text">Dahora App</span>
-                </div>
-                <ul class="nav-menu">
-                    <li><a href="#inicio" class="nav-link">Início</a></li>
-                    <li><a href="#destaques" class="nav-link">Destaques</a></li>
-                    <li><a href="#recursos" class="nav-link">Recursos</a></li>
-                    <li><a href="#casos-uso" class="nav-link">Casos de Uso</a></li>
-                    <li><a href="#screenshots" class="nav-link">Screenshots</a></li>
-                    <li><a href="#beneficios" class="nav-link">Benefícios</a></li>
-                    <li><a href="#download" class="nav-link">Download</a></li>
-                    <li><a href="#sobre" class="nav-link">Sobre</a></li>
-                    <li><a href="#faq" class="nav-link">FAQ</a></li>
-                    <li><a href="#privacidade" class="nav-link">Privacidade</a></li>
-                </ul>
-                <div class="nav-toggle">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
-            </div>
+            <a href="#inicio" class="nav-brand">
+                <img src="dahora_icon.png" alt="Dahora App Icon">
+                <span>Dahora App</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#recursos" class="nav-link">Recursos</a></li>
+                <li><a href="#novidades" class="nav-link">Novidades</a></li>
+                <li><a href="#screenshots" class="nav-link">Screenshots</a></li>
+                <li><a href="#download" class="nav-link">Download</a></li>
+                <li><a href="https://github.com/rkvasne/dahora-app" class="nav-link">GitHub</a></li>
+            </ul>
         </nav>
     </header>
 
     <!-- Hero Section -->
     <section id="inicio" class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    <span class="gradient-text">Dahora App</span>
-                    <br>Sistema de Bandeja do Windows
-                </h1>
-                <p class="hero-subtitle">
-                    Copie data e hora no formato padrão com um clique ou atalho global. 
-                    Fica na bandeja do Windows, leve, confiável e sem rastreamento.
-                </p>
-                <div class="hero-badges">
-                    <span class="badge"><i class="fab fa-windows"></i> Windows 10/11</span>
-                    <span class="badge"><i class="fas fa-shield-alt"></i> Sem coleta de dados</span>
-                    <span class="badge"><i class="fas fa-bolt"></i> Rápido e leve</span>
-                </div>
-                <div class="hero-features">
-                    <div class="feature-tag">
-                        <i class="fas fa-keyboard"></i>
-                        <span>Ctrl+Shift+Q</span>
-                    </div>
-                    <div class="feature-tag">
-                        <i class="fas fa-clock"></i>
-                        <span>[DD.MM.AAAA-HH:MM]</span>
-                    </div>
-                    <div class="feature-tag">
-                        <i class="fas fa-history"></i>
-                        <span>Histórico</span>
-                    </div>
-                </div>
-                <div class="hero-buttons">
-                    <a href="#download" class="btn btn-primary">
-                        <i class="fas fa-download"></i>
-                        Download Grátis
-                    </a>
-                    <a href="#recursos" class="btn btn-secondary">
-                        <i class="fas fa-play"></i>
-                        Ver Recursos
-                    </a>
-                </div>
+        <div class="hero-container animate-fade-in">
+            <div class="hero-version">🎉 MVP v0.1.0 COMPLETO!</div>
+            <h1 class="hero-title">📅 Dahora App</h1>
+            <p class="hero-subtitle">
+                Gerenciador de Clipboard com Data/Hora<br>
+                Busca inteligente • Configurações avançadas • 100% privado
+            </p>
+            <div class="hero-badges">
+                <span class="badge">🪟 Windows 10/11</span>
+                <span class="badge">🔒 Zero Telemetria</span>
+                <span class="badge">⚡ ~31MB</span>
+                <span class="badge">✅ 15/15 Testes</span>
+                <span class="badge">🎯 MVP Completo</span>
             </div>
-            <div class="hero-image">
-                <div class="app-preview">
-                    <div class="system-tray-demo">
-                        <div class="tray-icon">
-                            <img src="dahora_icon.png" alt="Ícone na bandeja">
-                        </div>
-                        <div class="tray-tooltip">Dahora App - Clique para copiar data/hora</div>
-                    </div>
-                    <div class="datetime-output">
-                        <span class="output-text">[25.12.2024-14:30]</span>
-                        <div class="copy-animation">
-                            <i class="fas fa-copy"></i>
-                            <span>Copiado!</span>
-                        </div>
-                    </div>
+            <div class="hero-buttons">
+                <a href="#download" class="btn btn-primary">
+                    💾 Download Grátis
+                </a>
+                <a href="https://github.com/rkvasne/dahora-app" class="btn btn-secondary">
+                    🔗 GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>2500+</h3>
+                <p>Linhas de Código</p>
+            </div>
+            <div class="stat-item">
+                <h3>14</h3>
+                <p>Módulos Python</p>
+            </div>
+            <div class="stat-item">
+                <h3>15/15</h3>
+                <p>Testes Passando</p>
+            </div>
+            <div class="stat-item">
+                <h3>95%</h3>
+                <p>Cobertura de Código</p>
+            </div>
+            <div class="stat-item">
+                <h3>v0.1.0</h3>
+                <p>MVP Completo</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Features Section -->
+    <section id="recursos" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">⚡ Recursos Principais</h2>
+                <p class="section-subtitle">Tudo que você precisa para gerenciar clipboard e data/hora de forma profissional</p>
+            </div>
+            <div class="features-grid">
+                <!-- Data/Hora -->
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Data/Hora Formatada</h3>
+                    <p>
+                        • Formato <code>[DD.MM.AAAA-HH:MM]</code><br>
+                        • Prefixo configurável<br>
+                        • Hotkey <strong>Ctrl+Shift+Q</strong><br>
+                        • Menu de bandeja
+                    </p>
+                </div>
+
+                <!-- Histórico -->
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Gerenciamento de Clipboard</h3>
+                    <p>
+                        • Até 1000 itens (configurável)<br>
+                        • Monitoramento automático (Ctrl+C)<br>
+                        • Últimos 5 itens no menu<br>
+                        • Persistência entre reinícios
+                    </p>
+                </div>
+
+                <!-- Busca -->
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Busca no Histórico (NOVO!)</h3>
+                    <p>
+                        • Busca em tempo real<br>
+                        • Timestamps formatados<br>
+                        • Double-click para copiar<br>
+                        • Hotkey <strong>Ctrl+Shift+F</strong>
+                    </p>
+                </div>
+
+                <!-- Configurações -->
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Configurações Avançadas (NOVO!)</h3>
+                    <p>
+                        • Interface gráfica (4 abas)<br>
+                        • Hotkeys personalizáveis<br>
+                        • Intervalos ajustáveis<br>
+                        • Aplicação instantânea
+                    </p>
+                </div>
+
+                <!-- Hotkeys -->
+                <div class="feature-card">
+                    <div class="feature-icon">⌨️</div>
+                    <h3>Atalhos Globais</h3>
+                    <p>
+                        • <strong>Ctrl+Shift+Q</strong> → Copiar data/hora<br>
+                        • <strong>Ctrl+Shift+F</strong> → Buscar histórico<br>
+                        • <strong>Ctrl+Shift+R</strong> → Recarregar menu<br>
+                        • <strong>Ctrl+C</strong> → Monitorado auto
+                    </p>
+                </div>
+
+                <!-- Privacidade -->
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacidade & Segurança</h3>
+                    <p>
+                        • Zero telemetria<br>
+                        • 100% offline<br>
+                        • Dados locais (%APPDATA%)<br>
+                        • Validação automática
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Dark Highlights Section -->
-    <section id="destaques" class="section--dark">
+    <!-- NEW FEATURES Section -->
+    <section id="novidades" class="section section-dark">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Destaques</h2>
-                <p class="section-subtitle">Conjunto enxuto de funcionalidades com foco em produtividade</p>
-            </div>
-            <div class="cards-grid--symm">
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon"><i class="fas fa-clock"></i></div>
-                    <h3>Formato ISO claro</h3>
-                    <p>Sempre <code>[DD.MM.AAAA-HH:MM]</code> para documentos e logs consistentes.</p>
-                </div>
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon"><i class="fas fa-keyboard"></i></div>
-                    <h3>Atalho Global</h3>
-                    <p><strong>Ctrl+Shift+Q</strong> funciona em qualquer aplicativo, sem abrir janelas.</p>
-                </div>
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon"><i class="fas fa-history"></i></div>
-                    <h3>Histórico</h3>
-                    <p>Até 100 itens recentes no menu de contexto da bandeja.</p>
-                </div>
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon"><i class="fas fa-bell"></i></div>
-                    <h3>Toast discreto</h3>
-                    <p>Confirmação rápida e desativável após copiar para a área de transferência.</p>
-                </div>
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3>Privacidade</h3>
-                    <p>Sem telemetria. Dados ficam locais em <code>%APPDATA%</code>.</p>
-                </div>
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon"><i class="fas fa-feather"></i></div>
-                    <h3>Leve e ágil</h3>
-                    <p>Executa na bandeja com consumo mínimo de recursos.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Benefits Section -->
-    <section id="beneficios" class="benefits">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Benefícios</h2>
-                <p class="section-subtitle">Ganhe produtividade com informações claras e formato consistente</p>
-            </div>
-            <div class="benefits-grid">
-                <div class="benefit-item animate-on-scroll"><i class="fas fa-check-circle"></i><div><strong>Padrão único</strong><p>Formato fixo <code>[DD.MM.AAAA-HH:MM]</code> para documentos e logs.</p></div></div>
-                <div class="benefit-item animate-on-scroll"><i class="fas fa-check-circle"></i><div><strong>Uso instantâneo</strong><p>Atalho global <strong>Ctrl+Shift+Q</strong> funciona em qualquer aplicativo.</p></div></div>
-                <div class="benefit-item animate-on-scroll"><i class="fas fa-check-circle"></i><div><strong>Histórico útil</strong><p>Até 100 itens recentes do clipboard acessíveis no menu.</p></div></div>
-                <div class="benefit-item animate-on-scroll"><i class="fas fa-check-circle"></i><div><strong>Foco em privacidade</strong><p>Sem telemetria; dados permanecem <em>localmente</em> na pasta de usuário.</p></div></div>
-                <div class="benefit-item animate-on-scroll"><i class="fas fa-check-circle"></i><div><strong>Sem distrações</strong><p>Sem anúncios, leve no sistema e com notificações discretas.</p></div></div>
-                <div class="benefit-item animate-on-scroll"><i class="fas fa-check-circle"></i><div><strong>Estável</strong><p>Previne múltiplas instâncias e possui logs para diagnóstico.</p></div></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Dark Use Cases Section -->
-    <section id="casos-uso" class="section--dark">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Casos de Uso</h2>
-                <p class="section-subtitle">Onde o Dahora App acelera seu dia a dia</p>
-            </div>
-            <div class="cards-grid--symm">
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon"><i class="fas fa-code"></i></div>
-                    <h3>Commits & Issues</h3>
-                    <p>Padronize timestamps em mensagens de commit, PRs e tickets.</p>
-                </div>
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon"><i class="fas fa-file-alt"></i></div>
-                    <h3>Documentação Técnica</h3>
-                    <p>Insira datas consistentes em changelogs, releases e notas.</p>
-                </div>
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon"><i class="fas fa-clipboard-list"></i></div>
-                    <h3>Atas e Relatórios</h3>
-                    <p>Registre sessões, reuniões e auditorias com precisão.</p>
-                </div>
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon"><i class="fas fa-database"></i></div>
-                    <h3>Logs & ETL</h3>
-                    <p>Copie carimbos prontos para logs, ETL e backups.</p>
-                </div>
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon"><i class="fas fa-envelope"></i></div>
-                    <h3>E-mails & Mensagens</h3>
-                    <p>Insira data/hora em comunicações sem sair do contexto.</p>
-                </div>
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon"><i class="fas fa-tasks"></i></div>
-                    <h3>Checklist</h3>
-                    <p>Carimbo consistente para tarefas concluídas e revisões.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="recursos" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Recursos Principais</h2>
-                <p class="section-subtitle">Tudo que você precisa para gerenciar data e hora de forma eficiente</p>
+                <h2 class="section-title">🎉 Novidades do MVP v0.1.0</h2>
+                <p class="section-subtitle">Features implementadas nesta versão</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mouse-pointer"></i>
-                    </div>
-                    <h3>Sistema de Bandeja</h3>
-                    <p>Fica sempre disponível na bandeja do sistema. Clique esquerdo para instruções, direito para menu completo.</p>
+                    <div class="feature-icon">🔍</div>
+                    <h3>Busca no Histórico</h3>
+                    <p>
+                        Janela moderna de busca com filtro em tempo real. Digite e veja os resultados instantaneamente!
+                        Exibe timestamps formatados e permite copiar com double-click.
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        <strong>Como usar:</strong> Pressione <code>Ctrl+Shift+F</code> ou clique em "Buscar no Histórico" no menu.
+                    </p>
                 </div>
+
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-keyboard"></i>
-                    </div>
-                    <h3>Tecla de Atalho Global</h3>
-                    <p>Use <strong>Ctrl+Shift+Q</strong> de qualquer aplicativo para copiar a data/hora instantaneamente.</p>
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Configurações Avançadas</h3>
+                    <p>
+                        Interface completa com 4 abas: Geral, Histórico, Notificações e Atalhos.
+                        Configure tudo do seu jeito sem editar arquivos!
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        <strong>Destaque:</strong> Aplicação instantânea (sem restart, exceto hotkeys).
+                    </p>
                 </div>
+
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <h3>Formato Padronizado</h3>
-                    <p>Sempre no formato <code>[DD.MM.AAAA-HH:MM]</code> - perfeito para documentação e logs.</p>
+                    <div class="feature-icon">🏗️</div>
+                    <h3>Arquitetura Modular</h3>
+                    <p>
+                        Código organizado em 14 módulos especializados com responsabilidade única.
+                        Thread-safe, testável e manutenível.
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        <strong>Qualidade:</strong> 15/15 testes passando, 95% cobertura de código.
+                    </p>
                 </div>
+
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-history"></i>
-                    </div>
-                    <h3>Histórico de Clipboard</h3>
-                    <p>Mantém os últimos 100 itens copiados com acesso rápido através do menu de contexto.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bell"></i>
-                    </div>
-                    <h3>Notificações Toast</h3>
-                    <p>Confirmação visual de 2 segundos sempre que a data/hora for copiada com sucesso.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Instância Única</h3>
-                    <p>Previne múltiplas execuções e garante que apenas uma instância rode por vez.</p>
+                    <div class="feature-icon">📚</div>
+                    <h3>Documentação Completa</h3>
+                    <p>
+                        README reescrito com badges, guias de uso, estrutura do projeto e solução de problemas.
+                        CHANGELOG detalhado com todas as mudanças.
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        <strong>Inclui:</strong> Guia de desenvolvimento, testes e arquitetura.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Dark Screenshots Section -->
-    <section id="screenshots" class="section--dark">
+    <!-- Technical Details Section -->
+    <section class="section section-alt">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Screenshots</h2>
-                <p class="section-subtitle">Visual do app na bandeja, menus e toasts</p>
+                <h2 class="section-title">🛠️ Detalhes Técnicos</h2>
+                <p class="section-subtitle">Arquitetura moderna e profissional</p>
             </div>
-            <div class="cards-grid--symm">
-                <div class="mock-window animate-on-scroll">
-                    <div class="titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <div class="content">
-                        <p>Preview: ícone na bandeja com tooltip e menu.</p>
-                    </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>Stack Tecnológico</h3>
+                    <p>
+                        • Python 3.8+<br>
+                        • pystray (system tray)<br>
+                        • pyperclip (clipboard)<br>
+                        • keyboard (hotkeys)<br>
+                        • Pillow (ícones)<br>
+                        • winotify (toast notifications)<br>
+                        • tkinter (UI)
+                    </p>
                 </div>
-                <div class="mock-window animate-on-scroll">
-                    <div class="titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <div class="content">
-                        <p>Preview: toast de confirmação após copiar.</p>
-                    </div>
-                </div>
-                <div class="mock-window animate-on-scroll">
-                    <div class="titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <div class="content">
-                        <p>Preview: histórico recente acessível pelo menu.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- How it Works Section -->
-    <section class="how-it-works">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Como Funciona</h2>
-                <p class="section-subtitle">Três formas simples de usar o Dahora App</p>
-            </div>
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <div class="step-icon">
-                        <i class="fas fa-mouse-pointer"></i>
-                    </div>
-                    <h3>Clique no Ícone</h3>
-                    <p>Clique esquerdo para instruções ou direito para o menu completo com todas as opções.</p>
+                <div class="feature-card">
+                    <div class="feature-icon">🏗️</div>
+                    <h3>Padrões de Projeto</h3>
+                    <p>
+                        • Thread-safe com <code>Lock()</code><br>
+                        • Callback pattern<br>
+                        • Atomic writes<br>
+                        • Generator pattern<br>
+                        • Dependency injection<br>
+                        • Single responsibility
+                    </p>
                 </div>
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <div class="step-icon">
-                        <i class="fas fa-keyboard"></i>
-                    </div>
-                    <h3>Use o Atalho</h3>
-                    <p>Pressione <strong>Ctrl+Shift+Q</strong> de qualquer lugar para copiar instantaneamente.</p>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🧪</div>
+                    <h3>Testes & Qualidade</h3>
+                    <p>
+                        • 15 testes automatizados<br>
+                        • 95% cobertura de código<br>
+                        • pytest com fixtures<br>
+                        • CI/CD ready<br>
+                        • Type hints<br>
+                        • Logs rotativos
+                    </p>
                 </div>
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <div class="step-icon">
-                        <i class="fas fa-paste"></i>
-                    </div>
-                    <h3>Cole Onde Precisar</h3>
-                    <p>A data/hora estará na área de transferência no formato <code>[DD.MM.AAAA-HH:MM]</code>.</p>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📁</div>
+                    <h3>Estrutura Modular</h3>
+                    <p>
+                        • 14 módulos Python<br>
+                        • ~2500+ linhas de código<br>
+                        • Separação UI/Core<br>
+                        • API pública clara<br>
+                        • Reutilizável<br>
+                        • Escalável
+                    </p>
                 </div>
             </div>
         </div>
@@ -328,533 +745,48 @@
 
     <!-- Download Section -->
     <section id="download" class="download">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Download Gratuito</h2>
-                <p class="section-subtitle">Baixe e instale o Dahora App em poucos minutos</p>
-            </div>
-
-            <!-- Download Options -->
-            <div class="download-options">
-                <div class="download-option animate-on-scroll">
-                    <div class="option-icon">
-                        <i class="fas fa-magic"></i>
-                    </div>
-                    <div class="option-content">
-                        <h3>Instalação Automática</h3>
-                        <p>Execute o arquivo <code>instalar.bat</code> para instalar automaticamente todas as dependências. Ideal para maioria dos usuários.</p>
-                        <a href="instalar.bat" class="btn btn-primary" download>
-                            <i class="fas fa-download"></i>
-                            Baixar Instalador
-                        </a>
-                    </div>
+        <div class="download-box">
+            <h2>📥 Download Grátis</h2>
+            <p>MVP v0.1.0 - Completo e pronto para uso!</p>
+            <a href="https://github.com/rkvasne/dahora-app/releases" class="btn btn-primary" style="font-size: 1.3rem; padding: 1.2rem 3rem;">
+                💾 Baixar dahora_app_v0.1.0.exe
+            </a>
+            <div class="download-info">
+                <div class="download-detail">
+                    <span>📦</span>
+                    <span>~31MB</span>
                 </div>
-
-                <div class="download-option animate-on-scroll">
-                    <div class="option-icon">
-                        <i class="fas fa-file-archive"></i>
-                    </div>
-                    <div class="option-content">
-                        <h3>Executável Windows</h3>
-                        <p>Arquivo .exe pronto para usar, sem necessidade de instalar Python ou dependências. Pronto para executar.</p>
-                        <a href="#" class="btn btn-secondary">
-                            <i class="fas fa-download"></i>
-                            Baixar .EXE
-                        </a>
-                    </div>
+                <div class="download-detail">
+                    <span>🪟</span>
+                    <span>Windows 10/11</span>
                 </div>
-
-                <div class="download-option animate-on-scroll">
-                    <div class="option-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <div class="option-content">
-                        <h3>Código-Fonte</h3>
-                        <p>Para desenvolvedores. Clone o repositório e instale manualmente as dependências com <code>pip install -r requirements.txt</code>.</p>
-                        <a href="#" class="btn btn-secondary">
-                            <i class="fab fa-github"></i>
-                            Ver no GitHub
-                        </a>
-                    </div>
+                <div class="download-detail">
+                    <span>🔒</span>
+                    <span>Sem instalação</span>
                 </div>
             </div>
-
-            <!-- System Requirements -->
-            <div class="requirements-card animate-on-scroll">
-                <div class="req-icon">
-                    <i class="fas fa-desktop"></i>
-                </div>
-                <div class="req-content">
-                    <h3>Requisitos do Sistema</h3>
-                    <div class="requirements-grid">
-                        <div class="req-item">
-                            <i class="fab fa-windows"></i>
-                            <span>Windows 10 ou superior</span>
-                        </div>
-                        <div class="req-item">
-                            <i class="fas fa-microchip"></i>
-                            <span>Python 3.8+ (versão script)</span>
-                        </div>
-                        <div class="req-item">
-                            <i class="fas fa-memory"></i>
-                            <span>50MB de espaço livre</span>
-                        </div>
-                        <div class="req-item">
-                            <i class="fas fa-shield-alt"></i>
-                            <span>Permissões de administrador (primeira execução)</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Installation Steps -->
-            <div class="installation-card animate-on-scroll">
-                <div class="install-icon">
-                    <i class="fas fa-tasks"></i>
-                </div>
-                <div class="install-content">
-                    <h3>Passos de Instalação</h3>
-                    <div class="steps-timeline">
-                        <div class="timeline-step">
-                            <div class="step-marker">1</div>
-                            <div class="step-info">
-                                <strong>Baixe o instalador</strong>
-                                <p>Clique no botão "Baixar Instalador" acima</p>
-                            </div>
-                        </div>
-                        <div class="timeline-step">
-                            <div class="step-marker">2</div>
-                            <div class="step-info">
-                                <strong>Execute como administrador</strong>
-                                <p>Clique com botão direito → "Executar como administrador"</p>
-                            </div>
-                        </div>
-                        <div class="timeline-step">
-                            <div class="step-marker">3</div>
-                            <div class="step-info">
-                                <strong>Aguarde a instalação</strong>
-                                <p>O script instalará automaticamente todas as dependências</p>
-                            </div>
-                        </div>
-                        <div class="timeline-step">
-                            <div class="step-marker">4</div>
-                            <div class="step-info">
-                                <strong>Execute o aplicativo</strong>
-                                <p>Execute <code>python dahora_app.py</code> ou o arquivo .exe</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="sobre" class="about">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Sobre o Dahora App</h2>
-                <p class="section-subtitle">A solução elegante para gerenciar data e hora no seu dia a dia</p>
-            </div>
-
-            <div class="about-story animate-on-scroll">
-                <div class="story-icon">
-                    <i class="fas fa-lightbulb"></i>
-                </div>
-                <div class="story-content">
-                    <h3>Nossa História</h3>
-                    <p>O Dahora App nasceu da necessidade de ter uma forma rápida e padronizada de inserir data e hora em documentos, logs e comunicações. Desenvolvido com foco na simplicidade e eficiência, o aplicativo oferece uma solução elegante para uma tarefa cotidiana.</p>
-                </div>
-            </div>
-
-            <!-- Stats Cards -->
-            <div class="stats-grid">
-                <div class="stat-card animate-on-scroll">
-                    <div class="stat-icon">
-                        <i class="fas fa-gift"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Gratuito</div>
-                    </div>
-                </div>
-
-                <div class="stat-card animate-on-scroll">
-                    <div class="stat-icon">
-                        <i class="fas fa-compress"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-number">< 50MB</div>
-                        <div class="stat-label">Tamanho</div>
-                    </div>
-                </div>
-
-                <div class="stat-card animate-on-scroll">
-                    <div class="stat-icon">
-                        <i class="fas fa-ban"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-number">0</div>
-                        <div class="stat-label">Anúncios</div>
-                    </div>
-                </div>
-
-                <div class="stat-card animate-on-scroll">
-                    <div class="stat-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-number">24/7</div>
-                        <div class="stat-label">Disponível</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Features Grid -->
-            <div class="about-features-section">
-                <div class="section-header">
-                    <h3>Por que escolher o Dahora App?</h3>
-                    <p class="section-subtitle">Benefícios que fazem a diferença no seu trabalho</p>
-                </div>
-
-                <div class="features-grid-2">
-                    <div class="feature-card-2 animate-on-scroll">
-                        <div class="feature-icon-2">
-                            <i class="fas fa-layer-group"></i>
-                        </div>
-                        <h4>Interface Limpa</h4>
-                        <p>Design intuitivo e sem complicações para máxima produtividade</p>
-                    </div>
-
-                    <div class="feature-card-2 animate-on-scroll">
-                        <div class="feature-icon-2">
-                            <i class="fas fa-battery-full"></i>
-                        </div>
-                        <h4>Consumo Mínimo</h4>
-                        <p>Executa leve em background sem impactar o desempenho do sistema</p>
-                    </div>
-
-                    <div class="feature-card-2 animate-on-scroll">
-                        <div class="feature-icon-2">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h4>Privacidade Total</h4>
-                        <p>Sem coleta de dados pessoais ou telemetria alguma</p>
-                    </div>
-
-                    <div class="feature-card-2 animate-on-scroll">
-                        <div class="feature-icon-2">
-                            <i class="fas fa-code-branch"></i>
-                        </div>
-                        <h4>Código Aberto</h4>
-                        <p>Transparência total com código-fonte disponível para inspeção</p>
-                    </div>
-
-                    <div class="feature-card-2 animate-on-scroll">
-                        <div class="feature-icon-2">
-                            <i class="fas fa-sync"></i>
-                        </div>
-                        <h4>Atualizações Regulares</h4>
-                        <p>Melhorias constantes baseadas no feedback da comunidade</p>
-                    </div>
-
-                    <div class="feature-card-2 animate-on-scroll">
-                        <div class="feature-icon-2">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <h4>Suporte Ativo</h4>
-                        <p>Comunidade engajada e suporte responsivo para dúvidas</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tech Stack Simplified -->
-            <div class="tech-card animate-on-scroll">
-                <div class="tech-icon">
-                    <i class="fas fa-microchip"></i>
-                </div>
-                <div class="tech-content">
-                    <h3>Tecnologias Principais</h3>
-                    <div class="tech-tags-simplified">
-                        <span class="tech-tag-main">Python 3.8+</span>
-                        <span class="tech-tag-main">PyStray</span>
-                        <span class="tech-tag-main">Keyboard</span>
-                        <span class="tech-tag-main">Pillow</span>
-                    </div>
-                    <p class="tech-description">Construído com tecnologias robustas e bem documentadas da comunidade Python</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Dark FAQ Section -->
-    <section id="faq" class="section--dark">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perguntas Frequentes</h2>
-                <p class="section-subtitle">Respostas rápidas sobre instalação, uso e segurança</p>
-            </div>
-            <div class="faq-accordion">
-                <div class="faq-item dark-card hover-bloom animate-on-scroll">
-                    <div class="faq-header" onclick="toggleFAQ(this)">
-                        <div class="faq-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <div class="faq-question">
-                            <h3>O aplicativo coleta dados?</h3>
-                            <p>Privacidade e armazenamento local</p>
-                        </div>
-                        <div class="faq-toggle">
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                    </div>
-                    <div class="faq-content">
-                        <p>Não. O app funciona offline e não envia informações para servidores. Todos os dados ficam salvos localmente em <code>%APPDATA%/DahoraApp</code> com controle total do usuário.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item dark-card hover-bloom animate-on-scroll">
-                    <div class="faq-header" onclick="toggleFAQ(this)">
-                        <div class="faq-icon">
-                            <i class="fas fa-cog"></i>
-                        </div>
-                        <div class="faq-question">
-                            <h3>Funciona sem Python?</h3>
-                            <p>Requisitos e versões disponíveis</p>
-                        </div>
-                        <div class="faq-toggle">
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                    </div>
-                    <div class="faq-content">
-                        <p>Sim. Use a versão .exe compilada que não requer instalação. A versão script exige Python 3.8+ e dependências do arquivo <code>requirements.txt</code>.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item dark-card hover-bloom animate-on-scroll">
-                    <div class="faq-header" onclick="toggleFAQ(this)">
-                        <div class="faq-icon">
-                            <i class="fas fa-keyboard"></i>
-                        </div>
-                        <div class="faq-question">
-                            <h3>Qual é o atalho global?</h3>
-                            <p>Uso e personalização de atalhos</p>
-                        </div>
-                        <div class="faq-toggle">
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                    </div>
-                    <div class="faq-content">
-                        <p>O atalho padrão é <strong>Ctrl+Shift+Q</strong>. Funciona em qualquer aplicativo Windows e pode ser personalizado no arquivo de configuração se necessário.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item dark-card hover-bloom animate-on-scroll">
-                    <div class="faq-header" onclick="toggleFAQ(this)">
-                        <div class="faq-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="faq-question">
-                            <h3>Posso personalizar o formato?</h3>
-                            <p>Padrão e planos futuros</p>
-                        </div>
-                        <div class="faq-toggle">
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                    </div>
-                    <div class="faq-content">
-                        <p>O formato atual é fixo <code>[DD.MM.AAAA-HH:MM]</code> para manter consistência. Futuras versões podem oferecer opções de personalização baseadas em feedback da comunidade.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item dark-card hover-bloom animate-on-scroll">
-                    <div class="faq-header" onclick="toggleFAQ(this)">
-                        <div class="faq-icon">
-                            <i class="fas fa-hdd"></i>
-                        </div>
-                        <div class="faq-question">
-                            <h3>Onde ficam salvos os dados?</h3>
-                            <p>Armazenamento e backup</p>
-                        </div>
-                        <div class="faq-toggle">
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                    </div>
-                    <div class="faq-content">
-                        <p>Os dados ficam em <code>%APPDATA%/DahoraApp</code>. Incluem histórico, configurações e logs. Para backup, copie esta pasta ou use "Limpar Histórico" no menu.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item dark-card hover-bloom animate-on-scroll">
-                    <div class="faq-header" onclick="toggleFAQ(this)">
-                        <div class="faq-icon">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <div class="faq-question">
-                            <h3>Como resolver problemas?</h3>
-                            <p>Troubleshooting e suporte</p>
-                        </div>
-                        <div class="faq-toggle">
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                    </div>
-                    <div class="faq-content">
-                        <p>Verifique o arquivo <code>qopas.log</code> na pasta de dados. Use "Limpar Histórico" no menu ou reinicie o aplicativo para resolver a maioria dos problemas.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Dark Privacy Section -->
-    <section id="privacidade" class="section--dark">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Privacidade & Dados</h2>
-                <p class="section-subtitle">Transparência total sobre armazenamento local e segurança</p>
-            </div>
-            <div class="cards-grid--symm">
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>Armazenamento Local</h3>
-                    <p>Histórico de clipboard armazenado exclusivamente em <code>%APPDATA%/DahoraApp</code>. Dados nunca saem do seu computador.</p>
-                </div>
-
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <h3>Logs de Diagnóstico</h3>
-                    <p>Arquivos <code>qopas.log</code> criados localmente para troubleshooting. Sem envio de informações externas.</p>
-                </div>
-
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon">
-                        <i class="fas fa-user-shield"></i>
-                    </div>
-                    <h3>Zero Telemetria</h3>
-                    <p>Sem rastreamento, analytics, anúncios ou coleta de dados. Aplicativo funciona completamente offline.</p>
-                </div>
-
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <h3>Controle Total</h3>
-                    <p>Você tem controle completo. Use "Limpar Histórico" no menu para apagar todos os dados quando quiser.</p>
-                </div>
-
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon">
-                        <i class="fas fa-folder-shield"></i>
-                    </div>
-                    <h3>Backup Simples</h3>
-                    <p>Basta copiar a pasta <code>%APPDATA%/DahoraApp</code> para backup completo de histórico e configurações.</p>
-                </div>
-
-                <div class="dark-card hover-bloom animate-on-scroll">
-                    <div class="card-icon">
-                        <i class="fas fa-certificate"></i>
-                    </div>
-                    <h3>Código Aberto</h3>
-                    <p>Transparência total. Você pode inspecionar o código-fonte e verificar por si só a segurança implementada.</p>
-                </div>
-            </div>
+            <p style="margin-top: 2rem; opacity: 0.9;">
+                Ou compile do código-fonte:<br>
+                <code style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 0.5rem; margin-top: 0.5rem; display: inline-block;">
+                    python build.py
+                </code>
+            </p>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <img src="dahora_icon.png" alt="Dahora App">
-                        <span>Dahora App</span>
-                    </div>
-                    <p>Sistema de bandeja do Windows para copiar data e hora formatada.</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Links Rápidos</h3>
-                    <ul>
-                        <li><a href="#inicio">Início</a></li>
-                        <li><a href="#destaques">Destaques</a></li>
-                        <li><a href="#recursos">Recursos</a></li>
-                        <li><a href="#casos-uso">Casos de Uso</a></li>
-                        <li><a href="#screenshots">Screenshots</a></li>
-                        <li><a href="#beneficios">Benefícios</a></li>
-                        <li><a href="#download">Download</a></li>
-                        <li><a href="#sobre">Sobre</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                        <li><a href="#privacidade">Privacidade</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Suporte</h3>
-                    <ul>
-                        <li><a href="README.md">Documentação</a></li>
-                        <li><a href="CHANGELOG.md">Changelog</a></li>
-                        <li><a href="#" onclick="showIssueModal()">Reportar Bug</a></li>
-                        <li><a href="#" onclick="showFeatureModal()">Sugerir Recurso</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Informações</h3>
-                    <ul>
-                        <li>Versão: 0.0.5</li>
-                        <li>Licença: MIT</li>
-                        <li>Plataforma: Windows</li>
-                        <li>Tamanho: ~50MB</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2024 Dahora App. Todos os direitos reservados.</p>
-                <p>Desenvolvido com ❤️ para a comunidade Windows</p>
-            </div>
+        <div class="footer-links">
+            <a href="https://github.com/rkvasne/dahora-app" class="footer-link">GitHub</a>
+            <a href="https://github.com/rkvasne/dahora-app/blob/main/README.md" class="footer-link">Documentação</a>
+            <a href="https://github.com/rkvasne/dahora-app/blob/main/CHANGELOG.md" class="footer-link">Changelog</a>
+            <a href="https://github.com/rkvasne/dahora-app/issues" class="footer-link">Issues</a>
+            <a href="https://github.com/rkvasne/dahora-app/blob/main/LICENSE" class="footer-link">Licença MIT</a>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2025 Dahora App v0.1.0 MVP • Feito com ❤️ e Python</p>
+            <p style="margin-top: 0.5rem; opacity: 0.7;">100% Open Source • Zero Telemetria • Offline First</p>
         </div>
     </footer>
-
-    <!-- Modals -->
-    <div id="issueModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Reportar Bug</h2>
-            <p>Para reportar um bug, por favor:</p>
-            <ol>
-                <li>Verifique o arquivo <code>qopas.log</code> na pasta de dados do aplicativo</li>
-                <li>Descreva os passos para reproduzir o problema</li>
-                <li>Inclua informações sobre sua versão do Windows</li>
-                <li>Envie as informações para: <strong>suporte@dahoraapp.com</strong></li>
-            </ol>
-        </div>
-    </div>
-
-    <div id="featureModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Sugerir Recurso</h2>
-            <p>Tem uma ideia para melhorar o Dahora App?</p>
-            <p>Envie sua sugestão para: <strong>ideias@dahoraapp.com</strong></p>
-            <p>Inclua:</p>
-            <ul>
-                <li>Descrição detalhada do recurso</li>
-                <li>Como isso ajudaria você</li>
-                <li>Exemplos de uso</li>
-            </ul>
-        </div>
-    </div>
-
-    <script src="landing/script.js"></script>
-    <script src="landing/animations-dark.js"></script>
-    <!-- Lottie para microinterações -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" referrerpolicy="no-referrer"></script>
-    <script src="landing/lottie-init.js"></script>
 </body>
 </html>
