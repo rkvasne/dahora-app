@@ -37,6 +37,7 @@ from dahora_app import (
     IconManager,
     MenuBuilder,
     SettingsDialog,
+    SearchDialog,
 )
 from dahora_app.constants import (
     APP_TITLE,
@@ -96,6 +97,7 @@ class DahoraApp:
         self.hotkey_manager = HotkeyManager()
         self.prefix_dialog = PrefixDialog()
         self.settings_dialog = SettingsDialog()
+        self.search_dialog = SearchDialog()
         self.menu_builder = MenuBuilder()
         self.icon = None
     
@@ -134,14 +136,21 @@ class DahoraApp:
         self.settings_dialog.set_on_save_callback(self._on_settings_saved)
         self.settings_dialog.notification_callback = self.notification_manager.show_toast
         
+        # Search dialog
+        self.search_dialog.set_get_history_callback(lambda: self.clipboard_manager.clipboard_history)
+        self.search_dialog.set_copy_callback(self._copy_from_history)
+        self.search_dialog.notification_callback = self.notification_manager.show_toast
+        
         # Hotkeys
         self.hotkey_manager.set_copy_datetime_callback(lambda: self.copy_datetime(source="Atalho"))
         self.hotkey_manager.set_refresh_menu_callback(self._on_refresh_menu)
+        self.hotkey_manager.set_search_callback(self._show_search_dialog)
         self.hotkey_manager.set_ctrl_c_callback(self._on_ctrl_c)
         
         # Menu builder
         self.menu_builder.set_copy_datetime_callback(self._copy_datetime_menu)
         self.menu_builder.set_set_prefix_callback(self._show_prefix_dialog)
+        self.menu_builder.set_show_search_callback(self._show_search_dialog)
         self.menu_builder.set_show_settings_callback(self._show_settings_dialog)
         self.menu_builder.set_refresh_menu_callback(self._refresh_menu_action)
         self.menu_builder.set_get_recent_items_callback(self.clipboard_manager.get_recent_items)
@@ -250,6 +259,10 @@ class DahoraApp:
         # Atualiza configurações antes de mostrar
         self.settings_dialog.set_current_settings(self.settings_manager.get_all())
         self.settings_dialog.show()
+    
+    def _show_search_dialog(self):
+        """Mostra diálogo de busca no histórico"""
+        self.search_dialog.show()
     
     def _refresh_menu_action(self, icon, item):
         """Atualiza o menu manualmente"""

@@ -19,6 +19,7 @@ class HotkeyManager:
         self.registered_hotkeys = []
         self.copy_datetime_callback: Optional[Callable] = None
         self.refresh_menu_callback: Optional[Callable] = None
+        self.search_callback: Optional[Callable] = None
         self.ctrl_c_callback: Optional[Callable] = None
     
     def set_copy_datetime_callback(self, callback: Callable) -> None:
@@ -28,6 +29,10 @@ class HotkeyManager:
     def set_refresh_menu_callback(self, callback: Callable) -> None:
         """Define callback para refresh do menu"""
         self.refresh_menu_callback = callback
+    
+    def set_search_callback(self, callback: Callable) -> None:
+        """Define callback para busca no histórico"""
+        self.search_callback = callback
     
     def set_ctrl_c_callback(self, callback: Callable) -> None:
         """Define callback para Ctrl+C"""
@@ -46,6 +51,15 @@ class HotkeyManager:
                 self.refresh_menu_callback()
         except Exception as e:
             logging.warning(f"[Hotkey] Erro ao atualizar menu: {e}")
+    
+    def _on_search_triggered(self) -> None:
+        """Callback interno para hotkey de busca"""
+        try:
+            logging.info("[Hotkey] Buscar no Histórico acionado (CTRL+SHIFT+F)")
+            if self.search_callback:
+                self.search_callback()
+        except Exception as e:
+            logging.warning(f"[Hotkey] Erro ao abrir busca: {e}")
     
     def _on_ctrl_c_triggered(self) -> None:
         """Callback interno para Ctrl+C"""
@@ -72,6 +86,14 @@ class HotkeyManager:
             print(f"[OK] Tecla de atalho configurada: {HOTKEY_REFRESH_MENU.upper()} (recarregar itens do menu)")
         except Exception as e:
             print(f"[AVISO] Não foi possível configurar a hotkey de recarga: {e}")
+        
+        # Hotkey de busca: Ctrl+Shift+F
+        try:
+            keyboard.add_hotkey('ctrl+shift+f', self._on_search_triggered)
+            self.registered_hotkeys.append('ctrl+shift+f')
+            print(f"[OK] Tecla de atalho configurada: CTRL+SHIFT+F (buscar no histórico)")
+        except Exception as e:
+            print(f"[AVISO] Não foi possível configurar a hotkey de busca: {e}")
         
         # Listener Ctrl+C
         self.setup_ctrl_c_listener()

@@ -14,7 +14,7 @@ from dahora_app.clipboard_manager import ClipboardManager
 from dahora_app.datetime_formatter import DateTimeFormatter
 from dahora_app.notifications import NotificationManager
 from dahora_app.hotkeys import HotkeyManager
-from dahora_app.ui import PrefixDialog, IconManager, MenuBuilder, SettingsDialog
+from dahora_app.ui import PrefixDialog, IconManager, MenuBuilder, SettingsDialog, SearchDialog
 
 __all__ = [
     'APP_NAME',
@@ -30,4 +30,5 @@ __all__ = [
     'IconManager',
     'MenuBuilder',
     'SettingsDialog',
+    'SearchDialog',
 ]

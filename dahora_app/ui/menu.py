@@ -15,6 +15,7 @@ class MenuBuilder:
         self.copy_datetime_callback: Optional[Callable] = None
         self.set_prefix_callback: Optional[Callable] = None
         self.show_settings_callback: Optional[Callable] = None
+        self.show_search_callback: Optional[Callable] = None
         self.refresh_menu_callback: Optional[Callable] = None
         self.get_recent_items_callback: Optional[Callable] = None
         self.copy_from_history_callback: Optional[Callable] = None
@@ -33,6 +34,10 @@ class MenuBuilder:
     def set_show_settings_callback(self, callback: Callable) -> None:
         """Define callback para mostrar configurações"""
         self.show_settings_callback = callback
+    
+    def set_show_search_callback(self, callback: Callable) -> None:
+        """Define callback para mostrar busca"""
+        self.show_search_callback = callback
     
     def set_refresh_menu_callback(self, callback: Callable) -> None:
         """Define callback para refresh do menu"""
@@ -73,6 +78,11 @@ class MenuBuilder:
         if self.show_settings_callback:
             self.show_settings_callback()
     
+    def _show_search_wrapper(self, icon, item):
+        """Wrapper para callback de mostrar busca"""
+        if self.show_search_callback:
+            self.show_search_callback()
+    
     def _refresh_menu_wrapper(self, icon, item):
         """Wrapper para callback de refresh"""
         if self.refresh_menu_callback:
@@ -110,6 +120,7 @@ class MenuBuilder:
         # Opções principais
         menu_items.append(pystray.MenuItem('Copiar Data/Hora', self._copy_datetime_wrapper, default=True))
         menu_items.append(pystray.MenuItem('Definir Prefixo', self._set_prefix_wrapper))
+        menu_items.append(pystray.MenuItem('Buscar no Histórico (Ctrl+Shift+F)', self._show_search_wrapper))
         menu_items.append(pystray.MenuItem('Configurações', self._show_settings_wrapper))
         menu_items.append(pystray.MenuItem('Recarregar Itens', self._refresh_menu_wrapper))
         
