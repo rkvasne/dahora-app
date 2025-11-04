@@ -73,6 +73,16 @@ python build.py
 
 3. O executável estará em `dist/dahora_app_v0.0.6.exe`
 
+### Alternativa: usar o .spec canônico
+
+Se preferir usar um arquivo `.spec`, utilize o canônico com prefixo numérico:
+
+```bash
+pyinstaller 001_pyinstaller.spec
+```
+
+Isso gerará `dist/dahora_app.exe` (sem versão no nome). O build principal recomendado continua sendo via `build.py`.
+
 ## Uso
 
 1. **Primeiro, instale as dependências** (veja seção Instalação acima)

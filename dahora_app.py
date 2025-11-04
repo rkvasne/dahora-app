@@ -296,7 +296,9 @@ def copy_datetime(icon=None, item=None, source=None):
     if source.startswith("Menu:"):
         show_toast_notification("Dahora App", f"Copiado com sucesso via {source}!\n{dt_string}\nTotal: {counter}ª vez")
     else:
-        show_toast_notification("Dahora App", f"Copiado com sucesso via {source}!\n{dt_string}\nTotal: {counter}ª vez")
+        # Para atalho, usa duração menor de 1 segundo
+        dur = 1 if source == "Atalho" else 2
+        show_toast_notification("Dahora App", f"Copiado com sucesso via {source}!\n{dt_string}\nTotal: {counter}ª vez", duration=dur)
 
 
 def create_image():
