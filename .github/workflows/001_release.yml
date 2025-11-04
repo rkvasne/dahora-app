@@ -1,0 +1,85 @@
+name: Release on Tag
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build executable
+        shell: pwsh
+        run: python build.py
+
+      - name: Locate EXE artifact
+        id: locate
+        shell: pwsh
+        run: |
+          $exe = Get-ChildItem -Path dist -Filter *.exe | Select-Object -First 1 -ExpandProperty FullName
+          if (-not $exe) { throw "No .exe found in dist" }
+          echo "artifact=$exe" | Out-File -Append $Env:GITHUB_OUTPUT
+          echo "basename=$(Split-Path $exe -Leaf)" | Out-File -Append $Env:GITHUB_OUTPUT
+
+      - name: Compute SHA-256
+        id: hash
+        shell: pwsh
+        run: |
+          $exe = "${{ steps.locate.outputs.artifact }}"
+          $hash = (Get-FileHash $exe -Algorithm SHA256).Hash
+          $out = Join-Path (Split-Path $exe -Parent) ("$(${{ steps.locate.outputs.basename }}).sha256.txt")
+          "$hash  $(${{ steps.locate.outputs.basename }})" | Set-Content $out
+          echo "hashfile=$out" | Out-File -Append $Env:GITHUB_OUTPUT
+
+      - name: Extract release notes from CHANGELOG
+        id: notes
+        shell: pwsh
+        run: |
+          $version = "${{ github.ref_name }}".TrimStart('v')
+          $lines = Get-Content CHANGELOG.md
+          $startIndex = -1
+          for ($i=0; $i -lt $lines.Count; $i++) {
+            if ($lines[$i] -match "^## \[${version}\]") { $startIndex = $i; break }
+          }
+          $endIndex = $lines.Count
+          if ($startIndex -ge 0) {
+            for ($j=$startIndex+1; $j -lt $lines.Count; $j++) {
+              if ($lines[$j] -match "^## \[") { $endIndex = $j; break }
+            }
+            $slice = $lines[$startIndex..($endIndex-1)]
+          } else {
+            $slice = @("Release $version")
+          }
+          $out = "dist/release_notes_$version.md"
+          $slice | Set-Content $out
+          echo "notes_path=$out" | Out-File -Append $Env:GITHUB_OUTPUT
+
+      - name: Create GitHub Release and upload assets
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          body_path: ${{ steps.notes.outputs.notes_path }}
+          files: |
+            ${{ steps.locate.outputs.artifact }}
+            ${{ steps.hash.outputs.hashfile }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
