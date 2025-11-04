@@ -30,8 +30,10 @@
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
         body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
             color: var(--text-dark);
             overflow-x: hidden;
@@ -117,12 +119,20 @@
             margin: 0 auto;
         }
 
+        .hero-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+            display: block;
+        }
+
         .hero-title {
             font-size: 3.5rem;
-            font-weight: 800;
+            font-weight: 900;
             margin-bottom: 1rem;
             color: var(--text-dark);
             position: relative;
+            letter-spacing: -0.02em;
         }
 
         .hero-subtitle {
@@ -240,8 +250,26 @@
         }
 
         .section-dark {
-            background: var(--dark-bg);
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
             color: white;
+            position: relative;
+        }
+
+        .section-dark::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .section-dark .section-title,
+        .section-dark .section-subtitle {
+            position: relative;
+            z-index: 1;
         }
 
         .container {
@@ -264,55 +292,109 @@
             font-size: 1.2rem;
             color: var(--text-light);
             max-width: 700px;
-            margin: 0 auto;
         }
 
-        .section-dark .section-subtitle {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
+        /* Features Grid */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
+            margin-top: 3rem;
         }
 
         .feature-card {
             background: white;
             padding: 2rem;
             border-radius: 1rem;
-            box-shadow: var(--shadow);
-            transition: all 0.3s;
             border: 1px solid var(--border-color);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
-        .section-dark .feature-card {
-            background: var(--dark-card);
-            border-color: rgba(255, 255, 255, 0.1);
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.15), transparent 50%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 30px;
+            background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.2), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            filter: blur(10px);
+            z-index: -1;
+        }
+
+        .feature-card:hover::after {
+            opacity: 1;
+        }
+
+        .feature-card > * {
+            position: relative;
+            z-index: 1;
         }
 
         .feature-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-lg);
+            border-color: var(--primary-color);
+        }
+
+        .feature-card:hover .feature-icon {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
         }
 
         .feature-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: var(--light-bg);
+            border: 2px solid var(--border-color);
             border-radius: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 2rem;
             margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-            color: white;
+            transition: all 0.3s;
         }
 
         .feature-card h3 {
             font-size: 1.4rem;
             margin-bottom: 1rem;
             font-weight: 700;
+        }
+
+        .section-dark .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .section-dark .feature-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary-color);
         }
 
         .section-dark .feature-card h3 {
@@ -325,7 +407,17 @@
         }
 
         .section-dark .feature-card p {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .section-dark .feature-icon {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .section-dark .feature-card:hover .feature-icon {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
         }
 
         code {
@@ -570,13 +662,14 @@
             height: 120px;
             border-radius: 50%;
             margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: var(--primary-color);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 3rem;
             color: white;
             font-weight: 700;
+            border: 3px solid var(--border-color);
         }
 
         .developer-name {
@@ -651,7 +744,8 @@
     <section id="inicio" class="hero">
         <div class="hero-container animate-fade-in">
             <div class="hero-version">🎉 MVP v0.1.0 COMPLETO!</div>
-            <h1 class="hero-title"><img src="icon.ico" alt="" style="width: 80px; height: 80px; vertical-align: middle; margin-right: 1rem;">Dahora App</h1>
+            <img src="icon.ico" alt="Dahora App Icon" class="hero-icon">
+            <h1 class="hero-title">Dahora App</h1>
             <p class="hero-subtitle">
                 Gerenciador de Clipboard com Data/Hora<br>
                 Busca inteligente • Configurações avançadas • 100% privado
@@ -1111,6 +1205,7 @@
     </footer>
 
     <script>
+        // FAQ Toggle
         function toggleFAQ(button) {
             const faqItem = button.parentElement;
             const isActive = faqItem.classList.contains('active');
@@ -1125,6 +1220,8 @@
                 faqItem.classList.add('active');
             }
         }
+
+        // Efeito spotlight é totalmente CSS, sem necessidade de JS
     </script>
 </body>
 </html>
