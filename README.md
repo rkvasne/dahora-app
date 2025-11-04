@@ -185,7 +185,12 @@ Exemplos:
 ## Armazenamento de dados
 
 - O aplicativo salva o contador de uso e o histórico de clipboard na pasta de dados do usuário: %APPDATA%\DahoraApp.
-- Arquivos: dahora_counter.txt e clipboard_history.json.
+- Arquivos:
+  - `dahora_counter.txt` - Contador de uso
+  - `clipboard_history.json` - Histórico de clipboard
+  - `settings.json` - Configurações do aplicativo
+  - `dahora.log` - Logs do sistema (rotação automática: 5MB máximo, 3 backups)
+- Os logs são automaticamente rotacionados quando atingem 5MB, mantendo até 3 arquivos de backup (.log.1, .log.2, .log.3).
 
 ## Prefixo configurável
 
@@ -201,3 +206,13 @@ Exemplos:
   - O prefixo é salvo em `%APPDATA%\DahoraApp\settings.json`.
 - Dica:
   - Para remover, defina o prefixo como vazio.
+
+## Privacidade e Segurança
+
+- **Zero Telemetria:** O aplicativo não coleta, envia ou compartilha nenhum dado.
+- **Armazenamento Local:** Todos os dados ficam exclusivamente no seu computador em `%APPDATA%\DahoraApp`.
+- **Aviso na Primeira Execução:** O app mostra um aviso sobre privacidade ao ser executado pela primeira vez.
+- **Histórico de Clipboard:** Pode conter informações sensíveis (senhas, tokens). Use com cautela.
+- **Limpeza de Dados:** Você pode limpar o histórico a qualquer momento pelo menu do ícone da bandeja.
+- **Validação de Configurações:** Settings são validados e sanitizados automaticamente para prevenir problemas.
+- **Sem Conexão:** O aplicativo funciona 100% offline, sem necessidade de internet.

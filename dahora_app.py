@@ -16,6 +16,7 @@ import time
 import json
 import os
 import logging
+from logging.handlers import RotatingFileHandler
 from threading import Lock
 
 # Import para interface gráfica (janela de prefixo)
@@ -492,16 +493,24 @@ DATA_DIR = _get_data_dir()
 
 # Logging básico para diagnóstico (arquivo no diretório de dados)
 try:
+    log_path = os.path.join(DATA_DIR, 'dahora.log')
+    file_handler = RotatingFileHandler(
+        log_path,
+        maxBytes=5*1024*1024,  # 5MB
+        backupCount=3,
+        encoding='utf-8'
+    )
+    file_handler.setFormatter(
+        logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+    )
     logging.basicConfig(
         level=logging.INFO,
-        format='%(asctime)s %(levelname)s %(message)s',
-        handlers=[
-            logging.FileHandler(os.path.join(DATA_DIR, 'qopas.log'), encoding='utf-8'),
-            logging.StreamHandler(sys.stdout)
-        ]
+        handlers=[file_handler, logging.StreamHandler(sys.stdout)]
     )
-except Exception:
+    logging.info("Sistema de rotação de logs ativado (5MB, 3 backups)")
+except Exception as e:
     logging.basicConfig(level=logging.INFO)
+    logging.warning(f"Falha ao configurar rotação de logs: {e}")
 
 # Variável para controlar último clique esquerdo
 last_click_time = 0
@@ -528,14 +537,37 @@ settings_lock = Lock()
 settings_file = os.path.join(DATA_DIR, "settings.json")
 date_prefix = ""
 
+def validate_settings(settings_dict):
+    """Valida e sanitiza configurações carregadas"""
+    try:
+        import re
+        # Valida prefix
+        prefix = str(settings_dict.get("prefix", ""))
+        if len(prefix) > 100:
+            logging.warning("Prefixo muito longo, truncando para 100 chars")
+            prefix = prefix[:100]
+        
+        # Remove caracteres perigosos (controle ASCII)
+        prefix = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', prefix)
+        
+        return {"prefix": prefix}
+    except Exception as e:
+        logging.error(f"Erro ao validar settings: {e}")
+        return {"prefix": ""}
+
 def load_settings():
     global date_prefix
     try:
         with settings_lock:
             with open(settings_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            date_prefix = str(data.get("prefix", ""))
+            # Valida configurações antes de aplicar
+            validated = validate_settings(data)
+            date_prefix = validated["prefix"]
     except FileNotFoundError:
+        date_prefix = ""
+    except json.JSONDecodeError as e:
+        logging.error(f"Settings corrompido, usando padrão: {e}")
         date_prefix = ""
     except Exception as e:
         logging.warning(f"Falha ao carregar settings: {e}")
@@ -791,6 +823,36 @@ def show_about(icon, item):
     )
     # Mostra toast modal (dura 10 segundos para permitir leitura)
     show_toast_notification("Sobre - Dahora App", about_text, duration=10)
+
+
+def show_privacy_notice():
+    """Mostra aviso de privacidade na primeira execução"""
+    notice_file = os.path.join(DATA_DIR, ".privacy_accepted")
+    
+    if os.path.exists(notice_file):
+        return  # Já mostrou antes
+    
+    message = (
+        "AVISO DE PRIVACIDADE\n\n"
+        "O Dahora App mantém um histórico local dos últimos 100 itens "
+        "copiados para a área de transferência.\n\n"
+        "⚠️ Este histórico pode conter informações sensíveis "
+        "(senhas, tokens, etc.)\n\n"
+        "Os dados são armazenados LOCALMENTE em:\n"
+        f"{DATA_DIR}\n\n"
+        "Não há coleta de dados ou telemetria.\n\n"
+        "Você pode limpar o histórico a qualquer momento pelo menu."
+    )
+    
+    show_toast_notification("Dahora App - Privacidade", message, duration=15)
+    logging.info("Aviso de privacidade exibido (primeira execução)")
+    
+    # Marca como aceito
+    try:
+        with open(notice_file, 'w', encoding='utf-8') as f:
+            f.write(datetime.now().isoformat())
+    except Exception as e:
+        logging.warning(f"Falha ao marcar aviso de privacidade: {e}")
 
 
 def on_exit(icon, item):
@@ -1127,6 +1189,10 @@ def main():
     load_counter()
     load_clipboard_history()
     load_settings()
+    
+    # Mostra aviso de privacidade na primeira execução
+    show_privacy_notice()
+    
     # Inicializa o estado atual da clipboard
     try:
         last_clipboard_content = pyperclip.paste()
