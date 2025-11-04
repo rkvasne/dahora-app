@@ -11,8 +11,9 @@ import time
 
 
 def ensure_icon_exists(icon_path='icon.ico'):
-    # Usa o caminho completo especificado pelo usuário
-    full_icon_path = 'E:\\Dahora\\dahora-app\\icon.ico'
+    # Usa caminho relativo ao diretório do script
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    full_icon_path = os.path.join(base_dir, 'icon.ico')
 
     if os.path.exists(full_icon_path):
         print(f">>> Usando ícone existente: {full_icon_path}")
