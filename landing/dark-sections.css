@@ -150,9 +150,20 @@
     border-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Ajusta o efeito ::before para cards escuros (menos brilho) */
+.section-dark .feature-card::before {
+    background: radial-gradient(
+        600px circle at var(--x, 50%) var(--y, 50%),
+        rgba(255, 107, 0, 0.15),
+        rgba(255, 69, 0, 0.08) 40%,
+        transparent 65%
+    );
+}
+
 .section-dark .feature-card:hover {
     background: rgba(255, 255, 255, 0.08);
-    border-color: var(--primary-color);
+    border-color: rgba(255, 107, 0, 0.6);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 107, 0, 0.2);
 }
 
 .section-dark .feature-card h3 {
@@ -165,21 +176,21 @@
 
 /* CUSTOMIZAÇÃO: Ícones monocromáticos (branco) → hover laranja */
 .section-dark .feature-icon {
-    background: rgba(255, 255, 255, 0.1) !important;
-    border-color: rgba(255, 255, 255, 0.2) !important;
-    color: rgba(255, 255, 255, 0.9) !important;  /* BRANCO! */
-    filter: grayscale(1) brightness(1.2) !important; /* Cinza claro (quase branco) */
-    opacity: 0.85 !important;
-    transition: all 0.4s ease !important; /* Transição mais suave */
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.9);  /* BRANCO! */
+    filter: grayscale(1) brightness(1.2); /* Cinza claro (quase branco) */
+    opacity: 0.85;
+    transition: all 0.4s ease; /* Transição mais suave */
 }
 
 .section-dark .feature-card:hover .feature-icon {
-    background: var(--gradient-orange-red) !important;  /* Gradiente laranja→vermelho */
-    border-color: transparent !important;
-    color: white !important;
-    filter: grayscale(0) brightness(1) !important; /* Remove grayscale = emoji colorido */
-    opacity: 1 !important;
-    box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4) !important;
+    background: var(--gradient-orange-red);  /* Gradiente laranja→vermelho */
+    border-color: transparent;
+    color: white;
+    filter: grayscale(0) brightness(1); /* Remove grayscale = emoji colorido */
+    opacity: 1;
+    box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
 }
 
 .section-dark code {
@@ -235,10 +246,10 @@
 
 /* CUSTOMIZAÇÃO: python build.py com contraste */
 .download code {
-    background: rgba(255,255,255,0.25) !important;
-    padding: 0.5rem 1rem !important;
-    border-radius: 0.5rem !important;
-    border: 1px solid rgba(255,255,255,0.3) !important;
-    font-weight: 600 !important;
-    color: white !important;
+    background: rgba(255,255,255,0.25);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255,255,255,0.3);
+    font-weight: 600;
+    color: white;
 }

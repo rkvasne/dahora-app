@@ -2,7 +2,7 @@
 
 > **Aplicativo Windows profissional para bandeja do sistema com gerenciamento inteligente de clipboard**
 
-[![Version](https://img.shields.io/badge/version-0.1.0%20MVP-blue.svg)](https://github.com/rkvasne/dahora-app)
+[![Version](https://img.shields.io/badge/version-0.1.1-blue.svg)](https://github.com/rkvasne/dahora-app)
 [![Python](https://img.shields.io/badge/python-3.8+-green.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-15%2F15%20passing-brightgreen.svg)](tests/)
@@ -110,7 +110,7 @@ python build.py
 
 **Importante:** O build usará automaticamente o arquivo `icon.ico` existente no projeto. Se o arquivo não existir, o script tentará criar um ícone padrão.
 
-3. O executável estará em `dist/dahora_app_v0.1.0.exe`
+3. O executável estará em `dist/dahora_app_v0.1.1.exe`
 
 ### Alternativa: usar o .spec canônico
 
@@ -240,7 +240,7 @@ Exemplos:
 - **Recursos mínimos:** Consuma pouca memória e CPU
 - **Segundo plano:** Roda silenciosamente sem interferir em outros apps
 - **Executável:** O .exe não requer Python instalado no computador de destino
-- **Versão:** v0.1.0 MVP - Executável nomeado como `dahora_app_v0.1.0.exe`
+- **Versão:** v0.1.1 - Executável nomeado como `dahora_app_v0.1.1.exe`
 - **Segurança:** Todas as notificações são seguras e não exigem permissões especiais
 - **Interface profissional:** Segui padrões do Windows moderno com tooltips claros
 - **Contador de uso:** Acompanha quantas vezes o app foi acionado
@@ -327,9 +327,11 @@ dahora-app/
 │   ├── animations-dark.js
 │   └── lottie-init.js
 │
-└── docs/                        # Documentação
-    ├── CHANGELOG.md            # Histórico de mudanças
-    └── CHECKLIST_MELHORIAS.md  # Roadmap de melhorias
+└── docs/                        # Documentação técnica (4 docs essenciais)
+    ├── README.md               # Índice da documentação
+    ├── DEVELOPMENT_HISTORY.md  # Histórico consolidado ⭐
+    ├── IMPROVEMENTS.md         # Roadmap e melhorias
+    └── PRICING.md              # Análise de negócio
 ```
 
 ### Arquitetura
@@ -382,3 +384,14 @@ tests/
 ```
 
 Para mais informações sobre os testes, consulte [tests/README.md](tests/README.md).
+
+## 📚 Documentação
+
+Toda a documentação técnica está organizada na pasta `docs/` (4 documentos essenciais):
+
+- **[docs/README.md](docs/README.md)** - Índice da documentação
+- **[docs/DEVELOPMENT_HISTORY.md](docs/DEVELOPMENT_HISTORY.md)** ⭐ - Histórico completo consolidado
+- **[docs/IMPROVEMENTS.md](docs/IMPROVEMENTS.md)** - Roadmap e melhorias planejadas
+- **[docs/PRICING.md](docs/PRICING.md)** - Análise de precificação e modelo de negócio
+
+**Para novos desenvolvedores:** Comece por **[DEVELOPMENT_HISTORY.md](docs/DEVELOPMENT_HISTORY.md)**

@@ -241,12 +241,6 @@ def set_prefix_action():
     thread.start()
     logging.info("Thread da janela de prefixo iniciada")
 
-try:
-    # Reutiliza a função de criação de ícone para evitar duplicação
-    from create_icon import create_image as external_create_image
-except Exception:
-    external_create_image = None
-
 # Para prevenir múltiplas instâncias
 try:
     import win32event
@@ -276,9 +270,9 @@ try:
     if os.path.exists('icon.ico'):
         icon_image = Image.open('icon.ico')
     else:
-        icon_image = external_create_image() if external_create_image else _create_simple_fallback_icon()
+        icon_image = _create_simple_fallback_icon()
 except Exception:
-    icon_image = external_create_image() if external_create_image else _create_simple_fallback_icon()
+    icon_image = _create_simple_fallback_icon()
 
 try:
     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
@@ -481,7 +475,7 @@ def copy_datetime(icon=None, item=None, source=None):
 
 
 def _create_simple_fallback_icon():
-    """Cria um ícone simples como fallback se create_icon.py não estiver disponível"""
+    """Cria um ícone simples como fallback se icon.ico não estiver disponível"""
     image = Image.new('RGBA', (64, 64), color=(255, 152, 0, 255))
     draw = ImageDraw.Draw(image)
     # Desenha "D" simples no centro
@@ -1062,9 +1056,9 @@ def setup_icon(reload=False):
         if os.path.exists(icon_path):
             icon_image = Image.open(icon_path)
         else:
-            icon_image = external_create_image() if external_create_image else _create_simple_fallback_icon()
+            icon_image = _create_simple_fallback_icon()
     except Exception:
-        icon_image = external_create_image() if external_create_image else _create_simple_fallback_icon()
+        icon_image = _create_simple_fallback_icon()
 
     # Cria ícone com menu dinâmico que atualiza a cada abertura
     icon = pystray.Icon(

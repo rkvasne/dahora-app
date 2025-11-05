@@ -5,6 +5,50 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 2025-11-04 🧹 **CLEANUP & ORGANIZATION**
+
+### Changed
+- **📁 Documentação Reorganizada e Limpa**:
+  - Criada pasta `docs/` para centralizar documentação técnica
+  - Criado `docs/DEVELOPMENT_HISTORY.md` consolidando histórico completo
+  - Criado `docs/README.md` como índice da documentação
+  - **Deletados 9 documentos redundantes** (conteúdo consolidado)
+  - Estrutura final: 4 documentos essenciais (README, DEVELOPMENT_HISTORY, IMPROVEMENTS, PRICING)
+  - Raiz do projeto limpa (apenas README.md e CHANGELOG.md)
+  
+- **🎯 Padronização Completa**:
+  - Renomeados 8 documentos de PT-BR para inglês (mantendo conteúdo PT-BR)
+  - Ícone padronizado: `icone-novo.ico` → `icon.ico`
+  - Removido `create_icon.py` (gerava ícone laranja antigo)
+  - Todos os arquivos Python agora usam `icon.ico` diretamente
+  
+- **🗑️ Limpeza de Arquivos**:
+  - Deletados 8 arquivos temporários e backups
+  - Removido `landing-old/` e `__pycache__/`
+  - Deletados arquivos `.spec` de versões antigas
+  - Movidos scripts de teste para `scripts/`
+
+- **📦 Organização de Scripts**:
+  - Criada pasta `scripts/` para utilitários
+  - Movidos: `rebuild_clean.bat`, `test_menu.py`, `test_minimal.py`
+  - Atualizado `rebuild_clean.bat` para versão 0.1.1
+
+### Fixed
+- **🔧 Correção de Ícone**:
+  - Build agora usa `icon.ico` (azul) em vez de gerar ícone laranja
+  - Removida função `ensure_icon_exists()` do `build.py`
+  - Atualizados `main.py`, `dahora_app.py`, `icon_manager.py`
+  - Ícone azul padronizado em todo o projeto
+
+### Documentation
+- **📚 Documentos Consolidados**:
+  - `DEVELOPMENT_HISTORY.md` unifica Fases 1-3, correções e padronizações
+  - `ORGANIZATION_SUMMARY.md` documenta reorganização
+  - `STANDARDIZATION.md` estabelece padrões do projeto
+  - README.md atualizado com seção de documentação
+
+---
+
 ## [0.1.0] - 2025-11-04 🎉 **MVP RELEASE**
 
 ### 🎯 MVP Completo!

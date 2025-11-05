@@ -1,6 +1,18 @@
 """
 Script de teste para verificar itens do menu
 """
+import sys
+import os
+
+# Configura encoding UTF-8 para Windows
+if sys.platform == 'win32':
+    import codecs
+    sys.stdout = codecs.getwriter('utf-8')(sys.stdout.buffer, 'strict')
+    sys.stderr = codecs.getwriter('utf-8')(sys.stderr.buffer, 'strict')
+
+# Adiciona o diretório pai ao path para importar módulos
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from dahora_app.ui.menu import MenuBuilder
 
 # Cria menu builder

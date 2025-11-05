@@ -173,17 +173,16 @@ h1, h2, h3, h4, h5, h6 {
 .feature-card::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
+    border-radius: inherit;
     background: radial-gradient(
-        500px circle at var(--x, 50%) var(--y, 50%),
-        rgba(59, 130, 246, 0.18),
-        transparent 55%
+        800px circle at var(--x, 50%) var(--y, 50%),
+        rgba(255, 255, 255, 0.8),
+        rgba(59, 130, 246, 0.35) 30%,
+        transparent 60%
     );
     opacity: 0;
-    transition: opacity 0.15s ease;
+    transition: opacity 0.2s ease;
     pointer-events: none;
     z-index: 0;
 }
@@ -199,8 +198,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .feature-card:hover {
     transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--primary-color);
+    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.25), 0 0 30px rgba(255, 255, 255, 0.6);
+    border-color: rgba(59, 130, 246, 0.5);
+    background: rgba(255, 255, 255, 1);
 }
 
 /* ===== FEATURE ICONS (CUSTOMIZAÇÃO: 56PX, MONOCROMÁTICO→LARANJA) ===== */
@@ -216,17 +216,17 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.75rem;    /* CUSTOMIZAÇÃO: 1.75rem */
     margin-bottom: 1.5rem;
     transition: all 0.3s;
-    filter: grayscale(1) !important; /* CUSTOMIZAÇÃO: 100% Monocromático (cinza) */
-    opacity: 0.7 !important;
+    filter: grayscale(1); /* CUSTOMIZAÇÃO: 100% Monocromático (cinza) */
+    opacity: 0.7;
 }
 
 .feature-card:hover .feature-icon {
-    background: var(--gradient-orange-red) !important;  /* CUSTOMIZAÇÃO: Hover laranja→vermelho */
-    border-color: transparent !important;
-    color: white !important;
-    filter: grayscale(0) !important; /* Remove grayscale = emoji colorido */
-    opacity: 1 !important;
-    box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3) !important;
+    background: var(--gradient-orange-red);  /* CUSTOMIZAÇÃO: Hover laranja→vermelho */
+    border-color: transparent;
+    color: white;
+    filter: grayscale(0); /* Remove grayscale = emoji colorido */
+    opacity: 1;
+    box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
 }
 
 .feature-card h3 {
@@ -242,17 +242,17 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ===== INSTALL SECTION (CUSTOMIZAÇÃO: SEM HOVER NOS NÚMEROS) ===== */
 .install-card:hover .install-number {
-    background: var(--light-bg) !important;
-    border-color: var(--border-color) !important;
-    color: inherit !important;
-    filter: none !important;
-    box-shadow: none !important;
+    background: var(--light-bg);
+    border-color: var(--border-color);
+    color: inherit;
+    filter: none;
+    box-shadow: none;
 }
 
 .install-number {
-    background: transparent !important;
-    border: none !important;
-    filter: none !important;
+    background: transparent;
+    border: none;
+    filter: none;
 }
 
 /* ===== CODE ===== */

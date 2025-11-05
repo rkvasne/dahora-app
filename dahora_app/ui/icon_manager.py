@@ -7,13 +7,6 @@ import logging
 from PIL import Image, ImageDraw
 from typing import Optional
 
-# Import opcional de create_icon
-try:
-    from create_icon import create_image as external_create_image
-except Exception:
-    external_create_image = None
-
-
 class IconManager:
     """Gerenciador de ícone da bandeja"""
     
@@ -58,14 +51,7 @@ class IconManager:
             except Exception:
                 pass
         
-        # Tenta usar função externa de create_icon.py
-        if external_create_image:
-            try:
-                return external_create_image()
-            except Exception:
-                pass
-        
-        # Fallback simples
+        # Fallback: cria ícone simples
         return IconManager._create_simple_fallback_icon()
     
     @staticmethod

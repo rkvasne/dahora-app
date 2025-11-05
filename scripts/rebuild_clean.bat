@@ -1,7 +1,10 @@
 @echo off
+cd /d "%~dp0\.."
 echo ============================================
 echo LIMPEZA COMPLETA E REBUILD
 echo ============================================
+echo.
+echo Diretorio: %CD%
 echo.
 
 echo [1/5] Fechando processos dahora_app...
@@ -24,17 +27,17 @@ echo [4/5] Compilando versao limpa...
 py build.py
 
 echo [5/5] Verificando build...
-if exist "dist\dahora_app_v0.1.0.exe" (
+if exist "dist\dahora_app_v0.1.1.exe" (
     echo.
     echo ============================================
     echo BUILD CONCLUIDO COM SUCESSO!
     echo ============================================
     echo.
-    echo Executavel: dist\dahora_app_v0.1.0.exe
+    echo Executavel: dist\dahora_app_v0.1.1.exe
     echo Tamanho: 
-    dir "dist\dahora_app_v0.1.0.exe" | find "dahora_app"
+    dir "dist\dahora_app_v0.1.1.exe" | find "dahora_app"
     echo.
-    echo Execute: dist\dahora_app_v0.1.0.exe
+    echo Execute: dist\dahora_app_v0.1.1.exe
     echo.
 ) else (
     echo.
