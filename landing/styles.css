@@ -170,25 +170,21 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
 }
 
+/* Borda superior azul no hover */
 .feature-card::before {
     content: '';
     position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: radial-gradient(
-        800px circle at var(--x, 50%) var(--y, 50%),
-        rgba(255, 255, 255, 0.8),
-        rgba(59, 130, 246, 0.35) 30%,
-        transparent 60%
-    );
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    pointer-events: none;
-    z-index: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #0078D4 0%, #2B88D8 100%);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
 }
 
 .feature-card:hover::before {
-    opacity: 1;
+    transform: scaleX(1);
 }
 
 .feature-card > * {
@@ -197,36 +193,30 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.25), 0 0 30px rgba(255, 255, 255, 0.6);
-    border-color: rgba(59, 130, 246, 0.5);
-    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 8px 16px rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.3);
 }
 
-/* ===== FEATURE ICONS (CUSTOMIZAÇÃO: 56PX, MONOCROMÁTICO→LARANJA) ===== */
+/* ===== FEATURE ICONS (FONT AWESOME - BRANCO SOBRE AZUL) ===== */
 .feature-icon {
-    width: 56px;           /* CUSTOMIZAÇÃO: 56px (antes 60px) */
+    width: 56px;
     height: 56px;
-    background: var(--light-bg);
-    border: 2px solid var(--border-color);
-    border-radius: 12px;   /* CUSTOMIZAÇÃO: 12px */
+    background: linear-gradient(135deg, #0078D4 0%, #2B88D8 100%);
+    border: none;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.75rem;    /* CUSTOMIZAÇÃO: 1.75rem */
+    font-size: 1.5rem;
     margin-bottom: 1.5rem;
     transition: all 0.3s;
-    filter: grayscale(1); /* CUSTOMIZAÇÃO: 100% Monocromático (cinza) */
-    opacity: 0.7;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 120, 212, 0.25);
 }
 
 .feature-card:hover .feature-icon {
-    background: var(--gradient-orange-red);  /* CUSTOMIZAÇÃO: Hover laranja→vermelho */
-    border-color: transparent;
-    color: white;
-    filter: grayscale(0); /* Remove grayscale = emoji colorido */
-    opacity: 1;
-    box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+    background: linear-gradient(135deg, #005A9E 0%, #0078D4 100%);  /* Azul mais escuro */
+    box-shadow: 0 4px 12px rgba(0, 120, 212, 0.4);
 }
 
 .feature-card h3 {
