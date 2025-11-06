@@ -13,31 +13,28 @@ class MenuBuilder:
     def __init__(self):
         """Inicializa o construtor de menus"""
         self.copy_datetime_callback: Optional[Callable] = None
-        self.set_prefix_callback: Optional[Callable] = None
-        self.show_settings_callback: Optional[Callable] = None
         self.show_search_callback: Optional[Callable] = None
+        self.show_custom_shortcuts_callback: Optional[Callable] = None  # Configurações unificadas
         self.refresh_menu_callback: Optional[Callable] = None
         self.get_recent_items_callback: Optional[Callable] = None
         self.copy_from_history_callback: Optional[Callable] = None
         self.clear_history_callback: Optional[Callable] = None
         self.show_about_callback: Optional[Callable] = None
         self.quit_callback: Optional[Callable] = None
+        self.hotkey_search_history: str = "ctrl+shift+f"  # Padrão
+        self.hotkey_refresh_menu: str = "ctrl+shift+r"  # Padrão
     
     def set_copy_datetime_callback(self, callback: Callable) -> None:
         """Define callback para copiar data/hora"""
         self.copy_datetime_callback = callback
     
-    def set_set_prefix_callback(self, callback: Callable) -> None:
-        """Define callback para definir prefixo"""
-        self.set_prefix_callback = callback
-    
-    def set_show_settings_callback(self, callback: Callable) -> None:
-        """Define callback para mostrar configurações"""
-        self.show_settings_callback = callback
-    
     def set_show_search_callback(self, callback: Callable) -> None:
         """Define callback para mostrar busca"""
         self.show_search_callback = callback
+    
+    def set_show_custom_shortcuts_callback(self, callback: Callable) -> None:
+        """Define callback para mostrar configurações unificadas"""
+        self.show_custom_shortcuts_callback = callback
     
     def set_refresh_menu_callback(self, callback: Callable) -> None:
         """Define callback para refresh do menu"""
@@ -68,20 +65,15 @@ class MenuBuilder:
         if self.copy_datetime_callback:
             self.copy_datetime_callback(icon, item)
     
-    def _set_prefix_wrapper(self, icon, item):
-        """Wrapper para callback de definir prefixo"""
-        if self.set_prefix_callback:
-            self.set_prefix_callback()
-    
-    def _show_settings_wrapper(self, icon, item):
-        """Wrapper para callback de mostrar configurações"""
-        if self.show_settings_callback:
-            self.show_settings_callback()
-    
     def _show_search_wrapper(self, icon, item):
         """Wrapper para callback de mostrar busca"""
         if self.show_search_callback:
             self.show_search_callback()
+    
+    def _show_custom_shortcuts_wrapper(self, icon, item):
+        """Wrapper para callback de mostrar configurações unificadas"""
+        if self.show_custom_shortcuts_callback:
+            self.show_custom_shortcuts_callback()
     
     def _refresh_menu_wrapper(self, icon, item):
         """Wrapper para callback de refresh"""
@@ -119,10 +111,13 @@ class MenuBuilder:
         
         # Opções principais
         menu_items.append(pystray.MenuItem('Copiar Data/Hora', self._copy_datetime_wrapper, default=True))
-        menu_items.append(pystray.MenuItem('Definir Prefixo', self._set_prefix_wrapper))
-        menu_items.append(pystray.MenuItem('Buscar no Histórico (Ctrl+Shift+F)', self._show_search_wrapper))
-        menu_items.append(pystray.MenuItem('Configurações', self._show_settings_wrapper))
-        menu_items.append(pystray.MenuItem('Recarregar Itens', self._refresh_menu_wrapper))
+        # Atalho de busca dinâmico
+        search_label = f'Buscar no Histórico ({self.hotkey_search_history.upper().replace("+", "+")})'
+        menu_items.append(pystray.MenuItem(search_label, self._show_search_wrapper))
+        menu_items.append(pystray.MenuItem('Configurações', self._show_custom_shortcuts_wrapper))
+        # Atalho de refresh dinâmico
+        refresh_label = f'Recarregar Itens ({self.hotkey_refresh_menu.upper().replace("+", "+")})'
+        menu_items.append(pystray.MenuItem(refresh_label, self._refresh_menu_wrapper))
         
         # Separador
         menu_items.append(pystray.Menu.SEPARATOR)

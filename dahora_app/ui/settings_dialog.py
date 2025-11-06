@@ -174,6 +174,33 @@ class SettingsDialog:
             # Aviso sobre atalhos
             ttk.Label(tab_hotkeys, text="⚠️ Alterar atalhos requer reiniciar o aplicativo", font=(default_font, 8), foreground="orange").grid(row=3, column=0, columnspan=2, sticky=tk.W, pady=(12, 0))
             
+            # Separador
+            ttk.Separator(tab_hotkeys, orient='horizontal').grid(row=4, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(16, 16))
+            
+            # Custom Shortcuts
+            ttk.Label(tab_hotkeys, text="Atalhos Personalizados:", font=(default_font, 10, "bold")).grid(row=5, column=0, columnspan=2, sticky=tk.W, pady=(0, 8))
+            ttk.Label(tab_hotkeys, text="Configure múltiplos atalhos com prefixos diferentes", font=(default_font, 8), foreground="gray").grid(row=6, column=0, columnspan=2, sticky=tk.W, pady=(0, 8))
+            
+            def on_manage_shortcuts():
+                """Abre o gerenciador de atalhos personalizados"""
+                try:
+                    # Fecha a janela de configurações primeiro
+                    root.destroy()
+                    
+                    # Importa e chama a função global que abre o gerenciador
+                    # (será tratado pelo main.py)
+                    if self.notification_callback:
+                        self.notification_callback("Dahora App", 
+                            "Para abrir o gerenciador de atalhos personalizados:\n\n"
+                            "1. Reinicie o aplicativo\n"
+                            "2. Use o menu: Configurações → Atalhos\n"
+                            "3. Clique em 'Gerenciar Atalhos Personalizados'\n\n"
+                            "OU adicione atalhos manualmente editando o arquivo settings.json")
+                except Exception as e:
+                    logging.error(f"Erro ao abrir gerenciador de shortcuts: {e}")
+            
+            ttk.Button(tab_hotkeys, text="⚙️ Gerenciar Atalhos Personalizados", command=on_manage_shortcuts).grid(row=7, column=0, columnspan=2, pady=(0, 8))
+            
             # Ações
             def on_save():
                 try:

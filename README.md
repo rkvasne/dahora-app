@@ -1,18 +1,31 @@
-# 📅 Dahora App - Gerenciador de Clipboard com Data/Hora
+# 📅 Dahora App - Cola Timestamps Automaticamente
 
-> **Aplicativo Windows profissional para bandeja do sistema com gerenciamento inteligente de clipboard**
+> **Aplicativo Windows revolucionário: cole timestamps formatados DIRETAMENTE com atalhos personalizáveis**
 
-[![Version](https://img.shields.io/badge/version-0.1.1-blue.svg)](https://github.com/rkvasne/dahora-app)
+[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://github.com/rkvasne/dahora-app)
 [![Python](https://img.shields.io/badge/python-3.8+-green.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-15%2F15%20passing-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](tests/)
 
-Dahora App é um sistema completo de bandeja para Windows que:
-- ✨ Copia data/hora formatada com um clique ou atalho
-- 📋 Gerencia histórico de clipboard com busca inteligente
-- ⚙️ Configurações avançadas com interface gráfica
-- 🎨 Interface moderna e intuitiva
-- 🔒 100% privado e offline
+## 🚀 Novidade v0.2.0 - Cola Diretamente!
+
+**Mudança revolucionária:** Os atalhos agora **colam automaticamente** onde seu cursor está!
+
+```
+ANTES (v0.1.x):
+CTRL+SHIFT+1 → Copia para clipboard → Você dá CTRL+V
+
+AGORA (v0.2.0):
+CTRL+SHIFT+1 → COLA DIRETO! ✨
+```
+
+Dahora App é o timestamp manager definitivo para Windows:
+- ⚡ **Cola timestamps diretamente** - Um atalho faz tudo
+- 🎯 **Atalhos ilimitados** - CTRL+SHIFT+1, CTRL+SHIFT+2, customize!
+- 🔄 **Preserva clipboard** - Não perde o que você copiou
+- 📋 **Histórico inteligente** - Backup quando Windows clipboard desabilitado
+- ⚙️ **100% configurável** - Formato, prefixos, delimitadores, tudo!
+- 🔒 **Privado e offline** - Zero telemetria
 
 ## Landing Page
 
@@ -25,28 +38,34 @@ Este repositório inclui uma landing page informativa do Dahora App.
 
 Para visualizar, abra `index.html` no navegador ou utilize um servidor HTTP local na raiz do projeto e acesse `http://localhost:5500/` (se estiver usando `001_serve.ps1`).
 
-## ✨ Características Principais
+## ✨ Características Principais (v0.2.0)
 
-### 📅 Data/Hora Formatada
-- ✅ **Formato personalizável:** `[DD.MM.AAAA-HH:MM]` por padrão
-- ✅ **Prefixo configurável:** Adicione seu próprio prefixo (ex: `[dahora-DD.MM.AAAA-HH:MM]`)
-- ✅ **Atalho global:** `Ctrl+Shift+Q` para copiar de qualquer lugar
-- ✅ **Menu de bandeja:** Acesso rápido via clique direito
+### ⚡ Colagem Automática (NOVO!)
+- ✨ **Cola direto onde está o cursor** - Um atalho, uma ação!
+- ✨ **Preserva seu clipboard** - Sistema salva e restaura automaticamente
+- ✨ **Sem notificações** - Você já vê o texto, sem popups irritantes
+- ✨ **Workflow perfeito** - Rápido, limpo, invisível
 
-### 📋 Gerenciamento de Clipboard
-- ✅ **Histórico inteligente:** Mantém até 1000 itens (configurável)
-- ✅ **Busca em tempo real:** Janela de busca com `Ctrl+Shift+F`
-- ✅ **Monitoramento automático:** Detecta Ctrl+C e mudanças no clipboard
-- ✅ **Acesso rápido:** Últimos 5 itens no menu da bandeja
-- ✅ **Timestamps:** Cada item salvo com data/hora
-- ✅ **Persistência:** Histórico salvo entre reinicializações
+### 🎯 Atalhos Personalizados Ilimitados (NOVO!)
+- ✅ **Crie quantos quiser:** CTRL+SHIFT+1, CTRL+SHIFT+2, ALT+F1...
+- ✅ **Prefixo por atalho:** Cada um com seu prefixo personalizado
+- ✅ **Habilitar/Desabilitar:** Controle individual de cada atalho
+- ✅ **Interface CRUD:** Adicionar, editar, remover facilmente
+- ✅ **Detecção automática:** Sistema detecta teclas pressionadas
 
-### ⚙️ Configurações Avançadas
-- ✅ **Interface gráfica:** Janela com 4 abas (Geral, Histórico, Notificações, Atalhos)
-- ✅ **Hotkeys personalizáveis:** Configure seus próprios atalhos
-- ✅ **Intervalos ajustáveis:** Controle de monitoramento (0.5s-60s)
-- ✅ **Notificações:** Habilitar/desabilitar e duração customizável
-- ✅ **Aplicação instantânea:** Sem necessidade de reiniciar (exceto hotkeys)
+### 📋 Histórico de Clipboard Inteligente
+- ✅ **Apenas textos úteis:** Timestamps NÃO poluem o histórico
+- ✅ **Backup automático:** Quando Windows clipboard está desabilitado
+- ✅ **Busca rápida:** CTRL+SHIFT+F para encontrar qualquer texto
+- ✅ **100 itens recentes:** Configurável, persistente
+- ✅ **Últimos 5 no menu:** Acesso rápido
+
+### ⚙️ Configuração Total
+- ✅ **Formato de data/hora:** Customize código strftime
+- ✅ **Caracteres de delimitação:** Mude [ ] para << >> ou o que quiser
+- ✅ **Teclas de sistema:** Busca e Refresh configuráveis
+- ✅ **5 abas organizadas:** Atalhos, Formato, Notificações, Teclas, Info
+- ✅ **Aplicação inteligente:** Avisa quando precisa reiniciar
 
 ### 🎨 Interface & UX
 - ✅ **Bandeja do sistema:** Ícone calendário/relógio personalizado

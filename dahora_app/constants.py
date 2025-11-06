@@ -5,8 +5,8 @@ import os
 
 # Informações do aplicativo
 APP_NAME = "DahoraApp"
-APP_VERSION = "0.1.1"
-APP_TITLE = "Dahora App - Sistema de Data/Hora"
+APP_VERSION = "0.2.0"
+APP_TITLE = "Dahora App - Sistema de Timestamp"
 
 # Diretório de dados do usuário
 def get_data_dir() -> str:

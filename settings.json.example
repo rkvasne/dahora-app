@@ -1,0 +1,32 @@
+{
+  "prefix": "compras",
+  "custom_shortcuts": [
+    {
+      "id": 1,
+      "hotkey": "ctrl+shift+1",
+      "prefix": "compras",
+      "enabled": true,
+      "description": "Lista de compras"
+    },
+    {
+      "id": 2,
+      "hotkey": "ctrl+shift+r",
+      "prefix": "",
+      "enabled": true,
+      "description": "Refresh do menu (sugestão)"
+    },
+    {
+      "id": 3,
+      "hotkey": "ctrl+shift+f",
+      "prefix": "",
+      "enabled": true,
+      "description": "Buscar no histórico (sugestão)"
+    }
+  ],
+  "datetime_format": "%d.%m.%Y-%H:%M",
+  "max_history_items": 100,
+  "clipboard_monitor_interval": 3.0,
+  "clipboard_idle_threshold": 30.0,
+  "notification_duration": 2,
+  "notification_enabled": true
+}

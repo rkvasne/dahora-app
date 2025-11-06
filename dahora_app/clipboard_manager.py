@@ -166,10 +166,10 @@ class ClipboardManager:
             try:
                 current_content = pyperclip.paste()
                 
-                # Log a cada 6 tentativas
-                if attempt % 6 == 0:
+                # Log reduzido (apenas a cada 120 tentativas = ~1 minuto)
+                if attempt % 120 == 0:
                     time_idle = current_time - last_activity_time
-                    logging.info(f"Verificação #{attempt} - Clipboard: '{current_content[:30] if current_content else 'vazio'}' (ocioso há {time_idle:.1f}s)")
+                    logging.debug(f"Monitor clipboard ativo (ocioso há {time_idle:.1f}s)")
                 
                 # Verifica mudança
                 if current_content and current_content.strip():

@@ -10,6 +10,8 @@ import logging
 import threading
 import pyperclip
 import pystray
+import keyboard
+import time
 
 # Configuração de encoding do console
 try:
@@ -38,6 +40,8 @@ from dahora_app import (
     MenuBuilder,
     SettingsDialog,
     SearchDialog,
+    CustomShortcutsDialog,
+    AboutDialog,
 )
 from dahora_app.constants import (
     APP_TITLE,
@@ -98,6 +102,8 @@ class DahoraApp:
         self.prefix_dialog = PrefixDialog()
         self.settings_dialog = SettingsDialog()
         self.search_dialog = SearchDialog()
+        self.custom_shortcuts_dialog = CustomShortcutsDialog()
+        self.about_dialog = AboutDialog()
         self.menu_builder = MenuBuilder()
         self.icon = None
     
@@ -110,11 +116,20 @@ class DahoraApp:
         self.clipboard_manager.load_history()
         self.settings_manager.load()
         
-        # Sincroniza prefixo
+        # Sincroniza prefixo e brackets
         self.datetime_formatter.set_prefix(self.settings_manager.get_prefix())
+        self.datetime_formatter.set_brackets(
+            self.settings_manager.bracket_open,
+            self.settings_manager.bracket_close
+        )
         
         # Configura callbacks
         self._setup_callbacks()
+        
+        # Configura custom shortcuts (NOVO)
+        print(">>> Iniciando setup de custom shortcuts...")
+        self._setup_custom_shortcuts()
+        print(">>> Setup de custom shortcuts concluído")
         
         # Mostra aviso de privacidade
         self.show_privacy_notice()
@@ -141,18 +156,30 @@ class DahoraApp:
         self.search_dialog.set_copy_callback(self._copy_from_history)
         self.search_dialog.notification_callback = self.notification_manager.show_toast
         
+        # Custom shortcuts dialog (agora com tabs completas)
+        self.custom_shortcuts_dialog.set_current_settings(self.settings_manager.get_all())
+        self.custom_shortcuts_dialog.set_on_add_callback(self._on_add_custom_shortcut_wrapper)  # Wrapper com log
+        self.custom_shortcuts_dialog.set_on_update_callback(self.settings_manager.update_custom_shortcut)
+        self.custom_shortcuts_dialog.set_on_remove_callback(self.settings_manager.remove_custom_shortcut)
+        self.custom_shortcuts_dialog.set_on_validate_hotkey_callback(self.hotkey_manager.validate_hotkey)
+        self.custom_shortcuts_dialog.set_on_save_callback(self._on_settings_saved)  # Para salvar configs gerais
+        self.custom_shortcuts_dialog.on_get_settings_callback = self.settings_manager.get_all  # Para recarregar dados frescos
+        self.custom_shortcuts_dialog.notification_callback = self.notification_manager.show_toast
+        
         # Hotkeys
         self.hotkey_manager.set_copy_datetime_callback(lambda: self.copy_datetime(source="Atalho"))
         self.hotkey_manager.set_refresh_menu_callback(self._on_refresh_menu)
         self.hotkey_manager.set_search_callback(self._show_search_dialog)
         self.hotkey_manager.set_ctrl_c_callback(self._on_ctrl_c)
         
-        # Menu builder
+        # Menu builder callbacks
         self.menu_builder.set_copy_datetime_callback(self._copy_datetime_menu)
-        self.menu_builder.set_set_prefix_callback(self._show_prefix_dialog)
         self.menu_builder.set_show_search_callback(self._show_search_dialog)
-        self.menu_builder.set_show_settings_callback(self._show_settings_dialog)
+        self.menu_builder.set_show_custom_shortcuts_callback(self._show_custom_shortcuts_dialog)  # Configurações unificadas
         self.menu_builder.set_refresh_menu_callback(self._refresh_menu_action)
+        # Atualiza atalhos no menu
+        self.menu_builder.hotkey_search_history = self.settings_manager.hotkey_search_history
+        self.menu_builder.hotkey_refresh_menu = self.settings_manager.hotkey_refresh_menu
         self.menu_builder.set_get_recent_items_callback(self.clipboard_manager.get_recent_items)
         self.menu_builder.set_copy_from_history_callback(self._copy_from_history)
         self.menu_builder.set_clear_history_callback(self._clear_history)
@@ -172,6 +199,14 @@ class DahoraApp:
         
         # Sincroniza componentes que dependem das configurações
         self.datetime_formatter.set_prefix(settings.get("prefix", ""))
+        self.datetime_formatter.set_brackets(
+            settings.get("bracket_open", "["),
+            settings.get("bracket_close", "]")
+        )
+        
+        # Atualiza atalhos no menu builder
+        self.menu_builder.hotkey_search_history = settings.get("hotkey_search_history", "ctrl+shift+f")
+        self.menu_builder.hotkey_refresh_menu = settings.get("hotkey_refresh_menu", "ctrl+shift+r")
         
         # Avisa que algumas mudanças requerem restart
         needs_restart = False
@@ -212,13 +247,99 @@ class DahoraApp:
         # ou usar "Recarregar Itens" (Ctrl+Shift+R)
         pass
     
+    def _setup_custom_shortcuts(self):
+        """Configura custom shortcuts na inicialização (NOVO)"""
+        try:
+            logging.info("=== Iniciando configuração de custom shortcuts ===")
+            
+            # Obtém custom shortcuts habilitados
+            custom_shortcuts = self.settings_manager.get_custom_shortcuts(enabled_only=True)
+            
+            if not custom_shortcuts:
+                logging.info("Nenhum custom shortcut configurado - OK, pulando")
+                return
+            
+            logging.info(f"Configurando {len(custom_shortcuts)} custom shortcuts...")
+            
+            # Registra hotkeys
+            results = self.hotkey_manager.setup_custom_hotkeys(custom_shortcuts)
+            
+            # Define callbacks para cada shortcut
+            for shortcut in custom_shortcuts:
+                shortcut_id = shortcut["id"]
+                prefix = shortcut["prefix"]
+                
+                # Cria callback com closure
+                def make_callback(p):
+                    return lambda: self._on_custom_shortcut_triggered(p)
+                
+                self.hotkey_manager.set_custom_shortcut_callback(shortcut_id, make_callback(prefix))
+                
+                # Log do resultado
+                status = results.get(shortcut_id, "unknown")
+                hotkey = shortcut.get("hotkey", "").upper()
+                if status == "ok":
+                    logging.info(f"✓ Custom shortcut OK: [{hotkey}] → {prefix}")
+                else:
+                    logging.warning(f"✗ Custom shortcut FALHOU: [{hotkey}] → {status}")
+            
+            # Notifica sucesso
+            success_count = sum(1 for s in results.values() if s == "ok")
+            if success_count > 0:
+                logging.info(f"{success_count}/{len(custom_shortcuts)} custom shortcuts registrados com sucesso")
+        
+        except Exception as e:
+            logging.error(f"Erro ao configurar custom shortcuts: {e}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            # Continua a execução mesmo com erro
+    
+    def _on_custom_shortcut_triggered(self, prefix: str):
+        """Callback quando custom shortcut é acionado (COLA DIRETAMENTE SEM AFETAR CLIPBOARD)"""
+        try:
+            # Formata com prefixo específico
+            dt_string = self.datetime_formatter.format_with_prefix(prefix)
+            
+            # SALVA o clipboard atual (preserva o que o usuário tinha copiado)
+            clipboard_backup = None
+            try:
+                clipboard_backup = pyperclip.paste()
+            except Exception:
+                pass
+            
+            # Copia temporariamente para poder colar
+            pyperclip.copy(dt_string)
+            time.sleep(0.05)  # Aguarda clipboard estar pronto
+            
+            # COLA AUTOMATICAMENTE onde o cursor está
+            keyboard.send('ctrl+v')
+            time.sleep(0.05)  # Aguarda a colagem completar
+            
+            # RESTAURA o clipboard original (usuário não perde o que tinha copiado)
+            if clipboard_backup is not None:
+                try:
+                    pyperclip.copy(clipboard_backup)
+                except Exception:
+                    pass
+            
+            # NÃO adiciona timestamp ao histórico (desnecessário - sempre pode gerar novo)
+            
+            # Incrementa contador
+            count = self.counter.increment()
+            
+            # Notificação desativada - o usuário já vê o texto colado na tela
+            
+            logging.info(f"Custom shortcut acionado: prefix='{prefix}', resultado={dt_string}, total={count}ª vez")
+        
+        except Exception as e:
+            logging.error(f"Erro ao processar custom shortcut: {e}")
+    
     def copy_datetime(self, icon=None, item=None, source=None):
         """Copia a data e hora para a área de transferência"""
         dt_string = self.datetime_formatter.format_now()
         self.clipboard_manager.copy_text(dt_string)
         
-        # Adiciona ao histórico
-        self.clipboard_manager.add_to_history(dt_string)
+        # NÃO adiciona timestamp ao histórico (desnecessário - sempre pode gerar novo)
         
         # Incrementa contador
         count = self.counter.increment()
@@ -264,6 +385,20 @@ class DahoraApp:
         """Mostra diálogo de busca no histórico"""
         self.search_dialog.show()
     
+    def _on_add_custom_shortcut_wrapper(self, hotkey: str, prefix: str, description: str = "", enabled: bool = True):
+        """Wrapper para adicionar custom shortcut"""
+        try:
+            return self.settings_manager.add_custom_shortcut(hotkey, prefix, description, enabled)
+        except Exception as e:
+            logging.error(f"Erro ao adicionar shortcut: {e}")
+            return False, f"Erro: {e}", None
+    
+    def _show_custom_shortcuts_dialog(self):
+        """Mostra diálogo de gerenciamento de custom shortcuts (NOVO)"""
+        # Passa TODAS as configurações (agora tem tabs)
+        self.custom_shortcuts_dialog.set_current_settings(self.settings_manager.get_all())
+        self.custom_shortcuts_dialog.show()
+    
     def _refresh_menu_action(self, icon, item):
         """Atualiza o menu manualmente"""
         try:
@@ -288,21 +423,8 @@ class DahoraApp:
         self._update_menu()
     
     def _show_about(self, icon, item):
-        """Mostra informações sobre o app"""
-        about_text = (
-            f"Dahora App v{APP_VERSION}\n\n"
-            "Aplicativo para copiar data e hora\n"
-            "Formato: [DD.MM.AAAA-HH:MM]\n\n"
-            f"Total de acionamentos: {self.counter.get_count()} vezes\n"
-            f"Histórico de clipboard: {self.clipboard_manager.get_history_size()} itens\n\n"
-            "Atalho: Ctrl+Shift+Q\n\n"
-            "Menu de opções via clique direito\n\n"
-            "Histórico mantém últimos 100 itens\n"
-            "Monitora clipboard a cada 3 segundos\n"
-            "Clique em itens do histórico para copiar\n"
-            "Opção 'Limpar Histórico' disponível"
-        )
-        self.notification_manager.show_toast("Sobre - Dahora App", about_text, duration=10)
+        """Mostra janela Sobre (estilo Windows nativo)"""
+        self.about_dialog.show()
     
     def _quit_app(self, icon, item):
         """Encerra o aplicativo"""
@@ -435,11 +557,19 @@ class DahoraApp:
             count = self.counter.get_count()
             
             print(f">>> App iniciado! Counter: {count}, Histórico: {total_history}, Prefixo: {prefix}")
+            
+            # Mensagem de inicialização
+            custom_count = len(self.settings_manager.get_custom_shortcuts())
+            if custom_count > 0:
+                shortcuts_msg = f"Atalhos configurados: {custom_count}"
+            else:
+                shortcuts_msg = "Configure seus atalhos em: Configurações → Prefixos"
+            
             self.notification_manager.show_toast("Dahora App",
-                f"App iniciado com sucesso!\n"
-                f"Atalho: Ctrl+Shift+Q\n"
-                f"Prefixo: {prefix}\n"
-                f"Menu: clique direito no ícone\n"
+                f"App iniciado com sucesso!\n\n"
+                f"{shortcuts_msg}\n"
+                f"Prefixo padrão: {prefix}\n"
+                f"Menu: clique direito no ícone\n\n"
                 f"Já acionado {count} vezes • Histórico: {total_history} itens")
             
             # Inicia ícone (bloqueia até fechar)
