@@ -141,45 +141,84 @@ pyinstaller 001_pyinstaller.spec
 
 Isso gerará `dist/dahora_app.exe` (sem versão no nome). O build principal recomendado continua sendo via `build.py`.
 
-## Uso
+## 🚀 Uso (v0.2.0)
 
-1. **Primeiro, instale as dependências** (veja seção Instalação acima)
-2. Execute o aplicativo: `python main.py` (ou o arquivo .exe)
-3. O ícone de calendário/relógio aparecerá na bandeja do sistema (canto inferior direito, próximo ao relógio)
+### Início Rápido
 
-### 🎯 Formas de usar:
+1. **Instale as dependências:** `pip install -r requirements.txt` (ou use `instalar.bat`)
+2. **Execute:** `python main.py` (ou o arquivo .exe)
+3. **Ícone na bandeja:** Aparece próximo ao relógio do Windows
 
-#### Menu da Bandeja (Clique Direito)
-- **Copiar Data/Hora** → Copia data/hora formatada
-- **Definir Prefixo** → Personaliza prefixo do formato
-- **Buscar no Histórico (Ctrl+Shift+F)** → Abre janela de busca
-- **Configurações** → Abre janela de configurações avançadas
-- **Recarregar Itens** → Atualiza menu manualmente
+### ⚡ Atalhos Personalizados (NOVO!)
+
+**Crie seus próprios atalhos que COLAM automaticamente:**
+
+1. Clique direito no ícone → **Configurações**
+2. Aba **"Atalhos Personalizados"**
+3. Clique **"Adicionar"**
+4. Configure:
+   - **Prefixo:** Ex: "dahora", "compras", "trabalho"
+   - **Atalho:** Clique "Detectar" e pressione as teclas (CTRL+SHIFT+1, etc.)
+   - **Descrição:** Opcional
+5. Clique **"OK"**
+
+**Uso:**
+```
+CTRL+SHIFT+1 → COLA [dahora-05.11.2025-23:30] onde o cursor está! ✨
+CTRL+SHIFT+2 → COLA [compras-05.11.2025-23:30] automaticamente!
+```
+
+**Seu clipboard é PRESERVADO!** O sistema salva, cola e restaura automaticamente.
+
+### 📋 Menu da Bandeja (Clique Direito)
+
+- **Copiar Data/Hora** → Copia timestamp (sem prefixo)
+- **Buscar no Histórico** → Busca textos copiados (CTRL+SHIFT+F configurável)
+- **Configurações** → 5 abas de configuração completa
+- **Recarregar Itens** → Atualiza menu (CTRL+SHIFT+R configurável)
 - **--- Últimos 5 Itens ---** → Histórico recente (clique para copiar)
 - **Limpar Histórico** → Remove todo o histórico
-- **Sobre** → Informações do app
+- **Sobre** → Informações e versão
 - **Sair** → Fecha o aplicativo
 
-#### Atalhos Globais
-- `Ctrl+Shift+Q` → Copia data/hora de qualquer lugar
-- `Ctrl+Shift+F` → Abre busca no histórico
-- `Ctrl+Shift+R` → Recarrega menu da bandeja
-- `Ctrl+C` → Monitorado automaticamente para histórico
+### ⚙️ Configurações Completas
 
-#### Janela de Busca
-1. Pressione `Ctrl+Shift+F` ou clique no menu
-2. Digite para buscar em tempo real
+Acesse via menu → **Configurações**. 5 abas disponíveis:
+
+#### 1️⃣ **Atalhos Personalizados**
+- Lista todos os atalhos configurados
+- Adicionar, editar, remover atalhos
+- Habilitar/desabilitar individualmente
+- Preview em tempo real
+
+#### 2️⃣ **Formato**
+- **Formato de data/hora:** Customize com códigos strftime
+- **Delimitadores:** Mude `[` `]` para `<<` `>>` ou qualquer caractere
+- **Itens no histórico:** Configure quantos textos guardar (10-1000)
+- **Intervalos:** Monitoramento e idle threshold
+
+#### 3️⃣ **Notificações**
+- Habilitar/desabilitar notificações
+- Duração configurável (1-15 segundos)
+
+#### 4️⃣ **Teclas de Atalho**
+- **Buscar no histórico:** Personalize (padrão CTRL+SHIFT+F)
+- **Recarregar menu:** Personalize (padrão CTRL+SHIFT+R)
+- ⚠️ Mudanças requerem reinício
+
+#### 5️⃣ **Info**
+- Informações sobre configurabilidade
+- Dicas de uso
+- Atalhos reservados do sistema
+
+### 🔍 Busca no Histórico
+
+1. Pressione **CTRL+SHIFT+F** (ou via menu)
+2. Digite para filtrar em tempo real
 3. Double-click para copiar item
-4. `F5` para refresh, `ESC` para fechar
+4. **F5** refresh, **ESC** fechar
 
-#### Configurações Avançadas
-1. Clique em "Configurações" no menu
-2. Navegue pelas 4 abas:
-   - **Geral:** Prefixo e formato de data
-   - **Histórico:** Máximo de itens e intervalos
-   - **Notificações:** Habilitar/desabilitar e duração
-   - **Atalhos:** Hotkeys personalizáveis
-3. Clique "Salvar" para aplicar (ou "Restaurar Padrões")
+**Histórico inteligente:** Guarda apenas textos que você copiou, NÃO timestamps (sempre pode gerar novos!)
 
 ## Formato de Saída
 
