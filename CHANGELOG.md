@@ -5,6 +5,83 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2025-11-05 🚀 **REVOLUÇÃO: COLA AUTOMATICAMENTE!**
+
+### 🔥 BREAKING CHANGES
+- **Atalhos agora COLAM diretamente** onde o cursor está (antes apenas copiava)
+- **Timestamps não vão mais para o histórico** (desnecessário - sempre pode gerar novo)
+- **Comportamento do clipboard mudou** (preservado automaticamente)
+
+### ✨ Added
+- **⚡ Colagem Automática**: 
+  - Atalhos customizados colam timestamp diretamente onde cursor está
+  - Sistema salva clipboard atual, cola e restaura automaticamente
+  - Zero interrupção no workflow do usuário
+  
+- **🎯 Atalhos Personalizados Ilimitados**:
+  - CRUD completo para gerenciar atalhos (CTRL+SHIFT+1, CTRL+SHIFT+2, etc.)
+  - Cada atalho com seu próprio prefixo personalizado
+  - Interface de detecção automática de teclas
+  - Habilitar/desabilitar individualmente
+  - Preview em tempo real
+
+- **⚙️ Interface Windows 11 Nativa**:
+  - 5 abas: Atalhos Personalizados, Formato, Notificações, Teclas de Atalho, Info
+  - Botões padrão Windows (OK azul + Cancelar)
+  - Fonte monoespaçada (Consolas) no listbox
+  - Padding e fontes padrão Microsoft
+  - Janela reduzida (600x500) mais compacta
+
+- **🆕 Tela Sobre Estilo Windows**:
+  - Design nativo Windows com LabelFrames
+  - Link para GitHub Repository
+  - Informações de versão e recursos
+
+- **🔧 Configuração Total**:
+  - Caracteres de delimitação configuráveis ([ ] → << >> ou qualquer)
+  - Formato de data/hora customizável com códigos strftime
+  - Teclas de busca e refresh configuráveis
+  - Atalhos dinâmicos exibidos no menu
+
+### 🔄 Changed
+- **📋 Histórico Inteligente**: 
+  - Guarda apenas textos copiados pelo usuário (não timestamps)
+  - Útil como backup quando Windows clipboard está desabilitado
+  - Foco em ser útil, não poluir
+
+- **🔇 Notificações Desativadas para Atalhos**:
+  - Você já vê o texto colado - popup seria redundante
+  - Experiência mais limpa e rápida
+  
+- **🧹 Logs Otimizados**:
+  - Verbosidade reduzida drasticamente (120x menos logs)
+  - Monitor de clipboard silencioso (log apenas a cada 1 minuto)
+  - Logs focados em mudanças importantes
+
+- **🎨 Interface Melhorada**:
+  - Janela de configurações 600x500 (antes 800x600)
+  - Listbox com 10 linhas (antes 15)
+  - Labels concisos estilo Windows
+  - Sem emojis nos botões
+
+### 🛠️ Fixed
+- Aplicação de atalhos configurados no menu após salvar
+- Sincronização de bracket_open/close ao salvar configurações
+- Import faltante de `keyboard` e `time` no main.py
+
+### 📚 Documentation
+- README.md completamente reescrito para v0.2.0
+- Seção de uso atualizada com guia passo a passo
+- Landing page (index.html) atualizada com novos recursos
+- CHANGELOG.md com entrada detalhada da v0.2.0
+
+### 🎯 Technical Details
+- Arquivos novos: `custom_shortcuts_dialog.py`, `about_dialog.py`, `styles.py`
+- 21 arquivos modificados, 3477 inserções, 126 deleções
+- Versão atualizada em todos os pontos: `__init__.py`, `constants.py`, about dialog
+
+---
+
 ## [0.1.1] - 2025-11-04 🧹 **CLEANUP & ORGANIZATION**
 
 ### Changed
