@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2025-11-06 🔧 **FIX: Registro Automático de Atalhos**
+
+### 🐛 Fixed
+- **Registro automático de custom shortcuts**: Atalhos agora são registrados **instantaneamente** ao adicionar/editar
+- **Problema anterior**: Atalhos só funcionavam após reiniciar o app
+- **Solução**: Implementados wrappers que registram/desregistram hotkeys em tempo real
+
+### ✨ Added
+- **`_on_add_custom_shortcut_wrapper()`**: Registra hotkey imediatamente ao adicionar
+- **`_on_update_custom_shortcut_wrapper()`**: Re-registra hotkey ao atualizar
+- **`_on_remove_custom_shortcut_wrapper()`**: Desregistra hotkey ao remover
+- **Import de `Optional`**: Adicionado para type hints nos novos métodos
+
+### 🔄 Changed
+- Custom shortcuts dialog agora usa wrappers com registro automático
+- Logs informativos mostram status de registro em tempo real
+
+### 📝 Technical Details
+- Arquivos modificados: `main.py` (3 novos métodos)
+- Versão atualizada em `constants.py`: 0.2.0 → 0.2.1
+- Build atualizado: `dahora_app_v0.2.1.spec`
+
+### 🎯 Impacto do Usuário
+**ANTES (v0.2.0):**
+1. Adiciona atalho CTRL+SHIFT+3
+2. Precisa **reiniciar o app** 🔄
+3. Atalho funciona
+
+**AGORA (v0.2.1):**
+1. Adiciona atalho CTRL+SHIFT+3
+2. Atalho funciona **NA HORA!** ⚡
+
+---
+
 ## [0.2.0] - 2025-11-05 🚀 **REVOLUÇÃO: COLA AUTOMATICAMENTE!**
 
 ### 🔥 BREAKING CHANGES

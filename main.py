@@ -12,6 +12,7 @@ import pyperclip
 import pystray
 import keyboard
 import time
+from typing import Optional
 
 # Configuração de encoding do console
 try:
@@ -158,9 +159,9 @@ class DahoraApp:
         
         # Custom shortcuts dialog (agora com tabs completas)
         self.custom_shortcuts_dialog.set_current_settings(self.settings_manager.get_all())
-        self.custom_shortcuts_dialog.set_on_add_callback(self._on_add_custom_shortcut_wrapper)  # Wrapper com log
-        self.custom_shortcuts_dialog.set_on_update_callback(self.settings_manager.update_custom_shortcut)
-        self.custom_shortcuts_dialog.set_on_remove_callback(self.settings_manager.remove_custom_shortcut)
+        self.custom_shortcuts_dialog.set_on_add_callback(self._on_add_custom_shortcut_wrapper)  # Wrapper com registro imediato
+        self.custom_shortcuts_dialog.set_on_update_callback(self._on_update_custom_shortcut_wrapper)  # Wrapper com re-registro
+        self.custom_shortcuts_dialog.set_on_remove_callback(self._on_remove_custom_shortcut_wrapper)  # Wrapper com desregistro
         self.custom_shortcuts_dialog.set_on_validate_hotkey_callback(self.hotkey_manager.validate_hotkey)
         self.custom_shortcuts_dialog.set_on_save_callback(self._on_settings_saved)  # Para salvar configs gerais
         self.custom_shortcuts_dialog.on_get_settings_callback = self.settings_manager.get_all  # Para recarregar dados frescos
@@ -386,12 +387,90 @@ class DahoraApp:
         self.search_dialog.show()
     
     def _on_add_custom_shortcut_wrapper(self, hotkey: str, prefix: str, description: str = "", enabled: bool = True):
-        """Wrapper para adicionar custom shortcut"""
+        """Wrapper para adicionar custom shortcut E REGISTRAR IMEDIATAMENTE"""
         try:
-            return self.settings_manager.add_custom_shortcut(hotkey, prefix, description, enabled)
+            # Adiciona no settings
+            success, msg, new_id = self.settings_manager.add_custom_shortcut(hotkey, prefix, description, enabled)
+            
+            if success and enabled and new_id is not None:
+                # Registra o hotkey IMEDIATAMENTE
+                shortcut = {
+                    "id": new_id,
+                    "hotkey": hotkey,
+                    "prefix": prefix,
+                    "enabled": enabled
+                }
+                
+                # Registra no sistema de hotkeys
+                results = self.hotkey_manager.setup_custom_hotkeys([shortcut])
+                
+                if results.get(new_id) == "ok":
+                    # Define callback
+                    def make_callback(p):
+                        return lambda: self._on_custom_shortcut_triggered(p)
+                    
+                    self.hotkey_manager.set_custom_shortcut_callback(new_id, make_callback(prefix))
+                    logging.info(f"✓ Atalho registrado em tempo real: [{hotkey.upper()}] → {prefix}")
+                else:
+                    logging.warning(f"✗ Falha ao registrar atalho: {results.get(new_id)}")
+            
+            return success, msg, new_id
         except Exception as e:
             logging.error(f"Erro ao adicionar shortcut: {e}")
             return False, f"Erro: {e}", None
+    
+    def _on_update_custom_shortcut_wrapper(self, shortcut_id: int, hotkey: Optional[str] = None,
+                                          prefix: Optional[str] = None, description: Optional[str] = None,
+                                          enabled: Optional[bool] = None):
+        """Wrapper para atualizar custom shortcut E RE-REGISTRAR"""
+        try:
+            # Atualiza no settings
+            success, msg = self.settings_manager.update_custom_shortcut(
+                shortcut_id, hotkey=hotkey, prefix=prefix, description=description, enabled=enabled
+            )
+            
+            if success:
+                # Remove registro antigo
+                self.hotkey_manager.unregister_custom_shortcut(shortcut_id)
+                
+                # Obtém shortcut atualizado
+                updated_shortcuts = [s for s in self.settings_manager.get_custom_shortcuts() if s["id"] == shortcut_id]
+                
+                if updated_shortcuts and updated_shortcuts[0].get("enabled", True):
+                    shortcut = updated_shortcuts[0]
+                    
+                    # Re-registra
+                    results = self.hotkey_manager.setup_custom_hotkeys([shortcut])
+                    
+                    if results.get(shortcut_id) == "ok":
+                        # Define callback
+                        def make_callback(p):
+                            return lambda: self._on_custom_shortcut_triggered(p)
+                        
+                        self.hotkey_manager.set_custom_shortcut_callback(shortcut_id, make_callback(shortcut["prefix"]))
+                        logging.info(f"✓ Atalho atualizado em tempo real: ID={shortcut_id}")
+            
+            return success, msg
+        except Exception as e:
+            logging.error(f"Erro ao atualizar shortcut: {e}")
+            return False, f"Erro: {e}"
+    
+    def _on_remove_custom_shortcut_wrapper(self, shortcut_id: int):
+        """Wrapper para remover custom shortcut E DESREGISTRAR"""
+        try:
+            # Remove registro do hotkey PRIMEIRO
+            self.hotkey_manager.unregister_custom_shortcut(shortcut_id)
+            
+            # Remove do settings
+            success, msg = self.settings_manager.remove_custom_shortcut(shortcut_id)
+            
+            if success:
+                logging.info(f"✓ Atalho removido e desregistrado: ID={shortcut_id}")
+            
+            return success, msg
+        except Exception as e:
+            logging.error(f"Erro ao remover shortcut: {e}")
+            return False, f"Erro: {e}"
     
     def _show_custom_shortcuts_dialog(self):
         """Mostra diálogo de gerenciamento de custom shortcuts (NOVO)"""

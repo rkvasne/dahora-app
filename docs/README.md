@@ -1,4 +1,4 @@
-# 📚 DOCUMENTAÇÃO - DAHORA APP v0.2.0
+# 📚 DOCUMENTAÇÃO - DAHORA APP v0.2.1
 
 Esta pasta contém toda a documentação técnica e histórico de desenvolvimento do projeto.
 
@@ -13,6 +13,7 @@ Esta pasta contém toda a documentação técnica e histórico de desenvolviment
 - Padronização do projeto
 - Customizações de UI
 - **v0.2.0 - Colagem automática** (revolucionário!)
+- **v0.2.1 - Registro automático** (fix crítico!)
 - Todas as mudanças importantes
 
 ### ✅ **[IMPROVEMENTS.md](IMPROVEMENTS.md)**

@@ -2,21 +2,21 @@
 
 > **Aplicativo Windows revolucionário: cole timestamps formatados DIRETAMENTE com atalhos personalizáveis**
 
-[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://github.com/rkvasne/dahora-app)
+[![Version](https://img.shields.io/badge/version-0.2.1-blue.svg)](https://github.com/rkvasne/dahora-app)
 [![Python](https://img.shields.io/badge/python-3.8+-green.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](tests/)
 
-## 🚀 Novidade v0.2.0 - Cola Diretamente!
+## 🚀 Novidade v0.2.1 - Registro Automático de Atalhos!
 
 **Mudança revolucionária:** Os atalhos agora **colam automaticamente** onde seu cursor está!
 
 ```
-ANTES (v0.1.x):
-CTRL+SHIFT+1 → Copia para clipboard → Você dá CTRL+V
-
-AGORA (v0.2.0):
+v0.2.0 - Cola Diretamente:
 CTRL+SHIFT+1 → COLA DIRETO! ✨
+
+v0.2.1 - Atalhos Funcionam Instantaneamente:
+Adiciona atalho → Funciona NA HORA (sem reiniciar)! 🚀
 ```
 
 Dahora App é o timestamp manager definitivo para Windows:
@@ -38,7 +38,7 @@ Este repositório inclui uma landing page informativa do Dahora App.
 
 Para visualizar, abra `index.html` no navegador ou utilize um servidor HTTP local na raiz do projeto e acesse `http://localhost:5500/` (se estiver usando `001_serve.ps1`).
 
-## ✨ Características Principais (v0.2.0)
+## ✨ Características Principais (v0.2.1)
 
 ### ⚡ Colagem Automática (NOVO!)
 - ✨ **Cola direto onde está o cursor** - Um atalho, uma ação!
@@ -129,7 +129,7 @@ python build.py
 
 **Importante:** O build usará automaticamente o arquivo `icon.ico` existente no projeto. Se o arquivo não existir, o script tentará criar um ícone padrão.
 
-3. O executável estará em `dist/dahora_app_v0.1.1.exe`
+3. O executável estará em `dist/DahoraApp_v0.2.1.exe`
 
 ### Alternativa: usar o .spec canônico
 
@@ -141,7 +141,7 @@ pyinstaller 001_pyinstaller.spec
 
 Isso gerará `dist/dahora_app.exe` (sem versão no nome). O build principal recomendado continua sendo via `build.py`.
 
-## 🚀 Uso (v0.2.0)
+## 🚀 Uso (v0.2.1)
 
 ### Início Rápido
 
@@ -298,7 +298,7 @@ Exemplos:
 - **Recursos mínimos:** Consuma pouca memória e CPU
 - **Segundo plano:** Roda silenciosamente sem interferir em outros apps
 - **Executável:** O .exe não requer Python instalado no computador de destino
-- **Versão:** v0.1.1 - Executável nomeado como `dahora_app_v0.1.1.exe`
+- **Versão:** v0.2.1 - Executável nomeado como `DahoraApp_v0.2.1.exe`
 - **Segurança:** Todas as notificações são seguras e não exigem permissões especiais
 - **Interface profissional:** Segui padrões do Windows moderno com tooltips claros
 - **Contador de uso:** Acompanha quantas vezes o app foi acionado
