@@ -39,13 +39,6 @@ def build_executable():
             except Exception:
                 print(">>> Continuando sem limpar cache dist")
 
-    # Garante que está usando o ícone correto
-    if os.path.exists('icone.ico'):
-        if os.path.exists('icon.ico'):
-            os.remove('icon.ico')
-        shutil.copy2('icone.ico', 'icon.ico')
-        print(">>> Ícone correto icone.ico copiado para icon.ico")
-
     # Limpa cache de ícones do Windows
     try:
         import subprocess
