@@ -1,4 +1,4 @@
-# 📚 DOCUMENTAÇÃO - DAHORA APP
+# 📚 DOCUMENTAÇÃO - DAHORA APP v0.2.0
 
 Esta pasta contém toda a documentação técnica e histórico de desenvolvimento do projeto.
 
@@ -12,6 +12,7 @@ Esta pasta contém toda a documentação técnica e histórico de desenvolviment
 - Correção de ícone
 - Padronização do projeto
 - Customizações de UI
+- **v0.2.0 - Colagem automática** (revolucionário!)
 - Todas as mudanças importantes
 
 ### ✅ **[IMPROVEMENTS.md](IMPROVEMENTS.md)**
@@ -19,6 +20,7 @@ Esta pasta contém toda a documentação técnica e histórico de desenvolviment
 - Features planejadas
 - Prioridades
 - Status de implementação
+- Itens completados na v0.2.0
 
 ### 💰 **[PRICING.md](PRICING.md)**
 **Análise de precificação e modelo de negócio**
@@ -31,15 +33,16 @@ Esta pasta contém toda a documentação técnica e histórico de desenvolviment
 ## 🎯 COMO USAR
 
 ### **Novo desenvolvedor?**
-1. Leia **[DEVELOPMENT_HISTORY.md](DEVELOPMENT_HISTORY.md)** - Entenda todo o contexto
-2. Consulte **[IMPROVEMENTS.md](IMPROVEMENTS.md)** - Veja o que está planejado
+1. Leia **[../README.md](../README.md)** (raiz) - Guia de uso atual (v0.2.0)
+2. Leia **[DEVELOPMENT_HISTORY.md](DEVELOPMENT_HISTORY.md)** - Entenda o contexto
+3. Consulte **[IMPROVEMENTS.md](IMPROVEMENTS.md)** - Veja o que está planejado
 
 ### **Análise de negócio?**
 → Consulte **[PRICING.md](PRICING.md)**
 
 ---
 
-## 📁 ESTRUTURA LIMPA
+## 📁 ESTRUTURA FINAL
 
 ```
 docs/
@@ -49,7 +52,7 @@ docs/
 └── PRICING.md                   💰 Análise de negócio
 ```
 
-**Total:** 4 documentos essenciais (sem redundâncias)
+**Total:** 4 documentos essenciais (zero redundâncias!)
 
 ---
 
