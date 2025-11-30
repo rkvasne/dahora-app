@@ -40,6 +40,13 @@
                 <li><a href="#faq" class="nav-link">FAQ</a></li>
                 <li><a href="https://github.com/rkvasne/dahora-app" target="_blank" rel="noopener noreferrer"
                         class="nav-link">GitHub</a></li>
+                <li>
+                    <button id="theme-toggle" class="nav-link"
+                        style="background:none; border:none; cursor:pointer; font-size:1.1rem; padding: 0.5rem;"
+                        aria-label="Alternar Tema">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
             </ul>
         </nav>
     </header>
@@ -641,6 +648,34 @@
                     section.style.setProperty('--my', y);
                 });
             });
+        });
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const icon = themeToggle.querySelector('i');
+
+        // Check local storage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+            body.classList.add('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                localStorage.setItem('theme', 'light');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
         });
     </script>
 </body>
