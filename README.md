@@ -27,7 +27,7 @@
 
 Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sistema leve e poderoso que revoluciona como você lida com timestamps. Ele roda silenciosamente na bandeja do sistema e permite que você cole a data e hora atual formatada em qualquer lugar, com um único atalho.
 
-**Novo na v0.2.2:** Uma interface deslumbrante baseada no **Windows 11 Fluent Design**, trazendo modernidade e elegância para suas configurações.
+**Novo na v0.2.2:** Uma interface renovada e limpa, focada em usabilidade e rapidez para suas configurações.
 
 ## ✨ Funcionalidades
 
@@ -36,10 +36,10 @@ Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sist
 - **Preservação de Clipboard:** O app salva o que você tinha copiado, cola o timestamp e restaura seu clipboard original. Transparente e fluido.
 - **Atalhos Ilimitados:** Crie atalhos personalizados (ex: `Ctrl+Shift+1`) com prefixos próprios (ex: `[trabalho-29.11.2025]`).
 
-### 🎨 Windows 11 Fluent Design
-- **Interface Nativa:** Inputs modernos, botões flat sem bordas e scrollbars minimalistas.
+### 🎨 Interface Moderna e Limpa
+- **Foco no Conteúdo:** Design minimalista que não distrai.
 - **Dark Mode:** Cores profundas e contrastes refinados para conforto visual.
-- **Visual Limpo:** Cards e painéis sem bordas excessivas, focando no conteúdo.
+- **Visual Organizado:** Cards e painéis sem bordas excessivas.
 
 ### 📋 Histórico Inteligente
 - **Backup de Texto:** Mantém um histórico dos últimos textos copiados (configurável).
