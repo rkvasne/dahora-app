@@ -7,11 +7,48 @@
 
 ## 📋 ÍNDICE
 
-1. [v0.2.0 - Revolução: Cola Automaticamente](#v020---revolução-cola-automaticamente) 🚀 **NOVO!**
-2. [Migração CSS (Fases 1-3)](#migração-css-fases-1-3)
-3. [Correção de Ícone](#correção-de-ícone)
-4. [Padronização do Projeto](#padronização-do-projeto)
-5. [Customizações de UI](#customizações-de-ui)
+1. [v0.2.2 - Produtividade & Dark Mode Web](#v022---produtividade--dark-mode-web) 🚀 **ATUAL!**
+2. [v0.2.0 - Revolução: Cola Automaticamente](#v020---revolução-cola-automaticamente)
+3. [Migração CSS (Fases 1-3)](#migração-css-fases-1-3)
+4. [Correção de Ícone](#correção-de-ícone)
+5. [Padronização do Projeto](#padronização-do-projeto)
+6. [Customizações de UI](#customizações-de-ui)
+
+---
+
+## 🚀 V0.2.2 - PRODUTIVIDADE & DARK MODE WEB
+
+**Data:** 29/11/2025
+**Status:** ✅ COMPLETA
+
+### ✨ Principais Mudanças
+
+#### 1. **Foco em Produtividade**
+- Refinamento da comunicação: foco na utilidade real (colar timestamps) em vez de apenas estética.
+- Ajustes na Landing Page para destacar "Mais Eficiência" e "Workflow Invisível".
+
+#### 2. **Landing Page com Dark Mode**
+- Implementação completa de tema escuro na documentação web (`index.html`).
+- Toggle button (Sol/Lua) na barra de navegação.
+- Persistência de preferência do usuário (localStorage).
+- Ajustes de contraste para garantir legibilidade em ambos os temas.
+
+#### 3. **Distribuição via Git LFS**
+- Executável `DahoraApp_v0.2.2.exe` hospedado diretamente no repositório via Git LFS.
+- Link de download direto (`raw/main/...`), facilitando o acesso sem depender de releases manuais.
+- Configuração de `.gitattributes` para rastrear binários.
+
+#### 4. **Organização de Arquivos**
+- Scripts utilitários movidos para `scripts/`.
+- Assets de imagem movidos para `assets/`.
+- Limpeza da raiz do projeto.
+
+### 🛠️ Arquivos Modificados
+
+- `index.html`: Adicionado JS de tema, novos textos, link LFS.
+- `landing/styles.css` & `variables.css`: Refatoração para CSS Variables.
+- `README.md`: Atualização completa de estrutura e foco.
+- `.gitattributes`: Configuração LFS.
 
 ---
 

@@ -2,9 +2,9 @@
 
 > **Documento de Rastreamento de Progresso**  
 > Criado em: 04/11/2025  
-> Última atualização: 04/11/2025  
-> Versão atual: v0.2.1  
-> Próxima release: v0.2.2
+> Última atualização: 29/11/2025  
+> Versão atual: v0.2.2  
+> Próxima release: v0.2.3
 
 ---
 
@@ -601,6 +601,19 @@ main.py (392L) - Aplicação principal
 - ✅ Tarefa 13: Busca no histórico
 
 **Progresso:** 0/2 tarefas (0/15 subtarefas)
+
+---
+
+### v0.2.2 - Polimento e Web
+**Prazo:** 29/11/2025 | **Status:** ✅ CONCLUÍDO
+
+**Inclui:**
+- ✅ Landing Page com Dark Mode
+- ✅ Distribuição via Git LFS
+- ✅ Reorganização de arquivos (assets/scripts)
+- ✅ Atualização de documentação
+
+**Progresso:** 4/4 tarefas
 
 ---
 
