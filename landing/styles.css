@@ -113,13 +113,13 @@ h6 {
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 2px solid white;
+    background: var(--glass-bg);
+    color: var(--text-dark);
+    border: 2px solid var(--border-color);
 }
 
 .btn-secondary:hover {
-    background: white;
+    background: var(--bg-white);
     color: var(--primary-color);
 }
 
