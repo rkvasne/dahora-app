@@ -104,39 +104,45 @@ class SettingsDialog:
             notebook.add(tab_general, text="Geral")
             
             # Prefixo
-            ttk.Label(tab_general, text="Prefixo de Data/Hora:", font=(default_font, 9), style="Card.TLabel").grid(row=0, column=0, sticky=tk.W, pady=4)
+            frame_prefix = ttk.Frame(tab_general)
+            frame_prefix.pack(fill=tk.X, pady=5)
+            ttk.Label(frame_prefix, text="Prefixo de Data/Hora:", font=(default_font, 9), style="Card.TLabel").pack(anchor=tk.W)
             var_prefix = tk.StringVar(value=self.current_settings.get("prefix", ""))
-            entry_prefix = ttk.Entry(tab_general, textvariable=var_prefix, width=30)
-            entry_prefix.grid(row=0, column=1, sticky=tk.W, pady=4, padx=(8, 0))
-            
+            ttk.Entry(frame_prefix, textvariable=var_prefix, width=40).pack(anchor=tk.W, pady=(2, 0))
+            ttk.Label(frame_prefix, text="Ex: [trabalho] (opcional)", font=(default_font, 8), foreground="gray", style="Card.TLabel").pack(anchor=tk.W)
+
             # Formato de data/hora
-            ttk.Label(tab_general, text="Formato de Data/Hora:", font=(default_font, 9), style="Card.TLabel").grid(row=1, column=0, sticky=tk.W, pady=4)
+            frame_format = ttk.Frame(tab_general)
+            frame_format.pack(fill=tk.X, pady=10)
+            ttk.Label(frame_format, text="Formato de Data/Hora:", font=(default_font, 9), style="Card.TLabel").pack(anchor=tk.W)
             var_datetime_format = tk.StringVar(value=self.current_settings.get("datetime_format", "%d.%m.%Y-%H:%M"))
-            entry_datetime_format = ttk.Entry(tab_general, textvariable=var_datetime_format, width=30)
-            entry_datetime_format.grid(row=1, column=1, sticky=tk.W, pady=4, padx=(8, 0))
-            ttk.Label(tab_general, text="Exemplo: %d.%m.%Y-%H:%M", font=(default_font, 8), foreground="gray", style="Card.TLabel").grid(row=2, column=1, sticky=tk.W, padx=(8, 0))
+            ttk.Entry(frame_format, textvariable=var_datetime_format, width=40).pack(anchor=tk.W, pady=(2, 0))
+            ttk.Label(frame_format, text="Exemplo: %d.%m.%Y-%H:%M", font=(default_font, 8), foreground="gray", style="Card.TLabel").pack(anchor=tk.W)
             
             # === ABA 2: HISTÓRICO ===
             tab_history = ttk.Frame(notebook, padding=16, style="Card.TFrame")
             notebook.add(tab_history, text="Histórico")
             
             # Máximo de itens
-            ttk.Label(tab_history, text="Máximo de itens no histórico:", font=(default_font, 9), style="Card.TLabel").grid(row=0, column=0, sticky=tk.W, pady=4)
+            frame_max = ttk.Frame(tab_history)
+            frame_max.pack(fill=tk.X, pady=5)
+            ttk.Label(frame_max, text="Máximo de itens no histórico:", font=(default_font, 9), style="Card.TLabel").pack(side=tk.LEFT)
             var_max_history = tk.IntVar(value=self.current_settings.get("max_history_items", 100))
-            spin_max_history = ttk.Spinbox(tab_history, from_=10, to=1000, textvariable=var_max_history, width=10)
-            spin_max_history.grid(row=0, column=1, sticky=tk.W, pady=4, padx=(8, 0))
+            ttk.Spinbox(frame_max, from_=10, to=1000, textvariable=var_max_history, width=10).pack(side=tk.RIGHT)
             
             # Intervalo de monitoramento
-            ttk.Label(tab_history, text="Intervalo de verificação (segundos):", font=(default_font, 9), style="Card.TLabel").grid(row=1, column=0, sticky=tk.W, pady=4)
+            frame_interval = ttk.Frame(tab_history)
+            frame_interval.pack(fill=tk.X, pady=5)
+            ttk.Label(frame_interval, text="Intervalo de verificação (s):", font=(default_font, 9), style="Card.TLabel").pack(side=tk.LEFT)
             var_monitor_interval = tk.DoubleVar(value=self.current_settings.get("clipboard_monitor_interval", 3))
-            spin_monitor_interval = ttk.Spinbox(tab_history, from_=0.5, to=60, increment=0.5, textvariable=var_monitor_interval, width=10)
-            spin_monitor_interval.grid(row=1, column=1, sticky=tk.W, pady=4, padx=(8, 0))
+            ttk.Spinbox(frame_interval, from_=0.5, to=60, increment=0.5, textvariable=var_monitor_interval, width=10).pack(side=tk.RIGHT)
             
             # Threshold de ociosidade
-            ttk.Label(tab_history, text="Tempo ocioso para intervalo maior (s):", font=(default_font, 9), style="Card.TLabel").grid(row=2, column=0, sticky=tk.W, pady=4)
+            frame_idle = ttk.Frame(tab_history)
+            frame_idle.pack(fill=tk.X, pady=5)
+            ttk.Label(frame_idle, text="Tempo ocioso para intervalo maior (s):", font=(default_font, 9), style="Card.TLabel").pack(side=tk.LEFT)
             var_idle_threshold = tk.DoubleVar(value=self.current_settings.get("clipboard_idle_threshold", 30))
-            spin_idle_threshold = ttk.Spinbox(tab_history, from_=5, to=300, increment=5, textvariable=var_idle_threshold, width=10)
-            spin_idle_threshold.grid(row=2, column=1, sticky=tk.W, pady=4, padx=(8, 0))
+            ttk.Spinbox(frame_idle, from_=5, to=300, increment=5, textvariable=var_idle_threshold, width=10).pack(side=tk.RIGHT)
             
             # === ABA 3: NOTIFICAÇÕES ===
             tab_notifications = ttk.Frame(notebook, padding=16, style="Card.TFrame")
@@ -144,41 +150,43 @@ class SettingsDialog:
             
             # Habilitar notificações
             var_notifications_enabled = tk.BooleanVar(value=self.current_settings.get("notification_enabled", True))
-            check_notifications = ttk.Checkbutton(tab_notifications, text="Habilitar notificações", variable=var_notifications_enabled, style="Card.TCheckbutton")
-            check_notifications.grid(row=0, column=0, columnspan=2, sticky=tk.W, pady=4)
+            ttk.Checkbutton(tab_notifications, text="Habilitar notificações", variable=var_notifications_enabled, style="Card.TCheckbutton").pack(anchor=tk.W, pady=10)
             
             # Duração da notificação
-            ttk.Label(tab_notifications, text="Duração da notificação (segundos):", font=(default_font, 9), style="Card.TLabel").grid(row=1, column=0, sticky=tk.W, pady=4)
+            frame_duration = ttk.Frame(tab_notifications)
+            frame_duration.pack(fill=tk.X, pady=5)
+            ttk.Label(frame_duration, text="Duração da notificação (segundos):", font=(default_font, 9), style="Card.TLabel").pack(side=tk.LEFT)
             var_notification_duration = tk.IntVar(value=self.current_settings.get("notification_duration", 2))
-            spin_notification_duration = ttk.Spinbox(tab_notifications, from_=1, to=15, textvariable=var_notification_duration, width=10)
-            spin_notification_duration.grid(row=1, column=1, sticky=tk.W, pady=4, padx=(8, 0))
+            ttk.Spinbox(frame_duration, from_=1, to=15, textvariable=var_notification_duration, width=10).pack(side=tk.RIGHT)
             
             # === ABA 4: ATALHOS ===
             tab_hotkeys = ttk.Frame(notebook, padding=16, style="Card.TFrame")
             notebook.add(tab_hotkeys, text="Atalhos")
             
             # Hotkey copiar data/hora
-            ttk.Label(tab_hotkeys, text="Copiar Data/Hora:", font=(default_font, 9), style="Card.TLabel").grid(row=0, column=0, sticky=tk.W, pady=4)
+            frame_copy = ttk.Frame(tab_hotkeys)
+            frame_copy.pack(fill=tk.X, pady=5)
+            ttk.Label(frame_copy, text="Copiar Data/Hora:", font=(default_font, 9), style="Card.TLabel").pack(anchor=tk.W)
             var_hotkey_copy = tk.StringVar(value=self.current_settings.get("hotkey_copy_datetime", "ctrl+shift+q"))
-            entry_hotkey_copy = ttk.Entry(tab_hotkeys, textvariable=var_hotkey_copy, width=25)
-            entry_hotkey_copy.grid(row=0, column=1, sticky=tk.W, pady=4, padx=(8, 0))
-            ttk.Label(tab_hotkeys, text="Exemplo: ctrl+shift+q", font=(default_font, 8), foreground="gray", style="Card.TLabel").grid(row=1, column=1, sticky=tk.W, padx=(8, 0))
+            ttk.Entry(frame_copy, textvariable=var_hotkey_copy, width=30).pack(anchor=tk.W, pady=(2, 0))
+            ttk.Label(frame_copy, text="Ex: ctrl+shift+q", font=(default_font, 8), foreground="gray", style="Card.TLabel").pack(anchor=tk.W)
             
             # Hotkey refresh menu
-            ttk.Label(tab_hotkeys, text="Atualizar Menu:", font=(default_font, 9), style="Card.TLabel").grid(row=2, column=0, sticky=tk.W, pady=4)
+            frame_refresh = ttk.Frame(tab_hotkeys)
+            frame_refresh.pack(fill=tk.X, pady=10)
+            ttk.Label(frame_refresh, text="Atualizar Menu:", font=(default_font, 9), style="Card.TLabel").pack(anchor=tk.W)
             var_hotkey_refresh = tk.StringVar(value=self.current_settings.get("hotkey_refresh_menu", "ctrl+shift+r"))
-            entry_hotkey_refresh = ttk.Entry(tab_hotkeys, textvariable=var_hotkey_refresh, width=25)
-            entry_hotkey_refresh.grid(row=2, column=1, sticky=tk.W, pady=4, padx=(8, 0))
+            ttk.Entry(frame_refresh, textvariable=var_hotkey_refresh, width=30).pack(anchor=tk.W, pady=(2, 0))
             
             # Aviso sobre atalhos
-            ttk.Label(tab_hotkeys, text="⚠️ Alterar atalhos requer reiniciar o aplicativo", font=(default_font, 8), foreground="orange", style="Card.TLabel").grid(row=3, column=0, columnspan=2, sticky=tk.W, pady=(12, 0))
+            ttk.Label(tab_hotkeys, text="⚠️ Alterar atalhos requer reiniciar o aplicativo", font=(default_font, 8), foreground="orange", style="Card.TLabel").pack(anchor=tk.W, pady=(5, 0))
             
             # Separador
-            ttk.Separator(tab_hotkeys, orient='horizontal').grid(row=4, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(16, 16))
+            ttk.Separator(tab_hotkeys, orient='horizontal').pack(fill=tk.X, pady=15)
             
             # Custom Shortcuts
-            ttk.Label(tab_hotkeys, text="Atalhos Personalizados:", font=(default_font, 10, "bold"), style="Card.TLabel").grid(row=5, column=0, columnspan=2, sticky=tk.W, pady=(0, 8))
-            ttk.Label(tab_hotkeys, text="Configure múltiplos atalhos com prefixos diferentes", font=(default_font, 8), foreground="gray", style="Card.TLabel").grid(row=6, column=0, columnspan=2, sticky=tk.W, pady=(0, 8))
+            ttk.Label(tab_hotkeys, text="Atalhos Personalizados:", font=(default_font, 10, "bold"), style="Card.TLabel").pack(anchor=tk.W)
+            ttk.Label(tab_hotkeys, text="Configure múltiplos atalhos com prefixos diferentes", font=(default_font, 8), foreground="gray", style="Card.TLabel").pack(anchor=tk.W, pady=(0, 10))
             
             def on_manage_shortcuts():
                 """Abre o gerenciador de atalhos personalizados"""
@@ -198,7 +206,7 @@ class SettingsDialog:
                 except Exception as e:
                     logging.error(f"Erro ao abrir gerenciador de shortcuts: {e}")
             
-            ttk.Button(tab_hotkeys, text="⚙️ Gerenciar Atalhos Personalizados", command=on_manage_shortcuts).grid(row=7, column=0, columnspan=2, pady=(0, 8))
+            ttk.Button(tab_hotkeys, text="⚙️ Gerenciar Atalhos Personalizados", command=on_manage_shortcuts).pack(fill=tk.X, pady=5)
             
             # Ações
             def on_save():

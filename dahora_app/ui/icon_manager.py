@@ -35,13 +35,9 @@ class IconManager:
         Returns:
             Imagem do ícone
         """
-        # Se não especificou path, tenta carregar icon.ico da raiz
+        # Se não especificou path, usa o path resolvido (suporta PyInstaller)
         if not icon_path:
-            try:
-                if os.path.exists('icon.ico'):
-                    return Image.open('icon.ico')
-            except Exception:
-                pass
+            icon_path = IconManager.resolve_icon_path()
         
         # Tenta carregar do path especificado
         if icon_path:
