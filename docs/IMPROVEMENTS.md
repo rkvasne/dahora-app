@@ -611,6 +611,7 @@ main.py (392L) - Aplicação principal
 - ✅ Landing Page com Dark Mode
 - ✅ Distribuição via Git LFS
 - ✅ Reorganização de arquivos (assets/scripts)
+- ✅ Polimento de UI (Ícones, Layouts, About Screen)
 - ✅ Atualização de documentação
 
 **Progresso:** 4/4 tarefas

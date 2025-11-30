@@ -43,11 +43,17 @@
 - Assets de imagem movidos para `assets/`.
 - Limpeza da raiz do projeto.
 
+#### 5. **Polimento de UI (Desktop)**
+- **Ícone do App**: Correção na exibição do ícone nas janelas de Configurações, Busca e Sobre (agora carrega corretamente do executável PyInstaller).
+- **Tela Sobre**: Redesign completo com logo em destaque, versão atualizada, links para GitHub/Site e layout centralizado.
+- **Configurações & Busca**: Melhorias significativas no layout (padding, espaçamento, alinhamento) para uma aparência mais profissional e nativa.
+
 ### 🛠️ Arquivos Modificados
 
 - `index.html`: Adicionado JS de tema, novos textos, link LFS.
 - `landing/styles.css` & `variables.css`: Refatoração para CSS Variables.
 - `README.md`: Atualização completa de estrutura e foco.
+- `dahora_app/ui/*.py`: Atualizações de layout e ícones em todas as janelas.
 - `.gitattributes`: Configuração LFS.
 
 ---
