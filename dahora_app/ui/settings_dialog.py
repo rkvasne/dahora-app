@@ -5,6 +5,7 @@ import logging
 import threading
 from typing import Optional, Callable
 from dahora_app.ui.styles import Windows11Style
+from dahora_app.ui.icon_manager import IconManager
 
 # Import opcional de tkinter
 try:
@@ -63,6 +64,10 @@ class SettingsDialog:
             root = tk.Tk()
             # Configura estilo Windows 11 (Dark Mode)
             Windows11Style.configure_window(root, "Dahora App - Configurações", "480x350")
+            try:
+                root.iconbitmap(IconManager.resolve_icon_path())
+            except Exception as e:
+                logging.warning(f"Não foi possível definir ícone da janela: {e}")
             Windows11Style.configure_styles(root)
             
             # Fonte preferida

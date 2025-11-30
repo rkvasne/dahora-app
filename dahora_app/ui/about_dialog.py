@@ -4,7 +4,9 @@ Tela Sobre - Estilo Windows Nativo
 import tkinter as tk
 from tkinter import ttk
 import webbrowser
+from PIL import ImageTk
 from dahora_app.ui.styles import Windows11Style
+from dahora_app.ui.icon_manager import IconManager
 
 
 class AboutDialog:
@@ -27,71 +29,95 @@ class AboutDialog:
         """Cria a janela"""
         self.window = tk.Tk()
         # Configura estilo Windows 11 (Dark Mode)
-        Windows11Style.configure_window(self.window, "Sobre - Dahora App", "500x400")
+        Windows11Style.configure_window(self.window, "Sobre - Dahora App", "500x450")
+        try:
+            self.window.iconbitmap(IconManager.resolve_icon_path())
+        except Exception:
+            pass
         Windows11Style.configure_styles(self.window)
         
-        # Frame principal (exatamente como search_dialog)
-        main = ttk.Frame(self.window, padding=(16, 12, 16, 12))
+        # Frame principal
+        main = ttk.Frame(self.window, padding=(20, 20, 20, 20))
         main.pack(fill=tk.BOTH, expand=True)
         
-        # Logo/Título
+        # === LOGO ===
+        try:
+            # Carrega ícone, redimensiona para 64x64
+            icon_img = IconManager.load_icon()
+            icon_img = icon_img.resize((64, 64))
+            self.photo_icon = ImageTk.PhotoImage(icon_img)
+            
+            logo_label = ttk.Label(main, image=self.photo_icon)
+            logo_label.pack(pady=(0, 10))
+        except Exception:
+            # Fallback se falhar imagem
+            pass
+        
+        # Título
         ttk.Label(
             main,
             text="Dahora App",
-            font=("Segoe UI", 14, "bold")
-        ).pack(pady=(10, 5))
+            font=("Segoe UI", 16, "bold")
+        ).pack(pady=(0, 5))
         
         ttk.Label(
             main,
             text="Gerenciador Inteligente de Clipboard",
-            font=("Segoe UI", 9)
+            font=("Segoe UI", 10),
+            foreground="#aaaaaa"
         ).pack(pady=(0, 20))
         
         # Versão
-        version_frame = ttk.LabelFrame(main, text="Versão", padding=(10, 10))
-        version_frame.pack(fill=tk.X, pady=(0, 10))
+        version_frame = ttk.Frame(main)
+        version_frame.pack(fill=tk.X, pady=(0, 15))
         
-        ttk.Label(version_frame, text="v0.2.0", font=("Segoe UI", 9, "bold")).pack()
+        ttk.Label(
+            version_frame, 
+            text="Versão v0.2.2", 
+            font=("Segoe UI", 10, "bold"),
+            background="#2d2d2d",
+            foreground="#ffffff",
+            padding=(10, 5)
+        ).pack()
         
         # Informações
-        info_frame = ttk.LabelFrame(main, text="Informações", padding=(10, 10))
-        info_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
-        
         info_text = (
-            "O Dahora App facilita a inserção de timestamps\n"
-            "formatados no seu clipboard com atalhos de teclado\n"
-            "personalizáveis.\n\n"
-            "Recursos:\n"
-            "  • Atalhos de teclado customizáveis\n"
-            "  • Prefixos personalizados por atalho\n"
-            "  • Histórico inteligente de clipboard\n"
-            "  • Busca rápida no histórico\n"
-            "  • Caracteres de delimitação configuráveis\n"
-            "  • Interface nativa Windows 11\n\n"
-            "Desenvolvido com Python e Tkinter"
+            "O Dahora App facilita a inserção de timestamps formatados\n"
+            "no seu clipboard com atalhos de teclado personalizáveis.\n\n"
+            "• Colagem Automática & Preservação de Clipboard\n"
+            "• Atalhos Ilimitados & Prefixos Personalizados\n"
+            "• Histórico Inteligente & Busca Rápida (Ctrl+Shift+F)\n"
+            "• Zero Telemetria & 100% Offline"
         )
         
         ttk.Label(
-            info_frame,
+            main,
             text=info_text,
             font=("Segoe UI", 9),
-            justify=tk.LEFT
-        ).pack(anchor=tk.W)
+            justify=tk.CENTER,
+            foreground="#cccccc"
+        ).pack(pady=(0, 20))
         
         # Links
-        links_frame = ttk.LabelFrame(main, text="Links", padding=(10, 10))
-        links_frame.pack(fill=tk.X, pady=(0, 10))
+        links_frame = ttk.Frame(main)
+        links_frame.pack(pady=(0, 20))
         
         def open_github():
             webbrowser.open("https://github.com/rkvasne/dahora-app")
+            
+        def open_website():
+            webbrowser.open("https://kvasne.com")
         
-        link_btn = ttk.Button(links_frame, text="GitHub Repository", command=open_github)
-        link_btn.pack(side=tk.LEFT, padx=(0, 8))
+        ttk.Button(links_frame, text="GitHub", command=open_github).pack(side=tk.LEFT, padx=5)
+        ttk.Button(links_frame, text="Website", command=open_website).pack(side=tk.LEFT, padx=5)
         
-        # Botão Fechar (exatamente como search_dialog)
-        buttons = ttk.Frame(main)
-        buttons.pack(fill=tk.X, pady=(8, 0))
-        ttk.Button(buttons, text="Fechar", command=self._on_close).pack(side=tk.RIGHT)
+        # Copyright
+        ttk.Label(
+            main,
+            text="© 2025 Raphael Kvasne. Licença MIT.",
+            font=("Segoe UI", 8),
+            foreground="#666666"
+        ).pack(side=tk.BOTTOM, pady=(10, 0))
         
         # Protocolo de fechamento
         self.window.protocol("WM_DELETE_WINDOW", self._on_close)
@@ -101,9 +127,12 @@ class AboutDialog:
         
         # Centraliza janela
         self.window.update_idletasks()
-        x = (self.window.winfo_screenwidth() // 2) - (self.window.winfo_width() // 2)
-        y = (self.window.winfo_screenheight() // 2) - (self.window.winfo_height() // 2)
-        self.window.geometry(f"+{x}+{y}")
+        try:
+            x = (self.window.winfo_screenwidth() // 2) - (self.window.winfo_width() // 2)
+            y = (self.window.winfo_screenheight() // 2) - (self.window.winfo_height() // 2)
+            self.window.geometry(f"+{int(x)}+{int(y)}")
+        except Exception:
+            pass
         
         self.window.mainloop()
     
