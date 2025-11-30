@@ -97,7 +97,7 @@ class SearchDialog:
             
             # Frame de busca
             search_frame = ttk.Frame(main, style="Card.TFrame")
-            search_frame.pack(fill=tk.X, pady=(0, 8))
+            search_frame.pack(fill=tk.X, pady=(0, 10))
             
             ttk.Label(search_frame, text="Buscar:", font=(default_font, 9), style="Card.TLabel").pack(side=tk.LEFT, padx=(0, 8))
             
@@ -169,8 +169,8 @@ class SearchDialog:
             search_entry.bind('<KeyRelease>', perform_search)  # Busca em tempo real
             
             # Frame de resultados
-            results_frame = ttk.LabelFrame(main, text="Resultados", padding=(8, 8), style="TLabelframe")
-            results_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 8))
+            results_frame = ttk.LabelFrame(main, text="Resultados", padding=(10, 10), style="TLabelframe")
+            results_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
             
             # Scrollbar
             scrollbar = ttk.Scrollbar(results_frame)
@@ -189,7 +189,7 @@ class SearchDialog:
             
             # Label de contagem
             count_label = ttk.Label(main, text="0 resultados encontrados", font=(default_font, 8), foreground="gray", style="Card.TLabel")
-            count_label.pack(anchor=tk.W)
+            count_label.pack(anchor=tk.W, pady=(0, 10))
             
             # Funções de ação
             def on_copy():
@@ -227,7 +227,7 @@ class SearchDialog:
             
             # Botões
             buttons = ttk.Frame(main, style="Card.TFrame")
-            buttons.pack(fill=tk.X, pady=(8, 0))
+            buttons.pack(fill=tk.X, pady=(0, 0))
             ttk.Button(buttons, text="Fechar", command=on_close).pack(side=tk.RIGHT)
             ttk.Button(buttons, text="Copiar Selecionado", command=on_copy).pack(side=tk.RIGHT, padx=(0, 8))
             
