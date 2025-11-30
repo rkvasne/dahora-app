@@ -12,4 +12,14 @@ def convert_png_to_ico(png_path, ico_path):
         print(f"Error converting icon: {e}")
 
 if __name__ == "__main__":
-    convert_png_to_ico("new_icon.png", "icon.ico")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    root_dir = os.path.dirname(script_dir)
+    assets_dir = os.path.join(root_dir, 'assets')
+    
+    input_png = os.path.join(assets_dir, "dahora_icon.png")
+    output_ico = os.path.join(root_dir, "icon.ico")
+    
+    if os.path.exists(input_png):
+        convert_png_to_ico(input_png, output_ico)
+    else:
+        print(f"Input file not found: {input_png}")

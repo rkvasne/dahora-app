@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🔄 Changed
 - **Refatoração de Estilos**: Centralização e padronização de todos os estilos em `Windows11Style`.
 - **Limpeza de Código**: Remoção do arquivo legado `dahora_app.py`.
+- **Organização de Arquivos**: Scripts movidos para `scripts/`, assets para `assets/`.
 - **Correção de Bugs**: Fix no `SearchDialog` para usar os novos estilos de Card.
 
 ### 🎯 Impacto Visual

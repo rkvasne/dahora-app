@@ -365,8 +365,19 @@ dahora-app/
 ├── main.py                      # Ponto de entrada principal
 ├── build.py                     # Script de build PyInstaller
 ├── icon.ico                     # Ícone do aplicativo
+├── icon_paused.ico              # Ícone de pausa
 ├── requirements.txt             # Dependências de produção
 ├── requirements-dev.txt         # Dependências de desenvolvimento
+│
+├── assets/                      # Arquivos de mídia e fontes
+│   └── dahora_icon.png          # Imagem fonte do ícone
+│
+├── scripts/                     # Scripts utilitários
+│   ├── convert_icon.py          # Conversor PNG -> ICO
+│   ├── generate_icons_all.py    # Gerador de ícones
+│   ├── debug_dahora.py          # Script de debug
+│   ├── rebuild_clean.bat        # Script de limpeza e build
+│   └── ...
 │
 ├── dahora_app/                  # Pacote principal
 │   ├── __init__.py             # Exports do pacote
@@ -388,7 +399,8 @@ dahora-app/
 │       ├── search_dialog.py    # Diálogo de busca no histórico
 │       ├── about_dialog.py     # Diálogo Sobre
 │       ├── custom_shortcuts_dialog.py # Gerenciador de atalhos
-│       └── styles.py           # Estilos e temas UI
+│       ├── shortcut_editor.py  # Editor de atalhos
+│       └── styles.py           # Estilos e temas UI (Windows 11)
 │
 ├── tests/                       # Testes automatizados
 │   ├── conftest.py             # Fixtures pytest

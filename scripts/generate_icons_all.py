@@ -63,20 +63,28 @@ def create_icons():
         
         return img
 
+    # Determine paths
+    import os
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    root_dir = os.path.dirname(script_dir)
+    assets_dir = os.path.join(root_dir, 'assets')
+    
+    os.makedirs(assets_dir, exist_ok=True)
+
     # Generate Normal Icon
     img_normal = draw_icon(is_paused=False)
     icon_sizes = [(16, 16), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)]
-    img_normal.save('icon.ico', format='ICO', sizes=icon_sizes)
-    print("Generated icon.ico (Larger)")
+    img_normal.save(os.path.join(root_dir, 'icon.ico'), format='ICO', sizes=icon_sizes)
+    print(f"Generated {os.path.join(root_dir, 'icon.ico')}")
     
     # Generate Paused Icon
     img_paused = draw_icon(is_paused=True)
-    img_paused.save('icon_paused.ico', format='ICO', sizes=icon_sizes)
-    print("Generated icon_paused.ico")
+    img_paused.save(os.path.join(root_dir, 'icon_paused.ico'), format='ICO', sizes=icon_sizes)
+    print(f"Generated {os.path.join(root_dir, 'icon_paused.ico')}")
     
     # Save PNG for Landing Page (Normal)
-    img_normal.save('dahora_icon.png', format='PNG')
-    print("Generated dahora_icon.png")
+    img_normal.save(os.path.join(assets_dir, 'dahora_icon.png'), format='PNG')
+    print(f"Generated {os.path.join(assets_dir, 'dahora_icon.png')}")
 
 if __name__ == "__main__":
     create_icons()
