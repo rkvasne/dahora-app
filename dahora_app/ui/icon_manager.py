@@ -55,39 +55,46 @@ class IconManager:
         return IconManager._create_simple_fallback_icon()
     
     @staticmethod
-    def resolve_icon_path() -> str:
+    def resolve_icon_path(is_paused: bool = False) -> str:
         """
         Resolve o caminho correto do ícone (suporta PyInstaller)
         
+        Args:
+            is_paused: Se True, retorna o ícone de pausa
+            
         Returns:
             Caminho para o arquivo de ícone
         """
-        try:
-            base_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
-        except Exception:
-            base_dir = os.path.abspath(os.path.dirname(__file__))
-        
-        # Volta dois níveis (ui -> dahora_app -> raiz)
-        base_dir = os.path.dirname(os.path.dirname(base_dir))
-        icon_path = os.path.join(base_dir, 'icon.ico')
-        
+        if getattr(sys, 'frozen', False):
+            # Se estiver rodando como executável (PyInstaller)
+            base_dir = sys._MEIPASS
+        else:
+            # Se estiver rodando do código fonte
+            # ui -> dahora_app -> raiz
+            base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+            
+        filename = 'icon_paused.ico' if is_paused else 'icon.ico'
+        icon_path = os.path.join(base_dir, filename)
         return icon_path
     
     @staticmethod
-    def get_icon_for_tray() -> Image.Image:
+    def get_icon_for_tray(is_paused: bool = False) -> Image.Image:
         """
         Obtém ícone otimizado para bandeja do sistema
+        
+        Args:
+            is_paused: Se True, retorna o ícone de pausa
         
         Returns:
             Imagem do ícone
         """
-        icon_path = IconManager.resolve_icon_path()
+        icon_path = IconManager.resolve_icon_path(is_paused)
         icon_image = IconManager.load_icon(icon_path)
         
         # Log para debug
         if os.path.exists(icon_path):
-            logging.info(f"Ícone carregado de: {icon_path}")
+            logging.info(f"Ícone carregado de: {icon_path} (Paused={is_paused})")
         else:
-            logging.info("Usando ícone gerado dinamicamente")
+            logging.info(f"Usando ícone gerado dinamicamente (Paused={is_paused})")
         
         return icon_image

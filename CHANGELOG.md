@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [0.2.2] - 2025-11-29 🎨 **MODERNIZAÇÃO UI: WINDOWS 11 FLUENT DESIGN**
+
+### ✨ Added
+- **🎨 Windows 11 Fluent Design**:
+  - **Inputs Modernos**: Caixas de texto com altura ~32px, padding refinado e cores flat.
+  - **Botões Flat**: Sem bordas, cores de fundo distintas (#333333) e hover states suaves.
+  - **Botão Primário**: Azul vibrante (#4CC2FF) com texto preto para ações principais.
+  - **Scrollbars Invisíveis**: Estilo flat minimalista que se mistura ao fundo.
+  - **Cards & Panels**: Remoção de bordas desnecessárias para um visual mais limpo e "clean".
+  - **Abas Modernas**: Navegação por abas sem bordas, com destaque de cor no texto.
+
+### 🔄 Changed
+- **Refatoração de Estilos**: Centralização e padronização de todos os estilos em `Windows11Style`.
+- **Limpeza de Código**: Remoção do arquivo legado `dahora_app.py`.
+- **Correção de Bugs**: Fix no `SearchDialog` para usar os novos estilos de Card.
+
+### 🎯 Impacto Visual
+- Interface muito mais próxima do **padrão nativo do Windows 11**.
+- Menos ruído visual (menos bordas, mais espaço).
+- Melhor feedback visual em interações (hover, focus).
+
+---
+
 
 ## [0.2.1] - 2025-11-06 🔧 **FIX: Registro Automático de Atalhos**
 

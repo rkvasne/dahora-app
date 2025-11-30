@@ -4,6 +4,7 @@ Tela Sobre - Estilo Windows Nativo
 import tkinter as tk
 from tkinter import ttk
 import webbrowser
+from dahora_app.ui.styles import Windows11Style
 
 
 class AboutDialog:
@@ -25,17 +26,9 @@ class AboutDialog:
     def _create_window(self):
         """Cria a janela"""
         self.window = tk.Tk()
-        self.window.title("Sobre - Dahora App")
-        self.window.geometry("500x400")
-        self.window.resizable(False, False)
-        self.window.focus_force()
-        
-        # Tema nativo Windows (exatamente como search_dialog)
-        try:
-            style = ttk.Style()
-            style.theme_use('vista')
-        except Exception:
-            style = ttk.Style()
+        # Configura estilo Windows 11 (Dark Mode)
+        Windows11Style.configure_window(self.window, "Sobre - Dahora App", "500x400")
+        Windows11Style.configure_styles(self.window)
         
         # Frame principal (exatamente como search_dialog)
         main = ttk.Frame(self.window, padding=(16, 12, 16, 12))

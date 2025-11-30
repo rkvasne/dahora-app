@@ -4,6 +4,7 @@ Janela de Configurações Avançadas do Dahora App
 import logging
 import threading
 from typing import Optional, Callable
+from dahora_app.ui.styles import Windows11Style
 
 # Import opcional de tkinter
 try:
@@ -60,16 +61,9 @@ class SettingsDialog:
             
             # Janela principal
             root = tk.Tk()
-            root.title("Dahora App - Configurações")
-            root.resizable(False, False)
-            root.focus_force()
-            
-            # Tema moderno
-            try:
-                style = ttk.Style()
-                style.theme_use('vista')
-            except Exception:
-                style = ttk.Style()
+            # Configura estilo Windows 11 (Dark Mode)
+            Windows11Style.configure_window(root, "Dahora App - Configurações", "480x350")
+            Windows11Style.configure_styles(root)
             
             # Fonte preferida
             def get_available_font():
@@ -101,85 +95,85 @@ class SettingsDialog:
             notebook.pack(fill=tk.BOTH, expand=True, pady=(0, 12))
             
             # === ABA 1: GERAL ===
-            tab_general = ttk.Frame(notebook, padding=16)
+            tab_general = ttk.Frame(notebook, padding=16, style="Card.TFrame")
             notebook.add(tab_general, text="Geral")
             
             # Prefixo
-            ttk.Label(tab_general, text="Prefixo de Data/Hora:", font=(default_font, 9)).grid(row=0, column=0, sticky=tk.W, pady=4)
+            ttk.Label(tab_general, text="Prefixo de Data/Hora:", font=(default_font, 9), style="Card.TLabel").grid(row=0, column=0, sticky=tk.W, pady=4)
             var_prefix = tk.StringVar(value=self.current_settings.get("prefix", ""))
             entry_prefix = ttk.Entry(tab_general, textvariable=var_prefix, width=30)
             entry_prefix.grid(row=0, column=1, sticky=tk.W, pady=4, padx=(8, 0))
             
             # Formato de data/hora
-            ttk.Label(tab_general, text="Formato de Data/Hora:", font=(default_font, 9)).grid(row=1, column=0, sticky=tk.W, pady=4)
+            ttk.Label(tab_general, text="Formato de Data/Hora:", font=(default_font, 9), style="Card.TLabel").grid(row=1, column=0, sticky=tk.W, pady=4)
             var_datetime_format = tk.StringVar(value=self.current_settings.get("datetime_format", "%d.%m.%Y-%H:%M"))
             entry_datetime_format = ttk.Entry(tab_general, textvariable=var_datetime_format, width=30)
             entry_datetime_format.grid(row=1, column=1, sticky=tk.W, pady=4, padx=(8, 0))
-            ttk.Label(tab_general, text="Exemplo: %d.%m.%Y-%H:%M", font=(default_font, 8), foreground="gray").grid(row=2, column=1, sticky=tk.W, padx=(8, 0))
+            ttk.Label(tab_general, text="Exemplo: %d.%m.%Y-%H:%M", font=(default_font, 8), foreground="gray", style="Card.TLabel").grid(row=2, column=1, sticky=tk.W, padx=(8, 0))
             
             # === ABA 2: HISTÓRICO ===
-            tab_history = ttk.Frame(notebook, padding=16)
+            tab_history = ttk.Frame(notebook, padding=16, style="Card.TFrame")
             notebook.add(tab_history, text="Histórico")
             
             # Máximo de itens
-            ttk.Label(tab_history, text="Máximo de itens no histórico:", font=(default_font, 9)).grid(row=0, column=0, sticky=tk.W, pady=4)
+            ttk.Label(tab_history, text="Máximo de itens no histórico:", font=(default_font, 9), style="Card.TLabel").grid(row=0, column=0, sticky=tk.W, pady=4)
             var_max_history = tk.IntVar(value=self.current_settings.get("max_history_items", 100))
             spin_max_history = ttk.Spinbox(tab_history, from_=10, to=1000, textvariable=var_max_history, width=10)
             spin_max_history.grid(row=0, column=1, sticky=tk.W, pady=4, padx=(8, 0))
             
             # Intervalo de monitoramento
-            ttk.Label(tab_history, text="Intervalo de verificação (segundos):", font=(default_font, 9)).grid(row=1, column=0, sticky=tk.W, pady=4)
+            ttk.Label(tab_history, text="Intervalo de verificação (segundos):", font=(default_font, 9), style="Card.TLabel").grid(row=1, column=0, sticky=tk.W, pady=4)
             var_monitor_interval = tk.DoubleVar(value=self.current_settings.get("clipboard_monitor_interval", 3))
             spin_monitor_interval = ttk.Spinbox(tab_history, from_=0.5, to=60, increment=0.5, textvariable=var_monitor_interval, width=10)
             spin_monitor_interval.grid(row=1, column=1, sticky=tk.W, pady=4, padx=(8, 0))
             
             # Threshold de ociosidade
-            ttk.Label(tab_history, text="Tempo ocioso para intervalo maior (s):", font=(default_font, 9)).grid(row=2, column=0, sticky=tk.W, pady=4)
+            ttk.Label(tab_history, text="Tempo ocioso para intervalo maior (s):", font=(default_font, 9), style="Card.TLabel").grid(row=2, column=0, sticky=tk.W, pady=4)
             var_idle_threshold = tk.DoubleVar(value=self.current_settings.get("clipboard_idle_threshold", 30))
             spin_idle_threshold = ttk.Spinbox(tab_history, from_=5, to=300, increment=5, textvariable=var_idle_threshold, width=10)
             spin_idle_threshold.grid(row=2, column=1, sticky=tk.W, pady=4, padx=(8, 0))
             
             # === ABA 3: NOTIFICAÇÕES ===
-            tab_notifications = ttk.Frame(notebook, padding=16)
+            tab_notifications = ttk.Frame(notebook, padding=16, style="Card.TFrame")
             notebook.add(tab_notifications, text="Notificações")
             
             # Habilitar notificações
             var_notifications_enabled = tk.BooleanVar(value=self.current_settings.get("notification_enabled", True))
-            check_notifications = ttk.Checkbutton(tab_notifications, text="Habilitar notificações", variable=var_notifications_enabled)
+            check_notifications = ttk.Checkbutton(tab_notifications, text="Habilitar notificações", variable=var_notifications_enabled, style="Card.TCheckbutton")
             check_notifications.grid(row=0, column=0, columnspan=2, sticky=tk.W, pady=4)
             
             # Duração da notificação
-            ttk.Label(tab_notifications, text="Duração da notificação (segundos):", font=(default_font, 9)).grid(row=1, column=0, sticky=tk.W, pady=4)
+            ttk.Label(tab_notifications, text="Duração da notificação (segundos):", font=(default_font, 9), style="Card.TLabel").grid(row=1, column=0, sticky=tk.W, pady=4)
             var_notification_duration = tk.IntVar(value=self.current_settings.get("notification_duration", 2))
             spin_notification_duration = ttk.Spinbox(tab_notifications, from_=1, to=15, textvariable=var_notification_duration, width=10)
             spin_notification_duration.grid(row=1, column=1, sticky=tk.W, pady=4, padx=(8, 0))
             
             # === ABA 4: ATALHOS ===
-            tab_hotkeys = ttk.Frame(notebook, padding=16)
+            tab_hotkeys = ttk.Frame(notebook, padding=16, style="Card.TFrame")
             notebook.add(tab_hotkeys, text="Atalhos")
             
             # Hotkey copiar data/hora
-            ttk.Label(tab_hotkeys, text="Copiar Data/Hora:", font=(default_font, 9)).grid(row=0, column=0, sticky=tk.W, pady=4)
+            ttk.Label(tab_hotkeys, text="Copiar Data/Hora:", font=(default_font, 9), style="Card.TLabel").grid(row=0, column=0, sticky=tk.W, pady=4)
             var_hotkey_copy = tk.StringVar(value=self.current_settings.get("hotkey_copy_datetime", "ctrl+shift+q"))
             entry_hotkey_copy = ttk.Entry(tab_hotkeys, textvariable=var_hotkey_copy, width=25)
             entry_hotkey_copy.grid(row=0, column=1, sticky=tk.W, pady=4, padx=(8, 0))
-            ttk.Label(tab_hotkeys, text="Exemplo: ctrl+shift+q", font=(default_font, 8), foreground="gray").grid(row=1, column=1, sticky=tk.W, padx=(8, 0))
+            ttk.Label(tab_hotkeys, text="Exemplo: ctrl+shift+q", font=(default_font, 8), foreground="gray", style="Card.TLabel").grid(row=1, column=1, sticky=tk.W, padx=(8, 0))
             
             # Hotkey refresh menu
-            ttk.Label(tab_hotkeys, text="Atualizar Menu:", font=(default_font, 9)).grid(row=2, column=0, sticky=tk.W, pady=4)
+            ttk.Label(tab_hotkeys, text="Atualizar Menu:", font=(default_font, 9), style="Card.TLabel").grid(row=2, column=0, sticky=tk.W, pady=4)
             var_hotkey_refresh = tk.StringVar(value=self.current_settings.get("hotkey_refresh_menu", "ctrl+shift+r"))
             entry_hotkey_refresh = ttk.Entry(tab_hotkeys, textvariable=var_hotkey_refresh, width=25)
             entry_hotkey_refresh.grid(row=2, column=1, sticky=tk.W, pady=4, padx=(8, 0))
             
             # Aviso sobre atalhos
-            ttk.Label(tab_hotkeys, text="⚠️ Alterar atalhos requer reiniciar o aplicativo", font=(default_font, 8), foreground="orange").grid(row=3, column=0, columnspan=2, sticky=tk.W, pady=(12, 0))
+            ttk.Label(tab_hotkeys, text="⚠️ Alterar atalhos requer reiniciar o aplicativo", font=(default_font, 8), foreground="orange", style="Card.TLabel").grid(row=3, column=0, columnspan=2, sticky=tk.W, pady=(12, 0))
             
             # Separador
             ttk.Separator(tab_hotkeys, orient='horizontal').grid(row=4, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(16, 16))
             
             # Custom Shortcuts
-            ttk.Label(tab_hotkeys, text="Atalhos Personalizados:", font=(default_font, 10, "bold")).grid(row=5, column=0, columnspan=2, sticky=tk.W, pady=(0, 8))
-            ttk.Label(tab_hotkeys, text="Configure múltiplos atalhos com prefixos diferentes", font=(default_font, 8), foreground="gray").grid(row=6, column=0, columnspan=2, sticky=tk.W, pady=(0, 8))
+            ttk.Label(tab_hotkeys, text="Atalhos Personalizados:", font=(default_font, 10, "bold"), style="Card.TLabel").grid(row=5, column=0, columnspan=2, sticky=tk.W, pady=(0, 8))
+            ttk.Label(tab_hotkeys, text="Configure múltiplos atalhos com prefixos diferentes", font=(default_font, 8), foreground="gray", style="Card.TLabel").grid(row=6, column=0, columnspan=2, sticky=tk.W, pady=(0, 8))
             
             def on_manage_shortcuts():
                 """Abre o gerenciador de atalhos personalizados"""
@@ -255,8 +249,10 @@ class SettingsDialog:
             
             # Centraliza janela
             root.update_idletasks()
-            width = max(480, root.winfo_width())
-            height = max(320, root.winfo_height())
+            # Centraliza janela
+            root.update_idletasks()
+            width = root.winfo_width()
+            height = root.winfo_height()
             x = (root.winfo_screenwidth() // 2) - (width // 2)
             y = (root.winfo_screenheight() // 2) - (height // 2)
             root.geometry(f'{width}x{height}+{x}+{y}')

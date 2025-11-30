@@ -23,6 +23,13 @@ class ClipboardManager:
         self.history_lock = Lock()
         self.clipboard_history: List[Dict[str, str]] = []
         self.last_clipboard_content = ""
+        self.paused = False
+    
+    def toggle_pause(self) -> bool:
+        """Alterna estado de pausa do monitoramento"""
+        self.paused = not self.paused
+        logging.info(f"Monitoramento de clipboard {'pausado' if self.paused else 'retomado'}")
+        return self.paused
     
     def load_history(self) -> None:
         """Carrega o histórico do arquivo ou inicia com lista vazia"""
@@ -166,10 +173,15 @@ class ClipboardManager:
             try:
                 current_content = pyperclip.paste()
                 
-                # Log reduzido (apenas a cada 120 tentativas = ~1 minuto)
                 if attempt % 120 == 0:
                     time_idle = current_time - last_activity_time
                     logging.debug(f"Monitor clipboard ativo (ocioso há {time_idle:.1f}s)")
+                
+                # Se pausado, apenas atualiza last_content para evitar flood quando despausar
+                if self.paused:
+                    self.last_clipboard_content = current_content
+                    time.sleep(1.0)
+                    continue
                 
                 # Verifica mudança
                 if current_content and current_content.strip():

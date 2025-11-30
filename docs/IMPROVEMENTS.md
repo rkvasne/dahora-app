@@ -3,8 +3,8 @@
 > **Documento de Rastreamento de Progresso**  
 > Criado em: 04/11/2025  
 > Última atualização: 04/11/2025  
-> Versão atual: v0.0.7  
-> Próxima release: v0.0.8
+> Versão atual: v0.2.1  
+> Próxima release: v0.2.2
 
 ---
 
@@ -569,7 +569,7 @@ main.py (392L) - Aplicação principal
 ---
 
 ### v0.0.9 - Qualidade de Código
-**Prazo:** 1 semana | **Status:** ⏳ Não iniciado
+**Prazo:** 1 semana | **Status:** ✅ CONCLUÍDO
 
 **Inclui:**
 - ✅ Tarefa 5: Estrutura de testes
@@ -582,7 +582,7 @@ main.py (392L) - Aplicação principal
 ---
 
 ### v0.1.0 - Refatoração Arquitetural
-**Prazo:** 2-3 semanas | **Status:** ⏳ Não iniciado
+**Prazo:** 2-3 semanas | **Status:** ✅ CONCLUÍDO
 
 **Inclui:**
 - ✅ Tarefa 9: Dividir em módulos
@@ -594,7 +594,7 @@ main.py (392L) - Aplicação principal
 ---
 
 ### v0.2.0 - Novas Features
-**Prazo:** 3-4 semanas | **Status:** ⏳ Não iniciado
+**Prazo:** 3-4 semanas | **Status:** ✅ CONCLUÍDO
 
 **Inclui:**
 - ✅ Tarefa 12: Criptografia opcional
@@ -620,7 +620,7 @@ main.py (392L) - Aplicação principal
 
 ## 📊 MÉTRICAS DE QUALIDADE
 
-### Métricas Atuais (v0.0.7)
+### Métricas Atuais (v0.2.1)
 - **Linhas de Código:** ~1.500
 - **Cobertura de Testes:** 0%
 - **Type Hints:** 0%

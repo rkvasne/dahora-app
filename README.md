@@ -2,10 +2,19 @@
 
 > **Aplicativo Windows revolucionário: cole timestamps formatados DIRETAMENTE com atalhos personalizáveis**
 
-[![Version](https://img.shields.io/badge/version-0.2.1-blue.svg)](https://github.com/rkvasne/dahora-app)
+[![Version](https://img.shields.io/badge/version-0.2.2-blue.svg)](https://github.com/rkvasne/dahora-app)
 [![Python](https://img.shields.io/badge/python-3.8+-green.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](tests/)
+
+## 🎨 Novidade v0.2.2 - Windows 11 Fluent Design!
+
+**Interface totalmente modernizada:** O Dahora App agora segue rigorosamente os padrões de design do Windows 11.
+
+- **Inputs Modernos**: ~32px de altura, padding refinado.
+- **Botões Flat**: Sem bordas, cores de fundo suaves e hover states elegantes.
+- **Visual Limpo**: Remoção de bordas excessivas em cards e painéis.
+- **Scrollbars Invisíveis**: Estilo minimalista que não distrai.
 
 ## 🚀 Novidade v0.2.1 - Registro Automático de Atalhos!
 
@@ -38,9 +47,15 @@ Este repositório inclui uma landing page informativa do Dahora App.
 
 Para visualizar, abra `index.html` no navegador ou utilize um servidor HTTP local na raiz do projeto e acesse `http://localhost:5500/` (se estiver usando `001_serve.ps1`).
 
-## ✨ Características Principais (v0.2.1)
+## ✨ Características Principais (v0.2.2)
 
-### ⚡ Colagem Automática (NOVO!)
+### 🎨 Interface Windows 11 Fluent (NOVO!)
+- ✨ **Design Nativo** - Inputs, botões e cards seguindo specs oficiais
+- ✨ **Visual Limpo** - Menos bordas, mais foco no conteúdo
+- ✨ **Dark Mode** - Cores profundas e contrastes refinados
+- ✨ **Interações Suaves** - Hover states e feedbacks visuais elegantes
+
+### ⚡ Colagem Automática
 - ✨ **Cola direto onde está o cursor** - Um atalho, uma ação!
 - ✨ **Preserva seu clipboard** - Sistema salva e restaura automaticamente
 - ✨ **Sem notificações** - Você já vê o texto, sem popups irritantes
@@ -370,7 +385,10 @@ dahora-app/
 │       ├── menu.py             # Construtor de menus dinâmicos
 │       ├── prefix_dialog.py    # Diálogo de prefixo
 │       ├── settings_dialog.py  # Diálogo de configurações (4 abas)
-│       └── search_dialog.py    # Diálogo de busca no histórico
+│       ├── search_dialog.py    # Diálogo de busca no histórico
+│       ├── about_dialog.py     # Diálogo Sobre
+│       ├── custom_shortcuts_dialog.py # Gerenciador de atalhos
+│       └── styles.py           # Estilos e temas UI
 │
 ├── tests/                       # Testes automatizados
 │   ├── conftest.py             # Fixtures pytest

@@ -5,6 +5,7 @@ import logging
 import threading
 from typing import Optional, Callable, List, Dict
 from datetime import datetime
+from dahora_app.ui.styles import Windows11Style
 
 # Import opcional de tkinter
 try:
@@ -59,16 +60,9 @@ class SearchDialog:
             
             # Janela principal
             root = tk.Tk()
-            root.title("Dahora App - Buscar no Histórico")
-            root.resizable(True, True)
-            root.focus_force()
-            
-            # Tema moderno
-            try:
-                style = ttk.Style()
-                style.theme_use('vista')
-            except Exception:
-                style = ttk.Style()
+            # Configura estilo Windows 11 (Dark Mode)
+            Windows11Style.configure_window(root, "Dahora App - Buscar no Histórico", "600x500")
+            Windows11Style.configure_styles(root)
             
             # Fonte preferida
             def get_available_font():
@@ -85,21 +79,22 @@ class SearchDialog:
             default_font = get_available_font()
             
             # Frame principal
-            main = ttk.Frame(root, padding=(16, 12, 16, 12))
+            main = ttk.Frame(root, padding=(16, 12, 16, 12), style="Card.TFrame")
             main.pack(fill=tk.BOTH, expand=True)
             
             # Cabeçalho
             ttk.Label(
                 main,
                 text="Buscar no Histórico do Clipboard",
-                font=(default_font, 12, "bold")
+                font=(default_font, 12, "bold"),
+                style="Card.TLabel"
             ).pack(anchor=tk.W, pady=(0, 8))
             
             # Frame de busca
-            search_frame = ttk.Frame(main)
+            search_frame = ttk.Frame(main, style="Card.TFrame")
             search_frame.pack(fill=tk.X, pady=(0, 8))
             
-            ttk.Label(search_frame, text="Buscar:", font=(default_font, 9)).pack(side=tk.LEFT, padx=(0, 8))
+            ttk.Label(search_frame, text="Buscar:", font=(default_font, 9), style="Card.TLabel").pack(side=tk.LEFT, padx=(0, 8))
             
             search_var = tk.StringVar()
             search_entry = ttk.Entry(search_frame, textvariable=search_var, width=40)
@@ -169,7 +164,7 @@ class SearchDialog:
             search_entry.bind('<KeyRelease>', perform_search)  # Busca em tempo real
             
             # Frame de resultados
-            results_frame = ttk.LabelFrame(main, text="Resultados", padding=(8, 8))
+            results_frame = ttk.LabelFrame(main, text="Resultados", padding=(8, 8), style="TLabelframe")
             results_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 8))
             
             # Scrollbar
@@ -183,11 +178,12 @@ class SearchDialog:
                 font=(default_font, 9),
                 height=15
             )
+            Windows11Style.configure_listbox(results_listbox)
             results_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
             scrollbar.config(command=results_listbox.yview)
             
             # Label de contagem
-            count_label = ttk.Label(main, text="0 resultados encontrados", font=(default_font, 8), foreground="gray")
+            count_label = ttk.Label(main, text="0 resultados encontrados", font=(default_font, 8), foreground="gray", style="Card.TLabel")
             count_label.pack(anchor=tk.W)
             
             # Funções de ação
@@ -225,7 +221,7 @@ class SearchDialog:
             results_listbox.bind('<Double-Button-1>', on_double_click)
             
             # Botões
-            buttons = ttk.Frame(main)
+            buttons = ttk.Frame(main, style="Card.TFrame")
             buttons.pack(fill=tk.X, pady=(8, 0))
             ttk.Button(buttons, text="Fechar", command=on_close).pack(side=tk.RIGHT)
             ttk.Button(buttons, text="Copiar Selecionado", command=on_copy).pack(side=tk.RIGHT, padx=(0, 8))
@@ -236,8 +232,10 @@ class SearchDialog:
             
             # Centraliza janela
             root.update_idletasks()
-            width = max(600, root.winfo_width())
-            height = max(500, root.winfo_height())
+            # Centraliza janela
+            root.update_idletasks()
+            width = root.winfo_width()
+            height = root.winfo_height()
             x = (root.winfo_screenwidth() // 2) - (width // 2)
             y = (root.winfo_screenheight() // 2) - (height // 2)
             root.geometry(f'{width}x{height}+{x}+{y}')

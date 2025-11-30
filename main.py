@@ -14,6 +14,27 @@ import keyboard
 import time
 from typing import Optional
 
+# HACK: Forçar Dark Mode em menus nativos do Windows (Bandeja/Pystray)
+# Isso usa APIs não documentadas do Windows para garantir que o menu de contexto
+# siga o tema escuro, mesmo se o app não tiver manifesto.
+# DEVE SER EXECUTADO ANTES DE QUALQUER OUTRA COISA DE UI
+try:
+    import ctypes
+    uxtheme = ctypes.windll.uxtheme
+    
+    # Tenta SetPreferredAppMode (Ordinal 135) - Win 10 1903+ / Win 11
+    # 2 = Force Dark Mode
+    try:
+        uxtheme[135](2)
+    except:
+        # Fallback: Tenta AllowDarkModeForApp (Ordinal 132) - Win 10 1809
+        try:
+            uxtheme[132](True)
+        except:
+            pass
+except Exception:
+    pass
+
 # Configuração de encoding do console
 try:
     import ctypes
@@ -185,6 +206,8 @@ class DahoraApp:
         self.menu_builder.set_copy_from_history_callback(self._copy_from_history)
         self.menu_builder.set_clear_history_callback(self._clear_history)
         self.menu_builder.set_show_about_callback(self._show_about)
+        self.menu_builder.set_toggle_pause_callback(self._toggle_pause)
+        self.menu_builder.set_is_paused_callback(lambda: self.clipboard_manager.paused)
         self.menu_builder.set_quit_callback(self._quit_app)
     
     def _on_prefix_saved(self, prefix: str):
@@ -334,6 +357,7 @@ class DahoraApp:
         
         except Exception as e:
             logging.error(f"Erro ao processar custom shortcut: {e}")
+            self.notification_manager.show_toast("Erro no Atalho", f"Falha ao processar atalho: {e}")
     
     def copy_datetime(self, icon=None, item=None, source=None):
         """Copia a data e hora para a área de transferência"""
@@ -504,7 +528,24 @@ class DahoraApp:
     def _show_about(self, icon, item):
         """Mostra janela Sobre (estilo Windows nativo)"""
         self.about_dialog.show()
-    
+
+    def _toggle_pause(self, icon=None, item=None):
+        """Alterna estado de pausa"""
+        self.clipboard_manager.toggle_pause()
+        is_paused = self.clipboard_manager.paused
+        
+        # Atualiza ícone
+        logging.info(f"Alternando ícone. Pausado: {is_paused}")
+        new_icon = self.icon_manager.get_icon_for_tray(is_paused=is_paused)
+        self.icon.icon = new_icon
+        # Força atualização visual (algumas versões do pystray precisam disso)
+        self.icon.visible = True
+        
+        status = "PAUSADO" if is_paused else "RETOMADO"
+        msg = "Monitoramento de clipboard PAUSADO" if is_paused else "Monitoramento de clipboard RETOMADO"
+        
+        logging.info(f"Estado alterado para: {status}")
+        self.notification_manager.show_toast("Dahora App", msg)  
     def _quit_app(self, icon, item):
         """Encerra o aplicativo"""
         try:

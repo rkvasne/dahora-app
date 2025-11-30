@@ -122,6 +122,7 @@ def build_executable():
         f'--name={exe_name}',
         '--icon=icon.ico',
         '--add-data=icon.ico;.',
+        '--add-data=icon_paused.ico;.',
         '--hidden-import=pystray',
         '--hidden-import=pyperclip',
         '--hidden-import=keyboard',
@@ -139,6 +140,7 @@ def build_executable():
         '--collect-all=winotify',
         '--hidden-import=dahora_app',
         '--hidden-import=dahora_app.ui',
+        '--manifest=manifest.xml',
         'main.py'
     ]
     if console_build:

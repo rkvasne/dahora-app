@@ -20,7 +20,10 @@ class MenuBuilder:
         self.copy_from_history_callback: Optional[Callable] = None
         self.clear_history_callback: Optional[Callable] = None
         self.show_about_callback: Optional[Callable] = None
+        self.show_about_callback: Optional[Callable] = None
         self.quit_callback: Optional[Callable] = None
+        self.toggle_pause_callback: Optional[Callable] = None
+        self.is_paused_callback: Optional[Callable] = None
         self.hotkey_search_history: str = "ctrl+shift+f"  # Padrão
         self.hotkey_refresh_menu: str = "ctrl+shift+r"  # Padrão
     
@@ -59,6 +62,14 @@ class MenuBuilder:
     def set_quit_callback(self, callback: Callable) -> None:
         """Define callback para sair"""
         self.quit_callback = callback
+
+    def set_toggle_pause_callback(self, callback: Callable) -> None:
+        """Define callback para alternar pausa"""
+        self.toggle_pause_callback = callback
+
+    def set_is_paused_callback(self, callback: Callable) -> None:
+        """Define callback para verificar estado de pausa"""
+        self.is_paused_callback = callback
     
     def _copy_datetime_wrapper(self, icon, item):
         """Wrapper para callback de copiar data/hora"""
@@ -94,6 +105,11 @@ class MenuBuilder:
         """Wrapper para callback de sair"""
         if self.quit_callback:
             self.quit_callback(icon, item)
+
+    def _toggle_pause_wrapper(self, icon, item):
+        """Wrapper para callback de alternar pausa"""
+        if self.toggle_pause_callback:
+            self.toggle_pause_callback(icon, item)
     
     def _get_dynamic_menu_items(self) -> List:
         """
@@ -147,6 +163,10 @@ class MenuBuilder:
         menu_items.append(pystray.Menu.SEPARATOR)
         
         # Opções finais
+        is_paused = self.is_paused_callback() if self.is_paused_callback else False
+        pause_label = 'Retomar Monitoramento' if is_paused else 'Pausar Monitoramento'
+        menu_items.append(pystray.MenuItem(pause_label, self._toggle_pause_wrapper))
+        
         menu_items.append(pystray.MenuItem('Limpar Histórico', self._clear_history_wrapper))
         menu_items.append(pystray.MenuItem('Sobre', self._show_about_wrapper))
         menu_items.append(pystray.MenuItem('Sair', self._quit_wrapper))

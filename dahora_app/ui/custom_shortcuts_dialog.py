@@ -6,7 +6,8 @@ from tkinter import ttk, messagebox
 import logging
 from typing import Callable, Optional, List, Dict, Any
 from datetime import datetime
-# Removido: from dahora_app.ui.styles import Windows11Style
+from datetime import datetime
+from dahora_app.ui.styles import Windows11Style
 
 # keyboard será importado apenas quando necessário (lazy import)
 
@@ -101,16 +102,9 @@ class CustomShortcutsDialog:
     def _create_window(self) -> None:
         """Cria a janela principal com tabs"""
         self.window = tk.Tk()
-        self.window.title("Dahora App - Configurações")
-        self.window.geometry("600x500")  # Ainda mais compacto
-        self.window.resizable(False, False)
-        
-        # Tema nativo Windows (como search_dialog)
-        try:
-            style = ttk.Style()
-            style.theme_use('vista')
-        except Exception:
-            style = ttk.Style()
+        # Configura estilo Windows 11 (Dark Mode)
+        Windows11Style.configure_window(self.window, "Dahora App - Configurações", "600x500")
+        Windows11Style.configure_styles(self.window)
         
         self.window.resizable(True, True)
         
@@ -169,7 +163,7 @@ class CustomShortcutsDialog:
     
     def _create_prefixes_tab(self, notebook: ttk.Notebook) -> None:
         """Cria aba de gerenciamento de prefixos (CRUD)"""
-        tab = ttk.Frame(notebook, padding=(12, 8))
+        tab = ttk.Frame(notebook, padding=(12, 8), style="Card.TFrame")
         notebook.add(tab, text="Atalhos Personalizados")
         
         # Frame de resultados com LabelFrame (EXATAMENTE como search_dialog)
@@ -187,6 +181,7 @@ class CustomShortcutsDialog:
             font=("Consolas", 9),  # Fonte monoespaçada para alinhamento
             height=10  # Reduzido para caber melhor na janela compacta
         )
+        Windows11Style.configure_listbox(self.shortcuts_listbox)
         self.shortcuts_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.config(command=self.shortcuts_listbox.yview)
         
@@ -194,7 +189,7 @@ class CustomShortcutsDialog:
         self.shortcuts_listbox.bind("<Double-Button-1>", lambda e: self._on_edit_clicked())
         
         # Label de contagem (EXATAMENTE como search_dialog)
-        self.count_label = ttk.Label(tab, text="0 atalhos configurados", font=("Segoe UI", 8), foreground="gray")
+        self.count_label = ttk.Label(tab, text="0 atalhos configurados", font=("Segoe UI", 8), foreground="gray", style="Card.TLabel")
         self.count_label.pack(anchor=tk.W)
         
         # Popula dados iniciais
@@ -210,11 +205,11 @@ class CustomShortcutsDialog:
     
     def _create_general_tab(self, notebook: ttk.Notebook) -> None:
         """Cria aba de configurações gerais"""
-        tab = ttk.Frame(notebook, padding=(12, 8))
+        tab = ttk.Frame(notebook, padding=(12, 8), style="Card.TFrame")
         notebook.add(tab, text="Formato")
         
         # Formato de data/hora padrão
-        ttk.Label(tab, text="Formato de data/hora:").grid(row=0, column=0, sticky=tk.W, pady=5)
+        ttk.Label(tab, text="Formato de data/hora:", style="Card.TLabel").grid(row=0, column=0, sticky=tk.W, pady=5)
         self.var_datetime_format = tk.StringVar(
             value=self.current_settings.get("datetime_format", "%d.%m.%Y-%H:%M"))
         ttk.Entry(tab, textvariable=self.var_datetime_format, width=30).grid(
@@ -223,38 +218,38 @@ class CustomShortcutsDialog:
         # Explicação do formato
         help_text = ("Códigos: %d=dia %m=mês %Y=ano %H=hora(24h) %M=minuto %S=segundo\n"
                     "Exemplo: %d.%m.%Y-%H:%M resulta em 05.11.2025-14:30")
-        ttk.Label(tab, text=help_text, font=("Segoe UI", 8), foreground="gray").grid(
+        ttk.Label(tab, text=help_text, font=("Segoe UI", 8), foreground="gray", style="Card.TLabel").grid(
             row=1, column=0, columnspan=2, sticky=tk.W, pady=(0, 10))
         
         # Caracteres de delimitação
         delim_frame = ttk.LabelFrame(tab, text="Caracteres de Delimitação", padding=10)
         delim_frame.grid(row=2, column=0, columnspan=2, sticky=tk.W+tk.E, pady=10)
         
-        ttk.Label(delim_frame, text="Abertura:").grid(row=0, column=0, sticky=tk.W, pady=5)
+        ttk.Label(delim_frame, text="Abertura:", style="Card.TLabel").grid(row=0, column=0, sticky=tk.W, pady=5)
         self.var_bracket_open = tk.StringVar(
             value=self.current_settings.get("bracket_open", "["))
         ttk.Entry(delim_frame, textvariable=self.var_bracket_open, width=10).grid(
             row=0, column=1, sticky=tk.W, padx=(10, 0), pady=5)
         
-        ttk.Label(delim_frame, text="Fechamento:").grid(row=0, column=2, sticky=tk.W, padx=(20, 0), pady=5)
+        ttk.Label(delim_frame, text="Fechamento:", style="Card.TLabel").grid(row=0, column=2, sticky=tk.W, padx=(20, 0), pady=5)
         self.var_bracket_close = tk.StringVar(
             value=self.current_settings.get("bracket_close", "]"))
         ttk.Entry(delim_frame, textvariable=self.var_bracket_close, width=10).grid(
             row=0, column=3, sticky=tk.W, padx=(10, 0), pady=5)
         
         ttk.Label(delim_frame, text="Ex: [dahora-05.11.2025-14:30]", 
-                 font=("Segoe UI", 8), foreground="gray").grid(
+                 font=("Segoe UI", 8), foreground="gray", style="Card.TLabel").grid(
             row=1, column=0, columnspan=4, sticky=tk.W, pady=(5, 0))
         
         # Histórico
-        ttk.Label(tab, text="Itens no histórico:").grid(row=3, column=0, sticky=tk.W, pady=5)
+        ttk.Label(tab, text="Itens no histórico:", style="Card.TLabel").grid(row=3, column=0, sticky=tk.W, pady=5)
         self.var_max_history = tk.IntVar(
             value=self.current_settings.get("max_history_items", 100))
         ttk.Spinbox(tab, from_=10, to=1000, textvariable=self.var_max_history, 
                    width=15).grid(row=3, column=1, sticky=tk.W, padx=(10, 0), pady=5)
         
         # Monitor de clipboard
-        ttk.Label(tab, text="Intervalo de monitoramento (seg):").grid(row=4, column=0, sticky=tk.W, pady=5)
+        ttk.Label(tab, text="Intervalo de monitoramento (seg):", style="Card.TLabel").grid(row=4, column=0, sticky=tk.W, pady=5)
         self.var_monitor_interval = tk.DoubleVar(
             value=self.current_settings.get("clipboard_monitor_interval", 3.0))
         ttk.Spinbox(tab, from_=0.5, to=10.0, increment=0.5, 
@@ -262,7 +257,7 @@ class CustomShortcutsDialog:
                        row=4, column=1, sticky=tk.W, padx=(10, 0), pady=5)
         
         # Idle threshold
-        ttk.Label(tab, text="Tempo ocioso para pausar (seg):").grid(row=5, column=0, sticky=tk.W, pady=5)
+        ttk.Label(tab, text="Tempo ocioso para pausar (seg):", style="Card.TLabel").grid(row=5, column=0, sticky=tk.W, pady=5)
         self.var_idle_threshold = tk.DoubleVar(
             value=self.current_settings.get("clipboard_idle_threshold", 30.0))
         ttk.Spinbox(tab, from_=10, to=300, increment=10, 
@@ -271,18 +266,18 @@ class CustomShortcutsDialog:
     
     def _create_notifications_tab(self, notebook: ttk.Notebook) -> None:
         """Cria aba de configurações de notificações"""
-        tab = ttk.Frame(notebook, padding=(12, 8))
+        tab = ttk.Frame(notebook, padding=(12, 8), style="Card.TFrame")
         notebook.add(tab, text="Notificações")
         
         # Habilitar notificações
         self.var_notifications_enabled = tk.BooleanVar(
             value=self.current_settings.get("notification_enabled", True))
         ttk.Checkbutton(tab, text="Habilitar notificações", 
-                       variable=self.var_notifications_enabled).grid(
+                       variable=self.var_notifications_enabled, style="Card.TCheckbutton").grid(
                            row=0, column=0, sticky=tk.W, pady=5)
         
         # Duração
-        ttk.Label(tab, text="Duração (segundos):").grid(row=1, column=0, sticky=tk.W, pady=5)
+        ttk.Label(tab, text="Duração (segundos):", style="Card.TLabel").grid(row=1, column=0, sticky=tk.W, pady=5)
         self.var_notification_duration = tk.IntVar(
             value=self.current_settings.get("notification_duration", 2))
         ttk.Spinbox(tab, from_=1, to=15, textvariable=self.var_notification_duration, 
@@ -290,11 +285,11 @@ class CustomShortcutsDialog:
     
     def _create_system_hotkeys_tab(self, notebook: ttk.Notebook) -> None:
         """Cria aba de atalhos do sistema"""
-        tab = ttk.Frame(notebook, padding=(12, 8))
+        tab = ttk.Frame(notebook, padding=(12, 8), style="Card.TFrame")
         notebook.add(tab, text="Teclas de Atalho")
         
         # Atalho de busca
-        ttk.Label(tab, text="Buscar no histórico:").grid(row=0, column=0, sticky=tk.W, pady=5)
+        ttk.Label(tab, text="Buscar no histórico:", style="Card.TLabel").grid(row=0, column=0, sticky=tk.W, pady=5)
         self.var_hotkey_search = tk.StringVar(
             value=self.current_settings.get("hotkey_search_history", "ctrl+shift+f"))
         self.var_hotkey_search.trace_add("write", lambda *args: self._mark_needs_restart())
@@ -302,7 +297,7 @@ class CustomShortcutsDialog:
             row=0, column=1, sticky=tk.W, padx=(10, 0), pady=5)
         
         # Atalho de refresh
-        ttk.Label(tab, text="Recarregar menu:").grid(row=1, column=0, sticky=tk.W, pady=5)
+        ttk.Label(tab, text="Recarregar menu:", style="Card.TLabel").grid(row=1, column=0, sticky=tk.W, pady=5)
         self.var_hotkey_refresh = tk.StringVar(
             value=self.current_settings.get("hotkey_refresh_menu", "ctrl+shift+r"))
         self.var_hotkey_refresh.trace_add("write", lambda *args: self._mark_needs_restart())
@@ -317,7 +312,7 @@ class CustomShortcutsDialog:
             "  • alt+shift+letra\n\n"
             "Evite conflitos com atalhos do sistema."
         )
-        ttk.Label(tab, text=warning_text, font=("Segoe UI", 8), foreground="gray").grid(
+        ttk.Label(tab, text=warning_text, font=("Segoe UI", 8), foreground="gray", style="Card.TLabel").grid(
             row=2, column=0, columnspan=2, sticky=tk.W, pady=(10, 0))
         
         # Atalhos Reservados
@@ -325,22 +320,22 @@ class CustomShortcutsDialog:
         reserved_frame.grid(row=3, column=0, columnspan=2, sticky=tk.W+tk.E, pady=(15, 0))
         
         ttk.Label(reserved_frame, text="Apenas atalhos básicos de clipboard:", 
-                 font=("Segoe UI", 9)).pack(anchor=tk.W)
+                 font=("Segoe UI", 9), style="Card.TLabel").pack(anchor=tk.W)
         ttk.Label(reserved_frame, text="Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+A, Ctrl+Z", 
-                 font=("Segoe UI", 9, "bold")).pack(anchor=tk.W, pady=(5, 0))
+                 font=("Segoe UI", 9, "bold"), style="Card.TLabel").pack(anchor=tk.W, pady=(5, 0))
     
     def _create_info_tab(self, notebook: ttk.Notebook) -> None:
         """Cria aba de informações sobre configurabilidade"""
-        tab = ttk.Frame(notebook, padding=(12, 8))
+        tab = ttk.Frame(notebook, padding=(12, 8), style="Card.TFrame")
         notebook.add(tab, text="Info")
         
         # Título
         ttk.Label(tab, text="Total Liberdade de Configuração!", 
-                 font=("Segoe UI", 11, "bold")).pack(pady=(10, 15))
+                 font=("Segoe UI", 11, "bold"), style="Card.TLabel").pack(pady=(10, 15))
         
         ttk.Label(tab, text="Nenhum atalho é fixo neste aplicativo!\n"
-                           "Você tem controle total sobre todas as teclas.", 
-                 font=("Segoe UI", 9), justify=tk.CENTER).pack(pady=(0, 15))
+                            "Você tem controle total sobre todas as teclas.", 
+                  font=("Segoe UI", 9), justify=tk.CENTER, style="Card.TLabel").pack(pady=(0, 15))
         
         # Recursos
         recursos_frame = ttk.LabelFrame(tab, text="Recursos Configuráveis", padding=10)
@@ -356,16 +351,16 @@ class CustomShortcutsDialog:
             "  • Notificações personalizáveis"
         )
         ttk.Label(recursos_frame, text=recursos_text, font=("Segoe UI", 9), 
-                 justify=tk.LEFT).pack(anchor=tk.W)
+                  justify=tk.LEFT, style="Card.TLabel").pack(anchor=tk.W)
         
         # Dica
         dica_frame = ttk.LabelFrame(tab, text="Dica", padding=10)
         dica_frame.pack(fill=tk.X, pady=(0, 10))
         
         ttk.Label(dica_frame, 
-                 text="Configure quantos atalhos quiser na aba 'Atalhos Personalizados'.\n"
-                      "Cada atalho pode ter seu próprio prefixo e pode ser habilitado/desabilitado.", 
-                 font=("Segoe UI", 9), justify=tk.LEFT).pack(anchor=tk.W)
+                  text="Configure quantos atalhos quiser na aba 'Atalhos Personalizados'.\n"
+                       "Cada atalho pode ter seu próprio prefixo e pode ser habilitado/desabilitado.", 
+                  font=("Segoe UI", 9), justify=tk.LEFT, style="Card.TLabel").pack(anchor=tk.W)
     
     def _refresh_list(self) -> None:
         """Atualiza a Listbox com dados dos prefixos (EXATAMENTE como search_dialog)"""
@@ -585,256 +580,6 @@ class CustomShortcutsDialog:
             messagebox.showerror("Erro", f"Erro ao salvar:\n{e}")
 
 
-class ShortcutEditorDialog:
-    """Dialog para editar/criar um shortcut"""
-    
-    def __init__(self, parent: tk.Tk, shortcut: Optional[Dict[str, Any]], 
-                 on_save: Callable, on_validate_hotkey: Optional[Callable]):
-        """Inicializa o editor"""
-        self.parent = parent
-        self.shortcut = shortcut.copy() if shortcut else {}
-        self.on_save = on_save
-        self.on_validate_hotkey = on_validate_hotkey
-        
-        self.window: Optional[tk.Toplevel] = None
-        self.hotkey_var = tk.StringVar(value=self.shortcut.get("hotkey", ""))
-        self.prefix_var = tk.StringVar(value=self.shortcut.get("prefix", ""))
-        self.description_var = tk.StringVar(value=self.shortcut.get("description", ""))
-        self.enabled_var = tk.BooleanVar(value=self.shortcut.get("enabled", True))
-        
-        self.validation_label: Optional[ttk.Label] = None
-        self.preview_label: Optional[ttk.Label] = None
-        
-        self.is_detecting = False
-        self.detected_keys = set()
-    
-    def show(self) -> None:
-        """Mostra o dialog de edição"""
-        is_new = not self.shortcut or "id" not in self.shortcut
-        title = "Adicionar Atalho" if is_new else "Editar Atalho"
-        
-        self.window = tk.Toplevel(self.parent)
-        
-        # Aplica estilo Windows 11
-        self.window.title(title)
-        self.window.geometry("500x380")
-        try:
-            style = ttk.Style()
-            style.theme_use('vista')
-        except:
-            pass
-        
-        self.window.resizable(False, False)
-        self.window.transient(self.parent)
-        
-        # Frame principal
-        main_frame = ttk.Frame(self.window, padding=(16, 12))
-        main_frame.pack(fill=tk.BOTH, expand=True)
-        
-        # Prefixo
-        ttk.Label(main_frame, text="Prefixo:").grid(row=0, column=0, sticky=tk.W, pady=5)
-        prefix_entry = ttk.Entry(main_frame, textvariable=self.prefix_var, width=40)
-        prefix_entry.grid(row=0, column=1, sticky=tk.W+tk.E, pady=5)
-        prefix_entry.bind("<KeyRelease>", lambda e: self._update_preview())
-        
-        # Descrição
-        ttk.Label(main_frame, text="Descrição:").grid(row=1, column=0, sticky=tk.W, pady=5)
-        description_entry = ttk.Entry(main_frame, textvariable=self.description_var, width=40)
-        description_entry.grid(row=1, column=1, sticky=tk.W+tk.E, pady=5)
-        
-        # Hotkey
-        ttk.Label(main_frame, text="Atalho:").grid(row=2, column=0, sticky=tk.W, pady=5)
-        
-        hotkey_frame = ttk.Frame(main_frame)
-        hotkey_frame.grid(row=2, column=1, sticky=tk.W+tk.E, pady=5)
-        
-        hotkey_entry = ttk.Entry(hotkey_frame, textvariable=self.hotkey_var)
-        hotkey_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 5))
-        hotkey_entry.bind("<KeyRelease>", lambda e: self._validate_hotkey())
-        
-        detect_button = ttk.Button(hotkey_frame, text="Detectar", command=self._start_detecting)
-        detect_button.pack(side=tk.LEFT)
-        
-        # Validação
-        self.validation_label = ttk.Label(main_frame, text="", foreground="gray")
-        self.validation_label.grid(row=3, column=1, sticky=tk.W, pady=(0, 5))
-        
-        # Preview
-        preview_frame = ttk.LabelFrame(main_frame, text="Preview")
-        preview_frame.grid(row=4, column=0, columnspan=2, sticky=tk.W+tk.E, pady=10)
-        
-        self.preview_label = ttk.Label(preview_frame, text="", font=("Segoe UI", 9, "bold"))
-        self.preview_label.pack(padx=10, pady=5)
-        
-        # Enabled checkbox
-        ttk.Checkbutton(main_frame, text="Habilitar este atalho", 
-                       variable=self.enabled_var).grid(row=5, column=0, columnspan=2, sticky=tk.W, pady=(0, 10))
-        
-        # Botões (padrão Windows - sem emojis)
-        buttons_frame = ttk.Frame(main_frame)
-        buttons_frame.grid(row=6, column=0, columnspan=2, sticky=tk.E, pady=(20, 0))
-        
-        ttk.Button(buttons_frame, text="Cancelar", 
-                  command=self._on_cancel_clicked, width=12).pack(side=tk.RIGHT, padx=(8, 0))
-        ttk.Button(buttons_frame, text="OK", 
-                  command=self._on_save_clicked, width=12, default="active").pack(side=tk.RIGHT)
-        
-        # Configure grid
-        main_frame.columnconfigure(1, weight=1)
-        
-        # Atualiza preview inicial
-        self._update_preview()
-        self._validate_hotkey()
-        
-        # Centraliza
-        self.window.update_idletasks()
-        x = self.parent.winfo_x() + (self.parent.winfo_width() // 2) - (self.window.winfo_width() // 2)
-        y = self.parent.winfo_y() + (self.parent.winfo_height() // 2) - (self.window.winfo_height() // 2)
-        self.window.geometry(f"+{x}+{y}")
-    
-    def _validate_hotkey(self) -> None:
-        """Valida o hotkey em tempo real"""
-        if not self.validation_label:
-            return
-        
-        hotkey = self.hotkey_var.get().strip()
-        
-        if not hotkey:
-            self.validation_label.config(text="Digite um atalho", foreground="gray")
-            return
-        
-        if self.on_validate_hotkey:
-            exclude_id = self.shortcut.get("id") if self.shortcut else None
-            valid, msg = self.on_validate_hotkey(hotkey, exclude_id)
-            
-            if valid:
-                self.validation_label.config(text=f"Hotkey válido", foreground="green")
-            else:
-                self.validation_label.config(text=f"{msg}", foreground="red")
-        else:
-            self.validation_label.config(text="", foreground="gray")
-    
-    def _update_preview(self) -> None:
-        """Atualiza o preview do resultado"""
-        if not self.preview_label:
-            return
-        
-        prefix = self.prefix_var.get().strip()
-        now = datetime.now()
-        timestamp = now.strftime("%d.%m.%Y-%H:%M")
-        
-        if prefix:
-            preview = f"[{prefix}-{timestamp}]"
-        else:
-            preview = f"[{timestamp}]"
-        
-        self.preview_label.config(text=preview)
-    
-    def _start_detecting(self) -> None:
-        """Inicia detecção de teclas"""
-        try:
-            import keyboard  # Lazy import apenas quando necessário
-        except ImportError:
-            messagebox.showerror("Erro", "Biblioteca 'keyboard' não disponível.\nInstale com: pip install keyboard")
-            return
-        
-        self.is_detecting = True
-        self.detected_keys.clear()
-        
-        # Cria janela de detecção
-        detect_window = tk.Toplevel(self.window)
-        detect_window.title("Detectar Teclas")
-        detect_window.geometry("400x200")
-        detect_window.transient(self.window)
-        detect_window.grab_set()
-        
-        ttk.Label(detect_window, text="Pressione a combinação de teclas desejada...", 
-                 font=("Segoe UI", 9)).pack(pady=20)
-        
-        keys_label = ttk.Label(detect_window, text="", font=("Segoe UI", 11, "bold"))
-        keys_label.pack(pady=10)
-        
-        ttk.Button(detect_window, text="Cancelar", 
-                  command=lambda: self._stop_detecting(detect_window, None)).pack(pady=20)
-        
-        # Hook de teclado
-        def on_key(event):
-            if not self.is_detecting:
-                return
-            
-            key_name = event.name.lower()
-            
-            # Adiciona modificadores
-            if key_name in ["ctrl", "shift", "alt"]:
-                self.detected_keys.add(key_name)
-            else:
-                # Tecla final pressionada
-                self.detected_keys.add(key_name)
-                
-                # Monta hotkey
-                modifiers = sorted([k for k in self.detected_keys if k in ["ctrl", "shift", "alt"]])
-                keys = [k for k in self.detected_keys if k not in ["ctrl", "shift", "alt"]]
-                
-                if modifiers and keys:
-                    hotkey = "+".join(modifiers + keys)
-                    self._stop_detecting(detect_window, hotkey)
-                    return
-            
-            # Atualiza label
-            display = " + ".join(sorted(self.detected_keys)).upper()
-            keys_label.config(text=display)
-        
-        keyboard.hook(on_key)
-        
-        # Centraliza
-        detect_window.update_idletasks()
-        x = self.window.winfo_x() + (self.window.winfo_width() // 2) - (detect_window.winfo_width() // 2)
-        y = self.window.winfo_y() + (self.window.winfo_height() // 2) - (detect_window.winfo_height() // 2)
-        detect_window.geometry(f"+{x}+{y}")
-    
-    def _stop_detecting(self, detect_window: tk.Toplevel, hotkey: Optional[str]) -> None:
-        """Para a detecção de teclas"""
-        self.is_detecting = False
-        
-        try:
-            import keyboard
-            keyboard.unhook_all()
-            keyboard.unhook_all()  # Chama duas vezes para garantir
-        except Exception as e:
-            logging.warning(f"Erro ao remover hooks de teclado: {e}")
-        
-        detect_window.destroy()
-        
-        if hotkey:
-            self.hotkey_var.set(hotkey)
-            self._validate_hotkey()
-    
-    def _on_save_clicked(self) -> None:
-        """Salva o shortcut"""
-        try:
-            prefix = self.prefix_var.get().strip()
-            hotkey = self.hotkey_var.get().strip().lower()
-            description = self.description_var.get().strip()
-            enabled = self.enabled_var.get()
-            
-            if not prefix:
-                messagebox.showwarning("Campo Obrigatório", "Por favor, preencha o prefixo.")
-                return
-            
-            if not hotkey:
-                messagebox.showwarning("Campo Obrigatório", "Por favor, defina um atalho.")
-                return
-            
-            # Valida hotkey
-            if self.on_validate_hotkey:
-                exclude_id = self.shortcut.get("id") if self.shortcut else None
-                valid, msg = self.on_validate_hotkey(hotkey, exclude_id)
-                
-                if not valid:
-                    messagebox.showerror("Atalho Inválido", msg)
-                    return
-            
-            # Monta dados
             shortcut_data = {
                 "hotkey": hotkey,
                 "prefix": prefix,
