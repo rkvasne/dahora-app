@@ -13,7 +13,7 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    line-height: 1.7; /* Aumentado para melhor leitura */
+    line-height: 1.6; /* Otimizado para leitura */
     color: var(--text-dark);
     background-color: var(--bg-white);
     overflow-x: hidden;
@@ -161,7 +161,7 @@ body.dark-mode .lang-btn {
 
 /* ===== SECTIONS ===== */
 .section {
-    padding: 10rem 2rem; /* Máximo espaçamento vertical (breathability) */
+    padding: 6rem 2rem; /* Espaçamento mais equilibrado */
 }
 
 .container {
@@ -172,7 +172,7 @@ body.dark-mode .lang-btn {
 
 .section-header {
     text-align: center;
-    margin-bottom: 5rem; /* Mais separação do conteúdo */
+    margin-bottom: 3.5rem; /* Mais equilibrado */
 }
 
 .section-title {
@@ -183,24 +183,25 @@ body.dark-mode .lang-btn {
 }
 
 .section-subtitle {
-    font-size: 1.25rem;
-    color: var(--text-gray); /* Alterado de text-light para text-gray (mais escuro) */
+    font-size: 1.2rem;
+    color: var(--text-gray);
     max-width: 700px;
     margin: 0 auto;
-    font-weight: 500; /* Levemente mais peso */
+    font-weight: 400; /* Mais leve e elegante */
+    line-height: 1.6;
 }
 
 /* ===== FEATURE CARDS ===== */
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); /* Cards mais largos */
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Ligeiramente menor */
+    gap: 1.5rem; /* Mais compacto */
 }
 
 .feature-card {
     background: var(--bg-white);
-    padding: 3rem; /* Mais padding interno */
-    border-radius: 1.5rem; /* Bordas mais arredondadas (24px) */
+    padding: 2.5rem; /* Mais equilibrado */
+    border-radius: 1rem; /* Menos arredondado, mais profissional */
     border: 1px solid var(--border-color);
     transition: all 0.3s ease;
     position: relative;
@@ -227,44 +228,46 @@ body.dark-mode .lang-btn {
 }
 
 .feature-card:hover {
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    border-color: rgba(0, 120, 212, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); /* Mais sutil */
+    border-color: rgba(0, 120, 212, 0.2); /* Menos intenso */
+    transform: translateY(-2px); /* Movimento sutil */
 }
 
-/* ===== FEATURE ICONS (FONT AWESOME - BRANCO SOBRE AZUL) ===== */
+/* ===== FEATURE ICONS (MAIS ELEGANTES) ===== */
 .feature-icon {
-    width: 60px;
-    height: 60px;
+    width: 56px; /* Ligeiramente menor */
+    height: 56px;
     background: linear-gradient(135deg, #0078D4 0%, #2B88D8 100%);
     border: none;
-    border-radius: 12px;
+    border-radius: 10px; /* Menos arredondado */
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     margin-bottom: 1.5rem;
     transition: all 0.3s;
     color: white;
-    box-shadow: 0 4px 10px rgba(0, 120, 212, 0.2);
+    box-shadow: 0 3px 8px rgba(0, 120, 212, 0.15); /* Mais sutil */
 }
 
 .feature-card:hover .feature-icon {
     background: linear-gradient(135deg, #005A9E 0%, #0078D4 100%);
-    box-shadow: 0 6px 15px rgba(0, 120, 212, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 120, 212, 0.25);
     transform: none; /* REMOVIDO ZOOM/MOVIMENTO */
 }
 
 .feature-card h3 {
-    font-size: 1.25rem;
+    font-size: 1.2rem; /* Ligeiramente menor */
     margin-bottom: 1rem;
     color: var(--text-dark);
+    font-weight: 600; /* Mais consistente */
 }
 
 .feature-card p {
-    color: var(--text-gray); /* Alterado de text-light para text-gray */
+    color: var(--text-gray);
     font-size: 0.95rem;
-    line-height: 1.7;
-    font-weight: 450; /* Melhor legibilidade */
+    line-height: 1.6; /* Mais compacto */
+    font-weight: 400; /* Mais leve */
 }
 
 /* ===== FOOTER ===== */
@@ -355,9 +358,9 @@ body.dark-mode .lang-btn {
     animation: fadeIn 0.8s ease-out forwards;
 }
 
-/* Developer Section - Modern Design */
+/* Developer Section - Design Mais Profissional */
 .developer-section {
-    padding: 120px 20px;
+    padding: 80px 20px; /* Menos padding */
     position: relative;
     overflow: hidden;
     /* Force dark theme for consistency */
@@ -366,27 +369,27 @@ body.dark-mode .lang-btn {
     
     /* Variáveis locais para este componente */
     --dev-primary: var(--primary-color);
-    --dev-glow: rgba(255, 69, 0, 0.2);
+    --dev-glow: rgba(255, 69, 0, 0.15); /* Mais sutil */
     --dev-bg: #0B0F19;
 }
 
 .dev-container {
     max-width: 1000px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.02); /* Mais sutil */
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 32px;
-    padding: 4rem;
+    border-radius: 24px; /* Menos arredondado */
+    padding: 3.5rem; /* Menos padding */
     display: flex;
     align-items: center;
-    gap: 4rem;
-    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.3);
+    gap: 3.5rem; /* Menos gap */
+    box-shadow: 0 15px 60px rgba(0, 0, 0, 0.25); /* Mais sutil */
     position: relative;
 }
 
-/* Glow effect behind */
+/* Glow effect mais sutil */
 .dev-container::before {
     content: '';
     position: absolute;
@@ -395,7 +398,7 @@ body.dark-mode .lang-btn {
     width: 200%;
     height: 200%;
     background: radial-gradient(circle at 50% 50%, var(--dev-glow) 0%, transparent 50%);
-    opacity: 0.5;
+    opacity: 0.3; /* Mais sutil */
     z-index: -1;
     pointer-events: none;
 }
@@ -406,24 +409,24 @@ body.dark-mode .lang-btn {
 }
 
 .dev-avatar {
-    width: 180px;
-    height: 180px;
-    border-radius: 24px;
+    width: 160px; /* Menor */
+    height: 160px;
+    border-radius: 20px; /* Menos arredondado */
     background: linear-gradient(135deg, #2b2b2b, #1a1a1a);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3.5rem;
+    font-size: 3rem; /* Menor */
     font-weight: 800;
     color: var(--dev-primary);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3); /* Mais sutil */
     border: 1px solid rgba(255,255,255,0.1);
-    transform: rotate(-3deg);
+    transform: rotate(-2deg); /* Menos rotação */
     transition: transform 0.3s ease;
 }
 
 .dev-container:hover .dev-avatar {
-    transform: rotate(0deg) scale(1.05);
+    transform: rotate(0deg) scale(1.03); /* Menos zoom */
 }
 
 /* ===== MOBILE MENU BUTTON ===== */
@@ -463,29 +466,29 @@ body.dark-mode .lang-btn {
 }
 
 .dev-name {
-    font-size: 3rem;
+    font-size: 2.5rem; /* Menor */
     font-weight: 800;
     color: white;
     margin: 0 0 0.5rem 0;
     line-height: 1.1;
-    background: linear-gradient(90deg, #fff, rgba(255,255,255,0.5));
+    background: linear-gradient(90deg, #fff, rgba(255,255,255,0.7)); /* Mais sutil */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
 .dev-role {
-    font-size: 1.25rem;
+    font-size: 1.1rem; /* Menor */
     font-weight: 500;
     color: rgba(255, 255, 255, 0.6);
     margin: 0 0 1.5rem 0;
 }
 
 .dev-bio {
-    font-size: 1.1rem;
-    line-height: 1.7;
+    font-size: 1rem; /* Menor */
+    line-height: 1.6;
     color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem; /* Menos margin */
     max-width: 600px;
 }
 
@@ -497,16 +500,16 @@ body.dark-mode .lang-btn {
 
 /* Removido estilo antigo .dev-link e substituído por .social-btn */
 .social-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
+    width: 48px; /* Ligeiramente menor */
+    height: 48px;
+    border-radius: 10px; /* Menos arredondado */
     background: rgba(255, 255, 255, 0.05);
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
     text-decoration: none;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -514,8 +517,8 @@ body.dark-mode .lang-btn {
 .social-btn:hover {
     background: var(--dev-primary);
     color: var(--dev-bg);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    transform: translateY(-3px); /* Menos movimento */
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15); /* Mais sutil */
 }
 
 @media (max-width: 768px) {

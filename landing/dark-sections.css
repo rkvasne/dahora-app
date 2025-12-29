@@ -5,13 +5,13 @@
    Data: 04/11/2025
    ============================================ */
 
-/* ===== HERO SECTION (CLEAN & MODERN) ===== */
+/* ===== HERO SECTION (MAIS ELEGANTE) ===== */
 .hero {
     background: 
-        radial-gradient(circle at top right, rgba(56, 189, 248, 0.15), transparent 40%),
-        radial-gradient(circle at bottom left, rgba(0, 120, 212, 0.1), transparent 40%),
+        radial-gradient(circle at top right, rgba(56, 189, 248, 0.1), transparent 40%),
+        radial-gradient(circle at bottom left, rgba(0, 120, 212, 0.08), transparent 40%),
         linear-gradient(180deg, #0f172a 0%, #1e293b 100%); /* Slate Gradient */
-    padding: 10rem 2rem 8rem; /* Espaçamento generoso */
+    padding: 8rem 2rem 6rem; /* Mais equilibrado */
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -45,22 +45,22 @@
 }
 
 .hero-title {
-    font-size: 4rem; /* Maior impacto */
+    font-size: 3.5rem; /* Mais equilibrado */
     font-weight: 800;
     margin-bottom: 1.5rem;
     color: white;
     position: relative;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em; /* Menos apertado */
     line-height: 1.1;
-    background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.8) 100%);
+    background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.85) 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 4px 20px rgba(0, 120, 212, 0.3));
+    filter: drop-shadow(0 2px 15px rgba(0, 120, 212, 0.2)); /* Mais sutil */
 }
 
 .hero-subtitle {
-    font-size: 1.25rem;
+    font-size: 1.2rem; /* Mais consistente */
     color: rgba(255, 255, 255, 0.8);
     margin-bottom: 2.5rem;
     position: relative;
@@ -68,6 +68,7 @@
     margin-left: auto;
     margin-right: auto;
     line-height: 1.6;
+    font-weight: 400; /* Mais leve */
 }
 
 .hero-version {
@@ -147,11 +148,11 @@
     font-size: 1.1rem;
 }
 
-/* ===== DARK SECTIONS (AZUL NEON + SPOTLIGHT) ===== */
+/* ===== DARK SECTIONS (MAIS ELEGANTES) ===== */
 .section-dark {
     background: 
-        radial-gradient(900px circle at var(--mx, 50%) var(--my, 50%), rgba(0,120,212,0.12), transparent 40%),
-        radial-gradient(1200px circle at 80% 100%, rgba(43,136,216,0.08), transparent 50%),
+        radial-gradient(900px circle at var(--mx, 50%) var(--my, 50%), rgba(0,120,212,0.08), transparent 40%),
+        radial-gradient(1200px circle at 80% 100%, rgba(43,136,216,0.05), transparent 50%),
         linear-gradient(180deg, var(--hero-dark-1) 0%, var(--hero-dark-2) 50%, var(--hero-dark-3) 100%);
     color: white;
     position: relative;
@@ -195,8 +196,9 @@
 
 .section-dark .feature-card:hover {
     background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(0, 120, 212, 0.6);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 120, 212, 0.3);
+    border-color: rgba(0, 120, 212, 0.4); /* Menos intenso */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25), 0 0 15px rgba(0, 120, 212, 0.2); /* Mais sutil */
+    transform: translateY(-2px); /* Movimento sutil */
 }
 
 .section-dark .feature-card h3 {
@@ -233,13 +235,13 @@
     color: var(--secondary-color);
 }
 
-/* ===== DOWNLOAD SECTION (AZUL NEON) ===== */
+/* ===== DOWNLOAD SECTION (MAIS ELEGANTE) ===== */
 .download {
     background: 
-        radial-gradient(800px circle at 20% 30%, rgba(0,120,212,0.15), transparent 50%),
-        radial-gradient(600px circle at 80% 70%, rgba(43,136,216,0.12), transparent 50%),
+        radial-gradient(800px circle at 20% 30%, rgba(0,120,212,0.1), transparent 50%),
+        radial-gradient(600px circle at 80% 70%, rgba(43,136,216,0.08), transparent 50%),
         linear-gradient(135deg, #020617 0%, #0f172a 100%); /* Deep space */
-    padding: 6rem 2rem;
+    padding: 5rem 2rem; /* Mais compacto */
     color: white;
     text-align: center;
 }
@@ -248,11 +250,11 @@
     max-width: 600px;
     margin: 0 auto;
     background: rgba(255, 255, 255, 0.03);
-    padding: 3.5rem;
-    border-radius: 2rem;
+    padding: 3rem; /* Mais equilibrado */
+    border-radius: 1.5rem; /* Menos arredondado */
     backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.25); /* Mais sutil */
 }
 
 .download-box h2 {

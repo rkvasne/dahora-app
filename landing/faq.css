@@ -1,8 +1,8 @@
 
-/* ===== FAQ SECTION ===== */
+/* ===== FAQ SECTION (MAIS ELEGANTE) ===== */
 .faq {
     background: var(--bg-white);
-    padding: 6rem 2rem;
+    padding: 5rem 2rem; /* Mais equilibrado */
 }
 
 .faq-container {
@@ -12,16 +12,16 @@
 
 .faq-item {
     border-bottom: 1px solid var(--border-color);
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem; /* Mais compacto */
 }
 
 .faq-question {
     width: 100%;
     text-align: left;
-    padding: 1.5rem 0;
+    padding: 1.25rem 0; /* Menos padding */
     background: none;
     border: none;
-    font-size: 1.1rem;
+    font-size: 1.05rem; /* Ligeiramente menor */
     font-weight: 600;
     color: var(--text-dark);
     cursor: pointer;
@@ -38,10 +38,12 @@
 .faq-icon {
     font-size: 0.8rem;
     transition: transform 0.3s;
+    opacity: 0.7; /* Mais sutil */
 }
 
 .faq-item.active .faq-icon {
     transform: rotate(180deg);
+    opacity: 1;
 }
 
 .faq-answer {
@@ -50,11 +52,12 @@
     transition: max-height 0.3s ease-out;
     color: var(--text-gray);
     line-height: 1.6;
+    font-size: 0.95rem; /* Ligeiramente menor */
 }
 
 .faq-item.active .faq-answer {
     max-height: 500px; /* Altura suficiente para conteúdo */
-    padding-bottom: 1.5rem;
+    padding-bottom: 1.25rem; /* Menos padding */
 }
 
 body.dark-mode .faq {

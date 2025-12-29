@@ -1,8 +1,3 @@
-# 📅 Dahora App - Cola Timestamps Automaticamente
-
-> **Aplicativo Windows revolucionário: cole timestamps formatados DIRETAMENTE com atalhos personalizáveis**
-
-[![Version](https://img.shields.io/badge/version-0.2.2-blue.svg)](https://github.com/rkvasne/dahora-app)
 # 📅 Dahora App
 
 <div align="center">
@@ -27,29 +22,29 @@
 
 Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sistema leve e poderoso que revoluciona como você lida com timestamps. Ele roda silenciosamente na bandeja do sistema e permite que você cole a data e hora atual formatada em qualquer lugar, com um único atalho.
 
-**Novo na v0.2.2:** Uma interface renovada e limpa, focada em usabilidade e rapidez para suas configurações.
+**Novo na v0.2.2:** Interface renovada com design limpo e organizado, focada na usabilidade e experiência do usuário.
 
 ## ✨ Funcionalidades
 
 ### ⚡ Produtividade Instantânea
-- **Colagem Automática:** Pressione `Ctrl+Shift+Q` e o timestamp aparece magicamente onde seu cursor estiver.
-- **Preservação de Clipboard:** O app salva o que você tinha copiado, cola o timestamp e restaura seu clipboard original. Transparente e fluido.
-- **Atalhos Ilimitados:** Crie atalhos personalizados (ex: `Ctrl+Shift+1`) com prefixos próprios (ex: `[trabalho-29.11.2025]`).
+- **Colagem Automática:** Pressione `Ctrl+Shift+Q` e o timestamp aparece onde seu cursor estiver.
+- **Preservação de Clipboard:** Sistema preserva seu clipboard automaticamente. Cola timestamp e restaura o conteúdo original.
+- **Atalhos Ilimitados:** Crie atalhos personalizados com prefixos próprios. Interface CRUD completa para gerenciar com eficiência.
 
 ### 🎨 Interface Moderna e Limpa
-- **Foco no Conteúdo:** Design minimalista que não distrai.
-- **Dark Mode:** Cores profundas e contrastes refinados para conforto visual.
-- **Visual Organizado:** Cards e painéis sem bordas excessivas.
+- **Design Renovado:** Interface renovada com design limpo e organizado.
+- **Foco na Usabilidade:** Experiência do usuário otimizada e intuitiva.
+- **Visual Profissional:** Cards e painéis com estética moderna.
 
 ### 📋 Histórico Inteligente
-- **Backup de Texto:** Mantém um histórico dos últimos textos copiados (configurável).
-- **Busca Rápida:** Pressione `Ctrl+Shift+F` para pesquisar e recuperar qualquer texto do histórico instantaneamente.
-- **Privacidade:** Timestamps gerados não poluem seu histórico.
+- **Armazenamento Seletivo:** Armazena apenas textos úteis, ignora timestamps.
+- **Busca Rápida:** Pressione `Ctrl+Shift+F` para busca instantânea no histórico.
+- **Privacidade:** Dados locais, zero telemetria.
 
 ### ⚙️ Controle Total
-- **Formatos Flexíveis:** Personalize a data/hora (`%d/%m/%Y`, `%Y-%m-%d`, etc.).
-- **Delimitadores:** Escolha entre `[]`, `()`, `{}`, ou crie o seu (`<< >>`).
-- **Regras de Uso:** Defina limites de histórico, intervalos de monitoramento e notificações.
+- **Painel Completo:** 5 abas para controle total do aplicativo.
+- **Configuração Flexível:** Configure formatos, delimitadores e teclas.
+- **Execução Invisível:** Colagem instantânea sem popups desnecessários.
 
 ---
 
@@ -154,7 +149,7 @@ dahora-app/
 
 ## 🤝 Contribuindo
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests.
+Valorizamos contribuições! Sinta-se à vontade para abrir issues ou enviar pull requests.
 
 1. Faça um Fork do projeto
 2. Crie sua Feature Branch (`git checkout -b feature/MinhaFeature`)

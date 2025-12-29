@@ -1,4 +1,15 @@
 # 💰 ANÁLISE DE PRECIFICAÇÃO E VALOR DE MERCADO - DAHORA APP
+
+> **ℹ️ NOTA INFORMATIVA:**  
+> Este documento é um **estudo de viabilidade e análise de mercado** realizado durante o desenvolvimento do projeto.  
+> O **Dahora App é 100% GRATUITO e OPEN SOURCE**.  
+> As estimativas de preço e estratégias de monetização abaixo servem apenas para:
+> 1. Demonstrar o **valor agregado** do software.
+> 2. Servir de referência para **estudos de caso**.
+> 3. Analisar **concorrentes** e posicionamento de mercado.
+>
+> **Não há planos atuais de cobrar pelo uso do aplicativo.**
+
 ## Dahora App - Sistema de Bandeja do Windows
 
 **Data da Análise:** Novembro 2025  
