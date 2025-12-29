@@ -388,33 +388,49 @@ class Windows11Style:
                        relief='flat',
                        focuscolor='none')
         
-        # === NOTEBOOK (TABS) MODERNO ===
+        # === NOTEBOOK (TABS) MODERNO - SEM BORDAS ===
         style.configure("TNotebook",
                        background=Windows11Style.COLORS['bg'],
                        borderwidth=0,
                        relief='flat',
-                       tabmargins=[2, 5, 2, 0])  # Margens para não cortar texto
+                       tabmargins=[0, 0, 0, 0],
+                       tabposition='n')
+        
+        # Remove a borda do notebook completamente
+        style.layout("TNotebook", [])
+        style.layout("TNotebook.Tab", [
+            ("Notebook.tab", {
+                "sticky": "nswe",
+                "children": [
+                    ("Notebook.padding", {
+                        "side": "top",
+                        "sticky": "nswe",
+                        "children": [
+                            ("Notebook.label", {"side": "top", "sticky": ""})
+                        ]
+                    })
+                ]
+            })
+        ])
         
         style.configure("TNotebook.Tab",
-                       background=Windows11Style.COLORS['bg_secondary'],
+                       background=Windows11Style.COLORS['bg'],
                        foreground=Windows11Style.COLORS['text_muted'],
                        font=Windows11Style.FONTS['default'],
-                       padding=(28, 16),  # Padding ainda mais generoso para não cortar texto
+                       padding=(20, 12),
                        borderwidth=0,
                        relief='flat',
-                       focuscolor='none',  # Remove foco visual
-                       expand=[1, 0, 0, 0])  # Expande horizontalmente para não cortar
+                       focuscolor=Windows11Style.COLORS['bg'])
         
         style.map("TNotebook.Tab",
-                 background=[('selected', Windows11Style.COLORS['surface']),
-                           ('active', Windows11Style.COLORS['bg_tertiary']),
-                           ('!active', Windows11Style.COLORS['bg_secondary'])],
+                 background=[('selected', Windows11Style.COLORS['bg']),
+                           ('active', Windows11Style.COLORS['bg']),
+                           ('!active', Windows11Style.COLORS['bg'])],
                  foreground=[('selected', Windows11Style.COLORS['accent']),
                            ('active', Windows11Style.COLORS['text']),
                            ('!active', Windows11Style.COLORS['text_muted'])],
-                 padding=[('selected', (28, 16)),  # Mantém padding consistente
-                         ('active', (28, 16)),
-                         ('!active', (28, 16))])
+                 borderwidth=[('selected', 0), ('!selected', 0)],
+                 relief=[('selected', 'flat'), ('!selected', 'flat')])
         
         # === LABELFRAME MODERNO (SEM BORDAS) ===
         style.configure("TLabelframe",

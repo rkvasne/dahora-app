@@ -177,24 +177,21 @@ class CustomShortcutsDialog:
         self.window.mainloop()
     
     def _create_scrollable_frame(self, parent) -> tuple:
-        """Cria um frame scrollável para conteúdo de aba"""
+        """Cria um frame scrollável para conteúdo de aba - SEM scrollbar visível"""
         # Canvas para scroll
         canvas = tk.Canvas(parent, 
                           bg=Windows11Style.COLORS['bg'],
                           highlightthickness=0,
                           borderwidth=0)
         
-        # Scrollbar vertical
-        scrollbar = ttk.Scrollbar(parent, orient="vertical", command=canvas.yview)
-        
         # Frame scrollável
         scrollable_frame = ttk.Frame(canvas, style="TFrame")
         
         # Configura scroll
-        scrollable_frame.bind(
-            "<Configure>",
-            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
-        )
+        def configure_scroll(event=None):
+            canvas.configure(scrollregion=canvas.bbox("all"))
+        
+        scrollable_frame.bind("<Configure>", configure_scroll)
         
         canvas_frame = canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
         
@@ -203,16 +200,30 @@ class CustomShortcutsDialog:
             canvas.itemconfig(canvas_frame, width=event.width)
         canvas.bind("<Configure>", configure_frame_width)
         
-        canvas.configure(yscrollcommand=scrollbar.set)
-        
-        # Pack
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        # Pack - SEM scrollbar visível
         canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         
-        # Mouse wheel scroll
+        # Mouse wheel scroll - CORRIGIDO para funcionar em todas as abas
         def _on_mousewheel(event):
-            canvas.yview_scroll(int(-1*(event.delta/120)), "units")
-        canvas.bind_all("<MouseWheel>", _on_mousewheel)
+            # Verifica se o canvas ainda existe
+            try:
+                canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+            except tk.TclError:
+                pass
+        
+        # Bind no canvas E no frame scrollável
+        canvas.bind("<MouseWheel>", _on_mousewheel)
+        scrollable_frame.bind("<MouseWheel>", _on_mousewheel)
+        
+        # Bind em todos os widgets filhos quando criados
+        def bind_mousewheel_to_children(widget):
+            widget.bind("<MouseWheel>", _on_mousewheel)
+            for child in widget.winfo_children():
+                bind_mousewheel_to_children(child)
+        
+        # Armazena referência para bind posterior
+        canvas._mousewheel_callback = _on_mousewheel
+        canvas._bind_children = bind_mousewheel_to_children
         
         return scrollable_frame, canvas
     
@@ -236,13 +247,8 @@ class CustomShortcutsDialog:
         list_frame = ttk.Frame(content, style="TFrame")
         list_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 16))
         
-        # Scrollbar da lista
-        list_scroll = ttk.Scrollbar(list_frame)
-        list_scroll.pack(side=tk.RIGHT, fill=tk.Y)
-        
         self.shortcuts_listbox = tk.Listbox(
             list_frame,
-            yscrollcommand=list_scroll.set,
             font=("Segoe UI", 10),
             height=10,
             borderwidth=0,
@@ -252,7 +258,6 @@ class CustomShortcutsDialog:
         )
         Windows11Style.configure_listbox(self.shortcuts_listbox)
         self.shortcuts_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        list_scroll.config(command=self.shortcuts_listbox.yview)
         
         self.shortcuts_listbox.bind("<Double-Button-1>", lambda e: self._on_edit_clicked())
         
@@ -276,6 +281,10 @@ class CustomShortcutsDialog:
                                           style="Danger.TButton").pack(side=tk.LEFT)
         Windows11Style.create_modern_button(buttons, "🔄", 
                                           command=self._refresh_list).pack(side=tk.RIGHT)
+        
+        # Bind mousewheel em todos os filhos
+        if hasattr(canvas, '_bind_children'):
+            content.after(100, lambda: canvas._bind_children(content))
     
     def _create_scrollable_general_tab(self, notebook: ttk.Notebook) -> None:
         """Cria aba de formato com scroll interno"""
@@ -337,6 +346,10 @@ class CustomShortcutsDialog:
         ttk.Label(content, text="Tempo ocioso para pausar (segundos)", style="TLabel").pack(anchor="w", pady=(0, 6))
         self.var_idle_threshold = tk.DoubleVar(value=self.current_settings.get("clipboard_idle_threshold", 30.0))
         ttk.Spinbox(content, from_=10, to=300, increment=10, textvariable=self.var_idle_threshold, width=15).pack(anchor="w")
+        
+        # Bind mousewheel
+        if hasattr(canvas, '_bind_children'):
+            content.after(100, lambda: canvas._bind_children(content))
     
     def _create_scrollable_notifications_tab(self, notebook: ttk.Notebook) -> None:
         """Cria aba de notificações com scroll interno"""
@@ -376,6 +389,10 @@ class CustomShortcutsDialog:
         ttk.Label(content, text="💡 Tipos de Notificações", style="Heading.TLabel").pack(anchor="w", pady=(0, 12))
         examples = "• Atalho acionado: 'Copiado com sucesso!'\n• Item do histórico: 'Copiado do histórico!'\n• Configurações: 'Configurações salvas!'"
         ttk.Label(content, text=examples, style="Muted.TLabel").pack(anchor="w")
+        
+        # Bind mousewheel
+        if hasattr(canvas, '_bind_children'):
+            content.after(100, lambda: canvas._bind_children(content))
     
     def _create_scrollable_hotkeys_tab(self, notebook: ttk.Notebook) -> None:
         """Cria aba de teclas de atalho com scroll interno"""
@@ -420,6 +437,10 @@ class CustomShortcutsDialog:
         ttk.Label(content, text="⚠️ Alterações requerem reinicialização", 
                  font=("Segoe UI", 9, "bold"), foreground=Windows11Style.COLORS['warning'],
                  background=Windows11Style.COLORS['bg']).pack(anchor="w")
+        
+        # Bind mousewheel
+        if hasattr(canvas, '_bind_children'):
+            content.after(100, lambda: canvas._bind_children(content))
     
     def _create_scrollable_info_tab(self, notebook: ttk.Notebook) -> None:
         """Cria aba de informações com scroll interno"""
@@ -450,6 +471,10 @@ class CustomShortcutsDialog:
         ttk.Label(content, text="💡 Dicas de Uso", style="Heading.TLabel").pack(anchor="w", pady=(0, 12))
         tips = "🎯 Configure atalhos na aba 'Atalhos'\n⌨️ Use ctrl+shift+letra para evitar conflitos\n🔍 Use Ctrl+Shift+F para buscar no histórico"
         ttk.Label(content, text=tips, style="Muted.TLabel").pack(anchor="w")
+        
+        # Bind mousewheel
+        if hasattr(canvas, '_bind_children'):
+            content.after(100, lambda: canvas._bind_children(content))
     
     def _refresh_list(self) -> None:
         """Atualiza a Listbox com dados dos atalhos em formato moderno"""
