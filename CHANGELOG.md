@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.2-color-improvements] - 2025-12-29 🎨 **MELHORIA SIGNIFICATIVA: ESQUEMA DE CORES**
+
+### 🎨 Enhanced
+- **Detecção automática de tema**: Agora detecta automaticamente se o Windows está em modo claro ou escuro e aplica o esquema correspondente
+- **Modo escuro melhorado**: Background menos escuro (`#121212` → `#1C1C1C`) para reduzir fadiga visual
+- **Legibilidade aprimorada**: Texto branco puro (`#E0E0E0` → `#FFFFFF`) e texto secundário mais claro (`#A0A0A0` → `#B3B3B3`)
+- **Cores oficiais Windows 11**: Azul accent atualizado para o oficial (`#4CC2FF` → `#0078D4`)
+- **Melhor definição visual**: Bordas mais visíveis (`#2b2b2b` → `#323130`) e superfícies mais claras
+- **Modo claro otimizado**: Background mais suave (`#F3F3F3` → `#FAFAFA`) e melhor contraste de texto
+- **Botões aprimorados**: Botão primário com texto branco sobre azul e hover states mais consistentes
+
+### 🎯 Benefits
+- Melhor legibilidade e contraste em ambos os modos
+- Menos fadiga visual com cores mais equilibradas
+- Consistência total com as diretrizes de design do Windows 11
+- Adaptação automática às preferências do usuário
+
 ## [0.2.2-shortcut-editor-fix] - 2025-12-29 🔧 **CORREÇÃO CRÍTICA: EDIÇÃO DE ATALHOS NO FRONTEND**
 
 ### 🐛 Fixed
