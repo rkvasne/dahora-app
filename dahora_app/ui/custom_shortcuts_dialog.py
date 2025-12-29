@@ -100,7 +100,7 @@ class CustomShortcutsDialog:
         self._create_window()
     
     def _create_window(self) -> None:
-        """Cria a janela principal com design moderno"""
+        """Cria a janela principal com design moderno e scrollbar"""
         self.window = tk.Tk()
         # Configura estilo moderno
         Windows11Style.configure_window(self.window, "Dahora App - Configurações", "800x650")
@@ -108,8 +108,34 @@ class CustomShortcutsDialog:
         
         self.window.resizable(True, True)
         
+        # Canvas principal com scrollbar para conteúdo que extrapola
+        main_canvas = tk.Canvas(self.window, 
+                               bg=Windows11Style.COLORS['bg'],
+                               highlightthickness=0,
+                               borderwidth=0)
+        main_canvas.pack(fill=tk.BOTH, expand=True)
+        
+        # Scrollbar moderna para o canvas
+        scrollbar = ttk.Scrollbar(self.window, orient="vertical", command=main_canvas.yview)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        main_canvas.configure(yscrollcommand=scrollbar.set)
+        
+        # Frame scrollável dentro do canvas
+        scrollable_frame = ttk.Frame(main_canvas, style="TFrame")
+        canvas_frame = main_canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+        
+        # Função para atualizar scroll region
+        def configure_scroll_region(event=None):
+            main_canvas.configure(scrollregion=main_canvas.bbox("all"))
+            # Ajusta largura do frame scrollável
+            canvas_width = main_canvas.winfo_width()
+            main_canvas.itemconfig(canvas_frame, width=canvas_width)
+        
+        scrollable_frame.bind("<Configure>", configure_scroll_region)
+        main_canvas.bind("<Configure>", configure_scroll_region)
+        
         # Frame principal moderno com padding generoso
-        main_frame = Windows11Style.create_modern_card(self.window, padding=24)
+        main_frame = Windows11Style.create_modern_card(scrollable_frame, padding=24)
         main_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
         
         # Cabeçalho moderno
@@ -168,6 +194,11 @@ class CustomShortcutsDialog:
         # Atalhos de teclado
         self.window.bind('<Escape>', lambda e: self._on_close())
         
+        # Scroll com mouse wheel
+        def _on_mousewheel(event):
+            main_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+        main_canvas.bind_all("<MouseWheel>", _on_mousewheel)
+        
         self.window.mainloop()
     
     def _create_modern_prefixes_tab(self, notebook: ttk.Notebook) -> None:
@@ -187,19 +218,19 @@ class CustomShortcutsDialog:
                                  style="Muted.TLabel")
         subtitle_label.pack(anchor="w", pady=(4, 0))
         
-        # Card da lista moderna
-        list_card = Windows11Style.create_modern_card(tab, padding=16)
+        # Card da lista moderna SEM bordas
+        list_card = ttk.Frame(tab, style="TFrame")  # Frame simples sem bordas
         list_card.pack(fill=tk.BOTH, expand=True, pady=(0, 16))
         
         # Container da lista com scrollbar moderna
         list_container = ttk.Frame(list_card, style="TFrame")
-        list_container.pack(fill=tk.BOTH, expand=True)
+        list_container.pack(fill=tk.BOTH, expand=True, padx=16, pady=16)
         
-        # Scrollbar moderna
-        scrollbar = ttk.Scrollbar(list_container)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y, padx=(8, 0))
+        # Scrollbar moderna (invisível até hover)
+        scrollbar = ttk.Scrollbar(list_container, style="TScrollbar")
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         
-        # Listbox moderna
+        # Listbox moderna SEM bordas
         self.shortcuts_listbox = tk.Listbox(
             list_container,
             yscrollcommand=scrollbar.set,
@@ -207,7 +238,8 @@ class CustomShortcutsDialog:
             height=12,  # Mais espaço
             borderwidth=0,
             highlightthickness=0,
-            selectmode=tk.SINGLE
+            selectmode=tk.SINGLE,
+            relief='flat'  # Sem relevo
         )
         Windows11Style.configure_listbox(self.shortcuts_listbox)
         self.shortcuts_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
@@ -221,14 +253,14 @@ class CustomShortcutsDialog:
         info_frame.pack(fill=tk.X, pady=(0, 16))
         
         self.count_label = ttk.Label(info_frame, text="0 atalhos configurados", style="Muted.TLabel")
-        self.count_label.pack(anchor="w")
+        self.count_label.pack(anchor="w", padx=16)
         
         # Popula dados iniciais
         self._refresh_list()
         
         # Botões de ação modernos
         buttons_frame = ttk.Frame(tab, style="TFrame")
-        buttons_frame.pack(fill=tk.X)
+        buttons_frame.pack(fill=tk.X, padx=16)
         
         # Botões principais à esquerda
         primary_buttons = ttk.Frame(buttons_frame, style="TFrame")

@@ -202,21 +202,23 @@ class Windows11Style:
         
         # === FRAMES MODERNOS ===
         style.configure("TFrame", 
-                       background=Windows11Style.COLORS['bg'])
+                       background=Windows11Style.COLORS['bg'],
+                       relief='flat',
+                       borderwidth=0)
                        
-        # Card moderno com sombra simulada
+        # Card moderno SEM bordas
         style.configure("Card.TFrame",
                        background=Windows11Style.COLORS['surface'],
                        relief='flat',
                        borderwidth=0)
         
-        # Card com borda sutil
+        # Card com borda MUITO sutil (quase invisível)
         style.configure("CardBorder.TFrame",
                        background=Windows11Style.COLORS['surface'],
-                       relief='solid',
-                       borderwidth=1)
+                       relief='flat',
+                       borderwidth=0)
         
-        # === LABELS MODERNOS ===
+        # === LABELS MODERNOS (FUNDO CONSISTENTE) ===
         style.configure("TLabel",
                        background=Windows11Style.COLORS['bg'],
                        foreground=Windows11Style.COLORS['text'],
@@ -242,7 +244,7 @@ class Windows11Style:
                        foreground=Windows11Style.COLORS['text_muted'],
                        font=Windows11Style.FONTS['small'])
                        
-        # Labels em cards
+        # Labels em cards (FUNDO DO CARD)
         style.configure("Card.TLabel",
                        background=Windows11Style.COLORS['surface'],
                        foreground=Windows11Style.COLORS['text'],
@@ -252,6 +254,12 @@ class Windows11Style:
                        background=Windows11Style.COLORS['surface'],
                        foreground=Windows11Style.COLORS['text_bright'],
                        font=Windows11Style.FONTS['heading'])
+        
+        # Labels em frames (FUNDO TRANSPARENTE)
+        style.configure("Frame.TLabel",
+                       background=Windows11Style.COLORS['bg'],
+                       foreground=Windows11Style.COLORS['text'],
+                       font=Windows11Style.FONTS['default'])
                        
         # === BOTÕES MODERNOS ===
         # Botão padrão moderno
@@ -330,69 +338,72 @@ class Windows11Style:
                            ('pressed', Windows11Style.COLORS['text_bright']),
                            ('!active', Windows11Style.COLORS['text_bright'])])
         
-        # === INPUTS MODERNOS ===
+        # === INPUTS MODERNOS (SEM BORDAS VISÍVEIS) ===
         style.configure("TEntry",
                        fieldbackground=Windows11Style.COLORS['surface'],
                        foreground=Windows11Style.COLORS['text'],
                        insertcolor=Windows11Style.COLORS['accent'],  # Cursor colorido
                        font=Windows11Style.FONTS['input'],
-                       borderwidth=1,
-                       relief='solid',
+                       borderwidth=0,  # SEM bordas
+                       relief='flat',
                        padding=(16, 12),  # Mais espaçoso
                        focuscolor='none')  # Remove foco padrão
         
         style.map("TEntry",
-                 bordercolor=[('focus', Windows11Style.COLORS['accent']),
-                            ('!focus', Windows11Style.COLORS['border'])],
                  fieldbackground=[('focus', Windows11Style.COLORS['surface']),
                                 ('!focus', Windows11Style.COLORS['surface'])],
                  foreground=[('focus', Windows11Style.COLORS['text']),
                            ('!focus', Windows11Style.COLORS['text'])])
         
-        # Spinbox moderno
+        # Spinbox moderno SEM bordas
         style.configure("TSpinbox",
                        fieldbackground=Windows11Style.COLORS['surface'],
                        foreground=Windows11Style.COLORS['text'],
                        insertcolor=Windows11Style.COLORS['accent'],
                        font=Windows11Style.FONTS['input'],
-                       borderwidth=1,
-                       relief='solid',
+                       borderwidth=0,  # SEM bordas
+                       relief='flat',
                        padding=(16, 12),
                        focuscolor='none')
         
         style.map("TSpinbox",
-                 bordercolor=[('focus', Windows11Style.COLORS['accent']),
-                            ('!focus', Windows11Style.COLORS['border'])],
                  fieldbackground=[('focus', Windows11Style.COLORS['surface']),
                                 ('!focus', Windows11Style.COLORS['surface'])])
         
-        # === CHECKBOXES MODERNOS ===
+        # === CHECKBOXES MODERNOS (FUNDO CONSISTENTE) ===
         style.configure("TCheckbutton",
                        background=Windows11Style.COLORS['bg'],
                        foreground=Windows11Style.COLORS['text'],
                        font=Windows11Style.FONTS['default'],
-                       padding=(8, 4))
+                       padding=(8, 4),
+                       borderwidth=0,
+                       relief='flat',
+                       focuscolor='none')
         
         style.configure("Card.TCheckbutton",
                        background=Windows11Style.COLORS['surface'],
                        foreground=Windows11Style.COLORS['text'],
-                       font=Windows11Style.FONTS['default'])
+                       font=Windows11Style.FONTS['default'],
+                       borderwidth=0,
+                       relief='flat',
+                       focuscolor='none')
         
         # === NOTEBOOK (TABS) MODERNO ===
         style.configure("TNotebook",
                        background=Windows11Style.COLORS['bg'],
                        borderwidth=0,
                        relief='flat',
-                       tabmargins=[0, 0, 0, 0])  # Remove margens das tabs
+                       tabmargins=[2, 5, 2, 0])  # Margens para não cortar texto
         
         style.configure("TNotebook.Tab",
                        background=Windows11Style.COLORS['bg_secondary'],
                        foreground=Windows11Style.COLORS['text_muted'],
                        font=Windows11Style.FONTS['default'],
-                       padding=(24, 14),  # Padding uniforme e generoso
+                       padding=(28, 16),  # Padding ainda mais generoso para não cortar texto
                        borderwidth=0,
                        relief='flat',
-                       focuscolor='none')  # Remove foco visual
+                       focuscolor='none',  # Remove foco visual
+                       expand=[1, 0, 0, 0])  # Expande horizontalmente para não cortar
         
         style.map("TNotebook.Tab",
                  background=[('selected', Windows11Style.COLORS['surface']),
@@ -401,18 +412,17 @@ class Windows11Style:
                  foreground=[('selected', Windows11Style.COLORS['accent']),
                            ('active', Windows11Style.COLORS['text']),
                            ('!active', Windows11Style.COLORS['text_muted'])],
-                 padding=[('selected', (24, 14)),  # Mantém padding consistente
-                         ('active', (24, 14)),
-                         ('!active', (24, 14))])
+                 padding=[('selected', (28, 16)),  # Mantém padding consistente
+                         ('active', (28, 16)),
+                         ('!active', (28, 16))])
         
-        # === LABELFRAME MODERNO ===
+        # === LABELFRAME MODERNO (SEM BORDAS) ===
         style.configure("TLabelframe",
                        background=Windows11Style.COLORS['surface'],
                        foreground=Windows11Style.COLORS['text'],
                        font=Windows11Style.FONTS['default'],
-                       borderwidth=1,
-                       relief='solid',
-                       bordercolor=Windows11Style.COLORS['border'])
+                       borderwidth=0,  # SEM bordas
+                       relief='flat')
         
         style.configure("TLabelframe.Label",
                        background=Windows11Style.COLORS['surface'],
@@ -423,45 +433,33 @@ class Windows11Style:
         style.configure("TSeparator",
                        background=Windows11Style.COLORS['border'])
                        
-        # === SCROLLBAR MODERNO (OVERLAY STYLE) ===
+        # === SCROLLBAR OVERLAY INVISÍVEL ===
         style.configure("TScrollbar",
-                       background=Windows11Style.COLORS['bg'],
-                       troughcolor=Windows11Style.COLORS['bg'],
-                       bordercolor=Windows11Style.COLORS['bg'],
-                       arrowcolor=Windows11Style.COLORS['text_muted'],
+                       background=Windows11Style.COLORS['bg'],  # Mesmo fundo da janela
+                       troughcolor=Windows11Style.COLORS['bg'],  # Trilha invisível
+                       bordercolor=Windows11Style.COLORS['bg'],  # Borda invisível
+                       arrowcolor=Windows11Style.COLORS['bg'],  # Setas invisíveis
                        borderwidth=0,
                        relief='flat',
-                       width=12,  # Scrollbar mais fina
-                       arrowsize=12)
+                       width=8,  # Scrollbar muito fina
+                       arrowsize=8)
         
         style.map("TScrollbar",
-                 background=[('active', Windows11Style.COLORS['bg_tertiary']), 
+                 background=[('active', Windows11Style.COLORS['text_muted']), 
                            ('pressed', Windows11Style.COLORS['accent']),
-                           ('!active', Windows11Style.COLORS['bg_secondary'])],
+                           ('!active', Windows11Style.COLORS['bg'])],  # Invisível quando não ativa
                  troughcolor=[('active', Windows11Style.COLORS['bg']),
                             ('!active', Windows11Style.COLORS['bg'])],
-                 arrowcolor=[('active', Windows11Style.COLORS['text']),
-                           ('pressed', Windows11Style.COLORS['text_bright']),
-                           ('!active', Windows11Style.COLORS['text_muted'])])
+                 arrowcolor=[('active', Windows11Style.COLORS['text_muted']),
+                           ('pressed', Windows11Style.COLORS['accent']),
+                           ('!active', Windows11Style.COLORS['bg'])])
     
     @staticmethod
     def create_modern_card(parent, padding=20, **kwargs):
-        """Cria um card moderno com visual elevado e bordas arredondadas simuladas"""
-        card = ttk.Frame(parent, style="Card.TFrame", padding=padding, **kwargs)
-        
-        # Adiciona efeito de elevação com múltiplas bordas sutis
-        try:
-            # Cria um frame container para simular sombra
-            shadow_frame = ttk.Frame(parent, style="TFrame")
-            shadow_frame.configure(background=Windows11Style.COLORS['shadow'])
-            
-            # Posiciona o card sobre a "sombra"
-            card.configure(relief='flat', borderwidth=1)
-            
-        except Exception:
-            # Fallback para card simples se houver erro
-            pass
-            
+        """Cria um card moderno SEM bordas visíveis"""
+        card = ttk.Frame(parent, style="TFrame", padding=padding, **kwargs)
+        # Remove qualquer borda ou relevo
+        card.configure(relief='flat', borderwidth=0)
         return card
     
     @staticmethod
