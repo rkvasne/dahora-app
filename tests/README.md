@@ -1,4 +1,4 @@
-# Testes do Dahora App
+# 🧪 TESTES AUTOMATIZADOS - DAHORA APP
 
 Este diretório contém a suíte de testes do Dahora App.
 

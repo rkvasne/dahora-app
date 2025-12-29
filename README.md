@@ -117,6 +117,15 @@ Os dados são salvos localmente em `%APPDATA%\DahoraApp`.
 
 ---
 
+## 📚 Documentação
+
+Toda a documentação técnica e de negócio está organizada na pasta `docs/`:
+
+- **[📜 Histórico de Desenvolvimento](docs/DEVELOPMENT_HISTORY.md):** Detalhes profundos sobre cada fase de desenvolvimento, migrações e decisões técnicas.
+- **[✅ Roadmap & Melhorias](docs/IMPROVEMENTS.md):** Checklist de tarefas, melhorias planejadas e status do projeto.
+- **[💰 Análise de Precificação](docs/PRICING.md):** Estudo de mercado, estratégias de monetização e análise de valor.
+- **[📝 Changelog](CHANGELOG.md):** Registro oficial de mudanças por versão.
+
 ## 📂 Estrutura do Projeto
 
 ```
@@ -125,17 +134,20 @@ dahora-app/
 ├── build.py                     # Script de build (PyInstaller)
 ├── assets/                      # Imagens e recursos
 ├── scripts/                     # Scripts utilitários (ícones, debug)
+│   └── README.md                # Doc dos scripts
+│
+├── tests/                       # Testes automatizados
+│   └── README.md                # Doc dos testes
 │
 ├── dahora_app/                  # Core package
 │   ├── ui/                      # Interface Gráfica (Tkinter/Pystray)
-│   │   ├── styles.py            # Windows 11 Fluent Styles
-│   │   └── ..._dialog.py        # Janelas do app
-│   ├── managers/                # Lógica de negócio (Clipboard, Hotkeys...)
+│   ├── managers/                # Lógica de negócio
 │   └── utils.py                 # Utilitários
 │
-└── docs/                        # Documentação Técnica
+└── docs/                        # Documentação Centralizada
     ├── DEVELOPMENT_HISTORY.md   # Histórico detalhado
-    └── ...
+    ├── IMPROVEMENTS.md          # Roadmap
+    └── PRICING.md               # Business
 ```
 
 ---

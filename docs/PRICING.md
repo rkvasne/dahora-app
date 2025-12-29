@@ -1,4 +1,4 @@
-# Análise de Precificação e Valor de Mercado
+# 💰 ANÁLISE DE PRECIFICAÇÃO E VALOR DE MERCADO - DAHORA APP
 ## Dahora App - Sistema de Bandeja do Windows
 
 **Data da Análise:** Novembro 2025  

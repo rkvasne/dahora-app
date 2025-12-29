@@ -11,43 +11,54 @@
     --primary-dark: #005A9E;
     --secondary-color: #0C5DAA;
 
-    /* ===== GRADIENTE LARANJA → VERMELHO (CUSTOMIZAÇÃO) ===== */
-    --gradient-orange-red: linear-gradient(135deg, #FF6B00 0%, #FF4500 100%);
-    --gradient-orange-red-hover: linear-gradient(135deg, #FF4500 0%, #CC3700 100%);
+    /* ===== GRADIENTE LARANJA → VERMELHO (REFINADO) ===== */
+    --gradient-orange-red: linear-gradient(135deg, #FF7B1A 0%, #FF4500 100%);
+    --gradient-orange-red-hover: linear-gradient(135deg, #FF5500 0%, #CC3700 100%);
+    --gradient-primary: var(--gradient-orange-red);
+    --gradient-primary-hover: var(--gradient-orange-red-hover);
 
-    /* ===== TEXTOS ===== */
-    --text-dark: #1A1A1A;
-    --text-gray: #64748b;
-    --text-light: #cbd5e1;
+    /* ===== TEXTOS (BALANCEADO PARA AESTHETIC) ===== */
+    --text-dark: #0f172a; /* Slate 900 - Contraste máximo e elegante */
+    --text-gray: #64748b; /* Slate 500 - Suave e legível */
+    --text-light: #94a3b8; /* Slate 400 - Detalhes sutis */
 
     /* ===== FUNDOS ===== */
     --bg-white: #ffffff;
-    --border-color: #e2e8f0;
-    --light-bg: #f8fafc;
-    --dark-bg: #0f172a;
-    --dark-card: #1e293b;
+    --border-color: #f1f5f9; /* Slate 100 - Bordas ultra sutis */
+    --light-bg: #f8fafc; /* Slate 50 - Quase branco, muito limpo */
+    --dark-bg: #0f172a; /* Slate 900 */
+    --dark-card: #1e293b; /* Slate 800 */
 
-    /* ===== SOMBRAS ===== */
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    /* ===== SOMBRAS (PREMIUM & SUAVE) ===== */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+    --shadow-glow: 0 0 25px rgba(56, 189, 248, 0.25); /* Sky Blue Glow */
 
-    /* ===== HERO (AZUL ESCURO ORIGINAL - CUSTOMIZAÇÃO) ===== */
-    --hero-dark-1: #0B1E3C;
-    --hero-dark-2: #0F2E5C;
-    --hero-dark-3: #0956A3;
-    --glass-bg: rgba(255, 255, 255, 0.14);
-    --glass-border: rgba(255, 255, 255, 0.28);
+    /* ===== HERO (DEEP BLUE MESH) ===== */
+    --hero-dark-1: #020617; /* Slate 950 */
+    --hero-dark-2: #0f172a; /* Slate 900 */
+    --hero-dark-3: #1e293b; /* Slate 800 */
+    
+    /* ===== GLASSMORPHISM ===== */
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
 
-    --header-bg: rgba(255, 255, 255, 0.95);
+    --header-bg: rgba(255, 255, 255, 0.85);
+    
+    /* ===== FOOTER ===== */
+    --footer-bg: #0f172a; /* Slate 900 - Sempre escuro */
 }
 
 body.dark-mode {
-    --text-dark: #f1f5f9;
-    --text-gray: #94a3b8;
-    --bg-white: #1e293b;
-    --light-bg: #0f172a;
-    --border-color: #334155;
-    --header-bg: rgba(15, 23, 42, 0.95);
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    --text-dark: #f8fafc; /* Slate 50 */
+    --text-gray: #cbd5e1; /* Slate 300 */
+    --bg-white: #020617; /* Slate 950 */
+    --light-bg: #0f172a; /* Slate 900 */
+    --border-color: #1e293b; /* Slate 800 */
+    --header-bg: rgba(2, 6, 23, 0.85);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
 }
