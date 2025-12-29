@@ -33,82 +33,210 @@ class ShortcutEditorDialog:
     
     def show(self) -> None:
         """Mostra o dialog de edição"""
-        is_new = not self.shortcut or "id" not in self.shortcut
-        title = "Adicionar Atalho" if is_new else "Editar Atalho"
-        
-        self.window = tk.Toplevel(self.parent)
-        
-        # Aplica estilo Windows 11
-        Windows11Style.configure_window(self.window, title, "500x380")
-        Windows11Style.configure_styles(self.window)
-        
-        self.window.resizable(False, False)
-        self.window.transient(self.parent)
-        
-        # Frame principal
-        main_frame = ttk.Frame(self.window, padding=(16, 12), style="Card.TFrame")
-        main_frame.pack(fill=tk.BOTH, expand=True)
-        
-        # Prefixo
-        ttk.Label(main_frame, text="Prefixo:", style="Card.TLabel").grid(row=0, column=0, sticky=tk.W, pady=5)
-        prefix_entry = ttk.Entry(main_frame, textvariable=self.prefix_var, width=40)
-        prefix_entry.grid(row=0, column=1, sticky=tk.W+tk.E, pady=5)
-        prefix_entry.bind("<KeyRelease>", lambda e: self._update_preview())
-        
-        # Descrição
-        ttk.Label(main_frame, text="Descrição:", style="Card.TLabel").grid(row=1, column=0, sticky=tk.W, pady=5)
-        description_entry = ttk.Entry(main_frame, textvariable=self.description_var, width=40)
-        description_entry.grid(row=1, column=1, sticky=tk.W+tk.E, pady=5)
-        
-        # Hotkey
-        ttk.Label(main_frame, text="Atalho:", style="Card.TLabel").grid(row=2, column=0, sticky=tk.W, pady=5)
-        
-        hotkey_frame = ttk.Frame(main_frame, style="Card.TFrame")
-        hotkey_frame.grid(row=2, column=1, sticky=tk.W+tk.E, pady=5)
-        
-        hotkey_entry = ttk.Entry(hotkey_frame, textvariable=self.hotkey_var)
-        hotkey_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 5))
-        hotkey_entry.bind("<KeyRelease>", lambda e: self._validate_hotkey())
-        
-        detect_button = ttk.Button(hotkey_frame, text="Detectar", command=self._start_detecting)
-        detect_button.pack(side=tk.LEFT)
-        
-        # Validação
-        self.validation_label = ttk.Label(main_frame, text="", foreground="gray", style="Card.TLabel")
-        self.validation_label.grid(row=3, column=1, sticky=tk.W, pady=(0, 5))
-        
-        # Preview
-        preview_frame = ttk.LabelFrame(main_frame, text="Preview")
-        preview_frame.grid(row=4, column=0, columnspan=2, sticky=tk.W+tk.E, pady=10)
-        
-        self.preview_label = ttk.Label(preview_frame, text="", font=("Segoe UI", 9, "bold"), style="Card.TLabel")
-        self.preview_label.pack(padx=10, pady=5)
-        
-        # Enabled checkbox
-        ttk.Checkbutton(main_frame, text="Habilitar este atalho", 
-                       variable=self.enabled_var, style="Card.TCheckbutton").grid(row=5, column=0, columnspan=2, sticky=tk.W, pady=(0, 10))
-        
-        # Botões (padrão Windows - sem emojis)
-        buttons_frame = ttk.Frame(main_frame, style="Card.TFrame")
-        buttons_frame.grid(row=6, column=0, columnspan=2, sticky=tk.E, pady=(20, 0))
-        
-        ttk.Button(buttons_frame, text="Cancelar", 
-                  command=self._on_cancel_clicked, width=12).pack(side=tk.RIGHT, padx=(8, 0))
-        ttk.Button(buttons_frame, text="OK", 
-                  command=self._on_save_clicked, width=12, default="active").pack(side=tk.RIGHT)
-        
-        # Configure grid
-        main_frame.columnconfigure(1, weight=1)
-        
-        # Atualiza preview inicial
-        self._update_preview()
-        self._validate_hotkey()
-        
-        # Centraliza
-        self.window.update_idletasks()
-        x = self.parent.winfo_x() + (self.parent.winfo_width() // 2) - (self.window.winfo_width() // 2)
-        y = self.parent.winfo_y() + (self.parent.winfo_height() // 2) - (self.window.winfo_height() // 2)
-        self.window.geometry(f"+{x}+{y}")
+        try:
+            logging.info("ShortcutEditorDialog.show() iniciado")
+            
+            is_new = not self.shortcut or "id" not in self.shortcut
+            title = "Adicionar Atalho" if is_new else "Editar Atalho"
+            
+            logging.info(f"Criando janela: {title}, is_new: {is_new}")
+            
+            if not self.parent:
+                logging.error("Parent window é None")
+                raise Exception("Janela pai não encontrada")
+            
+            # Verifica se a janela pai ainda existe
+            try:
+                self.parent.winfo_exists()
+                logging.info("Parent window existe e é válida")
+            except tk.TclError as e:
+                logging.error(f"Parent window não é válida: {e}")
+                raise Exception("Janela pai não é mais válida")
+            
+            self.window = tk.Toplevel(self.parent)
+            logging.info("tk.Toplevel criado com sucesso")
+            
+            # Aplica estilo Windows 11
+            Windows11Style.configure_window(self.window, title, "500x380")
+            Windows11Style.configure_styles(self.window)
+            logging.info("Estilos aplicados")
+            
+            self.window.resizable(False, False)
+            self.window.transient(self.parent)
+            self.window.grab_set()  # Torna a janela modal
+            logging.info("Propriedades da janela configuradas")
+            
+            self._create_window_content()
+            logging.info("Conteúdo da janela criado")
+            
+            # Força a janela para frente e foca
+            self.window.lift()
+            self.window.focus_force()
+            self.window.attributes('-topmost', True)
+            self.window.after(100, lambda: self.window.attributes('-topmost', False))
+            
+            # Verifica se a janela foi realmente criada
+            self.window.update_idletasks()
+            if self.window.winfo_exists():
+                logging.info("Janela de edição exibida com sucesso")
+            else:
+                logging.error("Janela foi criada mas não existe")
+                raise Exception("Falha na criação da janela")
+            
+        except Exception as e:
+            logging.error(f"Erro em ShortcutEditorDialog.show(): {e}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            
+            # Fallback: mostra um messagebox simples para coletar dados
+            self._show_fallback_dialog()
+            
+    def _show_fallback_dialog(self):
+        """Fallback dialog usando messagebox simples"""
+        try:
+            from tkinter import simpledialog, messagebox
+            
+            logging.info("Usando fallback dialog")
+            
+            is_new = not self.shortcut or "id" not in self.shortcut
+            title = "Adicionar Atalho" if is_new else "Editar Atalho"
+            
+            # Coleta dados básicos
+            hotkey = simpledialog.askstring(
+                title, 
+                "Digite o atalho (ex: ctrl+shift+1):",
+                initialvalue=self.shortcut.get("hotkey", "") if self.shortcut else ""
+            )
+            
+            if not hotkey:
+                return
+                
+            prefix = simpledialog.askstring(
+                title,
+                "Digite o prefixo:",
+                initialvalue=self.shortcut.get("prefix", "") if self.shortcut else ""
+            )
+            
+            if not prefix:
+                return
+                
+            description = simpledialog.askstring(
+                title,
+                "Digite a descrição (opcional):",
+                initialvalue=self.shortcut.get("description", "") if self.shortcut else ""
+            ) or ""
+            
+            # Valida hotkey
+            if self.on_validate_hotkey:
+                exclude_id = self.shortcut.get("id") if self.shortcut else None
+                valid, msg = self.on_validate_hotkey(hotkey, exclude_id)
+                if not valid:
+                    messagebox.showerror("Erro", f"Atalho inválido:\n{msg}")
+                    return
+            
+            # Prepara dados
+            result_data = self.shortcut.copy() if self.shortcut else {}
+            result_data.update({
+                "hotkey": hotkey.strip(),
+                "prefix": prefix.strip(),
+                "description": description.strip(),
+                "enabled": True
+            })
+            
+            # Chama callback
+            self.on_save(result_data)
+            
+            logging.info("Fallback dialog concluído com sucesso")
+            
+        except Exception as e:
+            logging.error(f"Erro no fallback dialog: {e}")
+            import tkinter.messagebox as mb
+            mb.showerror("Erro", f"Erro ao abrir editor de atalho:\n{str(e)}")
+    
+    def _create_window_content(self) -> None:
+        """Cria o conteúdo da janela"""
+        try:
+            logging.info("Criando conteúdo da janela de edição")
+            
+            # Frame principal
+            main_frame = ttk.Frame(self.window, padding=(16, 12), style="Card.TFrame")
+            main_frame.pack(fill=tk.BOTH, expand=True)
+            
+            # Prefixo
+            ttk.Label(main_frame, text="Prefixo:", style="Card.TLabel").grid(row=0, column=0, sticky=tk.W, pady=5)
+            prefix_entry = ttk.Entry(main_frame, textvariable=self.prefix_var, width=40)
+            prefix_entry.grid(row=0, column=1, sticky=tk.W+tk.E, pady=5)
+            prefix_entry.bind("<KeyRelease>", lambda e: self._update_preview())
+            
+            # Descrição
+            ttk.Label(main_frame, text="Descrição:", style="Card.TLabel").grid(row=1, column=0, sticky=tk.W, pady=5)
+            description_entry = ttk.Entry(main_frame, textvariable=self.description_var, width=40)
+            description_entry.grid(row=1, column=1, sticky=tk.W+tk.E, pady=5)
+            
+            # Hotkey
+            ttk.Label(main_frame, text="Atalho:", style="Card.TLabel").grid(row=2, column=0, sticky=tk.W, pady=5)
+            
+            hotkey_frame = ttk.Frame(main_frame, style="Card.TFrame")
+            hotkey_frame.grid(row=2, column=1, sticky=tk.W+tk.E, pady=5)
+            
+            hotkey_entry = ttk.Entry(hotkey_frame, textvariable=self.hotkey_var)
+            hotkey_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 5))
+            hotkey_entry.bind("<KeyRelease>", lambda e: self._validate_hotkey())
+            
+            detect_button = ttk.Button(hotkey_frame, text="Detectar", command=self._start_detecting)
+            detect_button.pack(side=tk.LEFT)
+            
+            # Validação
+            self.validation_label = ttk.Label(main_frame, text="", foreground="gray", style="Card.TLabel")
+            self.validation_label.grid(row=3, column=1, sticky=tk.W, pady=(0, 5))
+            
+            # Preview
+            preview_frame = ttk.LabelFrame(main_frame, text="Preview")
+            preview_frame.grid(row=4, column=0, columnspan=2, sticky=tk.W+tk.E, pady=10)
+            
+            self.preview_label = ttk.Label(preview_frame, text="", font=("Segoe UI", 9, "bold"), style="Card.TLabel")
+            self.preview_label.pack(padx=10, pady=5)
+            
+            # Enabled checkbox
+            ttk.Checkbutton(main_frame, text="Habilitar este atalho", 
+                           variable=self.enabled_var, style="Card.TCheckbutton").grid(row=5, column=0, columnspan=2, sticky=tk.W, pady=(0, 10))
+            
+            # Botões (padrão Windows - sem emojis)
+            buttons_frame = ttk.Frame(main_frame, style="Card.TFrame")
+            buttons_frame.grid(row=6, column=0, columnspan=2, sticky=tk.E, pady=(20, 0))
+            
+            ttk.Button(buttons_frame, text="Cancelar", 
+                      command=self._on_cancel_clicked, width=12).pack(side=tk.RIGHT, padx=(8, 0))
+            ttk.Button(buttons_frame, text="OK", 
+                      command=self._on_save_clicked, width=12, default="active").pack(side=tk.RIGHT)
+            
+            # Configure grid
+            main_frame.columnconfigure(1, weight=1)
+            
+            # Atualiza preview inicial
+            self._update_preview()
+            self._validate_hotkey()
+            
+            # Centraliza
+            self.window.update_idletasks()
+            x = self.parent.winfo_x() + (self.parent.winfo_width() // 2) - (self.window.winfo_width() // 2)
+            y = self.parent.winfo_y() + (self.parent.winfo_height() // 2) - (self.window.winfo_height() // 2)
+            self.window.geometry(f"+{x}+{y}")
+            
+            # Protocolo de fechamento
+            self.window.protocol("WM_DELETE_WINDOW", self._on_cancel_clicked)
+            
+            # Atalhos de teclado
+            self.window.bind('<Escape>', lambda e: self._on_cancel_clicked())
+            self.window.bind('<Return>', lambda e: self._on_save_clicked())
+            
+            logging.info("Janela de edição criada e centralizada com sucesso")
+            
+        except Exception as e:
+            logging.error(f"Erro ao criar conteúdo da janela: {e}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            raise
     
     def _validate_hotkey(self) -> None:
         """Valida o hotkey em tempo real"""
@@ -253,8 +381,15 @@ class ShortcutEditorDialog:
         # Chama callback de salvamento
         self.on_save(self.shortcut)
         
-        self.window.destroy()
+        # Fecha janela modal
+        if self.window:
+            self.window.grab_release()
+            self.window.destroy()
+            self.window = None
     
     def _on_cancel_clicked(self) -> None:
         """Callback do botão Cancelar"""
-        self.window.destroy()
+        if self.window:
+            self.window.grab_release()
+            self.window.destroy()
+            self.window = None

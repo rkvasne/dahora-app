@@ -6,8 +6,8 @@ from tkinter import ttk, messagebox
 import logging
 from typing import Callable, Optional, List, Dict, Any
 from datetime import datetime
-from datetime import datetime
 from dahora_app.ui.styles import Windows11Style
+from dahora_app.ui.shortcut_editor import ShortcutEditorDialog
 
 # keyboard será importado apenas quando necessário (lazy import)
 
@@ -463,24 +463,67 @@ class CustomShortcutsDialog:
     
     def _on_add_clicked(self) -> None:
         """Callback para adicionar novo shortcut"""
-        self._show_editor_dialog()
+        try:
+            logging.info("=== Botão Adicionar clicado ===")
+            logging.info(f"Window exists: {self.window is not None}")
+            if self.window:
+                try:
+                    logging.info(f"Window is valid: {self.window.winfo_exists()}")
+                except tk.TclError as e:
+                    logging.error(f"Window validation failed: {e}")
+            
+            self._show_editor_dialog()
+            logging.info("=== _show_editor_dialog() retornou ===")
+        except Exception as e:
+            logging.error(f"Erro no _on_add_clicked: {e}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            if self.notification_callback:
+                self.notification_callback("Erro", f"Erro ao adicionar: {str(e)}")
     
     def _on_edit_clicked(self) -> None:
         """Callback para editar shortcut selecionado (usando Listbox)"""
-        if not hasattr(self, 'shortcuts_listbox') or not self.shortcuts_listbox:
-            return
-        
-        selection = self.shortcuts_listbox.curselection()
-        if not selection:
-            messagebox.showwarning("Aviso", "Selecione um atalho para editar")
-            return
-        
-        idx = selection[0]
-        if idx >= len(self.shortcuts_data):
-            return
-        
-        shortcut_data = self.shortcuts_data[idx]
-        self._show_editor_dialog(shortcut_data)
+        try:
+            logging.info("=== Botão Editar clicado ===")
+            
+            if not hasattr(self, 'shortcuts_listbox') or not self.shortcuts_listbox:
+                logging.error("shortcuts_listbox não existe")
+                return
+            
+            selection = self.shortcuts_listbox.curselection()
+            logging.info(f"Seleção atual: {selection}")
+            
+            if not selection:
+                logging.warning("Nenhum atalho selecionado")
+                messagebox.showwarning("Aviso", "Selecione um atalho para editar")
+                return
+            
+            idx = selection[0]
+            logging.info(f"Índice selecionado: {idx}, total de atalhos: {len(self.shortcuts_data)}")
+            
+            if idx >= len(self.shortcuts_data):
+                logging.error(f"Índice {idx} fora do range")
+                return
+            
+            shortcut_data = self.shortcuts_data[idx]
+            logging.info(f"Dados do atalho selecionado: {shortcut_data}")
+            
+            logging.info(f"Window exists: {self.window is not None}")
+            if self.window:
+                try:
+                    logging.info(f"Window is valid: {self.window.winfo_exists()}")
+                except tk.TclError as e:
+                    logging.error(f"Window validation failed: {e}")
+            
+            self._show_editor_dialog(shortcut_data)
+            logging.info("=== _show_editor_dialog() retornou ===")
+            
+        except Exception as e:
+            logging.error(f"Erro no _on_edit_clicked: {e}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            if self.notification_callback:
+                self.notification_callback("Erro", f"Erro ao editar: {str(e)}")
     
     def _on_remove_clicked(self) -> None:
         """Callback para remover shortcut selecionado (usando Listbox)"""
@@ -523,13 +566,54 @@ class CustomShortcutsDialog:
     
     def _show_editor_dialog(self, shortcut: Optional[Dict[str, Any]] = None) -> None:
         """Mostra dialog de edição/criação"""
-        editor = ShortcutEditorDialog(
-            parent=self.window,
-            shortcut=shortcut,
-            on_save=self._on_editor_save,
-            on_validate_hotkey=self.on_validate_hotkey_callback
-        )
-        editor.show()
+        try:
+            logging.info(f"=== _show_editor_dialog iniciado ===")
+            logging.info(f"Shortcut data: {shortcut}")
+            
+            if not self.window:
+                logging.error("Janela principal não existe")
+                if self.notification_callback:
+                    self.notification_callback("Erro", "Janela principal não encontrada")
+                return
+            
+            # Verifica se a janela principal ainda está válida
+            try:
+                exists = self.window.winfo_exists()
+                logging.info(f"Janela principal existe: {exists}")
+                if not exists:
+                    raise tk.TclError("Window does not exist")
+            except tk.TclError as e:
+                logging.error(f"Janela principal não é mais válida: {e}")
+                if self.notification_callback:
+                    self.notification_callback("Erro", "Janela principal não é mais válida")
+                return
+            
+            logging.info("Criando ShortcutEditorDialog...")
+            editor = ShortcutEditorDialog(
+                parent=self.window,
+                shortcut=shortcut,
+                on_save=self._on_editor_save,
+                on_validate_hotkey=self.on_validate_hotkey_callback
+            )
+            logging.info("ShortcutEditorDialog criado com sucesso")
+            
+            logging.info("Chamando editor.show()...")
+            editor.show()
+            logging.info("editor.show() retornou com sucesso")
+            
+        except Exception as e:
+            logging.error(f"=== ERRO em _show_editor_dialog ===")
+            logging.error(f"Erro: {e}")
+            import traceback
+            logging.error(f"Traceback completo:\n{traceback.format_exc()}")
+            
+            if self.notification_callback:
+                self.notification_callback("Erro", f"Erro ao abrir editor:\n{str(e)}")
+            else:
+                import tkinter.messagebox as mb
+                mb.showerror("Erro", f"Erro ao abrir editor de atalho:\n{str(e)}")
+        finally:
+            logging.info("=== _show_editor_dialog finalizado ===")
     
     def _on_editor_save(self, shortcut_data: Dict[str, Any]) -> None:
         """Callback quando editor salva"""
@@ -578,32 +662,3 @@ class CustomShortcutsDialog:
         except Exception as e:
             logging.error(f"Erro ao salvar: {e}")
             messagebox.showerror("Erro", f"Erro ao salvar:\n{e}")
-
-
-            shortcut_data = {
-                "hotkey": hotkey,
-                "prefix": prefix,
-                "description": description,
-                "enabled": enabled,
-                "datetime_format": "%d.%m.%Y-%H:%M"
-            }
-            
-            if self.shortcut and "id" in self.shortcut:
-                shortcut_data["id"] = self.shortcut["id"]
-            
-            # Fecha janela PRIMEIRO
-            if self.window:
-                self.window.destroy()
-                self.window = None
-            
-            # Chama callback
-            if self.on_save:
-                self.on_save(shortcut_data)
-            
-        except Exception as e:
-            logging.error(f"Erro ao salvar: {e}")
-            messagebox.showerror("Erro", f"Erro ao salvar: {e}")
-    
-    def _on_cancel_clicked(self) -> None:
-        """Cancela a edição"""
-        self.window.destroy()

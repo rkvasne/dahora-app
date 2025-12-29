@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.2-shortcut-editor-fix] - 2025-12-29 🔧 **CORREÇÃO CRÍTICA: EDIÇÃO DE ATALHOS NO FRONTEND**
+
+### 🐛 Fixed
+- **Diálogo de edição de atalhos não abria**: Corrigido problema onde os botões "Adicionar" e "Editar" na aba "Atalhos Personalizados" não abriam o diálogo de edição
+- **Janela modal inadequada**: Implementado `grab_set()` para tornar o diálogo adequadamente modal
+- **Problemas de visibilidade**: Adicionado `lift()`, `focus_force()` e `topmost` temporário para garantir que o diálogo seja visível
+- **Validação de janela pai**: Adicionada verificação se a janela pai existe antes de criar o diálogo
+- **Limpeza inadequada**: Implementado `grab_release()` nos métodos de fechar/cancelar
+
+### ✨ Enhanced
+- **Atalhos de teclado**: Adicionado Escape (cancelar) e Enter (salvar) no diálogo de edição
+- **Mecanismo de fallback**: Se o diálogo principal falhar, usa `simpledialog` como backup
+- **Logging detalhado**: Adicionado logs abrangentes para debug do processo de criação do diálogo
+- **Protocolo de janela**: Adicionado tratamento adequado do botão de fechar (X)
+
+### 🧪 Tested
+- Teste isolado confirmou funcionamento correto do diálogo
+- Aplicação principal testada com 3 atalhos personalizados existentes
+- Logs confirmam criação e exibição bem-sucedida do diálogo
+
+### 📁 Files Modified
+- `dahora_app/ui/shortcut_editor.py`: Melhorias na criação e exibição do diálogo
+- `dahora_app/ui/custom_shortcuts_dialog.py`: Logging aprimorado e validação de janela
+
 ## [0.2.2-landing-improvements] - 2025-12-29 🎨 **LANDING PAGE: DESIGN & COPY PROFISSIONAL**
 
 ### 🎨 Design Improvements
