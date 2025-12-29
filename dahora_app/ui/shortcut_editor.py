@@ -57,7 +57,7 @@ class ShortcutEditorDialog:
             logging.info("tk.Toplevel criado com sucesso")
             
             # Aplica estilo Windows 11
-            Windows11Style.configure_window(self.window, title, "500x380")
+            Windows11Style.configure_window(self.window, title, "600x500")
             Windows11Style.configure_styles(self.window)
             logging.info("Estilos aplicados")
             
@@ -154,70 +154,103 @@ class ShortcutEditorDialog:
             mb.showerror("Erro", f"Erro ao abrir editor de atalho:\n{str(e)}")
     
     def _create_window_content(self) -> None:
-        """Cria o conteúdo da janela"""
+        """Cria o conteúdo da janela com design moderno"""
         try:
-            logging.info("Criando conteúdo da janela de edição")
+            logging.info("Criando conteúdo moderno da janela de edição")
             
-            # Frame principal
-            main_frame = ttk.Frame(self.window, padding=(16, 12), style="Card.TFrame")
-            main_frame.pack(fill=tk.BOTH, expand=True)
+            # Frame principal com padding generoso
+            main_frame = Windows11Style.create_modern_card(self.window, padding=24)
+            main_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
             
-            # Prefixo
-            ttk.Label(main_frame, text="Prefixo:", style="Card.TLabel").grid(row=0, column=0, sticky=tk.W, pady=5)
-            prefix_entry = ttk.Entry(main_frame, textvariable=self.prefix_var, width=40)
-            prefix_entry.grid(row=0, column=1, sticky=tk.W+tk.E, pady=5)
+            # Título da seção
+            is_new = not self.shortcut or "id" not in self.shortcut
+            title_text = "Adicionar Novo Atalho" if is_new else "Editar Atalho"
+            title_label = Windows11Style.create_section_header(main_frame, title_text)
+            title_label.pack(anchor="w", pady=(0, 20))
+            
+            # === SEÇÃO PREFIXO ===
+            prefix_section = ttk.Frame(main_frame, style="TFrame")
+            prefix_section.pack(fill=tk.X, pady=(0, 16))
+            
+            ttk.Label(prefix_section, text="Prefixo", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 6))
+            ttk.Label(prefix_section, text="Texto que será inserido antes da data/hora", 
+                     style="Muted.TLabel").pack(anchor="w", pady=(0, 8))
+            
+            prefix_entry = Windows11Style.create_modern_entry(prefix_section, textvariable=self.prefix_var, width=40)
+            prefix_entry.pack(fill=tk.X)
             prefix_entry.bind("<KeyRelease>", lambda e: self._update_preview())
             
-            # Descrição
-            ttk.Label(main_frame, text="Descrição:", style="Card.TLabel").grid(row=1, column=0, sticky=tk.W, pady=5)
-            description_entry = ttk.Entry(main_frame, textvariable=self.description_var, width=40)
-            description_entry.grid(row=1, column=1, sticky=tk.W+tk.E, pady=5)
+            # === SEÇÃO DESCRIÇÃO ===
+            desc_section = ttk.Frame(main_frame, style="TFrame")
+            desc_section.pack(fill=tk.X, pady=(0, 16))
             
-            # Hotkey
-            ttk.Label(main_frame, text="Atalho:", style="Card.TLabel").grid(row=2, column=0, sticky=tk.W, pady=5)
+            ttk.Label(desc_section, text="Descrição", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 6))
+            ttk.Label(desc_section, text="Descrição opcional para identificar este atalho", 
+                     style="Muted.TLabel").pack(anchor="w", pady=(0, 8))
             
-            hotkey_frame = ttk.Frame(main_frame, style="Card.TFrame")
-            hotkey_frame.grid(row=2, column=1, sticky=tk.W+tk.E, pady=5)
+            desc_entry = Windows11Style.create_modern_entry(desc_section, textvariable=self.description_var, width=40)
+            desc_entry.pack(fill=tk.X)
             
-            hotkey_entry = ttk.Entry(hotkey_frame, textvariable=self.hotkey_var)
-            hotkey_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 5))
+            # === SEÇÃO ATALHO ===
+            hotkey_section = ttk.Frame(main_frame, style="TFrame")
+            hotkey_section.pack(fill=tk.X, pady=(0, 16))
+            
+            ttk.Label(hotkey_section, text="Combinação de Teclas", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 6))
+            ttk.Label(hotkey_section, text="Ex: ctrl+shift+1, alt+f1, ctrl+alt+d", 
+                     style="Muted.TLabel").pack(anchor="w", pady=(0, 8))
+            
+            hotkey_frame = ttk.Frame(hotkey_section, style="TFrame")
+            hotkey_frame.pack(fill=tk.X)
+            
+            hotkey_entry = Windows11Style.create_modern_entry(hotkey_frame, textvariable=self.hotkey_var)
+            hotkey_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 12))
             hotkey_entry.bind("<KeyRelease>", lambda e: self._validate_hotkey())
             
-            detect_button = ttk.Button(hotkey_frame, text="Detectar", command=self._start_detecting)
-            detect_button.pack(side=tk.LEFT)
+            detect_button = Windows11Style.create_modern_button(hotkey_frame, "Detectar", 
+                                                              command=self._start_detecting)
+            detect_button.pack(side=tk.RIGHT)
             
             # Validação
-            self.validation_label = ttk.Label(main_frame, text="", foreground="gray", style="Card.TLabel")
-            self.validation_label.grid(row=3, column=1, sticky=tk.W, pady=(0, 5))
+            self.validation_label = ttk.Label(hotkey_section, text="", style="Muted.TLabel")
+            self.validation_label.pack(anchor="w", pady=(8, 0))
             
-            # Preview
-            preview_frame = ttk.LabelFrame(main_frame, text="Preview")
-            preview_frame.grid(row=4, column=0, columnspan=2, sticky=tk.W+tk.E, pady=10)
+            # === PREVIEW MODERNO ===
+            preview_card = Windows11Style.create_modern_card(main_frame, padding=16)
+            preview_card.pack(fill=tk.X, pady=(0, 16))
             
-            self.preview_label = ttk.Label(preview_frame, text="", font=("Segoe UI", 9, "bold"), style="Card.TLabel")
-            self.preview_label.pack(padx=10, pady=5)
+            ttk.Label(preview_card, text="Preview do Resultado", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 8))
             
-            # Enabled checkbox
-            ttk.Checkbutton(main_frame, text="Habilitar este atalho", 
-                           variable=self.enabled_var, style="Card.TCheckbutton").grid(row=5, column=0, columnspan=2, sticky=tk.W, pady=(0, 10))
+            self.preview_label = ttk.Label(preview_card, text="", font=("Consolas", 11, "bold"), 
+                                         style="Card.TLabel")
+            self.preview_label.pack(anchor="w")
             
-            # Botões (padrão Windows - sem emojis)
-            buttons_frame = ttk.Frame(main_frame, style="Card.TFrame")
-            buttons_frame.grid(row=6, column=0, columnspan=2, sticky=tk.E, pady=(20, 0))
+            # === OPÇÕES ===
+            options_section = ttk.Frame(main_frame, style="TFrame")
+            options_section.pack(fill=tk.X, pady=(0, 20))
             
-            ttk.Button(buttons_frame, text="Cancelar", 
-                      command=self._on_cancel_clicked, width=12).pack(side=tk.RIGHT, padx=(8, 0))
-            ttk.Button(buttons_frame, text="OK", 
-                      command=self._on_save_clicked, width=12, default="active").pack(side=tk.RIGHT)
+            enabled_check = ttk.Checkbutton(options_section, text="Habilitar este atalho", 
+                                          variable=self.enabled_var, style="TCheckbutton")
+            enabled_check.pack(anchor="w")
             
-            # Configure grid
-            main_frame.columnconfigure(1, weight=1)
+            # === BOTÕES MODERNOS ===
+            buttons_frame = ttk.Frame(main_frame, style="TFrame")
+            buttons_frame.pack(fill=tk.X, pady=(20, 0))
+            
+            # Botões alinhados à direita com espaçamento moderno
+            cancel_btn = Windows11Style.create_modern_button(buttons_frame, "Cancelar", 
+                                                           command=self._on_cancel_clicked)
+            cancel_btn.pack(side=tk.RIGHT, padx=(12, 0))
+            
+            save_btn = Windows11Style.create_modern_button(buttons_frame, "Salvar", 
+                                                         command=self._on_save_clicked, 
+                                                         style="Primary.TButton")
+            save_btn.pack(side=tk.RIGHT)
             
             # Atualiza preview inicial
             self._update_preview()
             self._validate_hotkey()
             
-            # Centraliza
+            # Centraliza janela
             self.window.update_idletasks()
             x = self.parent.winfo_x() + (self.parent.winfo_width() // 2) - (self.window.winfo_width() // 2)
             y = self.parent.winfo_y() + (self.parent.winfo_height() // 2) - (self.window.winfo_height() // 2)
@@ -230,7 +263,7 @@ class ShortcutEditorDialog:
             self.window.bind('<Escape>', lambda e: self._on_cancel_clicked())
             self.window.bind('<Return>', lambda e: self._on_save_clicked())
             
-            logging.info("Janela de edição criada e centralizada com sucesso")
+            logging.info("Janela moderna de edição criada com sucesso")
             
         except Exception as e:
             logging.error(f"Erro ao criar conteúdo da janela: {e}")

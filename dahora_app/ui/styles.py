@@ -9,63 +9,84 @@ class Windows11Style:
     """Gerenciador de estilos Windows 11"""
     
     # Cores Windows 11 Dark Mode
-    # Cores Windows 11 Dark Mode (Melhoradas)
+    # Cores Modernas - Inspiradas em Discord/VS Code/Apps Modernos
     COLORS_DARK = {
-        'bg': '#1C1C1C',           # Menos escuro que antes (era #121212)
-        'bg_dark': '#0F0F0F',      # Preto profundo para contraste
-        'text': '#FFFFFF',         # Branco puro para melhor legibilidade
-        'text_secondary': '#B3B3B3', # Cinza mais claro (era #A0A0A0)
-        'accent': '#0078D4',       # Azul oficial do Windows 11
-        'accent_hover': '#106EBE', # Azul mais escuro para hover
-        'success': '#107C10',      # Verde
-        'warning': '#FCE100',      # Amarelo
-        'error': '#FF4343',        # Vermelho mais suave
-        'border': '#323130',       # Bordas mais visíveis (era #2b2b2b)
-        'white': '#252423',        # Superfícies mais claras (era #1E1E1E)
-        'input_bg': '#323130',     # Fundo de inputs mais claro
-        'button_bg': '#3B3A39',    # Botão padrão mais claro
-        'button_hover': '#484644', # Botão hover mais claro
+        'bg': '#1a1a1a',           # Background principal mais moderno
+        'bg_secondary': '#2d2d30',  # Background secundário
+        'bg_tertiary': '#3e3e42',   # Background terciário
+        'surface': '#252526',       # Superfícies elevadas (cards)
+        'surface_hover': '#2d2d30', # Hover em superfícies
+        'text': '#cccccc',          # Texto principal suave
+        'text_bright': '#ffffff',   # Texto destacado
+        'text_muted': '#969696',    # Texto secundário
+        'text_disabled': '#6a6a6a', # Texto desabilitado
+        'accent': '#007acc',        # Azul moderno (VS Code)
+        'accent_hover': '#1177bb',  # Azul hover
+        'accent_light': '#4fc3f7',  # Azul claro para destaques
+        'success': '#4caf50',       # Verde moderno
+        'warning': '#ff9800',       # Laranja moderno
+        'error': '#f44336',         # Vermelho moderno
+        'border': '#3e3e42',        # Bordas sutis
+        'border_focus': '#007acc',  # Bordas em foco
+        'shadow': 'rgba(0,0,0,0.3)', # Sombras
+        'overlay': 'rgba(0,0,0,0.5)', # Overlays
     }
 
-    # Cores Windows 11 Light Mode (Melhoradas)
+    # Cores Modernas - Modo Claro
     COLORS_LIGHT = {
-        'bg': '#FAFAFA',           # Background mais suave (era #F3F3F3)
-        'bg_dark': '#F0F0F0',      # Background secundário
-        'text': '#1F1F1F',         # Texto quase preto para melhor contraste
-        'text_secondary': '#605E5C', # Cinza mais escuro para melhor legibilidade
-        'accent': '#0078D4',       # Azul oficial do Windows 11
-        'accent_hover': '#106EBE', # Azul mais escuro para hover
-        'success': '#107C10',      # Verde
-        'warning': '#F7630C',      # Laranja aviso
-        'error': '#D13438',        # Vermelho erro
-        'border': '#E1DFDD',       # Bordas mais suaves
-        'white': '#FFFFFF',        # Branco puro
-        'input_bg': '#FFFFFF',     # Fundo de inputs
-        'button_bg': '#F3F2F1',    # Botão padrão
-        'button_hover': '#EDEBE9', # Botão hover
+        'bg': '#ffffff',            # Background branco puro
+        'bg_secondary': '#f8f9fa',  # Background secundário
+        'bg_tertiary': '#e9ecef',   # Background terciário
+        'surface': '#ffffff',       # Superfícies elevadas
+        'surface_hover': '#f8f9fa', # Hover em superfícies
+        'text': '#212529',          # Texto principal
+        'text_bright': '#000000',   # Texto destacado
+        'text_muted': '#6c757d',    # Texto secundário
+        'text_disabled': '#adb5bd', # Texto desabilitado
+        'accent': '#0066cc',        # Azul moderno
+        'accent_hover': '#0052a3',  # Azul hover
+        'accent_light': '#66b3ff',  # Azul claro
+        'success': '#28a745',       # Verde moderno
+        'warning': '#fd7e14',       # Laranja moderno
+        'error': '#dc3545',         # Vermelho moderno
+        'border': '#dee2e6',        # Bordas sutis
+        'border_focus': '#0066cc',  # Bordas em foco
+        'shadow': 'rgba(0,0,0,0.1)', # Sombras suaves
+        'overlay': 'rgba(0,0,0,0.3)', # Overlays
     }
 
     # Cores atuais (serão definidas dinamicamente)
     COLORS = COLORS_DARK
     
-    # Fontes Windows 11
+    # Fontes Modernas
     FONTS = {
-        'default': ('Segoe UI', 9),
-        'heading': ('Segoe UI', 12, 'bold'),
-        'title': ('Segoe UI', 14, 'bold'),
-        'small': ('Segoe UI', 8),
-        'button': ('Segoe UI', 9),
-        'input': ('Segoe UI', 9),
+        'default': ('Segoe UI', 10),        # Ligeiramente maior
+        'heading': ('Segoe UI', 14, 'bold'), # Mais proeminente
+        'title': ('Segoe UI', 18, 'bold'),   # Títulos grandes
+        'subtitle': ('Segoe UI', 12),        # Subtítulos
+        'small': ('Segoe UI', 9),           # Texto pequeno
+        'button': ('Segoe UI', 10, 'normal'), # Botões sem bold
+        'input': ('Segoe UI', 10),          # Inputs
+        'mono': ('Consolas', 9),            # Fonte monoespaçada
+        'large': ('Segoe UI', 16),          # Texto grande
     }
     
-    # Espaçamentos
+    # Espaçamentos Modernos (mais generosos)
     SPACING = {
-        'xs': 4,
-        'sm': 8,
-        'md': 12,
-        'lg': 16,
-        'xl': 20,
-        'xxl': 24,
+        'xs': 6,   # Era 4
+        'sm': 12,  # Era 8
+        'md': 18,  # Era 12
+        'lg': 24,  # Era 16
+        'xl': 32,  # Era 20
+        'xxl': 48, # Era 24
+    }
+    
+    # Bordas Arredondadas Modernas
+    RADIUS = {
+        'small': 6,
+        'medium': 8,
+        'large': 12,
+        'xl': 16,
     }
     
     @staticmethod
@@ -109,7 +130,7 @@ class Windows11Style:
 
     @staticmethod
     def configure_window(window: tk.Tk, title: str = "Dahora App", size: str = "700x450"):
-        """Configura janela com estilo Windows 11"""
+        """Configura janela com estilo moderno"""
         window.title(title)
         window.geometry(size)
         
@@ -124,42 +145,55 @@ class Windows11Style:
         if system_theme == 'dark':
             window.after(100, lambda: Windows11Style.apply_dark_title_bar(window))
             
+        # Background moderno
         window.configure(bg=Windows11Style.COLORS['bg'])
+        
+        # Remove bordas padrão para visual mais limpo
+        try:
+            window.attributes('-alpha', 0.98)  # Transparência sutil
+        except:
+            pass
         
     @staticmethod
     def configure_listbox(listbox: tk.Listbox):
-        """Configura cores de um Listbox (widget nativo não-ttk)"""
+        """Configura Listbox com estilo moderno"""
         listbox.configure(
-            background=Windows11Style.COLORS['input_bg'],
+            background=Windows11Style.COLORS['surface'],
             foreground=Windows11Style.COLORS['text'],
             selectbackground=Windows11Style.COLORS['accent'],
-            selectforeground='#000000',
-            borderwidth=1,
+            selectforeground=Windows11Style.COLORS['text_bright'],
+            borderwidth=0,
             relief='flat',
-            highlightthickness=1,
-            highlightbackground=Windows11Style.COLORS['border'],
-            highlightcolor=Windows11Style.COLORS['accent']
+            highlightthickness=0,
+            font=Windows11Style.FONTS['default'],
+            activestyle='none',  # Remove estilo de ativação padrão
         )
 
     @staticmethod
     def configure_styles(window: tk.Tk):
-        """Configura todos os estilos ttk"""
+        """Configura todos os estilos com design moderno"""
         style = ttk.Style(window)
         
-        # Usa tema 'clam' para controle total das cores (evita cinza do sistema)
+        # Usa tema 'clam' para controle total
         style.theme_use('clam')
         
-        # Frame
+        # === FRAMES MODERNOS ===
         style.configure("TFrame", 
                        background=Windows11Style.COLORS['bg'])
                        
-        # Card (Frame com cor de superfície) - SEM BORDA (Flat)
+        # Card moderno com sombra simulada
         style.configure("Card.TFrame",
-                       background=Windows11Style.COLORS['white'],
+                       background=Windows11Style.COLORS['surface'],
                        relief='flat',
                        borderwidth=0)
         
-        # Label
+        # Card com borda sutil
+        style.configure("CardBorder.TFrame",
+                       background=Windows11Style.COLORS['surface'],
+                       relief='solid',
+                       borderwidth=1)
+        
+        # === LABELS MODERNOS ===
         style.configure("TLabel",
                        background=Windows11Style.COLORS['bg'],
                        foreground=Windows11Style.COLORS['text'],
@@ -167,168 +201,188 @@ class Windows11Style:
         
         style.configure("Heading.TLabel",
                        background=Windows11Style.COLORS['bg'],
-                       foreground=Windows11Style.COLORS['text'],
+                       foreground=Windows11Style.COLORS['text_bright'],
                        font=Windows11Style.FONTS['heading'])
         
         style.configure("Title.TLabel",
                        background=Windows11Style.COLORS['bg'],
-                       foreground=Windows11Style.COLORS['text'],
+                       foreground=Windows11Style.COLORS['text_bright'],
                        font=Windows11Style.FONTS['title'])
         
-        style.configure("Secondary.TLabel",
+        style.configure("Subtitle.TLabel",
                        background=Windows11Style.COLORS['bg'],
-                       foreground=Windows11Style.COLORS['text_secondary'],
-                       font=Windows11Style.FONTS['default'])
-                       
-        # Labels dentro de Cards
-        style.configure("Card.TLabel",
-                       background=Windows11Style.COLORS['white'],
                        foreground=Windows11Style.COLORS['text'],
-                       font=Windows11Style.FONTS['default'])
+                       font=Windows11Style.FONTS['subtitle'])
+        
+        style.configure("Muted.TLabel",
+                       background=Windows11Style.COLORS['bg'],
+                       foreground=Windows11Style.COLORS['text_muted'],
+                       font=Windows11Style.FONTS['small'])
                        
-        style.configure("Card.TCheckbutton",
-                       background=Windows11Style.COLORS['white'],
+        # Labels em cards
+        style.configure("Card.TLabel",
+                       background=Windows11Style.COLORS['surface'],
                        foreground=Windows11Style.COLORS['text'],
                        font=Windows11Style.FONTS['default'])
         
-    # ... (previous code) ...
-
-        # Button - estilo moderno FLAT (Windows 11: ~32px height, 4px radius simulated via padding/relief)
+        style.configure("CardHeading.TLabel",
+                       background=Windows11Style.COLORS['surface'],
+                       foreground=Windows11Style.COLORS['text_bright'],
+                       font=Windows11Style.FONTS['heading'])
+                       
+        # === BOTÕES MODERNOS ===
+        # Botão padrão moderno
         style.configure("TButton",
                        font=Windows11Style.FONTS['button'],
-                       padding=(24, 6), # Mais largo, altura controlada (~32px total)
+                       padding=(20, 10),  # Mais espaçoso
                        borderwidth=0,
                        relief='flat',
-                       background=Windows11Style.COLORS['button_bg'],
+                       background=Windows11Style.COLORS['bg_secondary'],
                        foreground=Windows11Style.COLORS['text'])
         
         style.map("TButton",
-                 background=[('active', Windows11Style.COLORS['button_hover']),
-                           ('pressed', Windows11Style.COLORS['bg_dark'])],
-                 foreground=[('active', Windows11Style.COLORS['text'])],
+                 background=[('active', Windows11Style.COLORS['bg_tertiary']),
+                           ('pressed', Windows11Style.COLORS['border'])],
+                 foreground=[('active', Windows11Style.COLORS['text_bright'])],
                  relief=[('pressed', 'flat')])
         
-        # Primary Button (Accent Color)
+        # Botão primário moderno
         style.configure("Primary.TButton",
                        font=Windows11Style.FONTS['button'],
                        background=Windows11Style.COLORS['accent'],
-                       foreground='#FFFFFF', # Texto branco no accent
-                       padding=(24, 6))
+                       foreground=Windows11Style.COLORS['text_bright'],
+                       padding=(20, 10))
         
         style.map("Primary.TButton",
-                 background=[('active', Windows11Style.COLORS.get('accent_hover', '#106EBE')),
-                           ('pressed', '#005A9E')], # Azul mais escuro para pressed
-                 foreground=[('active', '#FFFFFF')])
+                 background=[('active', Windows11Style.COLORS['accent_hover']),
+                           ('pressed', Windows11Style.COLORS['accent'])],
+                 foreground=[('active', Windows11Style.COLORS['text_bright'])])
         
-        # Entry - estilo moderno (Windows 11: MinHeight 32px, Padding 10,6)
+        # Botão de sucesso
+        style.configure("Success.TButton",
+                       font=Windows11Style.FONTS['button'],
+                       background=Windows11Style.COLORS['success'],
+                       foreground=Windows11Style.COLORS['text_bright'],
+                       padding=(20, 10))
+        
+        # Botão de perigo
+        style.configure("Danger.TButton",
+                       font=Windows11Style.FONTS['button'],
+                       background=Windows11Style.COLORS['error'],
+                       foreground=Windows11Style.COLORS['text_bright'],
+                       padding=(20, 10))
+        
+        # === INPUTS MODERNOS ===
         style.configure("TEntry",
-                       fieldbackground=Windows11Style.COLORS['input_bg'],
+                       fieldbackground=Windows11Style.COLORS['surface'],
                        foreground=Windows11Style.COLORS['text'],
                        insertcolor=Windows11Style.COLORS['text'],
                        font=Windows11Style.FONTS['input'],
                        borderwidth=1,
-                       relief='flat',
-                       padding=(10, 6)) # Padding lateral maior, vertical ajustado para 32px
+                       relief='solid',
+                       padding=(12, 8))  # Mais espaçoso
         
         style.map("TEntry",
-                 bordercolor=[('focus', Windows11Style.COLORS['accent'])],
-                 lightcolor=[('focus', Windows11Style.COLORS['accent'])],
-                 darkcolor=[('focus', Windows11Style.COLORS['accent'])])
+                 bordercolor=[('focus', Windows11Style.COLORS['accent']),
+                            ('!focus', Windows11Style.COLORS['border'])],
+                 fieldbackground=[('focus', Windows11Style.COLORS['surface'])])
         
-        # Spinbox
+        # Spinbox moderno
         style.configure("TSpinbox",
-                       fieldbackground=Windows11Style.COLORS['input_bg'],
+                       fieldbackground=Windows11Style.COLORS['surface'],
                        foreground=Windows11Style.COLORS['text'],
                        insertcolor=Windows11Style.COLORS['text'],
                        font=Windows11Style.FONTS['input'],
                        borderwidth=1,
-                       relief='flat',
-                       padding=(10, 6))
+                       relief='solid',
+                       padding=(12, 8))
         
         style.map("TSpinbox",
-                 bordercolor=[('focus', Windows11Style.COLORS['accent'])],
-                 lightcolor=[('focus', Windows11Style.COLORS['accent'])],
-                 darkcolor=[('focus', Windows11Style.COLORS['accent'])])
+                 bordercolor=[('focus', Windows11Style.COLORS['accent']),
+                            ('!focus', Windows11Style.COLORS['border'])])
         
-        # Checkbutton
+        # === CHECKBOXES MODERNOS ===
         style.configure("TCheckbutton",
                        background=Windows11Style.COLORS['bg'],
                        foreground=Windows11Style.COLORS['text'],
                        font=Windows11Style.FONTS['default'],
-                       padding=(4, 0)) # Espaçamento do texto
+                       padding=(8, 4))
         
-        # Treeview
-        style.configure("Treeview",
-                       background=Windows11Style.COLORS['white'],
+        style.configure("Card.TCheckbutton",
+                       background=Windows11Style.COLORS['surface'],
                        foreground=Windows11Style.COLORS['text'],
-                       fieldbackground=Windows11Style.COLORS['white'],
-                       font=Windows11Style.FONTS['default'],
-                       rowheight=36, # Mais alto para toque/modernidade
-                       borderwidth=0,
-                       relief='flat')
+                       font=Windows11Style.FONTS['default'])
         
-        style.configure("Treeview.Heading",
-                       background=Windows11Style.COLORS['bg'],
-                       foreground=Windows11Style.COLORS['text'],
-                       font=('Segoe UI', 9, 'bold'),
-                       borderwidth=0,
-                       relief='flat',
-                       padding=(12, 10))
-        
-        style.map("Treeview",
-                 background=[('selected', Windows11Style.COLORS['accent'])],
-                 foreground=[('selected', '#000000')],
-                 relief=[('selected', 'flat')])
-        
-        style.map("Treeview.Heading",
-                 background=[('active', Windows11Style.COLORS['bg_dark'])],
-                 relief=[('pressed', 'flat')])
-        
-        # Notebook (Tabs)
+        # === NOTEBOOK (TABS) MODERNO ===
         style.configure("TNotebook",
                        background=Windows11Style.COLORS['bg'],
                        borderwidth=0,
                        relief='flat')
         
         style.configure("TNotebook.Tab",
-                       background=Windows11Style.COLORS['bg'],
-                       foreground=Windows11Style.COLORS['text_secondary'],
+                       background=Windows11Style.COLORS['bg_secondary'],
+                       foreground=Windows11Style.COLORS['text_muted'],
                        font=Windows11Style.FONTS['default'],
-                       padding=(16, 8),
+                       padding=(20, 12),  # Tabs mais espaçosas
                        borderwidth=0)
         
         style.map("TNotebook.Tab",
-                 background=[('selected', Windows11Style.COLORS['bg'])], # Fundo igual ao selecionado
-                 foreground=[('selected', Windows11Style.COLORS['accent'])], # Texto azul quando selecionado
-                 padding=[('selected', (16, 8))]) # Mantém tamanho
+                 background=[('selected', Windows11Style.COLORS['surface']),
+                           ('active', Windows11Style.COLORS['bg_tertiary'])],
+                 foreground=[('selected', Windows11Style.COLORS['accent']),
+                           ('active', Windows11Style.COLORS['text'])])
         
-        # LabelFrame
+        # === LABELFRAME MODERNO ===
         style.configure("TLabelframe",
-                       background=Windows11Style.COLORS['white'],
+                       background=Windows11Style.COLORS['surface'],
                        foreground=Windows11Style.COLORS['text'],
                        font=Windows11Style.FONTS['default'],
                        borderwidth=1,
-                       relief='flat',
+                       relief='solid',
                        bordercolor=Windows11Style.COLORS['border'])
         
         style.configure("TLabelframe.Label",
-                       background=Windows11Style.COLORS['white'],
-                       foreground=Windows11Style.COLORS['text'],
-                       font=('Segoe UI', 9, 'bold'))
+                       background=Windows11Style.COLORS['surface'],
+                       foreground=Windows11Style.COLORS['text_bright'],
+                       font=Windows11Style.FONTS['subtitle'])
         
-        # Separator
+        # === SEPARATOR MODERNO ===
         style.configure("TSeparator",
                        background=Windows11Style.COLORS['border'])
                        
-        # Scrollbar
+        # === SCROLLBAR MODERNO ===
         style.configure("TScrollbar",
-                       background='#424242',
+                       background=Windows11Style.COLORS['bg_secondary'],
                        troughcolor=Windows11Style.COLORS['bg'],
                        bordercolor=Windows11Style.COLORS['bg'],
-                       arrowcolor=Windows11Style.COLORS['text'],
+                       arrowcolor=Windows11Style.COLORS['text_muted'],
                        borderwidth=0,
                        relief='flat')
         
         style.map("TScrollbar",
-                 background=[('active', '#505050'), 
+                 background=[('active', Windows11Style.COLORS['bg_tertiary']), 
                            ('pressed', Windows11Style.COLORS['accent'])])
+    
+    @staticmethod
+    def create_modern_card(parent, padding=20, **kwargs):
+        """Cria um card moderno com visual elevado"""
+        card = ttk.Frame(parent, style="Card.TFrame", padding=padding, **kwargs)
+        return card
+    
+    @staticmethod
+    def create_modern_button(parent, text, command=None, style="TButton", **kwargs):
+        """Cria um botão moderno com espaçamento adequado"""
+        button = ttk.Button(parent, text=text, command=command, style=style, **kwargs)
+        return button
+    
+    @staticmethod
+    def create_section_header(parent, text, **kwargs):
+        """Cria um cabeçalho de seção moderno"""
+        header = ttk.Label(parent, text=text, style="Heading.TLabel", **kwargs)
+        return header
+    
+    @staticmethod
+    def create_modern_entry(parent, **kwargs):
+        """Cria um campo de entrada moderno"""
+        entry = ttk.Entry(parent, style="TEntry", **kwargs)
+        return entry
