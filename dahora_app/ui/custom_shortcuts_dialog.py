@@ -100,51 +100,60 @@ class CustomShortcutsDialog:
         self._create_window()
     
     def _create_window(self) -> None:
-        """Cria a janela principal com tabs"""
+        """Cria a janela principal com design moderno"""
         self.window = tk.Tk()
-        # Configura estilo Windows 11 (Dark Mode)
-        Windows11Style.configure_window(self.window, "Dahora App - Configurações", "600x500")
+        # Configura estilo moderno
+        Windows11Style.configure_window(self.window, "Dahora App - Configurações", "800x650")
         Windows11Style.configure_styles(self.window)
         
         self.window.resizable(True, True)
         
-        # Frame principal
-        main_frame = ttk.Frame(self.window, padding=(16, 12, 16, 12))
-        main_frame.pack(fill=tk.BOTH, expand=True)
+        # Frame principal moderno com padding generoso
+        main_frame = Windows11Style.create_modern_card(self.window, padding=24)
+        main_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
         
-        # Notebook (Tabs)
+        # Cabeçalho moderno
+        header_frame = ttk.Frame(main_frame, style="TFrame")
+        header_frame.pack(fill=tk.X, pady=(0, 24))
+        
+        title_label = Windows11Style.create_section_header(header_frame, "⚙️ Configurações do Dahora App")
+        title_label.pack(anchor="w")
+        
+        subtitle_label = ttk.Label(header_frame, text="Personalize atalhos, formatos e preferências", 
+                                 style="Muted.TLabel")
+        subtitle_label.pack(anchor="w", pady=(4, 0))
+        
+        # Notebook moderno (Tabs)
         notebook = ttk.Notebook(main_frame)
-        notebook.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
+        notebook.pack(fill=tk.BOTH, expand=True, pady=(0, 20))
         
-        # === ABA 1: PREFIXOS (CRUD) ===
-        self._create_prefixes_tab(notebook)
+        # === ABAS MODERNIZADAS ===
+        self._create_modern_prefixes_tab(notebook)
+        self._create_modern_general_tab(notebook)
+        self._create_modern_notifications_tab(notebook)
+        self._create_modern_system_hotkeys_tab(notebook)
+        self._create_modern_info_tab(notebook)
         
-        # === ABA 2: GERAL ===
-        self._create_general_tab(notebook)
-        
-        # === ABA 3: NOTIFICAÇÕES ===
-        self._create_notifications_tab(notebook)
-        
-        # === ABA 4: ATALHOS DO SISTEMA ===
-        self._create_system_hotkeys_tab(notebook)
-        
-        # === ABA 5: INFORMAÇÕES ===
-        self._create_info_tab(notebook)
-        
-        # Aviso de reinicialização necessária (inicialmente oculto)
+        # Aviso de reinicialização moderno
         self.restart_warning_label = ttk.Label(
             main_frame, 
             text="⚠️ Reinicialização necessária para aplicar algumas mudanças",
-            font=("Segoe UI", 9, "bold"),
-            foreground="#D83B01"  # Laranja/vermelho Windows
+            font=("Segoe UI", 10, "bold"),
+            foreground=Windows11Style.COLORS['warning']
         )
-        # Não empacota ainda - só quando needs_restart = True
         
-        # Botões inferiores (padrão Windows: OK azul + Cancelar)
-        buttons = ttk.Frame(main_frame)
-        buttons.pack(fill=tk.X, pady=(12, 0))
-        ttk.Button(buttons, text="Cancelar", command=self._on_close).pack(side=tk.RIGHT, padx=(8, 0))
-        ok_btn = ttk.Button(buttons, text="OK", command=self._on_save_and_close, default="active")
+        # Botões modernos
+        buttons_frame = ttk.Frame(main_frame, style="TFrame")
+        buttons_frame.pack(fill=tk.X, pady=(20, 0))
+        
+        # Botões alinhados à direita com espaçamento moderno
+        cancel_btn = Windows11Style.create_modern_button(buttons_frame, "Cancelar", 
+                                                        command=self._on_close)
+        cancel_btn.pack(side=tk.RIGHT, padx=(16, 0))
+        
+        ok_btn = Windows11Style.create_modern_button(buttons_frame, "Salvar", 
+                                                   command=self._on_save_and_close, 
+                                                   style="Primary.TButton")
         ok_btn.pack(side=tk.RIGHT)
         
         # Protocolo de fechamento
@@ -161,25 +170,44 @@ class CustomShortcutsDialog:
         
         self.window.mainloop()
     
-    def _create_prefixes_tab(self, notebook: ttk.Notebook) -> None:
-        """Cria aba de gerenciamento de prefixos (CRUD)"""
-        tab = ttk.Frame(notebook, padding=(12, 8), style="Card.TFrame")
-        notebook.add(tab, text="Atalhos Personalizados")
+    def _create_modern_prefixes_tab(self, notebook: ttk.Notebook) -> None:
+        """Cria aba moderna de gerenciamento de atalhos personalizados"""
+        # Tab com padding moderno
+        tab = Windows11Style.create_modern_card(notebook, padding=24)
+        notebook.add(tab, text="🎯 Atalhos Personalizados")
         
-        # Frame de resultados com LabelFrame (EXATAMENTE como search_dialog)
-        results_frame = ttk.LabelFrame(tab, text="Atalhos Configurados", padding=(8, 8))
-        results_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 8))
+        # Cabeçalho da seção
+        header_frame = ttk.Frame(tab, style="TFrame")
+        header_frame.pack(fill=tk.X, pady=(0, 20))
         
-        # Scrollbar
-        scrollbar = ttk.Scrollbar(results_frame)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        title_label = ttk.Label(header_frame, text="Atalhos Configurados", style="Heading.TLabel")
+        title_label.pack(anchor="w")
         
-        # Listbox simples (EXATAMENTE como search_dialog - NÃO usa Treeview)
+        subtitle_label = ttk.Label(header_frame, text="Gerencie seus atalhos personalizados para inserção rápida de timestamps", 
+                                 style="Muted.TLabel")
+        subtitle_label.pack(anchor="w", pady=(4, 0))
+        
+        # Card da lista moderna
+        list_card = Windows11Style.create_modern_card(tab, padding=16)
+        list_card.pack(fill=tk.BOTH, expand=True, pady=(0, 16))
+        
+        # Container da lista com scrollbar moderna
+        list_container = ttk.Frame(list_card, style="TFrame")
+        list_container.pack(fill=tk.BOTH, expand=True)
+        
+        # Scrollbar moderna
+        scrollbar = ttk.Scrollbar(list_container)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y, padx=(8, 0))
+        
+        # Listbox moderna
         self.shortcuts_listbox = tk.Listbox(
-            results_frame,
+            list_container,
             yscrollcommand=scrollbar.set,
-            font=("Consolas", 9),  # Fonte monoespaçada para alinhamento
-            height=10  # Reduzido para caber melhor na janela compacta
+            font=("Segoe UI", 10),  # Fonte moderna
+            height=12,  # Mais espaço
+            borderwidth=0,
+            highlightthickness=0,
+            selectmode=tk.SINGLE
         )
         Windows11Style.configure_listbox(self.shortcuts_listbox)
         self.shortcuts_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
@@ -188,202 +216,408 @@ class CustomShortcutsDialog:
         # Duplo clique para editar
         self.shortcuts_listbox.bind("<Double-Button-1>", lambda e: self._on_edit_clicked())
         
-        # Label de contagem (EXATAMENTE como search_dialog)
-        self.count_label = ttk.Label(tab, text="0 atalhos configurados", font=("Segoe UI", 8), foreground="gray", style="Card.TLabel")
-        self.count_label.pack(anchor=tk.W)
+        # Informações da lista
+        info_frame = ttk.Frame(tab, style="TFrame")
+        info_frame.pack(fill=tk.X, pady=(0, 16))
+        
+        self.count_label = ttk.Label(info_frame, text="0 atalhos configurados", style="Muted.TLabel")
+        self.count_label.pack(anchor="w")
         
         # Popula dados iniciais
         self._refresh_list()
         
-        # Botões de ação (EXATAMENTE como search_dialog - SEM emojis)
-        buttons_frame = ttk.Frame(tab)
-        buttons_frame.pack(fill=tk.X, pady=(8, 0))
-        ttk.Button(buttons_frame, text="Adicionar", command=self._on_add_clicked).pack(side=tk.LEFT, padx=(0, 8))
-        ttk.Button(buttons_frame, text="Editar", command=self._on_edit_clicked).pack(side=tk.LEFT, padx=(0, 8))
-        ttk.Button(buttons_frame, text="Remover", command=self._on_remove_clicked).pack(side=tk.LEFT, padx=(0, 8))
-        ttk.Button(buttons_frame, text="Atualizar", command=self._refresh_list).pack(side=tk.RIGHT)
-    
-    def _create_general_tab(self, notebook: ttk.Notebook) -> None:
-        """Cria aba de configurações gerais"""
-        tab = ttk.Frame(notebook, padding=(12, 8), style="Card.TFrame")
-        notebook.add(tab, text="Formato")
+        # Botões de ação modernos
+        buttons_frame = ttk.Frame(tab, style="TFrame")
+        buttons_frame.pack(fill=tk.X)
         
-        # Formato de data/hora padrão
-        ttk.Label(tab, text="Formato de data/hora:", style="Card.TLabel").grid(row=0, column=0, sticky=tk.W, pady=5)
+        # Botões principais à esquerda
+        primary_buttons = ttk.Frame(buttons_frame, style="TFrame")
+        primary_buttons.pack(side=tk.LEFT)
+        
+        add_btn = Windows11Style.create_modern_button(primary_buttons, "➕ Adicionar", 
+                                                    command=self._on_add_clicked, 
+                                                    style="Primary.TButton")
+        add_btn.pack(side=tk.LEFT, padx=(0, 12))
+        
+        edit_btn = Windows11Style.create_modern_button(primary_buttons, "✏️ Editar", 
+                                                     command=self._on_edit_clicked)
+        edit_btn.pack(side=tk.LEFT, padx=(0, 12))
+        
+        remove_btn = Windows11Style.create_modern_button(primary_buttons, "🗑️ Remover", 
+                                                       command=self._on_remove_clicked, 
+                                                       style="Danger.TButton")
+        remove_btn.pack(side=tk.LEFT)
+        
+        # Botão de atualizar à direita
+        refresh_btn = Windows11Style.create_modern_button(buttons_frame, "🔄 Atualizar", 
+                                                        command=self._refresh_list)
+        refresh_btn.pack(side=tk.RIGHT)
+    
+    def _create_modern_general_tab(self, notebook: ttk.Notebook) -> None:
+        """Cria aba moderna de configurações de formato"""
+        tab = Windows11Style.create_modern_card(notebook, padding=24)
+        notebook.add(tab, text="📅 Formato")
+        
+        # Cabeçalho
+        header_frame = ttk.Frame(tab, style="TFrame")
+        header_frame.pack(fill=tk.X, pady=(0, 24))
+        
+        title_label = ttk.Label(header_frame, text="Formato de Data e Hora", style="Heading.TLabel")
+        title_label.pack(anchor="w")
+        
+        subtitle_label = ttk.Label(header_frame, text="Configure como a data e hora serão formatadas nos timestamps", 
+                                 style="Muted.TLabel")
+        subtitle_label.pack(anchor="w", pady=(4, 0))
+        
+        # Seção de formato principal
+        format_card = Windows11Style.create_modern_card(tab, padding=20)
+        format_card.pack(fill=tk.X, pady=(0, 20))
+        
+        ttk.Label(format_card, text="Formato de Data/Hora", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 8))
+        
         self.var_datetime_format = tk.StringVar(
             value=self.current_settings.get("datetime_format", "%d.%m.%Y-%H:%M"))
-        ttk.Entry(tab, textvariable=self.var_datetime_format, width=30).grid(
-            row=0, column=1, sticky=tk.W, padx=(10, 0), pady=5)
         
-        # Explicação do formato
-        help_text = ("Códigos: %d=dia %m=mês %Y=ano %H=hora(24h) %M=minuto %S=segundo\n"
-                    "Exemplo: %d.%m.%Y-%H:%M resulta em 05.11.2025-14:30")
-        ttk.Label(tab, text=help_text, font=("Segoe UI", 8), foreground="gray", style="Card.TLabel").grid(
-            row=1, column=0, columnspan=2, sticky=tk.W, pady=(0, 10))
+        format_entry = Windows11Style.create_modern_entry(format_card, textvariable=self.var_datetime_format, width=40)
+        format_entry.pack(fill=tk.X, pady=(0, 12))
         
-        # Caracteres de delimitação
-        delim_frame = ttk.LabelFrame(tab, text="Caracteres de Delimitação", padding=10)
-        delim_frame.grid(row=2, column=0, columnspan=2, sticky=tk.W+tk.E, pady=10)
+        # Explicação com exemplos
+        help_card = Windows11Style.create_modern_card(format_card, padding=16)
+        help_card.pack(fill=tk.X)
         
-        ttk.Label(delim_frame, text="Abertura:", style="Card.TLabel").grid(row=0, column=0, sticky=tk.W, pady=5)
-        self.var_bracket_open = tk.StringVar(
-            value=self.current_settings.get("bracket_open", "["))
-        ttk.Entry(delim_frame, textvariable=self.var_bracket_open, width=10).grid(
-            row=0, column=1, sticky=tk.W, padx=(10, 0), pady=5)
+        ttk.Label(help_card, text="💡 Códigos Disponíveis", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 8))
         
-        ttk.Label(delim_frame, text="Fechamento:", style="Card.TLabel").grid(row=0, column=2, sticky=tk.W, padx=(20, 0), pady=5)
-        self.var_bracket_close = tk.StringVar(
-            value=self.current_settings.get("bracket_close", "]"))
-        ttk.Entry(delim_frame, textvariable=self.var_bracket_close, width=10).grid(
-            row=0, column=3, sticky=tk.W, padx=(10, 0), pady=5)
+        codes_text = (
+            "• %d = dia (01-31)     • %m = mês (01-12)     • %Y = ano (2025)\n"
+            "• %H = hora 24h (00-23)     • %M = minuto (00-59)     • %S = segundo (00-59)\n\n"
+            "Exemplo: %d.%m.%Y-%H:%M resulta em → 29.12.2025-14:30"
+        )
+        ttk.Label(help_card, text=codes_text, style="Card.TLabel").pack(anchor="w")
         
-        ttk.Label(delim_frame, text="Ex: [dahora-05.11.2025-14:30]", 
-                 font=("Segoe UI", 8), foreground="gray", style="Card.TLabel").grid(
-            row=1, column=0, columnspan=4, sticky=tk.W, pady=(5, 0))
+        # Seção de delimitadores
+        delim_card = Windows11Style.create_modern_card(tab, padding=20)
+        delim_card.pack(fill=tk.X, pady=(0, 20))
         
-        # Histórico
-        ttk.Label(tab, text="Itens no histórico:", style="Card.TLabel").grid(row=3, column=0, sticky=tk.W, pady=5)
-        self.var_max_history = tk.IntVar(
-            value=self.current_settings.get("max_history_items", 100))
-        ttk.Spinbox(tab, from_=10, to=1000, textvariable=self.var_max_history, 
-                   width=15).grid(row=3, column=1, sticky=tk.W, padx=(10, 0), pady=5)
+        ttk.Label(delim_card, text="Caracteres de Delimitação", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 16))
         
-        # Monitor de clipboard
-        ttk.Label(tab, text="Intervalo de monitoramento (seg):", style="Card.TLabel").grid(row=4, column=0, sticky=tk.W, pady=5)
-        self.var_monitor_interval = tk.DoubleVar(
-            value=self.current_settings.get("clipboard_monitor_interval", 3.0))
-        ttk.Spinbox(tab, from_=0.5, to=10.0, increment=0.5, 
-                   textvariable=self.var_monitor_interval, width=15).grid(
-                       row=4, column=1, sticky=tk.W, padx=(10, 0), pady=5)
+        delim_container = ttk.Frame(delim_card, style="TFrame")
+        delim_container.pack(fill=tk.X)
         
-        # Idle threshold
-        ttk.Label(tab, text="Tempo ocioso para pausar (seg):", style="Card.TLabel").grid(row=5, column=0, sticky=tk.W, pady=5)
-        self.var_idle_threshold = tk.DoubleVar(
-            value=self.current_settings.get("clipboard_idle_threshold", 30.0))
-        ttk.Spinbox(tab, from_=10, to=300, increment=10, 
-                   textvariable=self.var_idle_threshold, width=15).grid(
-                       row=5, column=1, sticky=tk.W, padx=(10, 0), pady=5)
+        # Abertura
+        open_frame = ttk.Frame(delim_container, style="TFrame")
+        open_frame.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 16))
+        
+        ttk.Label(open_frame, text="Abertura", style="Card.TLabel").pack(anchor="w", pady=(0, 6))
+        self.var_bracket_open = tk.StringVar(value=self.current_settings.get("bracket_open", "["))
+        open_entry = Windows11Style.create_modern_entry(open_frame, textvariable=self.var_bracket_open, width=10)
+        open_entry.pack(fill=tk.X)
+        
+        # Fechamento
+        close_frame = ttk.Frame(delim_container, style="TFrame")
+        close_frame.pack(side=tk.LEFT, fill=tk.X, expand=True)
+        
+        ttk.Label(close_frame, text="Fechamento", style="Card.TLabel").pack(anchor="w", pady=(0, 6))
+        self.var_bracket_close = tk.StringVar(value=self.current_settings.get("bracket_close", "]"))
+        close_entry = Windows11Style.create_modern_entry(close_frame, textvariable=self.var_bracket_close, width=10)
+        close_entry.pack(fill=tk.X)
+        
+        # Preview do resultado
+        preview_card = Windows11Style.create_modern_card(delim_card, padding=16)
+        preview_card.pack(fill=tk.X, pady=(16, 0))
+        
+        ttk.Label(preview_card, text="Preview", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 8))
+        preview_text = "[dahora-29.12.2025-14:30]"
+        ttk.Label(preview_card, text=preview_text, font=("Consolas", 11, "bold"), 
+                 style="Card.TLabel").pack(anchor="w")
+        
+        # Configurações de histórico
+        history_card = Windows11Style.create_modern_card(tab, padding=20)
+        history_card.pack(fill=tk.X)
+        
+        ttk.Label(history_card, text="Configurações de Histórico", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 16))
+        
+        # Grid para configurações
+        config_frame = ttk.Frame(history_card, style="TFrame")
+        config_frame.pack(fill=tk.X)
+        
+        # Máximo de itens
+        max_frame = ttk.Frame(config_frame, style="TFrame")
+        max_frame.pack(fill=tk.X, pady=(0, 12))
+        
+        ttk.Label(max_frame, text="Máximo de itens no histórico", style="Card.TLabel").pack(anchor="w", pady=(0, 6))
+        self.var_max_history = tk.IntVar(value=self.current_settings.get("max_history_items", 100))
+        max_spinbox = ttk.Spinbox(max_frame, from_=10, to=1000, textvariable=self.var_max_history, width=15)
+        max_spinbox.pack(anchor="w")
+        
+        # Intervalo de monitoramento
+        interval_frame = ttk.Frame(config_frame, style="TFrame")
+        interval_frame.pack(fill=tk.X, pady=(0, 12))
+        
+        ttk.Label(interval_frame, text="Intervalo de monitoramento (segundos)", style="Card.TLabel").pack(anchor="w", pady=(0, 6))
+        self.var_monitor_interval = tk.DoubleVar(value=self.current_settings.get("clipboard_monitor_interval", 3.0))
+        interval_spinbox = ttk.Spinbox(interval_frame, from_=0.5, to=10.0, increment=0.5, 
+                                     textvariable=self.var_monitor_interval, width=15)
+        interval_spinbox.pack(anchor="w")
+        
+        # Tempo ocioso
+        idle_frame = ttk.Frame(config_frame, style="TFrame")
+        idle_frame.pack(fill=tk.X)
+        
+        ttk.Label(idle_frame, text="Tempo ocioso para pausar (segundos)", style="Card.TLabel").pack(anchor="w", pady=(0, 6))
+        self.var_idle_threshold = tk.DoubleVar(value=self.current_settings.get("clipboard_idle_threshold", 30.0))
+        idle_spinbox = ttk.Spinbox(idle_frame, from_=10, to=300, increment=10, 
+                                 textvariable=self.var_idle_threshold, width=15)
+        idle_spinbox.pack(anchor="w")
     
-    def _create_notifications_tab(self, notebook: ttk.Notebook) -> None:
-        """Cria aba de configurações de notificações"""
-        tab = ttk.Frame(notebook, padding=(12, 8), style="Card.TFrame")
-        notebook.add(tab, text="Notificações")
+    def _create_modern_notifications_tab(self, notebook: ttk.Notebook) -> None:
+        """Cria aba moderna de configurações de notificações"""
+        tab = Windows11Style.create_modern_card(notebook, padding=24)
+        notebook.add(tab, text="🔔 Notificações")
         
-        # Habilitar notificações
+        # Cabeçalho
+        header_frame = ttk.Frame(tab, style="TFrame")
+        header_frame.pack(fill=tk.X, pady=(0, 24))
+        
+        title_label = ttk.Label(header_frame, text="Configurações de Notificações", style="Heading.TLabel")
+        title_label.pack(anchor="w")
+        
+        subtitle_label = ttk.Label(header_frame, text="Configure como e quando as notificações serão exibidas", 
+                                 style="Muted.TLabel")
+        subtitle_label.pack(anchor="w", pady=(4, 0))
+        
+        # Card principal de notificações
+        notif_card = Windows11Style.create_modern_card(tab, padding=20)
+        notif_card.pack(fill=tk.X, pady=(0, 20))
+        
+        # Toggle principal
+        toggle_frame = ttk.Frame(notif_card, style="TFrame")
+        toggle_frame.pack(fill=tk.X, pady=(0, 20))
+        
         self.var_notifications_enabled = tk.BooleanVar(
             value=self.current_settings.get("notification_enabled", True))
-        ttk.Checkbutton(tab, text="Habilitar notificações", 
-                       variable=self.var_notifications_enabled, style="Card.TCheckbutton").grid(
-                           row=0, column=0, sticky=tk.W, pady=5)
         
-        # Duração
-        ttk.Label(tab, text="Duração (segundos):", style="Card.TLabel").grid(row=1, column=0, sticky=tk.W, pady=5)
+        enable_check = ttk.Checkbutton(toggle_frame, text="🔔 Habilitar notificações do sistema", 
+                                     variable=self.var_notifications_enabled, 
+                                     style="TCheckbutton")
+        enable_check.pack(anchor="w")
+        
+        ttk.Label(toggle_frame, text="Exibe notificações quando atalhos são acionados ou ações são realizadas", 
+                 style="Muted.TLabel").pack(anchor="w", pady=(4, 0))
+        
+        # Configurações de duração
+        duration_frame = ttk.Frame(notif_card, style="TFrame")
+        duration_frame.pack(fill=tk.X)
+        
+        ttk.Label(duration_frame, text="Duração da Notificação", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 8))
+        
+        duration_container = ttk.Frame(duration_frame, style="TFrame")
+        duration_container.pack(fill=tk.X)
+        
         self.var_notification_duration = tk.IntVar(
             value=self.current_settings.get("notification_duration", 2))
-        ttk.Spinbox(tab, from_=1, to=15, textvariable=self.var_notification_duration, 
-                   width=15).grid(row=1, column=1, sticky=tk.W, padx=(10, 0), pady=5)
+        
+        duration_spinbox = ttk.Spinbox(duration_container, from_=1, to=15, 
+                                     textvariable=self.var_notification_duration, width=10)
+        duration_spinbox.pack(side=tk.LEFT, padx=(0, 8))
+        
+        ttk.Label(duration_container, text="segundos", style="Card.TLabel").pack(side=tk.LEFT)
+        
+        # Card de preview
+        preview_card = Windows11Style.create_modern_card(tab, padding=20)
+        preview_card.pack(fill=tk.X)
+        
+        ttk.Label(preview_card, text="💡 Tipos de Notificações", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 12))
+        
+        examples_text = (
+            "• Atalho acionado: 'Copiado com sucesso via Atalho! [dahora-29.12.2025-14:30]'\n"
+            "• Item do histórico: 'Copiado do histórico! [texto copiado]'\n"
+            "• Configurações salvas: 'Configurações salvas com sucesso!'\n"
+            "• Erros: 'Erro ao processar atalho: [detalhes do erro]'"
+        )
+        
+        ttk.Label(preview_card, text=examples_text, style="Card.TLabel").pack(anchor="w")
     
-    def _create_system_hotkeys_tab(self, notebook: ttk.Notebook) -> None:
-        """Cria aba de atalhos do sistema"""
-        tab = ttk.Frame(notebook, padding=(12, 8), style="Card.TFrame")
-        notebook.add(tab, text="Teclas de Atalho")
+    def _create_modern_system_hotkeys_tab(self, notebook: ttk.Notebook) -> None:
+        """Cria aba moderna de atalhos do sistema"""
+        tab = Windows11Style.create_modern_card(notebook, padding=24)
+        notebook.add(tab, text="⌨️ Teclas de Atalho")
+        
+        # Cabeçalho
+        header_frame = ttk.Frame(tab, style="TFrame")
+        header_frame.pack(fill=tk.X, pady=(0, 24))
+        
+        title_label = ttk.Label(header_frame, text="Atalhos do Sistema", style="Heading.TLabel")
+        title_label.pack(anchor="w")
+        
+        subtitle_label = ttk.Label(header_frame, text="Configure os atalhos globais para funções do sistema", 
+                                 style="Muted.TLabel")
+        subtitle_label.pack(anchor="w", pady=(4, 0))
+        
+        # Card de atalhos principais
+        hotkeys_card = Windows11Style.create_modern_card(tab, padding=20)
+        hotkeys_card.pack(fill=tk.X, pady=(0, 20))
+        
+        ttk.Label(hotkeys_card, text="Atalhos Principais", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 16))
         
         # Atalho de busca
-        ttk.Label(tab, text="Buscar no histórico:", style="Card.TLabel").grid(row=0, column=0, sticky=tk.W, pady=5)
+        search_frame = ttk.Frame(hotkeys_card, style="TFrame")
+        search_frame.pack(fill=tk.X, pady=(0, 16))
+        
+        ttk.Label(search_frame, text="🔍 Buscar no Histórico", style="Card.TLabel").pack(anchor="w", pady=(0, 6))
         self.var_hotkey_search = tk.StringVar(
             value=self.current_settings.get("hotkey_search_history", "ctrl+shift+f"))
         self.var_hotkey_search.trace_add("write", lambda *args: self._mark_needs_restart())
-        ttk.Entry(tab, textvariable=self.var_hotkey_search, width=30).grid(
-            row=0, column=1, sticky=tk.W, padx=(10, 0), pady=5)
+        
+        search_entry = Windows11Style.create_modern_entry(search_frame, textvariable=self.var_hotkey_search, width=30)
+        search_entry.pack(fill=tk.X)
         
         # Atalho de refresh
-        ttk.Label(tab, text="Recarregar menu:", style="Card.TLabel").grid(row=1, column=0, sticky=tk.W, pady=5)
+        refresh_frame = ttk.Frame(hotkeys_card, style="TFrame")
+        refresh_frame.pack(fill=tk.X)
+        
+        ttk.Label(refresh_frame, text="🔄 Recarregar Menu", style="Card.TLabel").pack(anchor="w", pady=(0, 6))
         self.var_hotkey_refresh = tk.StringVar(
             value=self.current_settings.get("hotkey_refresh_menu", "ctrl+shift+r"))
         self.var_hotkey_refresh.trace_add("write", lambda *args: self._mark_needs_restart())
-        ttk.Entry(tab, textvariable=self.var_hotkey_refresh, width=30).grid(
-            row=1, column=1, sticky=tk.W, padx=(10, 0), pady=5)
         
-        # Aviso
-        warning_text = (
-            "Use combinações como:\n"
-            "  • ctrl+shift+letra\n"
-            "  • ctrl+alt+letra\n"
-            "  • alt+shift+letra\n\n"
-            "Evite conflitos com atalhos do sistema."
+        refresh_entry = Windows11Style.create_modern_entry(refresh_frame, textvariable=self.var_hotkey_refresh, width=30)
+        refresh_entry.pack(fill=tk.X)
+        
+        # Card de orientações
+        guide_card = Windows11Style.create_modern_card(tab, padding=20)
+        guide_card.pack(fill=tk.X, pady=(0, 20))
+        
+        ttk.Label(guide_card, text="💡 Orientações", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 12))
+        
+        guide_text = (
+            "✅ Combinações recomendadas:\n"
+            "   • ctrl+shift+letra (ex: ctrl+shift+f)\n"
+            "   • ctrl+alt+letra (ex: ctrl+alt+h)\n"
+            "   • alt+shift+letra (ex: alt+shift+s)\n\n"
+            "⚠️ Evite conflitos com atalhos já utilizados por outros programas"
         )
-        ttk.Label(tab, text=warning_text, font=("Segoe UI", 8), foreground="gray", style="Card.TLabel").grid(
-            row=2, column=0, columnspan=2, sticky=tk.W, pady=(10, 0))
         
-        # Atalhos Reservados
-        reserved_frame = ttk.LabelFrame(tab, text="Atalhos Reservados (não disponíveis)", padding=10)
-        reserved_frame.grid(row=3, column=0, columnspan=2, sticky=tk.W+tk.E, pady=(15, 0))
+        ttk.Label(guide_card, text=guide_text, style="Card.TLabel").pack(anchor="w")
         
-        ttk.Label(reserved_frame, text="Apenas atalhos básicos de clipboard:", 
-                 font=("Segoe UI", 9), style="Card.TLabel").pack(anchor=tk.W)
-        ttk.Label(reserved_frame, text="Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+A, Ctrl+Z", 
-                 font=("Segoe UI", 9, "bold"), style="Card.TLabel").pack(anchor=tk.W, pady=(5, 0))
+        # Card de atalhos reservados
+        reserved_card = Windows11Style.create_modern_card(tab, padding=20)
+        reserved_card.pack(fill=tk.X)
+        
+        ttk.Label(reserved_card, text="🚫 Atalhos Reservados", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 12))
+        
+        ttk.Label(reserved_card, text="Os seguintes atalhos são reservados pelo sistema e não podem ser alterados:", 
+                 style="Card.TLabel").pack(anchor="w", pady=(0, 8))
+        
+        reserved_text = "Ctrl+C • Ctrl+V • Ctrl+X • Ctrl+A • Ctrl+Z"
+        ttk.Label(reserved_card, text=reserved_text, font=("Consolas", 10, "bold"), 
+                 style="Card.TLabel").pack(anchor="w")
+        
+        # Aviso de reinicialização
+        restart_card = Windows11Style.create_modern_card(tab, padding=16)
+        restart_card.pack(fill=tk.X, pady=(20, 0))
+        
+        ttk.Label(restart_card, text="⚠️ Alterações nestes atalhos requerem reinicialização da aplicação", 
+                 font=("Segoe UI", 9, "bold"), foreground=Windows11Style.COLORS['warning'], 
+                 style="Card.TLabel").pack(anchor="w")
     
-    def _create_info_tab(self, notebook: ttk.Notebook) -> None:
-        """Cria aba de informações sobre configurabilidade"""
-        tab = ttk.Frame(notebook, padding=(12, 8), style="Card.TFrame")
-        notebook.add(tab, text="Info")
+    def _create_modern_info_tab(self, notebook: ttk.Notebook) -> None:
+        """Cria aba moderna de informações sobre o aplicativo"""
+        tab = Windows11Style.create_modern_card(notebook, padding=24)
+        notebook.add(tab, text="ℹ️ Sobre")
         
-        # Título
-        ttk.Label(tab, text="Total Liberdade de Configuração!", 
-                 font=("Segoe UI", 11, "bold"), style="Card.TLabel").pack(pady=(10, 15))
+        # Cabeçalho principal
+        header_frame = ttk.Frame(tab, style="TFrame")
+        header_frame.pack(fill=tk.X, pady=(0, 24))
         
-        ttk.Label(tab, text="Nenhum atalho é fixo neste aplicativo!\n"
-                            "Você tem controle total sobre todas as teclas.", 
-                  font=("Segoe UI", 9), justify=tk.CENTER, style="Card.TLabel").pack(pady=(0, 15))
+        title_label = ttk.Label(header_frame, text="🚀 Dahora App", style="Title.TLabel")
+        title_label.pack(anchor="w")
         
-        # Recursos
-        recursos_frame = ttk.LabelFrame(tab, text="Recursos Configuráveis", padding=10)
-        recursos_frame.pack(fill=tk.X, pady=(0, 10))
+        subtitle_label = ttk.Label(header_frame, text="Sistema avançado de timestamps com total liberdade de configuração", 
+                                 style="Subtitle.TLabel")
+        subtitle_label.pack(anchor="w", pady=(4, 0))
         
-        recursos_text = (
-            "  • Atalhos personalizados ilimitados\n"
-            "  • Prefixos customizados por atalho\n"
-            "  • Formato de data/hora configurável\n"
-            "  • Caracteres de delimitação ajustáveis\n"
-            "  • Teclas de busca e refresh definíveis\n"
-            "  • Histórico de clipboard configurável\n"
-            "  • Notificações personalizáveis"
+        # Card de destaque
+        highlight_card = Windows11Style.create_modern_card(tab, padding=20)
+        highlight_card.pack(fill=tk.X, pady=(0, 20))
+        
+        ttk.Label(highlight_card, text="✨ Total Liberdade de Configuração", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 12))
+        
+        freedom_text = (
+            "Nenhum atalho é fixo neste aplicativo! Você tem controle total sobre:\n"
+            "• Todas as combinações de teclas\n"
+            "• Todos os prefixos e formatos\n"
+            "• Todas as configurações de comportamento"
         )
-        ttk.Label(recursos_frame, text=recursos_text, font=("Segoe UI", 9), 
-                  justify=tk.LEFT, style="Card.TLabel").pack(anchor=tk.W)
         
-        # Dica
-        dica_frame = ttk.LabelFrame(tab, text="Dica", padding=10)
-        dica_frame.pack(fill=tk.X, pady=(0, 10))
+        ttk.Label(highlight_card, text=freedom_text, style="Card.TLabel").pack(anchor="w")
         
-        ttk.Label(dica_frame, 
-                  text="Configure quantos atalhos quiser na aba 'Atalhos Personalizados'.\n"
-                       "Cada atalho pode ter seu próprio prefixo e pode ser habilitado/desabilitado.", 
-                  font=("Segoe UI", 9), justify=tk.LEFT, style="Card.TLabel").pack(anchor=tk.W)
+        # Card de recursos
+        features_card = Windows11Style.create_modern_card(tab, padding=20)
+        features_card.pack(fill=tk.X, pady=(0, 20))
+        
+        ttk.Label(features_card, text="🎯 Recursos Principais", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 12))
+        
+        features_text = (
+            "✅ Atalhos personalizados ilimitados\n"
+            "✅ Prefixos customizados por atalho\n"
+            "✅ Formato de data/hora totalmente configurável\n"
+            "✅ Caracteres de delimitação ajustáveis\n"
+            "✅ Histórico inteligente de clipboard\n"
+            "✅ Notificações personalizáveis\n"
+            "✅ Interface moderna e responsiva\n"
+            "✅ Tema automático (claro/escuro)"
+        )
+        
+        ttk.Label(features_card, text=features_text, style="Card.TLabel").pack(anchor="w")
+        
+        # Card de dicas
+        tips_card = Windows11Style.create_modern_card(tab, padding=20)
+        tips_card.pack(fill=tk.X)
+        
+        ttk.Label(tips_card, text="💡 Dicas de Uso", style="CardHeading.TLabel").pack(anchor="w", pady=(0, 12))
+        
+        tips_text = (
+            "🎯 Configure quantos atalhos quiser na aba 'Atalhos Personalizados'\n"
+            "⌨️ Use combinações como ctrl+shift+letra para evitar conflitos\n"
+            "🔄 Cada atalho pode ser habilitado/desabilitado individualmente\n"
+            "📋 O histórico mantém os últimos 100 itens copiados\n"
+            "🔍 Use Ctrl+Shift+F para buscar no histórico rapidamente"
+        )
+        
+        ttk.Label(tips_card, text=tips_text, style="Card.TLabel").pack(anchor="w")
     
     def _refresh_list(self) -> None:
-        """Atualiza a Listbox com dados dos prefixos (EXATAMENTE como search_dialog)"""
+        """Atualiza a Listbox com dados dos atalhos em formato moderno"""
         if not hasattr(self, 'shortcuts_listbox') or not self.shortcuts_listbox:
             return
         
         # Limpa listbox
         self.shortcuts_listbox.delete(0, tk.END)
         
-        # Popula listbox (formato simples como search_dialog)
+        # Popula listbox com formato moderno
         for shortcut in self.shortcuts_data:
-            status = "✓" if shortcut.get("enabled", True) else "⏸"
+            status_icon = "✅" if shortcut.get("enabled", True) else "⏸️"
             hotkey = shortcut.get("hotkey", "").upper()
             prefix = shortcut.get("prefix", "")
             description = shortcut.get("description", "")
             
-            # Formato: [✓] CTRL+SHIFT+1 → prefix - descrição
-            display = f"[{status}] {hotkey:20} → {prefix:15} - {description}"
+            # Formato moderno: ✅ CTRL+SHIFT+1 → dahora - Prefixo principal
+            if description:
+                display = f"{status_icon} {hotkey} → {prefix} - {description}"
+            else:
+                display = f"{status_icon} {hotkey} → {prefix}"
+            
             self.shortcuts_listbox.insert(tk.END, display)
         
-        # Atualiza contagem (EXATAMENTE como search_dialog)
+        # Atualiza contagem com texto moderno
         if hasattr(self, 'count_label'):
-            self.count_label.config(text=f"{len(self.shortcuts_data)} atalhos configurados")
+            count = len(self.shortcuts_data)
+            if count == 0:
+                self.count_label.config(text="Nenhum atalho configurado")
+            elif count == 1:
+                self.count_label.config(text="1 atalho configurado")
+            else:
+                self.count_label.config(text=f"{count} atalhos configurados")
     
     def _reload_from_settings(self) -> None:
         """Recarrega a lista diretamente do settings_manager"""

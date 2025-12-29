@@ -156,7 +156,7 @@ class Windows11Style:
         
     @staticmethod
     def configure_listbox(listbox: tk.Listbox):
-        """Configura Listbox com estilo moderno"""
+        """Configura Listbox com estilo moderno e melhor interatividade"""
         listbox.configure(
             background=Windows11Style.COLORS['surface'],
             foreground=Windows11Style.COLORS['text'],
@@ -167,7 +167,30 @@ class Windows11Style:
             highlightthickness=0,
             font=Windows11Style.FONTS['default'],
             activestyle='none',  # Remove estilo de ativação padrão
+            selectborderwidth=0,  # Remove borda da seleção
         )
+        
+        # Adiciona efeitos de hover personalizados
+        try:
+            def on_motion(event):
+                """Efeito de hover nos itens"""
+                index = listbox.nearest(event.y)
+                listbox.selection_clear(0, tk.END)
+                if 0 <= index < listbox.size():
+                    # Não seleciona automaticamente, apenas destaca visualmente
+                    pass
+            
+            def on_leave(event):
+                """Remove hover ao sair"""
+                # Restaura seleção original se houver
+                pass
+            
+            # Bind eventos (comentado para não interferir com seleção)
+            # listbox.bind("<Motion>", on_motion)
+            # listbox.bind("<Leave>", on_leave)
+            
+        except Exception:
+            pass
 
     @staticmethod
     def configure_styles(window: tk.Tk):
@@ -234,72 +257,114 @@ class Windows11Style:
         # Botão padrão moderno
         style.configure("TButton",
                        font=Windows11Style.FONTS['button'],
-                       padding=(20, 10),  # Mais espaçoso
+                       padding=(24, 12),  # Mais espaçoso
                        borderwidth=0,
                        relief='flat',
                        background=Windows11Style.COLORS['bg_secondary'],
-                       foreground=Windows11Style.COLORS['text'])
+                       foreground=Windows11Style.COLORS['text'],
+                       focuscolor='none')  # Remove foco visual
         
         style.map("TButton",
                  background=[('active', Windows11Style.COLORS['bg_tertiary']),
-                           ('pressed', Windows11Style.COLORS['border'])],
-                 foreground=[('active', Windows11Style.COLORS['text_bright'])],
-                 relief=[('pressed', 'flat')])
+                           ('pressed', Windows11Style.COLORS['border']),
+                           ('!active', Windows11Style.COLORS['bg_secondary'])],
+                 foreground=[('active', Windows11Style.COLORS['text_bright']),
+                           ('pressed', Windows11Style.COLORS['text_bright']),
+                           ('!active', Windows11Style.COLORS['text'])],
+                 relief=[('pressed', 'flat'),
+                        ('!pressed', 'flat')])
         
         # Botão primário moderno
         style.configure("Primary.TButton",
                        font=Windows11Style.FONTS['button'],
                        background=Windows11Style.COLORS['accent'],
                        foreground=Windows11Style.COLORS['text_bright'],
-                       padding=(20, 10))
+                       padding=(24, 12),
+                       borderwidth=0,
+                       relief='flat',
+                       focuscolor='none')
         
         style.map("Primary.TButton",
                  background=[('active', Windows11Style.COLORS['accent_hover']),
-                           ('pressed', Windows11Style.COLORS['accent'])],
-                 foreground=[('active', Windows11Style.COLORS['text_bright'])])
+                           ('pressed', Windows11Style.COLORS['accent']),
+                           ('!active', Windows11Style.COLORS['accent'])],
+                 foreground=[('active', Windows11Style.COLORS['text_bright']),
+                           ('pressed', Windows11Style.COLORS['text_bright']),
+                           ('!active', Windows11Style.COLORS['text_bright'])],
+                 relief=[('pressed', 'flat'),
+                        ('!pressed', 'flat')])
         
         # Botão de sucesso
         style.configure("Success.TButton",
                        font=Windows11Style.FONTS['button'],
                        background=Windows11Style.COLORS['success'],
                        foreground=Windows11Style.COLORS['text_bright'],
-                       padding=(20, 10))
+                       padding=(24, 12),
+                       borderwidth=0,
+                       relief='flat',
+                       focuscolor='none')
+        
+        style.map("Success.TButton",
+                 background=[('active', '#45a049'),  # Verde mais escuro no hover
+                           ('pressed', Windows11Style.COLORS['success']),
+                           ('!active', Windows11Style.COLORS['success'])],
+                 foreground=[('active', Windows11Style.COLORS['text_bright']),
+                           ('pressed', Windows11Style.COLORS['text_bright']),
+                           ('!active', Windows11Style.COLORS['text_bright'])])
         
         # Botão de perigo
         style.configure("Danger.TButton",
                        font=Windows11Style.FONTS['button'],
                        background=Windows11Style.COLORS['error'],
                        foreground=Windows11Style.COLORS['text_bright'],
-                       padding=(20, 10))
+                       padding=(24, 12),
+                       borderwidth=0,
+                       relief='flat',
+                       focuscolor='none')
+        
+        style.map("Danger.TButton",
+                 background=[('active', '#d32f2f'),  # Vermelho mais escuro no hover
+                           ('pressed', Windows11Style.COLORS['error']),
+                           ('!active', Windows11Style.COLORS['error'])],
+                 foreground=[('active', Windows11Style.COLORS['text_bright']),
+                           ('pressed', Windows11Style.COLORS['text_bright']),
+                           ('!active', Windows11Style.COLORS['text_bright'])])
         
         # === INPUTS MODERNOS ===
         style.configure("TEntry",
                        fieldbackground=Windows11Style.COLORS['surface'],
                        foreground=Windows11Style.COLORS['text'],
-                       insertcolor=Windows11Style.COLORS['text'],
+                       insertcolor=Windows11Style.COLORS['accent'],  # Cursor colorido
                        font=Windows11Style.FONTS['input'],
                        borderwidth=1,
                        relief='solid',
-                       padding=(12, 8))  # Mais espaçoso
+                       padding=(16, 12),  # Mais espaçoso
+                       focuscolor='none')  # Remove foco padrão
         
         style.map("TEntry",
                  bordercolor=[('focus', Windows11Style.COLORS['accent']),
                             ('!focus', Windows11Style.COLORS['border'])],
-                 fieldbackground=[('focus', Windows11Style.COLORS['surface'])])
+                 fieldbackground=[('focus', Windows11Style.COLORS['surface']),
+                                ('!focus', Windows11Style.COLORS['surface'])],
+                 foreground=[('focus', Windows11Style.COLORS['text']),
+                           ('!focus', Windows11Style.COLORS['text'])])
         
         # Spinbox moderno
         style.configure("TSpinbox",
                        fieldbackground=Windows11Style.COLORS['surface'],
                        foreground=Windows11Style.COLORS['text'],
-                       insertcolor=Windows11Style.COLORS['text'],
+                       insertcolor=Windows11Style.COLORS['accent'],
                        font=Windows11Style.FONTS['input'],
                        borderwidth=1,
                        relief='solid',
-                       padding=(12, 8))
+                       padding=(16, 12),
+                       focuscolor='none')
         
         style.map("TSpinbox",
                  bordercolor=[('focus', Windows11Style.COLORS['accent']),
-                            ('!focus', Windows11Style.COLORS['border'])])
+                            ('!focus', Windows11Style.COLORS['border'])],
+                 fieldbackground=[('focus', Windows11Style.COLORS['surface']),
+                                ('!focus', Windows11Style.COLORS['surface'])])
         
         # === CHECKBOXES MODERNOS ===
         style.configure("TCheckbutton",
@@ -317,20 +382,28 @@ class Windows11Style:
         style.configure("TNotebook",
                        background=Windows11Style.COLORS['bg'],
                        borderwidth=0,
-                       relief='flat')
+                       relief='flat',
+                       tabmargins=[0, 0, 0, 0])  # Remove margens das tabs
         
         style.configure("TNotebook.Tab",
                        background=Windows11Style.COLORS['bg_secondary'],
                        foreground=Windows11Style.COLORS['text_muted'],
                        font=Windows11Style.FONTS['default'],
-                       padding=(20, 12),  # Tabs mais espaçosas
-                       borderwidth=0)
+                       padding=(24, 14),  # Padding uniforme e generoso
+                       borderwidth=0,
+                       relief='flat',
+                       focuscolor='none')  # Remove foco visual
         
         style.map("TNotebook.Tab",
                  background=[('selected', Windows11Style.COLORS['surface']),
-                           ('active', Windows11Style.COLORS['bg_tertiary'])],
+                           ('active', Windows11Style.COLORS['bg_tertiary']),
+                           ('!active', Windows11Style.COLORS['bg_secondary'])],
                  foreground=[('selected', Windows11Style.COLORS['accent']),
-                           ('active', Windows11Style.COLORS['text'])])
+                           ('active', Windows11Style.COLORS['text']),
+                           ('!active', Windows11Style.COLORS['text_muted'])],
+                 padding=[('selected', (24, 14)),  # Mantém padding consistente
+                         ('active', (24, 14)),
+                         ('!active', (24, 14))])
         
         # === LABELFRAME MODERNO ===
         style.configure("TLabelframe",
@@ -350,29 +423,74 @@ class Windows11Style:
         style.configure("TSeparator",
                        background=Windows11Style.COLORS['border'])
                        
-        # === SCROLLBAR MODERNO ===
+        # === SCROLLBAR MODERNO (OVERLAY STYLE) ===
         style.configure("TScrollbar",
-                       background=Windows11Style.COLORS['bg_secondary'],
+                       background=Windows11Style.COLORS['bg'],
                        troughcolor=Windows11Style.COLORS['bg'],
                        bordercolor=Windows11Style.COLORS['bg'],
                        arrowcolor=Windows11Style.COLORS['text_muted'],
                        borderwidth=0,
-                       relief='flat')
+                       relief='flat',
+                       width=12,  # Scrollbar mais fina
+                       arrowsize=12)
         
         style.map("TScrollbar",
                  background=[('active', Windows11Style.COLORS['bg_tertiary']), 
-                           ('pressed', Windows11Style.COLORS['accent'])])
+                           ('pressed', Windows11Style.COLORS['accent']),
+                           ('!active', Windows11Style.COLORS['bg_secondary'])],
+                 troughcolor=[('active', Windows11Style.COLORS['bg']),
+                            ('!active', Windows11Style.COLORS['bg'])],
+                 arrowcolor=[('active', Windows11Style.COLORS['text']),
+                           ('pressed', Windows11Style.COLORS['text_bright']),
+                           ('!active', Windows11Style.COLORS['text_muted'])])
     
     @staticmethod
     def create_modern_card(parent, padding=20, **kwargs):
-        """Cria um card moderno com visual elevado"""
+        """Cria um card moderno com visual elevado e bordas arredondadas simuladas"""
         card = ttk.Frame(parent, style="Card.TFrame", padding=padding, **kwargs)
+        
+        # Adiciona efeito de elevação com múltiplas bordas sutis
+        try:
+            # Cria um frame container para simular sombra
+            shadow_frame = ttk.Frame(parent, style="TFrame")
+            shadow_frame.configure(background=Windows11Style.COLORS['shadow'])
+            
+            # Posiciona o card sobre a "sombra"
+            card.configure(relief='flat', borderwidth=1)
+            
+        except Exception:
+            # Fallback para card simples se houver erro
+            pass
+            
         return card
     
     @staticmethod
     def create_modern_button(parent, text, command=None, style="TButton", **kwargs):
-        """Cria um botão moderno com espaçamento adequado"""
+        """Cria um botão moderno com espaçamento adequado e efeitos visuais"""
         button = ttk.Button(parent, text=text, command=command, style=style, **kwargs)
+        
+        # Adiciona efeitos de hover personalizados se possível
+        try:
+            def on_enter(event):
+                """Efeito ao passar o mouse"""
+                if style == "Primary.TButton":
+                    button.configure(cursor="hand2")
+                elif style == "Danger.TButton":
+                    button.configure(cursor="hand2")
+                else:
+                    button.configure(cursor="hand2")
+            
+            def on_leave(event):
+                """Efeito ao sair com o mouse"""
+                button.configure(cursor="")
+            
+            button.bind("<Enter>", on_enter)
+            button.bind("<Leave>", on_leave)
+            
+        except Exception:
+            # Fallback se houver erro
+            pass
+            
         return button
     
     @staticmethod
