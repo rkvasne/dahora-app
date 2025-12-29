@@ -9,36 +9,40 @@ class Windows11Style:
     """Gerenciador de estilos Windows 11"""
     
     # Cores Windows 11 Dark Mode
-    # Cores Windows 11 Dark Mode (Deep Dark)
+    # Cores Windows 11 Dark Mode (Melhoradas)
     COLORS_DARK = {
-        'bg': '#121212',           # Preto quase absoluto (Material Dark)
-        'bg_dark': '#000000',      # Preto absoluto
-        'text': '#E0E0E0',          # Branco suave
-        'text_secondary': '#A0A0A0', # Cinza médio
-        'accent': '#4CC2FF',        # Azul vibrante moderno
-        'success': '#107C10',       # Verde
-        'warning': '#FCE100',       # Amarelo
-        'error': '#FF4D4F',         # Vermelho
-        'border': '#2b2b2b',        # Bordas muito sutis
-        'white': '#1E1E1E',         # Superfícies (Cards/Inputs)
-        'input_bg': '#2b2b2b',      # Fundo de inputs (levemente mais claro que bg)
-        'button_bg': '#333333',     # Botão padrão (destaque sutil)
-        'button_hover': '#454545',  # Botão hover
+        'bg': '#1C1C1C',           # Menos escuro que antes (era #121212)
+        'bg_dark': '#0F0F0F',      # Preto profundo para contraste
+        'text': '#FFFFFF',         # Branco puro para melhor legibilidade
+        'text_secondary': '#B3B3B3', # Cinza mais claro (era #A0A0A0)
+        'accent': '#0078D4',       # Azul oficial do Windows 11
+        'accent_hover': '#106EBE', # Azul mais escuro para hover
+        'success': '#107C10',      # Verde
+        'warning': '#FCE100',      # Amarelo
+        'error': '#FF4343',        # Vermelho mais suave
+        'border': '#323130',       # Bordas mais visíveis (era #2b2b2b)
+        'white': '#252423',        # Superfícies mais claras (era #1E1E1E)
+        'input_bg': '#323130',     # Fundo de inputs mais claro
+        'button_bg': '#3B3A39',    # Botão padrão mais claro
+        'button_hover': '#484644', # Botão hover mais claro
     }
 
-    # Cores Windows 11 Light Mode
+    # Cores Windows 11 Light Mode (Melhoradas)
     COLORS_LIGHT = {
-        'bg': '#F3F3F3',           # Background claro
-        'bg_dark': '#E6E6E6',      # Background escuro
-        'text': '#202020',          # Texto principal
-        'text_secondary': '#666666', # Texto secundário
-        'accent': '#0066CC',        # Azul accent
-        'success': '#107C10',       # Verde sucesso
-        'warning': '#F7630C',       # Laranja aviso
-        'error': '#D13438',         # Vermelho erro
-        'border': '#D1D1D1',        # Bordas
-        'white': '#FFFFFF',         # Branco puro
-        'input_bg': '#FFFFFF',      # Fundo de inputs
+        'bg': '#FAFAFA',           # Background mais suave (era #F3F3F3)
+        'bg_dark': '#F0F0F0',      # Background secundário
+        'text': '#1F1F1F',         # Texto quase preto para melhor contraste
+        'text_secondary': '#605E5C', # Cinza mais escuro para melhor legibilidade
+        'accent': '#0078D4',       # Azul oficial do Windows 11
+        'accent_hover': '#106EBE', # Azul mais escuro para hover
+        'success': '#107C10',      # Verde
+        'warning': '#F7630C',      # Laranja aviso
+        'error': '#D13438',        # Vermelho erro
+        'border': '#E1DFDD',       # Bordas mais suaves
+        'white': '#FFFFFF',        # Branco puro
+        'input_bg': '#FFFFFF',     # Fundo de inputs
+        'button_bg': '#F3F2F1',    # Botão padrão
+        'button_hover': '#EDEBE9', # Botão hover
     }
 
     # Cores atuais (serão definidas dinamicamente)
@@ -108,11 +112,17 @@ class Windows11Style:
         """Configura janela com estilo Windows 11"""
         window.title(title)
         window.geometry(size)
-        # Força tema escuro (Dark Mode) para visual mais profissional
-        Windows11Style.COLORS = Windows11Style.COLORS_DARK
         
-        # Aplica dark title bar com delay para garantir que a janela foi criada
-        window.after(100, lambda: Windows11Style.apply_dark_title_bar(window))
+        # Detecta tema do sistema automaticamente
+        system_theme = Windows11Style.get_system_theme()
+        if system_theme == 'light':
+            Windows11Style.COLORS = Windows11Style.COLORS_LIGHT
+        else:
+            Windows11Style.COLORS = Windows11Style.COLORS_DARK
+        
+        # Aplica dark title bar apenas se estiver em modo escuro
+        if system_theme == 'dark':
+            window.after(100, lambda: Windows11Style.apply_dark_title_bar(window))
             
         window.configure(bg=Windows11Style.COLORS['bg'])
         
@@ -202,13 +212,13 @@ class Windows11Style:
         style.configure("Primary.TButton",
                        font=Windows11Style.FONTS['button'],
                        background=Windows11Style.COLORS['accent'],
-                       foreground='#000000', # Texto preto no accent azul
+                       foreground='#FFFFFF', # Texto branco no accent
                        padding=(24, 6))
         
         style.map("Primary.TButton",
-                 background=[('active', '#60CDFF'), # Lighter accent
-                           ('pressed', '#0094D8')], # Darker accent
-                 foreground=[('active', '#000000')])
+                 background=[('active', Windows11Style.COLORS.get('accent_hover', '#106EBE')),
+                           ('pressed', '#005A9E')], # Azul mais escuro para pressed
+                 foreground=[('active', '#FFFFFF')])
         
         # Entry - estilo moderno (Windows 11: MinHeight 32px, Padding 10,6)
         style.configure("TEntry",
