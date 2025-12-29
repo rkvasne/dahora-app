@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [0.2.2-site-update] - 2025-12-29 🌐 **LANDING PAGE: TEXTOS E UX**
+
+### 🔄 Changed
+- **Copywriting Refinado**: Textos da Landing Page (`index.html`) ajustados para serem menos promocionais e mais diretos.
+- **Faq Contrast Fix**: Correção de contraste nas respostas do FAQ no modo claro (`landing/faq.css`).
+- **Seção Novidades**: Textos dos cards simplificados e padronizados (Sentence Case).
+- **SEO**: Meta description atualizada para ser mais informativa e menos "marketing".
+
+---
+
 ## [0.2.2] - 2025-11-29 🎨 **MODERNIZAÇÃO UI: WINDOWS 11 FLUENT DESIGN**
 
 ### ✨ Added
