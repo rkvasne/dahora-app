@@ -5,10 +5,8 @@ Este diretório contém a suíte de testes do Dahora App.
 ## 📊 Status Atual
 
 ```
-✅ 15 testes implementados
-✅ 15 testes passando (100%)
-✅ 95% de cobertura de código
-✅ 0 falhas
+✅ Suíte de testes ativa
+✅ Todos os testes passando
 ```
 
 ## 🧪 Executar Testes
@@ -22,6 +20,8 @@ pytest tests/
 ```bash
 pytest tests/ --cov=. --cov-report=html
 ```
+
+Obs.: a cobertura pode variar conforme o ambiente e dependências.
 
 ### Executar testes específicos:
 ```bash

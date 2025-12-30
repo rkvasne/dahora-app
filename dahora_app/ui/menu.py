@@ -4,7 +4,7 @@ Sistema de menus do Dahora App
 import logging
 import pystray
 from typing import Callable, Optional, List, Dict
-from dahora_app.utils import truncate_text, sanitize_text_for_display
+from dahora_app.utils import truncate_text, sanitize_text_for_display, format_hotkey_display
 
 
 class MenuBuilder:
@@ -24,8 +24,14 @@ class MenuBuilder:
         self.quit_callback: Optional[Callable] = None
         self.toggle_pause_callback: Optional[Callable] = None
         self.is_paused_callback: Optional[Callable] = None
+        self.hotkey_copy_datetime: str = "ctrl+shift+q"  # Padrão (ação principal)
         self.hotkey_search_history: str = "ctrl+shift+f"  # Padrão
         self.hotkey_refresh_menu: str = "ctrl+shift+r"  # Padrão
+
+    @staticmethod
+    def _format_hotkey_display(hotkey: str) -> str:
+        """Formata hotkey para exibição (inclui símbolos como !/@/#)."""
+        return format_hotkey_display(hotkey)
     
     def set_copy_datetime_callback(self, callback: Callable) -> None:
         """Define callback para copiar data/hora"""
@@ -125,14 +131,19 @@ class MenuBuilder:
         except Exception:
             pass
         
-        # Opções principais
-        menu_items.append(pystray.MenuItem('Copiar Data/Hora', self._copy_datetime_wrapper, default=True))
-        # Atalho de busca dinâmico
-        search_label = f'Buscar no Histórico ({self.hotkey_search_history.upper().replace("+", "+")})'
+        # Opções principais (padrão de mercado: ações + atalhos em parênteses, configurações com reticências)
+        copy_hk = self._format_hotkey_display(self.hotkey_copy_datetime)
+        copy_label = f"Copiar data/hora ({copy_hk})" if copy_hk else "Copiar data/hora"
+        menu_items.append(pystray.MenuItem(copy_label, self._copy_datetime_wrapper, default=True))
+
+        search_hk = self._format_hotkey_display(self.hotkey_search_history)
+        search_label = f"Buscar no histórico ({search_hk})" if search_hk else "Buscar no histórico"
         menu_items.append(pystray.MenuItem(search_label, self._show_search_wrapper))
-        menu_items.append(pystray.MenuItem('Configurações', self._show_custom_shortcuts_wrapper))
-        # Atalho de refresh dinâmico
-        refresh_label = f'Recarregar Itens ({self.hotkey_refresh_menu.upper().replace("+", "+")})'
+
+        menu_items.append(pystray.MenuItem('Configurações…', self._show_custom_shortcuts_wrapper))
+
+        refresh_hk = self._format_hotkey_display(self.hotkey_refresh_menu)
+        refresh_label = f"Recarregar itens ({refresh_hk})" if refresh_hk else "Recarregar itens"
         menu_items.append(pystray.MenuItem(refresh_label, self._refresh_menu_wrapper))
         
         # Separador
@@ -164,11 +175,11 @@ class MenuBuilder:
         
         # Opções finais
         is_paused = self.is_paused_callback() if self.is_paused_callback else False
-        pause_label = 'Retomar Monitoramento' if is_paused else 'Pausar Monitoramento'
+        pause_label = 'Retomar monitoramento' if is_paused else 'Pausar monitoramento'
         menu_items.append(pystray.MenuItem(pause_label, self._toggle_pause_wrapper))
         
-        menu_items.append(pystray.MenuItem('Limpar Histórico', self._clear_history_wrapper))
-        menu_items.append(pystray.MenuItem('Sobre', self._show_about_wrapper))
+        menu_items.append(pystray.MenuItem('Limpar histórico', self._clear_history_wrapper))
+        menu_items.append(pystray.MenuItem('Sobre…', self._show_about_wrapper))
         menu_items.append(pystray.MenuItem('Sair', self._quit_wrapper))
         
         try:

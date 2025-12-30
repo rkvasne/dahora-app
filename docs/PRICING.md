@@ -13,8 +13,11 @@
 ## Dahora App - Sistema de Bandeja do Windows
 
 **Data da Análise:** Novembro 2025  
-**Versão do Aplicativo:** 0.0.2  
+**Versão do Aplicativo (na época da análise):** 0.0.2  
+**Versão atual do projeto (referência):** 0.2.3  
 **Tipo:** Utilitário Windows - System Tray
+
+> Este documento é **histórico** e serve como estudo de caso. Alguns números e comparações podem não refletir o estado atual do produto.
 
 ---
 

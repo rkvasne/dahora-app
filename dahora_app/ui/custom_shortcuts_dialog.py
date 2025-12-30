@@ -4,6 +4,7 @@ Gerenciador de Atalhos Personalizados - Dialog de Configurações com CRUD
 import tkinter as tk
 from tkinter import ttk, messagebox
 import logging
+from dahora_app.utils import format_hotkey_display
 from typing import Callable, Optional, List, Dict, Any
 from datetime import datetime
 from dahora_app.ui.styles import Windows11Style
@@ -487,7 +488,7 @@ class CustomShortcutsDialog:
         # Popula listbox com formato moderno
         for shortcut in self.shortcuts_data:
             status_icon = "✅" if shortcut.get("enabled", True) else "⏸️"
-            hotkey = shortcut.get("hotkey", "").upper()
+            hotkey = format_hotkey_display(shortcut.get("hotkey", ""))
             prefix = shortcut.get("prefix", "")
             description = shortcut.get("description", "")
             
@@ -666,7 +667,7 @@ class CustomShortcutsDialog:
         shortcut = self.shortcuts_data[idx]
         shortcut_id = shortcut.get("id")
         prefix = shortcut.get("prefix", "")
-        hotkey = shortcut.get("hotkey", "").upper()
+        hotkey = format_hotkey_display(shortcut.get("hotkey", ""))
         
         confirm = messagebox.askyesno("Confirmar Remoção",
                                      f"Deseja remover o atalho?\n\n"

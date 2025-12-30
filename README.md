@@ -7,7 +7,7 @@
 **O gerenciador de timestamps definitivo para Windows.**  
 *Cole datas e horas formatadas instantaneamente com atalhos personalizáveis.*
 
-[![Version](https://img.shields.io/badge/version-0.2.2-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
+[![Version](https://img.shields.io/badge/version-0.2.3-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
 [![Python](https://img.shields.io/badge/python-3.8+-green.svg?style=for-the-badge)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg?style=for-the-badge)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg?style=for-the-badge)](tests/)
@@ -22,7 +22,7 @@
 
 Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sistema leve e poderoso que revoluciona como você lida com timestamps. Ele roda silenciosamente na bandeja do sistema e permite que você cole a data e hora atual formatada em qualquer lugar, com um único atalho.
 
-**Novo na v0.2.2:** Interface renovada com design limpo e organizado, focada na usabilidade e experiência do usuário.
+**Novo na v0.2.3:** Documentação unificada e ajustes de consistência na interface moderna.
 
 ## ✨ Funcionalidades
 
@@ -54,8 +54,8 @@ Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sist
 Não requer Python instalado. Basta baixar e rodar.
 
 1. Vá para a página de [Releases](https://github.com/rkvasne/dahora-app/releases).
-2. Baixe o arquivo `DahoraApp_v0.2.2.exe`.
-3. Execute o arquivo. O ícone aparecerá na bandeja do sistema (próximo ao relógio).
+2. Baixe o arquivo `DahoraApp_v0.2.3.zip`.
+3. Extraia o ZIP e execute `DahoraApp_v0.2.3.exe`. O ícone aparecerá na bandeja do sistema (próximo ao relógio).
 
 ### Opção 2: Rodar do Código Fonte
 
@@ -116,8 +116,10 @@ Os dados são salvos localmente em `%APPDATA%\DahoraApp`.
 
 Toda a documentação técnica e de negócio está organizada na pasta `docs/`:
 
+- **[📚 Índice da Documentação](docs/README.md):** Mapa e convenções da documentação.
+- **[🚀 Release (Build/ZIP/LFS)](docs/RELEASE.md):** Processo atualizado de build e publicação.
 - **[📜 Histórico de Desenvolvimento](docs/DEVELOPMENT_HISTORY.md):** Detalhes profundos sobre cada fase de desenvolvimento, migrações e decisões técnicas.
-- **[✅ Roadmap & Melhorias](docs/IMPROVEMENTS.md):** Checklist de tarefas, melhorias planejadas e status do projeto.
+- **[🗺️ Roadmap](docs/ROADMAP.md):** Próximos passos em alto nível.
 - **[💰 Análise de Precificação](docs/PRICING.md):** Estudo de mercado, estratégias de monetização e análise de valor.
 - **[📝 Changelog](CHANGELOG.md):** Registro oficial de mudanças por versão.
 
@@ -141,7 +143,9 @@ dahora-app/
 │
 └── docs/                        # Documentação Centralizada
     ├── DEVELOPMENT_HISTORY.md   # Histórico detalhado
-    ├── IMPROVEMENTS.md          # Roadmap
+    ├── README.md                # Índice da documentação
+    ├── ROADMAP.md               # Roadmap
+    ├── RELEASE.md               # Build/Release/ZIP/LFS
     └── PRICING.md               # Business
 ```
 

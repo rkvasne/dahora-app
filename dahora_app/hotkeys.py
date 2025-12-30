@@ -3,6 +3,7 @@ Gerenciamento de hotkeys globais
 """
 import logging
 import keyboard
+import threading
 from typing import Callable, Optional, Dict, Any, List, Tuple
 from dahora_app.constants import (
     HOTKEY_COPY_DATETIME,
@@ -16,19 +17,51 @@ class HotkeyManager:
     
     def __init__(self):
         """Inicializa o gerenciador de hotkeys"""
+        self._lock = threading.RLock()
         self.registered_hotkeys = []
         self.copy_datetime_callback: Optional[Callable] = None
         self.refresh_menu_callback: Optional[Callable] = None
         self.search_callback: Optional[Callable] = None
         self.ctrl_c_callback: Optional[Callable] = None
+
+        # Handles para hotkeys do próprio app (remove preciso, sem afetar custom shortcuts)
+        self._app_hotkey_handles: Dict[str, Any] = {}
+        self._app_hotkey_strings: Dict[str, str] = {}
+        self._ctrl_c_hook = None
+
+        # Hotkeys configuráveis do app (padrões)
+        self.hotkey_copy_datetime = HOTKEY_COPY_DATETIME
+        self.hotkey_refresh_menu = HOTKEY_REFRESH_MENU
+        self.hotkey_search_history = "ctrl+shift+f"
         
         # Custom shortcuts (NOVO)
         self.custom_shortcuts_callbacks: Dict[int, Callable] = {}  # shortcut_id -> callback
         self.custom_shortcuts_hotkeys: Dict[int, str] = {}  # shortcut_id -> hotkey
-        # Apenas atalhos de clipboard que NÃO devem ser sobrescritos
-        self.reserved_hotkeys = [
-            "ctrl+c", "ctrl+v", "ctrl+x", "ctrl+a", "ctrl+z"
+        # Hotkeys reservados (clipboard + atalhos do app)
+        # Testes esperam bloquear também Ctrl+Shift+Q/R/F.
+        self._reserved_base = [
+            "ctrl+c", "ctrl+v", "ctrl+x", "ctrl+a", "ctrl+z",
+            "ctrl+shift+q", "ctrl+shift+r", "ctrl+shift+f",
         ]
+        self.reserved_hotkeys = list(self._reserved_base)
+
+    def set_configured_hotkeys(
+        self,
+        hotkey_copy_datetime: str,
+        hotkey_search_history: str,
+        hotkey_refresh_menu: str,
+    ) -> None:
+        """Define hotkeys configuráveis do app e atualiza a lista de reservados."""
+        self.hotkey_copy_datetime = (hotkey_copy_datetime or "").strip().lower() or HOTKEY_COPY_DATETIME
+        self.hotkey_search_history = (hotkey_search_history or "").strip().lower() or "ctrl+shift+f"
+        self.hotkey_refresh_menu = (hotkey_refresh_menu or "").strip().lower() or HOTKEY_REFRESH_MENU
+
+        # Atualiza reservados para evitar conflito com custom shortcuts
+        reserved = set(self._reserved_base)
+        reserved.add(self.hotkey_copy_datetime)
+        reserved.add(self.hotkey_search_history)
+        reserved.add(self.hotkey_refresh_menu)
+        self.reserved_hotkeys = sorted(reserved)
     
     def set_copy_datetime_callback(self, callback: Callable) -> None:
         """Define callback para copiar data/hora"""
@@ -76,6 +109,97 @@ class HotkeyManager:
                 self.ctrl_c_callback()
         except Exception as e:
             logging.warning(f"Falha ao processar Ctrl+C: {e}")
+
+    def _register_or_replace_app_hotkey(self, key: str, hotkey: str, callback: Callable) -> Tuple[bool, str]:
+        """Registra (ou substitui) um hotkey do app via handle.
+
+        Não remove custom shortcuts e evita múltiplos registros do mesmo handler.
+        """
+        hotkey = (hotkey or "").strip().lower()
+        if not hotkey:
+            return False, "hotkey vazio"
+
+        # Evita conflito com custom shortcuts já registrados
+        if hotkey in set(self.custom_shortcuts_hotkeys.values()):
+            return False, f"conflito com atalho personalizado ({hotkey})"
+
+        with self._lock:
+            old_handle = self._app_hotkey_handles.get(key)
+            old_hotkey = self._app_hotkey_strings.get(key)
+
+            # Tenta registrar o novo primeiro (para não ficar sem hotkey)
+            try:
+                new_handle = keyboard.add_hotkey(hotkey, callback, args=())
+            except Exception as e:
+                return False, str(e)
+
+            # Remove o antigo (se existir)
+            if old_handle is not None:
+                try:
+                    keyboard.remove_hotkey(old_handle)
+                except Exception:
+                    # Melhor esforço: se não remover, ainda assim seguimos.
+                    pass
+
+            self._app_hotkey_handles[key] = new_handle
+            self._app_hotkey_strings[key] = hotkey
+
+            # Mantém lista de strings (usada em logs/diagnóstico)
+            if old_hotkey and old_hotkey in self.registered_hotkeys:
+                try:
+                    self.registered_hotkeys.remove(old_hotkey)
+                except ValueError:
+                    pass
+            if hotkey not in self.registered_hotkeys:
+                self.registered_hotkeys.append(hotkey)
+
+            return True, "ok"
+
+    def apply_configured_hotkeys(self) -> Dict[str, str]:
+        """Aplica hotkeys configuráveis do app em runtime.
+
+        Retorna um dict action->status ("ok" ou "erro: ...").
+        """
+        results: Dict[str, str] = {}
+
+        # Detecta duplicatas entre hotkeys do app
+        desired = {
+            "copy_datetime": self.hotkey_copy_datetime,
+            "refresh_menu": self.hotkey_refresh_menu,
+            "search_history": self.hotkey_search_history,
+        }
+        normalized = {k: (v or "").strip().lower() for k, v in desired.items()}
+        reverse: Dict[str, List[str]] = {}
+        for action, hk in normalized.items():
+            if not hk:
+                continue
+            reverse.setdefault(hk, []).append(action)
+        duplicates = {hk: actions for hk, actions in reverse.items() if len(actions) > 1}
+        if duplicates:
+            for hk, actions in duplicates.items():
+                for action in actions:
+                    results[action] = f"erro: hotkey duplicado ({hk})"
+
+        # Aplica cada hotkey (se não estiver bloqueado por duplicata)
+        if "copy_datetime" not in results:
+            ok, msg = self._register_or_replace_app_hotkey(
+                "copy_datetime", self.hotkey_copy_datetime, self._on_copy_datetime_triggered
+            )
+            results["copy_datetime"] = "ok" if ok else f"erro: {msg}"
+
+        if "refresh_menu" not in results:
+            ok, msg = self._register_or_replace_app_hotkey(
+                "refresh_menu", self.hotkey_refresh_menu, self._on_refresh_menu_triggered
+            )
+            results["refresh_menu"] = "ok" if ok else f"erro: {msg}"
+
+        if "search_history" not in results:
+            ok, msg = self._register_or_replace_app_hotkey(
+                "search_history", self.hotkey_search_history, self._on_search_triggered
+            )
+            results["search_history"] = "ok" if ok else f"erro: {msg}"
+
+        return results
     
     def setup_all(self) -> None:
         """Configura hotkeys do sistema (TODOS agora são opcionais/configuráveis)"""
@@ -83,9 +207,28 @@ class HotkeyManager:
         # Agora TUDO é configurado pelo usuário via custom shortcuts
         # Incluindo refresh (Ctrl+Shift+R) e busca (Ctrl+Shift+F)
         
+        # Hotkeys configuráveis do app
+        results = self.apply_configured_hotkeys()
+        if results.get("copy_datetime") == "ok":
+            logging.info(f"[OK] Hotkey copiar/colar data/hora: {self.hotkey_copy_datetime}")
+        else:
+            logging.warning(f"[AVISO] hotkey_copy_datetime não aplicado: {results.get('copy_datetime')}")
+
+        if results.get("refresh_menu") == "ok":
+            logging.info(f"[OK] Hotkey recarregar menu: {self.hotkey_refresh_menu}")
+        else:
+            logging.warning(f"[AVISO] hotkey_refresh_menu não aplicado: {results.get('refresh_menu')}")
+
+        if results.get("search_history") == "ok":
+            logging.info(f"[OK] Hotkey buscar histórico: {self.hotkey_search_history}")
+        else:
+            logging.warning(f"[AVISO] hotkey_search_history não aplicado: {results.get('search_history')}")
+
         # Listener para Ctrl+C (único que permanece automático para monitorar clipboard)
         try:
-            keyboard.on_press_key('c', self._on_ctrl_c_triggered)
+            with self._lock:
+                if self._ctrl_c_hook is None:
+                    self._ctrl_c_hook = keyboard.on_press_key('c', self._on_ctrl_c_triggered)
             logging.info("[OK] Listener Ctrl+C configurado")
         except Exception as e:
             logging.warning(f"Não foi possível configurar o Ctrl+C: {e}")
@@ -104,6 +247,10 @@ class HotkeyManager:
         try:
             keyboard.unhook_all()
             self.registered_hotkeys.clear()
+            with self._lock:
+                self._app_hotkey_handles.clear()
+                self._app_hotkey_strings.clear()
+                self._ctrl_c_hook = None
             self.custom_shortcuts_callbacks.clear()
             self.custom_shortcuts_hotkeys.clear()
             logging.info("Hotkeys liberados")

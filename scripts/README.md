@@ -105,15 +105,12 @@ scripts/
 
 ## 🔄 MANUTENÇÃO
 
-### **Atualizar versão nos scripts:**
+### Versão do executável
 
-Quando incrementar versão do projeto, atualizar:
-- `rebuild_clean.bat` → Verificação do executável
+O `rebuild_clean.bat` procura automaticamente por `dist\DahoraApp_v*.exe`.
+Isso evita ter que atualizar o script a cada incremento de versão.
 
-**Exemplo:**
-```batch
-if exist "dist\dahora_app_v0.1.1.exe" (
-```
+Para detalhes do processo de release (ZIP/LFS), veja [docs/RELEASE.md](../docs/RELEASE.md).
 
 ---
 

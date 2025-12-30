@@ -7,6 +7,7 @@ import webbrowser
 from PIL import ImageTk
 from dahora_app.ui.styles import Windows11Style
 from dahora_app.ui.icon_manager import IconManager
+from dahora_app.constants import APP_VERSION
 
 
 class AboutDialog:
@@ -46,38 +47,37 @@ class AboutDialog:
             icon_img = IconManager.load_icon()
             icon_img = icon_img.resize((64, 64))
             self.photo_icon = ImageTk.PhotoImage(icon_img)
-            
+
             logo_label = ttk.Label(main, image=self.photo_icon)
             logo_label.pack(pady=(0, 10))
         except Exception:
-            # Fallback se falhar imagem
             pass
-        
+
         # Título
         ttk.Label(
             main,
             text="Dahora App",
-            font=("Segoe UI", 16, "bold")
+            font=("Segoe UI", 16, "bold"),
         ).pack(pady=(0, 5))
-        
+
         ttk.Label(
             main,
             text="Gerenciador Inteligente de Clipboard",
             font=("Segoe UI", 10),
-            foreground="#aaaaaa"
+            foreground="#aaaaaa",
         ).pack(pady=(0, 20))
-        
+
         # Versão
         version_frame = ttk.Frame(main)
         version_frame.pack(fill=tk.X, pady=(0, 15))
-        
+
         ttk.Label(
-            version_frame, 
-            text="Versão v0.2.2", 
+            version_frame,
+            text=f"Versão v{APP_VERSION}",
             font=("Segoe UI", 10, "bold"),
             background="#2d2d2d",
             foreground="#ffffff",
-            padding=(10, 5)
+            padding=(10, 5),
         ).pack()
         
         # Informações

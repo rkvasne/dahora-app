@@ -1,18 +1,35 @@
 # 📜 HISTÓRICO DE DESENVOLVIMENTO - DAHORA APP
 
 **Projeto:** Dahora App - Sistema de Bandeja para Data/Hora  
-**Última atualização:** 05/11/2025
+**Última atualização:** 30/12/2025
+
+> Nota: o **histórico narrativo** fica aqui; o registro oficial de mudanças por versão fica no [CHANGELOG.md](../CHANGELOG.md).
 
 ---
 
 ## 📋 ÍNDICE
 
-1. [v0.2.2 - Produtividade & Dark Mode Web](#v022---produtividade--dark-mode-web) 🚀 **ATUAL!**
-2. [v0.2.0 - Revolução: Cola Automaticamente](#v020---revolução-cola-automaticamente)
-3. [Migração CSS (Fases 1-3)](#migração-css-fases-1-3)
-4. [Correção de Ícone](#correção-de-ícone)
-5. [Padronização do Projeto](#padronização-do-projeto)
-6. [Customizações de UI](#customizações-de-ui)
+1. [v0.2.3 - Documentação Unificada & Release](#v023---documentação-unificada--release) 🚀 **ATUAL!**
+2. [v0.2.2 - Produtividade & Dark Mode Web](#v022---produtividade--dark-mode-web)
+3. [v0.2.0 - Revolução: Cola Automaticamente](#v020---revolução-cola-automaticamente)
+4. [Migração CSS (Fases 1-3)](#migração-css-fases-1-3)
+5. [Correção de Ícone](#correção-de-ícone)
+6. [Padronização do Projeto](#padronização-do-projeto)
+7. [Customizações de UI](#customizações-de-ui)
+
+---
+
+## 🚀 V0.2.3 - DOCUMENTAÇÃO UNIFICADA & RELEASE
+
+**Data:** 30/12/2025  
+**Status:** ✅ COMPLETA
+
+### ✨ Principais Mudanças
+
+- Documentação consolidada e padronizada em `docs/`.
+- Guia de release atualizado (build, ZIP e Git LFS): [docs/RELEASE.md](RELEASE.md).
+- Roadmap simplificado em alto nível: [docs/ROADMAP.md](ROADMAP.md).
+- Remoção de documentos redundantes/obsoletos que não refletiam mais o estado atual.
 
 ---
 
@@ -335,7 +352,7 @@ DEPOIS: Ícone azul (logo "D" moderno)
 | Antes (PT-BR) | Depois (EN) |
 |---------------|-------------|
 | `ANALISE_PRECIFICACAO.md` | `PRICING.md` |
-| `CHECKLIST_MELHORIAS.md` | `IMPROVEMENTS.md` |
+| `CHECKLIST_MELHORIAS.md` | `ROADMAP.md` |
 | `CORRECAO_ICONE.md` | `ICON_FIX.md` |
 | `CUSTOMIZACOES_ATUAIS.md` | `CUSTOMIZATIONS.md` |
 | `FASE2_COMPLETA.md` | `PHASE2_COMPLETE.md` |
@@ -477,8 +494,8 @@ dahora-app/
 3. ✅ Landing page atualizada
 4. ⏳ Build novo executável v0.2.0
 5. ⏳ Release GitHub com .exe
-6. 🔮 Próximas features em IMPROVEMENTS.md
+6. 🔮 Próximas features em ROADMAP.md
 
 ---
 
-**📌 Este documento consolida todo o histórico de desenvolvimento do projeto desde v0.1.0 até v0.2.0.**
+**📌 Este documento consolida o histórico de desenvolvimento (complementar ao CHANGELOG).**

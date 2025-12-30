@@ -27,17 +27,18 @@ echo [4/5] Compilando versao limpa...
 py build.py
 
 echo [5/5] Verificando build...
-if exist "dist\dahora_app_v0.1.1.exe" (
+for %%f in ("dist\DahoraApp_v*.exe") do set "BUILT_EXE=%%~ff"
+if defined BUILT_EXE (
     echo.
     echo ============================================
     echo BUILD CONCLUIDO COM SUCESSO!
     echo ============================================
     echo.
-    echo Executavel: dist\dahora_app_v0.1.1.exe
+    echo Executavel: %BUILT_EXE%
     echo Tamanho: 
-    dir "dist\dahora_app_v0.1.1.exe" | find "dahora_app"
+    dir "%BUILT_EXE%"
     echo.
-    echo Execute: dist\dahora_app_v0.1.1.exe
+    echo Execute: %BUILT_EXE%
     echo.
 ) else (
     echo.

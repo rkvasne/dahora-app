@@ -1,0 +1,27 @@
+# 🗺️ Roadmap — Dahora App
+
+Este documento mantém **um roadmap de alto nível** (curto e acionável). O detalhamento deve ficar em issues/discussions.
+
+## 🎯 Foco atual
+
+- Estabilidade e consistência da UI moderna (CustomTkinter)
+- Padronização de documentação e processo de release
+- Qualidade: testes, lint/typing quando fizer sentido
+
+## 📌 Próximos passos (alto nível)
+
+- Consolidar configurações/versão em um único ponto de verdade
+- Melhorar observabilidade (logs, erros de hotkeys, diagnósticos)
+- Melhorar UX do editor de atalhos e mensagens de conflito
+
+## ✅ Como contribuir
+
+- Abra uma issue com:
+  - problema/objetivo
+  - passos para reproduzir (se bug)
+  - comportamento esperado vs atual
+  - versão do app
+
+## 📎 Notas
+
+Este arquivo substitui o antigo checklist longo de melhorias, que era útil no início do projeto, mas ficou difícil de manter sincronizado com o estado real do código.

@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.3] - 2025-12-30
+
+### Added
+- Unified documentation index and guides in `docs/`.
+- Release guide describing build, ZIP packaging and Git LFS usage.
+
+### Changed
+- Version metadata aligned to `0.2.3` (app constants, build output name, Windows manifest).
+- Installation instructions now prefer the `.zip` artifact.
+
+### Fixed
+- About dialogs now render the current app version (no hardcoded value).
+
+### Chore
+- Git LFS now tracks `*.zip` artifacts (in addition to `*.exe`).
+
 ## [0.2.3-ui-modernization] - 2025-12-29 🎨 **INTERFACE ULTRA-MODERNA: WINDOWS 11 FLUENT DESIGN**
 
 ### 🎨 Complete UI Modernization

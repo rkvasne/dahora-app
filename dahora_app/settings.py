@@ -40,6 +40,10 @@ class SettingsManager:
         self.custom_shortcuts: List[Dict[str, Any]] = []
         self.max_custom_shortcuts = 10
         self.next_shortcut_id = 1
+
+        # Atalho padrão (entre os custom_shortcuts) usado como "principal" do app
+        # Ex: ação de copiar/colar timestamp (Ctrl+Shift+Q por padrão)
+        self.default_shortcut_id: Optional[int] = None
     
     def validate_settings(self, settings_dict: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -96,6 +100,29 @@ class SettingsManager:
             custom_shortcuts = self._validate_custom_shortcuts(
                 settings_dict.get("custom_shortcuts", [])
             )
+
+            # Atalho padrão (pode não existir em versões antigas)
+            default_shortcut_id_raw = settings_dict.get("default_shortcut_id", None)
+            default_shortcut_id: Optional[int] = None
+            try:
+                if default_shortcut_id_raw is not None and str(default_shortcut_id_raw).strip() != "":
+                    default_shortcut_id = int(default_shortcut_id_raw)
+            except Exception:
+                default_shortcut_id = None
+
+            # Se não definido, tenta escolher um padrão coerente
+            if default_shortcut_id is None and custom_shortcuts:
+                enabled = [s for s in custom_shortcuts if s.get("enabled", True)]
+                pick = (enabled[0] if enabled else custom_shortcuts[0])
+                default_shortcut_id = int(pick.get("id"))
+
+            # Se definido mas não existe, re-seleciona
+            if default_shortcut_id is not None:
+                ids = {int(s.get("id")) for s in custom_shortcuts}
+                if default_shortcut_id not in ids:
+                    enabled = [s for s in custom_shortcuts if s.get("enabled", True)]
+                    pick = (enabled[0] if enabled else (custom_shortcuts[0] if custom_shortcuts else None))
+                    default_shortcut_id = int(pick.get("id")) if pick else None
             
             return {
                 "prefix": prefix,
@@ -111,6 +138,7 @@ class SettingsManager:
                 "bracket_open": bracket_open,
                 "bracket_close": bracket_close,
                 "custom_shortcuts": custom_shortcuts,
+                "default_shortcut_id": default_shortcut_id,
             }
         except Exception as e:
             logging.error(f"Erro ao validar settings: {e}")
@@ -128,6 +156,7 @@ class SettingsManager:
                 "bracket_open": "[",
                 "bracket_close": "]",
                 "custom_shortcuts": [],
+                "default_shortcut_id": None,
             }
     
     def load(self) -> None:
@@ -151,9 +180,19 @@ class SettingsManager:
                 self.bracket_open = validated.get("bracket_open", "[")
                 self.bracket_close = validated.get("bracket_close", "]")
                 self.custom_shortcuts = validated.get("custom_shortcuts", [])
-                
-                # Migração automática DESABILITADA (não necessário para usuário único)
-                # self._migrate_legacy_prefix_if_needed(data)
+                self.default_shortcut_id = validated.get("default_shortcut_id", None)
+
+                # Migração automática do prefixo legado para custom shortcuts (necessário para retrocompatibilidade)
+                self._migrate_legacy_prefix_if_needed(data)
+
+                # Garante que o default_shortcut_id ainda é válido após migração
+                if self.custom_shortcuts:
+                    ids = {int(s.get("id")) for s in self.custom_shortcuts}
+                    if self.default_shortcut_id not in ids:
+                        enabled = [s for s in self.custom_shortcuts if s.get("enabled", True)]
+                        pick = (enabled[0] if enabled else self.custom_shortcuts[0])
+                        self.default_shortcut_id = int(pick.get("id"))
+                        self.save()
         except FileNotFoundError:
             pass  # Usa padrões do __init__
         except json.JSONDecodeError as e:
@@ -179,6 +218,7 @@ class SettingsManager:
                     "notification_duration": self.notification_duration,
                     "notification_enabled": self.notification_enabled,
                     "custom_shortcuts": self.custom_shortcuts,
+                    "default_shortcut_id": self.default_shortcut_id,
                 })
         except Exception as e:
             logging.error(f"Erro ao salvar configurações: {e}")
@@ -197,14 +237,18 @@ class SettingsManager:
         return {
             "prefix": self.date_prefix,
             "hotkey_copy_datetime": self.hotkey_copy_datetime,
+            "hotkey_search_history": self.hotkey_search_history,
             "hotkey_refresh_menu": self.hotkey_refresh_menu,
             "max_history_items": self.max_history_items,
             "clipboard_monitor_interval": self.clipboard_monitor_interval,
             "clipboard_idle_threshold": self.clipboard_idle_threshold,
             "datetime_format": self.datetime_format,
+            "bracket_open": self.bracket_open,
+            "bracket_close": self.bracket_close,
             "notification_duration": self.notification_duration,
             "notification_enabled": self.notification_enabled,
             "custom_shortcuts": self.custom_shortcuts,
+            "default_shortcut_id": self.default_shortcut_id,
         }
     
     def update_all(self, settings: Dict[str, Any]) -> None:
@@ -235,6 +279,15 @@ class SettingsManager:
             self.notification_enabled = bool(settings["notification_enabled"])
         if "custom_shortcuts" in settings:
             self.custom_shortcuts = self._validate_custom_shortcuts(settings["custom_shortcuts"])
+        if "default_shortcut_id" in settings:
+            try:
+                raw = settings.get("default_shortcut_id", None)
+                if raw is None or str(raw).strip() == "":
+                    self.default_shortcut_id = None
+                else:
+                    self.default_shortcut_id = int(raw)
+            except Exception:
+                self.default_shortcut_id = None
         self.save()
     
     # ========== MÉTODOS PARA CUSTOM SHORTCUTS (NOVO) ==========
@@ -318,6 +371,9 @@ class SettingsManager:
                 
                 self.custom_shortcuts = [migrated_shortcut]
                 self.next_shortcut_id = 2
+
+                # Usa o primeiro atalho como padrão do app
+                self.default_shortcut_id = 1
                 
                 # Salva migração
                 self.save()
@@ -343,7 +399,10 @@ class SettingsManager:
                     return False, "Hotkey e prefixo são obrigatórios", None
                 
                 # Verifica hotkeys reservados
-                reserved = ["ctrl+c", "ctrl+v", "ctrl+x", "ctrl+a", "ctrl+z"]
+                reserved = [
+                    "ctrl+c", "ctrl+v", "ctrl+x", "ctrl+a", "ctrl+z",
+                    "ctrl+shift+q", "ctrl+shift+r", "ctrl+shift+f",
+                ]
                 if hotkey in reserved:
                     return False, f"Hotkey '{hotkey}' é reservado pelo sistema", None
                 
@@ -426,7 +485,10 @@ class SettingsManager:
                     hotkey = hotkey.strip().lower()
                     
                     # Verifica hotkeys reservados (apenas clipboard básicos)
-                    reserved = ["ctrl+c", "ctrl+v", "ctrl+x", "ctrl+a", "ctrl+z"]
+                    reserved = [
+                        "ctrl+c", "ctrl+v", "ctrl+x", "ctrl+a", "ctrl+z",
+                        "ctrl+shift+q", "ctrl+shift+r", "ctrl+shift+f",
+                    ]
                     if hotkey in reserved:
                         return False, f"Hotkey '{hotkey}' é reservado pelo sistema"
                     

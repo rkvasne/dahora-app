@@ -5,6 +5,9 @@ dist/
 *.pyz
 *.zip
 
+# Allow versioned release artifacts committed via Git LFS
+!DahoraApp_v*.zip
+
 # Arquivos temporários e logs
 *.log
 *.tmp
@@ -38,6 +41,7 @@ venv/
 
 # Testes e cobertura
 .pytest_cache/
+.pytest_last.txt
 .coverage
 htmlcov/
 .tox/

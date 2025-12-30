@@ -6,6 +6,97 @@ import json
 from typing import Any
 
 
+def format_hotkey_display(hotkey: str) -> str:
+    """Formata hotkey para exibição humana.
+
+    Mantém o valor salvo/registrado intacto (ex.: 'ctrl+shift+exclam'), mas
+    exibe símbolos quando aplicável (ex.: 'Ctrl+Shift+!').
+    """
+    if not hotkey:
+        return ""
+
+    parts = [p for p in hotkey.replace(" ", "").split("+") if p]
+
+    modifiers = {
+        "ctrl": "Ctrl",
+        "control": "Ctrl",
+        "shift": "Shift",
+        "alt": "Alt",
+        "win": "Win",
+        "windows": "Win",
+        "cmd": "Cmd",
+        "command": "Cmd",
+    }
+
+    # Nomes usados por libs de hotkey (keyboard/tk) para símbolos
+    symbols = {
+        "exclam": "!",
+        "at": "@",
+        "numbersign": "#",
+        "number_sign": "#",
+        "hash": "#",
+        "dollar": "$",
+        "percent": "%",
+        "asciicircum": "^",
+        "caret": "^",
+        "ampersand": "&",
+        "asterisk": "*",
+        "parenleft": "(",
+        "parenright": ")",
+        "minus": "-",
+        "underscore": "_",
+        "equal": "=",
+        "plus": "+",
+        "comma": ",",
+        "period": ".",
+        "dot": ".",
+        "slash": "/",
+        "backslash": "\\",
+        "question": "?",
+        "quotedbl": '"',
+        "apostrophe": "'",
+        "grave": "`",
+        "tilde": "~",
+        "bracketleft": "[",
+        "bracketright": "]",
+        "braceleft": "{",
+        "braceright": "}",
+        "semicolon": ";",
+        "colon": ":",
+        "less": "<",
+        "greater": ">",
+        "bar": "|",
+    }
+
+    out = []
+    for raw in parts:
+        key = raw.lower()
+
+        if key in modifiers:
+            out.append(modifiers[key])
+            continue
+
+        if key in symbols:
+            out.append(symbols[key])
+            continue
+
+        # F-keys
+        if key.startswith("f") and key[1:].isdigit():
+            out.append("F" + key[1:])
+            continue
+
+        # Um único caractere: letra vira maiúscula; dígito/símbolo mantém
+        if len(raw) == 1:
+            out.append(raw.upper() if raw.isalpha() else raw)
+            continue
+
+        # Default: Title Case simples e troca _ por espaço
+        pretty = raw.replace("_", " ")
+        out.append(pretty[:1].upper() + pretty[1:] if pretty else pretty)
+
+    return "+".join(out)
+
+
 def atomic_write_text(path: str, text: str, encoding: str = "utf-8") -> None:
     """
     Escreve texto em arquivo de forma atômica (evita corrupção)

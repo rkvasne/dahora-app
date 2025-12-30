@@ -4,6 +4,7 @@ Dialog para editar/criar um shortcut
 import tkinter as tk
 from tkinter import ttk, messagebox
 import logging
+from dahora_app.utils import format_hotkey_display
 from typing import Callable, Optional, Dict, Any
 from datetime import datetime
 from dahora_app.ui.styles import Windows11Style
@@ -30,6 +31,7 @@ class ShortcutEditorDialog:
         
         self.is_detecting = False
         self.detected_keys = set()
+        self._detect_keyboard_hook = None
     
     def show(self) -> None:
         """Mostra o dialog de edição"""
@@ -360,10 +362,13 @@ class ShortcutEditorDialog:
                     return
             
             # Atualiza label
-            display = " + ".join(sorted(self.detected_keys)).upper()
-            keys_label.config(text=display)
+            keys_label.config(text=format_hotkey_display("+".join(sorted(self.detected_keys))))
         
-        keyboard.hook(on_key)
+        try:
+            self._detect_keyboard_hook = keyboard.hook(on_key)
+        except Exception as e:
+            logging.warning(f"Falha ao iniciar detecção de teclas: {e}")
+            self._detect_keyboard_hook = None
         
         # Centraliza
         detect_window.update_idletasks()
@@ -377,8 +382,12 @@ class ShortcutEditorDialog:
         
         try:
             import keyboard
-            keyboard.unhook_all()
-            keyboard.unhook_all()  # Chama duas vezes para garantir
+            if self._detect_keyboard_hook is not None:
+                try:
+                    keyboard.unhook(self._detect_keyboard_hook)
+                except Exception:
+                    pass
+            self._detect_keyboard_hook = None
         except Exception as e:
             logging.warning(f"Erro ao remover hooks de teclado: {e}")
         

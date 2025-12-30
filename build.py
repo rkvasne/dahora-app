@@ -62,8 +62,12 @@ def build_executable():
         except Exception:
             pass
 
-    # Define o nome do executável com versão
-    exe_name = 'DahoraApp_v0.2.2'
+    # Define o nome do executável com versão (fonte da verdade: constants.APP_VERSION)
+    try:
+        from dahora_app.constants import APP_VERSION
+        exe_name = f"DahoraApp_v{APP_VERSION}"
+    except Exception:
+        exe_name = 'DahoraApp_v0.2.3'
 
     # Verifica dependências
     try:

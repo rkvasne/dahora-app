@@ -178,8 +178,8 @@ class SettingsDialog:
             var_hotkey_refresh = tk.StringVar(value=self.current_settings.get("hotkey_refresh_menu", "ctrl+shift+r"))
             ttk.Entry(frame_refresh, textvariable=var_hotkey_refresh, width=30).pack(anchor=tk.W, pady=(2, 0))
             
-            # Aviso sobre atalhos
-            ttk.Label(tab_hotkeys, text="⚠️ Alterar atalhos requer reiniciar o aplicativo", font=(default_font, 8), foreground="orange", style="Card.TLabel").pack(anchor=tk.W, pady=(5, 0))
+            # Hotkeys agora aplicam sem reinicialização (o app re-registra automaticamente)
+            ttk.Label(tab_hotkeys, text="✅ Alterações em atalhos são aplicadas automaticamente", font=(default_font, 8), foreground="gray", style="Card.TLabel").pack(anchor=tk.W, pady=(5, 0))
             
             # Separador
             ttk.Separator(tab_hotkeys, orient='horizontal').pack(fill=tk.X, pady=15)

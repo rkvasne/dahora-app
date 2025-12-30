@@ -64,6 +64,9 @@ from dahora_app import (
     SearchDialog,
     CustomShortcutsDialog,
     AboutDialog,
+    ModernSettingsDialog,
+    ModernAboutDialog,
+    ModernSearchDialog,
 )
 from dahora_app.constants import (
     APP_TITLE,
@@ -125,6 +128,14 @@ class DahoraApp:
         self.settings_dialog = SettingsDialog()
         self.search_dialog = SearchDialog()
         self.custom_shortcuts_dialog = CustomShortcutsDialog()
+        self.modern_settings_dialog = ModernSettingsDialog()  # UI Moderna
+        self.modern_about_dialog = ModernAboutDialog()  # UI Moderna
+        self.modern_search_dialog = ModernSearchDialog()  # UI Moderna
+
+        # Root UI (Tk) único: evita criar CTk() e mainloop() em callbacks do tray.
+        self._ui_root = None
+        self._shutdown_requested = False
+        self._tray_thread: Optional[threading.Thread] = None
         self.about_dialog = AboutDialog()
         self.menu_builder = MenuBuilder()
         self.icon = None
@@ -178,6 +189,11 @@ class DahoraApp:
         self.search_dialog.set_copy_callback(self._copy_from_history)
         self.search_dialog.notification_callback = self.notification_manager.show_toast
         
+        # Modern search dialog (CustomTkinter)
+        self.modern_search_dialog.set_get_history_callback(lambda: self.clipboard_manager.clipboard_history)
+        self.modern_search_dialog.set_copy_callback(self._copy_from_history)
+        self.modern_search_dialog.notification_callback = self.notification_manager.show_toast
+        
         # Custom shortcuts dialog (agora com tabs completas)
         self.custom_shortcuts_dialog.set_current_settings(self.settings_manager.get_all())
         self.custom_shortcuts_dialog.set_on_add_callback(self._on_add_custom_shortcut_wrapper)  # Wrapper com registro imediato
@@ -188,11 +204,29 @@ class DahoraApp:
         self.custom_shortcuts_dialog.on_get_settings_callback = self.settings_manager.get_all  # Para recarregar dados frescos
         self.custom_shortcuts_dialog.notification_callback = self.notification_manager.show_toast
         
+        # Modern settings dialog (CustomTkinter - UI Moderna)
+        self.modern_settings_dialog.set_current_settings(self.settings_manager.get_all())
+        self.modern_settings_dialog.set_on_add_callback(self._on_add_custom_shortcut_wrapper)
+        self.modern_settings_dialog.set_on_update_callback(self._on_update_custom_shortcut_wrapper)
+        self.modern_settings_dialog.set_on_remove_callback(self._on_remove_custom_shortcut_wrapper)
+        self.modern_settings_dialog.set_on_validate_hotkey_callback(self.hotkey_manager.validate_hotkey)
+        self.modern_settings_dialog.set_on_save_callback(self._on_settings_saved)
+        self.modern_settings_dialog.on_get_settings_callback = self.settings_manager.get_all
+        self.modern_settings_dialog.notification_callback = self.notification_manager.show_toast
+        
         # Hotkeys
-        self.hotkey_manager.set_copy_datetime_callback(lambda: self.copy_datetime(source="Atalho"))
+        # Ctrl+Shift+Q: cola (paste) no cursor, preservando o clipboard
+        self.hotkey_manager.set_copy_datetime_callback(self._on_copy_datetime_hotkey)
         self.hotkey_manager.set_refresh_menu_callback(self._on_refresh_menu)
         self.hotkey_manager.set_search_callback(self._show_search_dialog)
         self.hotkey_manager.set_ctrl_c_callback(self._on_ctrl_c)
+
+        # Hotkeys configuráveis (usados pelo HotkeyManager.setup_all)
+        self.hotkey_manager.set_configured_hotkeys(
+            self.settings_manager.hotkey_copy_datetime,
+            self.settings_manager.hotkey_search_history,
+            self.settings_manager.hotkey_refresh_menu,
+        )
         
         # Menu builder callbacks
         self.menu_builder.set_copy_datetime_callback(self._copy_datetime_menu)
@@ -200,6 +234,7 @@ class DahoraApp:
         self.menu_builder.set_show_custom_shortcuts_callback(self._show_custom_shortcuts_dialog)  # Configurações unificadas
         self.menu_builder.set_refresh_menu_callback(self._refresh_menu_action)
         # Atualiza atalhos no menu
+        self.menu_builder.hotkey_copy_datetime = self.settings_manager.hotkey_copy_datetime
         self.menu_builder.hotkey_search_history = self.settings_manager.hotkey_search_history
         self.menu_builder.hotkey_refresh_menu = self.settings_manager.hotkey_refresh_menu
         self.menu_builder.set_get_recent_items_callback(self.clipboard_manager.get_recent_items)
@@ -218,8 +253,12 @@ class DahoraApp:
     
     def _on_settings_saved(self, settings: dict):
         """Callback quando configurações são salvas"""
+        # Snapshot antes da atualização (para fallback de campos que uma UI não envia)
+        previous_settings = self.settings_manager.get_all()
+
         # Atualiza o settings_manager
         self.settings_manager.update_all(settings)
+        current_settings = self.settings_manager.get_all()
         
         # Sincroniza componentes que dependem das configurações
         self.datetime_formatter.set_prefix(settings.get("prefix", ""))
@@ -229,26 +268,28 @@ class DahoraApp:
         )
         
         # Atualiza atalhos no menu builder
-        self.menu_builder.hotkey_search_history = settings.get("hotkey_search_history", "ctrl+shift+f")
-        self.menu_builder.hotkey_refresh_menu = settings.get("hotkey_refresh_menu", "ctrl+shift+r")
-        
-        # Avisa que algumas mudanças requerem restart
-        needs_restart = False
-        current_settings = self.settings_manager.get_all()
-        
-        # Verifica se hotkeys mudaram
-        if (settings.get("hotkey_copy_datetime") != current_settings.get("hotkey_copy_datetime") or
-            settings.get("hotkey_refresh_menu") != current_settings.get("hotkey_refresh_menu")):
-            needs_restart = True
-        
-        if needs_restart:
+        self.menu_builder.hotkey_copy_datetime = current_settings.get("hotkey_copy_datetime", "ctrl+shift+q")
+        self.menu_builder.hotkey_search_history = current_settings.get("hotkey_search_history", "ctrl+shift+f")
+        self.menu_builder.hotkey_refresh_menu = current_settings.get("hotkey_refresh_menu", "ctrl+shift+r")
+
+        # Aplica hotkeys imediatamente (sem precisar reiniciar)
+        copy_hk = current_settings.get("hotkey_copy_datetime") or previous_settings.get("hotkey_copy_datetime")
+        search_hk = current_settings.get("hotkey_search_history") or previous_settings.get("hotkey_search_history")
+        refresh_hk = current_settings.get("hotkey_refresh_menu") or previous_settings.get("hotkey_refresh_menu")
+
+        self.hotkey_manager.set_configured_hotkeys(copy_hk, search_hk, refresh_hk)
+        hotkey_results = self.hotkey_manager.apply_configured_hotkeys()
+
+        # Toast resumido (mostra erro apenas se algum falhou)
+        errors = [v for v in hotkey_results.values() if isinstance(v, str) and v.startswith("erro")]
+        if errors:
             self.notification_manager.show_toast(
-                "Dahora App", 
-                "Configurações salvas!\n\n⚠️ Reinicie o aplicativo para aplicar mudanças em atalhos.",
-                duration=5
+                "Dahora App",
+                "Configurações salvas!\n\n⚠️ Algumas teclas não puderam ser aplicadas agora.\nVerifique conflitos com atalhos personalizados.",
+                duration=5,
             )
         else:
-            self.notification_manager.show_toast("Dahora App", "Configurações salvas com sucesso!")
+            self.notification_manager.show_toast("Dahora App", "Configurações salvas e aplicadas!")
         
         logging.info(f"Configurações atualizadas: {settings}")
     
@@ -358,10 +399,29 @@ class DahoraApp:
         except Exception as e:
             logging.error(f"Erro ao processar custom shortcut: {e}")
             self.notification_manager.show_toast("Erro no Atalho", f"Falha ao processar atalho: {e}")
+
+    def _format_datetime_for_default_shortcut(self) -> str:
+        """Gera timestamp usando o atalho padrão (se existir); fallback para prefixo global."""
+        try:
+            default_id = getattr(self.settings_manager, "default_shortcut_id", None)
+        except Exception:
+            default_id = None
+
+        if default_id is not None:
+            try:
+                shortcut = self.settings_manager.get_custom_shortcut_by_id(int(default_id))
+            except Exception:
+                shortcut = None
+
+            if shortcut:
+                prefix = str(shortcut.get("prefix", ""))
+                return self.datetime_formatter.format_with_prefix(prefix)
+
+        return self.datetime_formatter.format_now()
     
     def copy_datetime(self, icon=None, item=None, source=None):
         """Copia a data e hora para a área de transferência"""
-        dt_string = self.datetime_formatter.format_now()
+        dt_string = self._format_datetime_for_default_shortcut()
         self.clipboard_manager.copy_text(dt_string)
         
         # NÃO adiciona timestamp ao histórico (desnecessário - sempre pode gerar novo)
@@ -391,6 +451,33 @@ class DahoraApp:
             except Exception:
                 self.notification_manager.show_toast("Dahora App",
                     f"Copiado com sucesso via {source}!\n{dt_string}\nTotal: {count}ª vez", duration=dur)
+
+    def _on_copy_datetime_hotkey(self) -> None:
+        """Ctrl+Shift+Q: cola data/hora onde o cursor está, preservando clipboard."""
+        try:
+            dt_string = self._format_datetime_for_default_shortcut()
+
+            clipboard_backup = None
+            try:
+                clipboard_backup = pyperclip.paste()
+            except Exception:
+                pass
+
+            pyperclip.copy(dt_string)
+            time.sleep(0.05)
+            keyboard.send('ctrl+v')
+            time.sleep(0.05)
+
+            if clipboard_backup is not None:
+                try:
+                    pyperclip.copy(clipboard_backup)
+                except Exception:
+                    pass
+
+            count = self.counter.increment()
+            logging.info(f"Hotkey copiar/colar data/hora acionado: resultado={dt_string}, total={count}ª vez")
+        except Exception as e:
+            logging.error(f"Erro no hotkey_copy_datetime: {e}")
     
     def _copy_datetime_menu(self, icon, item):
         """Wrapper para copiar data/hora do menu"""
@@ -407,8 +494,8 @@ class DahoraApp:
         self.settings_dialog.show()
     
     def _show_search_dialog(self):
-        """Mostra diálogo de busca no histórico"""
-        self.search_dialog.show()
+        """Mostra diálogo de busca no histórico (UI Moderna)"""
+        self._run_on_ui_thread(lambda: self.modern_search_dialog.show())
     
     def _on_add_custom_shortcut_wrapper(self, hotkey: str, prefix: str, description: str = "", enabled: bool = True):
         """Wrapper para adicionar custom shortcut E REGISTRAR IMEDIATAMENTE"""
@@ -497,10 +584,12 @@ class DahoraApp:
             return False, f"Erro: {e}"
     
     def _show_custom_shortcuts_dialog(self):
-        """Mostra diálogo de gerenciamento de custom shortcuts (NOVO)"""
-        # Passa TODAS as configurações (agora tem tabs)
-        self.custom_shortcuts_dialog.set_current_settings(self.settings_manager.get_all())
-        self.custom_shortcuts_dialog.show()
+        """Mostra diálogo de configurações com UI moderna (CustomTkinter)"""
+        def _open():
+            self.modern_settings_dialog.set_current_settings(self.settings_manager.get_all())
+            self.modern_settings_dialog.show()
+
+        self._run_on_ui_thread(_open)
     
     def _refresh_menu_action(self, icon, item):
         """Atualiza o menu manualmente"""
@@ -526,8 +615,122 @@ class DahoraApp:
         self._update_menu()
     
     def _show_about(self, icon, item):
-        """Mostra janela Sobre (estilo Windows nativo)"""
-        self.about_dialog.show()
+        """Mostra janela Sobre (UI Moderna)"""
+        self._run_on_ui_thread(lambda: self.modern_about_dialog.show())
+
+    def _ensure_ui_root(self):
+        """Garante um único CTk root rodando no main thread."""
+        if self._ui_root is not None:
+            return
+
+        import customtkinter as ctk
+        from dahora_app.ui.modern_styles import ModernTheme
+
+        ModernTheme.setup()
+        self._ui_root = ctk.CTk()
+        self._ui_root.withdraw()
+        self._ui_root.title("Dahora App")
+        try:
+            self._ui_root.iconbitmap('icon.ico')
+        except Exception:
+            pass
+
+        # Injeta o parent para os diálogos (toplevels)
+        try:
+            self.modern_settings_dialog.set_parent(self._ui_root)
+        except Exception:
+            pass
+        try:
+            self.modern_search_dialog.set_parent(self._ui_root)
+        except Exception:
+            pass
+        try:
+            self.modern_about_dialog.set_parent(self._ui_root)
+        except Exception:
+            pass
+
+    def _prewarm_ui(self) -> None:
+        """Constrói as janelas em idle (ocultas) para abertura instantânea depois."""
+        try:
+            # Settings é a mais pesada (tabs + widgets)
+            self.modern_settings_dialog.set_current_settings(self.settings_manager.get_all())
+            # força criação sem mostrar
+            if getattr(self.modern_settings_dialog, "window", None) is None:
+                self.modern_settings_dialog._create_window()  # noqa: SLF001
+                try:
+                    self.modern_settings_dialog.window.withdraw()
+                except Exception:
+                    pass
+        except Exception as e:
+            logging.warning(f"Falha ao pré-aquecer Configurações: {e}")
+            # Se criou parcialmente, destrói para evitar janela "quebrada" (abas faltando/scroll).
+            try:
+                w = getattr(self.modern_settings_dialog, "window", None)
+                if w is not None:
+                    try:
+                        w.destroy()
+                    except Exception:
+                        pass
+                self.modern_settings_dialog.window = None
+            except Exception:
+                pass
+
+        # Search/About são leves, mas também podem ser pré-criadas
+        try:
+            if getattr(self.modern_search_dialog, "window", None) is None:
+                self.modern_search_dialog._create_window()  # noqa: SLF001
+                try:
+                    self.modern_search_dialog.window.withdraw()
+                except Exception:
+                    pass
+        except Exception as e:
+            logging.warning(f"Falha ao pré-aquecer Busca: {e}")
+            try:
+                w = getattr(self.modern_search_dialog, "window", None)
+                if w is not None:
+                    try:
+                        w.destroy()
+                    except Exception:
+                        pass
+                self.modern_search_dialog.window = None
+            except Exception:
+                pass
+
+        try:
+            if getattr(self.modern_about_dialog, "window", None) is None:
+                self.modern_about_dialog._create_window()  # noqa: SLF001
+                try:
+                    self.modern_about_dialog.window.withdraw()
+                except Exception:
+                    pass
+        except Exception as e:
+            logging.warning(f"Falha ao pré-aquecer Sobre: {e}")
+            try:
+                w = getattr(self.modern_about_dialog, "window", None)
+                if w is not None:
+                    try:
+                        w.destroy()
+                    except Exception:
+                        pass
+                self.modern_about_dialog.window = None
+            except Exception:
+                pass
+
+    def _run_on_ui_thread(self, fn):
+        """Agenda uma ação no loop Tk (thread-safe)."""
+        # Se o UI root ainda não existe, cria agora.
+        # Importante: isso só é chamado depois do run() iniciar.
+        if self._ui_root is None:
+            try:
+                self._ensure_ui_root()
+            except Exception as e:
+                logging.error(f"Falha ao inicializar UI root: {e}")
+                return
+
+        try:
+            self._ui_root.after(0, fn)
+        except Exception as e:
+            logging.error(f"Falha ao agendar UI action: {e}")
 
     def _toggle_pause(self, icon=None, item=None):
         """Alterna estado de pausa"""
@@ -536,10 +739,20 @@ class DahoraApp:
         
         # Atualiza ícone
         logging.info(f"Alternando ícone. Pausado: {is_paused}")
-        new_icon = self.icon_manager.get_icon_for_tray(is_paused=is_paused)
-        self.icon.icon = new_icon
-        # Força atualização visual (algumas versões do pystray precisam disso)
-        self.icon.visible = True
+        try:
+            # IconManager é uma classe utilitária (não existe self.icon_manager)
+            new_icon = IconManager.get_icon_for_tray(is_paused=is_paused)
+            target_icon = icon or self.icon
+            if target_icon:
+                target_icon.icon = new_icon
+                # Força atualização visual (algumas versões do pystray precisam disso)
+                try:
+                    target_icon.visible = False
+                    target_icon.visible = True
+                except Exception:
+                    pass
+        except Exception as e:
+            logging.warning(f"Falha ao atualizar ícone do tray: {e}")
         
         status = "PAUSADO" if is_paused else "RETOMADO"
         msg = "Monitoramento de clipboard PAUSADO" if is_paused else "Monitoramento de clipboard RETOMADO"
@@ -548,18 +761,40 @@ class DahoraApp:
         self.notification_manager.show_toast("Dahora App", msg)  
     def _quit_app(self, icon, item):
         """Encerra o aplicativo"""
+        # IMPORTANTE: esse callback roda no thread do pystray.
+        # sys.exit() aqui NÃO encerra o processo; só encerra o thread.
+        # Precisamos pedir para o main thread (Tk) encerrar o mainloop.
+        if self._shutdown_requested:
+            return
+        self._shutdown_requested = True
+
         try:
             logging.info("Encerrando Dahora App...")
-            global mutex_handle
-            if mutex_handle and WIN32_AVAILABLE:
-                win32api.CloseHandle(mutex_handle)
-            self.hotkey_manager.cleanup()
+        except Exception:
+            pass
+
+        # Para o tray o quanto antes
+        try:
             if icon:
+                try:
+                    icon.visible = False
+                except Exception:
+                    pass
                 icon.stop()
+        except Exception:
+            pass
+
+        # Encerra o loop Tk no main thread
+        try:
+            if self._ui_root is not None:
+                self._ui_root.after(0, self._ui_root.quit)
+                # destroy após sair do mainloop (pequeno delay é ok)
+                self._ui_root.after(50, self._ui_root.destroy)
         except Exception as e:
-            logging.error(f"Erro ao encerrar app: {e}")
-        finally:
-            sys.exit(0)
+            try:
+                logging.error(f"Falha ao encerrar UI root: {e}")
+            except Exception:
+                pass
     
     def _update_menu(self):
         """Atualiza o menu do ícone"""
@@ -670,6 +905,15 @@ class DahoraApp:
             
             # Setup ícone
             self.setup_icon()
+
+            # UI root único (Tk): as janelas modernas serão Toplevels desse root.
+            self._ensure_ui_root()
+
+            # Pré-aquece UI em background (depois que o app já subiu)
+            try:
+                self._ui_root.after(700, self._prewarm_ui)
+            except Exception:
+                pass
             
             # Mensagem de boas-vindas
             total_history = self.clipboard_manager.get_history_size()
@@ -692,11 +936,20 @@ class DahoraApp:
                 f"Menu: clique direito no ícone\n\n"
                 f"Já acionado {count} vezes • Histórico: {total_history} itens")
             
-            # Inicia ícone (bloqueia até fechar)
+            # Inicia ícone em thread daemon.
+            # Isso evita que o processo fique preso caso o thread do tray não finalize corretamente.
             print(">>> Iniciando ícone da bandeja...")
-            logging.info("Iniciando icon.run()")
-            self.icon.run()
-            print(">>> Ícone da bandeja finalizado")
+            try:
+                self._tray_thread = threading.Thread(target=self.icon.run, daemon=True)
+                self._tray_thread.start()
+                logging.info("Thread do tray (pystray) iniciada")
+            except Exception as e:
+                logging.error(f"Falha ao iniciar thread do tray: {e}")
+
+            # Mantém o processo vivo e processa eventos de UI.
+            # As janelas (Configurações/Busca/Sobre) são Toplevels e são abertas via after().
+            self._ui_root.mainloop()
+            print(">>> Loop de UI finalizado")
         
         except KeyboardInterrupt:
             print("Dahora App encerrado pelo usuário")
@@ -714,6 +967,11 @@ class DahoraApp:
                     win32api.CloseHandle(mutex_handle)
                     logging.info("Mutex liberado")
                 self.hotkey_manager.cleanup()
+                try:
+                    if self.icon:
+                        self.icon.stop()
+                except Exception:
+                    pass
                 print("Recursos liberados com sucesso")
             except Exception as e:
                 logging.error(f"Erro ao limpar recursos: {e}")
