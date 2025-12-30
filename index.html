@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="landing/styles.css">
     <link rel="stylesheet" href="landing/dark-sections.css">
     <link rel="stylesheet" href="landing/faq.css">
+    <link rel="stylesheet" href="landing/footer.css">
     <link rel="stylesheet" href="landing/responsive.css">
 </head>
 
@@ -63,7 +64,7 @@
     <!-- Hero Section -->
     <section id="inicio" class="hero">
         <div class="hero-container animate-fade-in">
-            <div class="hero-version" data-i18n="hero.version">ATUALIZAÇÃO V.0.2.2</div>
+            <div class="hero-version" data-i18n="hero.version">ATUALIZAÇÃO V.0.2.4</div>
             <img src="assets/dahora_icon.png" alt="Dahora App Icon" class="hero-icon">
             <h1 class="hero-title">Dahora App</h1>
             <p class="hero-subtitle" data-i18n="hero.subtitle">
@@ -565,22 +566,59 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer" style="text-align: center; padding: 3rem 1rem;">
-        <p style="margin-bottom: 0.5rem;">
-            &copy; 2025 Dahora App v0.2.2. 
-            <br>
-            <span data-i18n="footer.developed_by">Criado por</span> 
-            <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">Raphael Kvasne</a>.
-        </p>
-        <p style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 1.5rem;" data-i18n="footer.privacy">
-            100% Open Source • Zero Telemetria • Offline First
-        </p>
-        
-        <div class="footer-links" style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; font-size: 0.9rem;">
-            <a href="https://github.com/rkvasne/dahora-app" target="_blank" rel="noopener noreferrer" style="color: var(--text-light); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-light)'">GitHub</a>
-            <a href="https://github.com/rkvasne/dahora-app/blob/main/README.md" target="_blank" rel="noopener noreferrer" style="color: var(--text-light); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-light)'">Docs</a>
-            <a href="https://github.com/rkvasne/dahora-app/blob/main/CHANGELOG.md" target="_blank" rel="noopener noreferrer" style="color: var(--text-light); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-light)'">Changelog</a>
-            <a href="https://github.com/rkvasne/dahora-app/issues" target="_blank" rel="noopener noreferrer" style="color: var(--text-light); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-light)'">Issues</a>
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="brand" style="gap: 0.75rem; align-items: center;">
+                    <img src="assets/dahora_icon.png" alt="Logo" class="brand-icon" style="width: 32px; height: 32px;">
+                    <div class="logo" style="font-size: 1.25rem; color: var(--primary-color); font-weight: 700;">Dahora App</div>
+                </div>
+                <p style="margin-top: 16px; font-size: 14px; line-height: 1.6;" data-i18n="footer.desc">Aplicativo Windows para colar timestamps formatados com atalhos personalizáveis.</p>
+            </div>
+            <div class="footer-links">
+                <h4 style="color: #fff; margin-bottom: 20px; font-size: 16px;" data-i18n="footer.links">Links Rápidos</h4>
+                <ul class="link-list">
+                    <li><a href="#recursos" data-i18n="nav.features">Recursos</a></li>
+                    <li><a href="#download" data-i18n="nav.download">Download</a></li>
+                    <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4 style="color: #fff; margin-bottom: 20px; font-size: 16px;" data-i18n="footer.social">Conecte-se</h4>
+                <div class="social-icons">
+                    <a href="https://github.com/rkvasne/dahora-app" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/rkvasne/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                            </path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" aria-label="Portfolio">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="margin: 0; font-size: 13px;" data-i18n="footer.copyright">© 2025 Dahora App v0.2.4 • Desenvolvido por <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a></p>
+            <p style="margin: 12px 0 0 0; font-size: 13px;" data-i18n="footer.privacy">100% Open Source • Zero Telemetry • Offline First</p>
         </div>
     </footer>
 
@@ -632,7 +670,7 @@
                 'nav.download': 'Download',
                 'nav.faq': 'FAQ',
                 'nav.github': 'GitHub',
-                'hero.version': 'ATUALIZAÇÃO V.0.2.2',
+                'hero.version': 'ATUALIZAÇÃO V.0.2.4',
                 'hero.title': 'Dahora App',
                 'hero.subtitle': 'Cola timestamps formatados onde você precisa.<br>Atalhos ilimitados • Clipboard preservado • Sem notificações',
                 'hero.badge.windows': '🪟 Windows 10/11',
@@ -725,10 +763,13 @@
                 'dev.role': 'Full Stack Developer',
                 'dev.bio': 'Especialista em criar ferramentas que unem produtividade e design. Criador do <strong>ProfitColors</strong>, <strong>Dahora App</strong> e <strong>Taskvasne</strong>. Focado em simplicidade e usabilidade.',
                 'dev.contact': 'Contato',
+                'footer.desc': 'Aplicativo Windows para colar timestamps formatados com atalhos personalizáveis.',
+                'footer.links': 'Links Rápidos',
+                'footer.social': 'Conecte-se',
                 'footer.developed_by': 'Criado por',
                 'footer.docs': 'Documentação',
                 'footer.license': 'Licença MIT',
-                'footer.copyright': '© 2025 Dahora App v0.2.2 • Desenvolvido por <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a>',
+                'footer.copyright': '© 2025 Dahora App v0.2.4 • Desenvolvido por <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a>',
                 'footer.privacy': '100% Open Source • Zero Telemetry • Offline First',
                 'footer.contact': 'Contato: <a href="mailto:rkvasne@gmail.com" style="color: var(--text-light); text-decoration: none;">rkvasne@gmail.com</a>'
             },
@@ -738,7 +779,7 @@
                 'nav.download': 'Download',
                 'nav.faq': 'FAQ',
                 'nav.github': 'GitHub',
-                'hero.version': 'UPDATE V.0.2.2',
+                'hero.version': 'UPDATE V.0.2.4',
                 'hero.title': 'Dahora App',
                 'hero.subtitle': 'Paste formatted timestamps where you need them.<br>Unlimited shortcuts • Preserved clipboard • No notifications',
                 'hero.badge.windows': '🪟 Windows 10/11',
@@ -763,7 +804,7 @@
                 'features.card6.title': '🔒 Private & Offline',
                 'features.card6.desc': '• Zero telemetry<br>• 100% offline<br>• Local data (%APPDATA%)<br>• Clean logs',
                 'news.title': '🚀 What\'s New in v0.2.2',
-                'news.subtitle': 'Key improvements in version 0.2.2.',
+                'news.subtitle': 'Key improvements in version 0.2.4.',
                 'news.card1.title': '🎨 Modern and Clean Interface',
                 'news.card1.desc': 'Renovated interface with clean and organized design. Focus on usability and user experience.',
                 'news.card2.title': '🎯 Unlimited Custom Shortcuts',
@@ -801,7 +842,7 @@
                 'install.warning.title': 'Windows Security Warning',
                 'install.warning.desc': '<p style="color: var(--text-gray); line-height: 1.7; margin-bottom: 1rem;">Windows may show warnings like "Windows protected your PC" or "Unrecognized app" when running this .exe, especially because it is not digitally signed. <strong>This is expected and does not mean the app is malicious.</strong></p><p style="color: var(--text-gray); line-height: 1.7;"><strong>How to run:</strong> Click "More info" → "Run anyway". If you prefer, review the code on GitHub and/or compile it yourself using <code>python build.py</code>.</p>',
                 'download.title': '📥 Free Download',
-                'download.subtitle': 'Version v0.2.2',
+                'download.subtitle': 'Version v0.2.4',
                 'download.btn': '💾 Download DahoraApp_v0.2.2.exe',
                 'download.detail1': '~31MB',
                 'download.detail2': 'Windows 10/11',
@@ -831,12 +872,15 @@
                 'dev.role': 'Full Stack Developer',
                 'dev.bio': 'Specialist in creating tools that combine productivity and design. Creator of <strong>ProfitColors</strong>, <strong>Dahora App</strong> and <strong>Taskvasne</strong>. Focused on simplicity and usability.',
                 'dev.contact': 'Contato',
+                'footer.desc': 'Windows app to paste formatted timestamps with customizable shortcuts.',
+                'footer.links': 'Quick Links',
+                'footer.social': 'Connect',
                 'footer.developed_by': 'Developed with 💙 by',
                 'footer.docs': 'Documentation',
                 'footer.license': 'MIT License',
-                'footer.copyright': '© 2025 Dahora App v0.2.2 • Developed by <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a>',
+                'footer.copyright': '© 2025 Dahora App v0.2.4 • Developed by <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a>',
                 'footer.privacy': '100% Open Source • Zero Telemetry • Offline First',
-                'footer.contact': 'Contato: <a href="mailto:rkvasne@gmail.com" style="color: var(--text-light); text-decoration: none;">rkvasne@gmail.com</a>'
+                'footer.contact': 'Contact: <a href="mailto:rkvasne@gmail.com" style="color: var(--text-light); text-decoration: none;">rkvasne@gmail.com</a>'
             }
         };
 
