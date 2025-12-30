@@ -16,6 +16,7 @@ from dahora_app.notifications import NotificationManager
 from dahora_app.hotkeys import HotkeyManager
 from dahora_app.hotkey_validator import HotkeyValidator
 from dahora_app.single_instance import SingleInstanceManager, initialize_single_instance, cleanup_single_instance
+from dahora_app.thread_sync import ThreadSyncManager, initialize_sync, get_sync_manager
 from dahora_app.ui import (
     PrefixDialog, IconManager, MenuBuilder, SettingsDialog, 
     SearchDialog, CustomShortcutsDialog, AboutDialog,
@@ -36,6 +37,9 @@ __all__ = [
     'SingleInstanceManager',
     'initialize_single_instance',
     'cleanup_single_instance',
+    'ThreadSyncManager',
+    'initialize_sync',
+    'get_sync_manager',
     'PrefixDialog',
     'IconManager',
     'MenuBuilder',

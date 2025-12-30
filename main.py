@@ -69,6 +69,7 @@ from dahora_app import (
     ModernSearchDialog,
 )
 from dahora_app.single_instance import initialize_single_instance, cleanup_single_instance
+from dahora_app.thread_sync import initialize_sync, get_sync_manager
 from dahora_app.constants import (
     APP_TITLE,
     APP_VERSION,
@@ -128,8 +129,8 @@ class DahoraApp:
 
         # Root UI (Tk) único: evita criar CTk() e mainloop() em callbacks do tray.
         self._ui_root = None
-        self._shutdown_requested = False
         self._tray_thread: Optional[threading.Thread] = None
+        self._sync_manager = initialize_sync()  # Gerenciar sincronização de threads
         self.about_dialog = AboutDialog()
         self.menu_builder = MenuBuilder()
         self.icon = None
@@ -758,9 +759,8 @@ class DahoraApp:
         # IMPORTANTE: esse callback roda no thread do pystray.
         # sys.exit() aqui NÃO encerra o processo; só encerra o thread.
         # Precisamos pedir para o main thread (Tk) encerrar o mainloop.
-        if self._shutdown_requested:
-            return
-        self._shutdown_requested = True
+        if not self._sync_manager.request_shutdown():
+            return  # Shutdown já foi requisitado por outra thread
 
         try:
             logging.info("Encerrando Dahora App...")
