@@ -10,6 +10,7 @@ from dahora_app.constants import (
     HOTKEY_REFRESH_MENU,
     HOTKEY_CTRL_C
 )
+from dahora_app.hotkey_validator import HotkeyValidator
 
 
 class HotkeyManager:
@@ -260,7 +261,7 @@ class HotkeyManager:
     # ========== MÉTODOS PARA CUSTOM SHORTCUTS (NOVO) ==========
     
     def validate_hotkey(self, hotkey: str, exclude_shortcut_id: Optional[int] = None) -> Tuple[bool, str]:
-        """Valida se hotkey pode ser usado
+        """Valida se hotkey pode ser usado com HotkeyValidator
         
         Args:
             hotkey: String do hotkey (ex: 'ctrl+shift+1')
@@ -275,6 +276,12 @@ class HotkeyManager:
             if not hotkey:
                 return False, "Hotkey não pode ser vazio"
             
+            # Usa HotkeyValidator para validação centralizada
+            validator = HotkeyValidator()
+            if not validator.is_valid(hotkey):
+                is_valid, reason = validator.validate_with_reason(hotkey)
+                return False, reason
+            
             # Verifica se é hotkey reservado
             if hotkey in self.reserved_hotkeys:
                 return False, f"Hotkey '{hotkey}' é reservado pelo sistema"
@@ -283,10 +290,6 @@ class HotkeyManager:
             for shortcut_id, used_hotkey in self.custom_shortcuts_hotkeys.items():
                 if shortcut_id != exclude_shortcut_id and used_hotkey == hotkey:
                     return False, f"Hotkey '{hotkey}' já está em uso por outro atalho"
-            
-            # Validação básica de formato (deve ter pelo menos um modificador)
-            if '+' not in hotkey:
-                return False, "Hotkey deve ter pelo menos um modificador (ctrl, alt, shift)"
             
             return True, "Hotkey válido"
         
