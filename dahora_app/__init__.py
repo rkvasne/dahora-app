@@ -14,6 +14,8 @@ from dahora_app.clipboard_manager import ClipboardManager
 from dahora_app.datetime_formatter import DateTimeFormatter
 from dahora_app.notifications import NotificationManager
 from dahora_app.hotkeys import HotkeyManager
+from dahora_app.hotkey_validator import HotkeyValidator
+from dahora_app.single_instance import SingleInstanceManager, initialize_single_instance, cleanup_single_instance
 from dahora_app.ui import (
     PrefixDialog, IconManager, MenuBuilder, SettingsDialog, 
     SearchDialog, CustomShortcutsDialog, AboutDialog,
@@ -30,6 +32,10 @@ __all__ = [
     'DateTimeFormatter',
     'NotificationManager',
     'HotkeyManager',
+    'HotkeyValidator',
+    'SingleInstanceManager',
+    'initialize_single_instance',
+    'cleanup_single_instance',
     'PrefixDialog',
     'IconManager',
     'MenuBuilder',

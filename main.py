@@ -68,6 +68,7 @@ from dahora_app import (
     ModernAboutDialog,
     ModernSearchDialog,
 )
+from dahora_app.single_instance import initialize_single_instance, cleanup_single_instance
 from dahora_app.constants import (
     APP_TITLE,
     APP_VERSION,
@@ -79,13 +80,7 @@ from dahora_app.constants import (
 )
 
 # Imports para verificação de instância única
-try:
-    import win32event
-    import win32con
-    import win32api
-    WIN32_AVAILABLE = True
-except ImportError:
-    WIN32_AVAILABLE = False
+# Movido para dahora_app/single_instance.py
 
 # Configuração de logging
 try:
@@ -110,7 +105,6 @@ except Exception as e:
 
 # Variáveis globais
 global_icon = None
-mutex_handle = None
 
 
 class DahoraApp:
@@ -835,32 +829,24 @@ class DahoraApp:
             logging.warning(f"Falha ao marcar aviso de privacidade: {e}")
     
     def check_single_instance(self):
-        """Verifica se já existe uma instância rodando"""
-        global mutex_handle
+        """Verifica se já existe uma instância rodando usando SingleInstanceManager"""
+        is_first, msg = initialize_single_instance("DahoraApp")
         
-        if not WIN32_AVAILABLE:
-            return True
+        if not is_first:
+            # Outra instância já está rodando - mostra notificação
+            notification_thread = threading.Thread(
+                target=self.notification_manager.show_toast,
+                args=("Dahora App Já em Execução",
+                      "O Dahora App já está rodando na bandeja do sistema!"),
+                daemon=False
+            )
+            notification_thread.start()
+            notification_thread.join(timeout=3.0)
+            logging.warning(f"[SingleInstance] {msg}")
+        else:
+            logging.info(f"[SingleInstance] {msg}")
         
-        mutex_name = "Global\\DahoraAppSingleInstance"
-        try:
-            mutex_handle = win32event.CreateMutex(None, False, mutex_name)
-            result = win32api.GetLastError()
-            
-            if result == 183:  # ERROR_ALREADY_EXISTS
-                notification_thread = threading.Thread(
-                    target=self.notification_manager.show_toast,
-                    args=("Dahora App Já em Execução",
-                          "O Dahora App já está rodando na bandeja do sistema!"),
-                    daemon=False
-                )
-                notification_thread.start()
-                notification_thread.join(timeout=3.0)
-                return False
-            
-            return True
-        except Exception as e:
-            print(f"Erro na verificação de instância única: {e}")
-            return True
+        return is_first
     
     def setup_icon(self):
         """Configura o ícone da bandeja"""
@@ -962,10 +948,7 @@ class DahoraApp:
             # Limpa recursos
             try:
                 logging.info("Limpando recursos...")
-                global mutex_handle
-                if mutex_handle and WIN32_AVAILABLE:
-                    win32api.CloseHandle(mutex_handle)
-                    logging.info("Mutex liberado")
+                cleanup_single_instance()
                 self.hotkey_manager.cleanup()
                 try:
                     if self.icon:
