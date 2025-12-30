@@ -7,6 +7,8 @@ dist/
 
 # Allow versioned release artifacts committed via Git LFS
 !DahoraApp_v*.zip
+!DahoraApp_v*.exe
+!DahoraApp_v*.spec
 
 # Arquivos temporários e logs
 *.log
