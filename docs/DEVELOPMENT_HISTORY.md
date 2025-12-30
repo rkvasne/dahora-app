@@ -51,7 +51,7 @@
 - Ajustes de contraste para garantir legibilidade em ambos os temas.
 
 #### 3. **Distribuição via Git LFS**
-- Executável `DahoraApp_v0.2.2.exe` hospedado diretamente no repositório via Git LFS.
+- Binários `DahoraApp_v*.exe` (e, posteriormente, `DahoraApp_v*.zip`) hospedados diretamente no repositório via Git LFS.
 - Link de download direto (`raw/main/...`), facilitando o acesso sem depender de releases manuais.
 - Configuração de `.gitattributes` para rastrear binários.
 
