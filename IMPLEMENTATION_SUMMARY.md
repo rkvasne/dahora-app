@@ -1,83 +1,92 @@
-# RESUMO DE IMPLEMENTAÇÃO - FASE 1 SECURITY HARDENING
+# RESUMO DE IMPLEMENTAÇÃO - PHASES 1, 4 & 5
 
 **Data:** December 30, 2025  
-**Status:** ✅ COMPLETO - Todos os testes passando (133/133)  
-**Citação do Usuário:** "SIM COMECE. SEM QUEBRAR NADA DO QUE JÁ ESTÁ FUNCIONANDO. SEJA CAUTELOSO"
+**Status:** ✅ COMPLETO - 178/178 testes passando  
+**Fases Finalizadas:** 3 (Security Hardening, Single Instance, Thread Sync)  
+**Próxima Fase:** Phase 6 (Callback Logic Consolidation)  
+**Citação do Usuário:** "SEM QUEBRAR NADA...SEJA CAUTELOSO"
 
 ---
 
-## 📊 Métricas Finais
+## 📊 Métricas Consolidadas
 
 | Métrica | Valor |
 |---------|-------|
-| **Testes Passando** | 133/133 (100%) |
+| **Testes Passando** | 178/178 (100%) |
 | **Funcionalidades Quebradas** | 0 |
-| **Novos Módulos** | 2 (hotkey_validator.py, schemas.py) |
-| **Linhas de Código Novo** | 850+ (testes: 420+, código: 430+) |
-| **Documentação Adicionada** | 1100+ linhas (ARCHITECTURE.md, HACKS.md) |
-| **Commits Realizados** | 5 commits atômicos |
+| **Novos Módulos** | 5 (hotkey_validator, schemas, single_instance, thread_sync, + 4 testes) |
+| **Linhas de Código Novo** | 2600+ (testes: 1300+, código: 1300+) |
+| **Documentação Adicionada** | 2500+ linhas |
+| **Commits Realizados** | 12 commits atômicos |
 | **Backward Compatibility** | 100% mantida |
+| **Race Conditions Eliminadas** | 2 (shutdown, UI singleton) |
+| **Vulnerabilidades Corrigidas** | 5 (validation, type safety, mutex, threading) |
 
 ---
 
-## 🎯 Fases Completadas
+## 🎯 Fases Completadas (3 de 9)
 
-### ✅ Phase 1a: HotkeyValidator Module (37 testes)
+### ✅ Phase 1: Security Hardening (66 testes)
 
-**Commit:** `a9accf1` - "security(hotkeys): Add HotkeyValidator with comprehensive tests"
+**Status:** Completo - 66/66 testes passando
 
-**Arquivo:** `dahora_app/hotkey_validator.py` (280 linhas)
+**Arquivos Criados:**
+- `dahora_app/hotkey_validator.py` (280 linhas)
+- `dahora_app/schemas.py` (167 linhas)
+- `tests/test_hotkey_validator.py` (650+ linhas, 37 testes)
+- `tests/test_schemas.py` (400+ linhas, 29 testes)
 
 **Funcionalidades:**
-- Validação de formato hotkey (modifier+key)
-- Bloqueio de teclas perigosas (Escape, Pause)
-- Normalização de hotkeys
-- Parsing de componentes
-- Sugestão de hotkeys livres
-- Suporte para símbolos (exclam→!, at→@, etc)
+- Validação centralizada de hotkeys
+- Type-safe configuration com Pydantic
+- Detecção de hotkeys perigosas (Escape, Pause)
+- Validação cruzada de configurações
+- Detecção de duplicatas
 
-**Testes:** 37 (100% passando)
-- Normalização: 10 testes
-- Parsing: 8 testes
-- Validação: 7 testes
-- Sugestões: 3 testes
-- Símbolos: 4 testes
-- Edge cases: 5 testes
+**Commits:** 3 commits descritivos
 
 ---
 
-### ✅ Phase 1b: Pydantic Schemas (29 testes)
+### ✅ Phase 4: Single Instance Manager (21 testes)
 
-**Commit:** `6c6ea77` - "security(config): Add Pydantic schemas for strict validation"
+**Status:** Completo - 21/21 testes passando
+**Critical Bug Resolvido:** #3 - Mutex incompleto permitia múltiplas instâncias
 
-**Arquivo:** `dahora_app/schemas.py` (167 linhas)
+**Arquivos Criados:**
+- `dahora_app/single_instance.py` (300+ linhas)
+- `tests/test_single_instance.py` (248 linhas, 21 testes)
 
-**Schemas Criados:**
-1. **CustomShortcutSchema** - Valida atalhos individuais
-   - Validação de hotkey format
-   - Sanitização de prefixo
-   - ID único e válido
+**Funcionalidades:**
+- Windows Mutex nativo (win32event)
+- Socket-based fallback para ambientes sem Windows
+- Notificação ao usuário se já houver instância
+- Limpeza de recursos segura
 
-2. **SettingsSchema** - Configurações completas
-   - Validação cruzada (brackets diferentes)
-   - Detecção de duplicatas
-   - Limites de range (min/max)
-   - Validação de formato datetime
-
-3. **NotificationSchema** - Configurações de notificações
-4. **AppConfigSchema** - Composição top-level
-
-**Testes:** 29 (100% passando)
-- CustomShortcutSchema: 8 testes
-- SettingsSchema: 16 testes
-- NotificationSchema: 2 testes
-- AppConfigSchema: 3 testes
+**Commits:** 2 commits descritivos
 
 ---
 
-### ✅ Phase 1c: Integração HotkeyValidator em hotkeys.py
+### ✅ Phase 5: Thread Synchronization (24 testes)
 
-**Commit:** `5efa16a` - "security(hotkeys): Integrate HotkeyValidator into HotkeyManager"
+**Status:** Completo - 24/24 testes passando
+**Important Bugs Resolvidos:** #4 e #5 - Thread sync e UI singleton
+
+**Arquivos Criados:**
+- `dahora_app/thread_sync.py` (180+ linhas)
+- `tests/test_thread_sync.py` (248 linhas, 24 testes)
+
+**Funcionalidades:**
+- ThreadSyncManager com RLock e Event primitives
+- Shutdown coordination atômico
+- Context managers para UI operations
+- Daemon thread creation helpers
+- Thread state checking e logging
+
+**Commits:** 1 commit descritivo
+
+---
+
+## 🔧 Integrações Realizadas
 
 **Mudanças:**
 - Importação de `HotkeyValidator`

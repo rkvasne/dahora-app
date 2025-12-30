@@ -10,7 +10,8 @@
 [![Version](https://img.shields.io/badge/version-0.2.3-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
 [![Python](https://img.shields.io/badge/python-3.8+-green.svg?style=for-the-badge)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg?style=for-the-badge)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg?style=for-the-badge)](tests/)
+[![Tests](https://img.shields.io/badge/tests-178%2F178-brightgreen.svg?style=for-the-badge)](tests/)
+[![Architecture](https://img.shields.io/badge/architecture-secure-brightblue.svg?style=for-the-badge)](docs/ARCHITECTURE.md)
 
 [Features](#-funcionalidades) • [Instalação](#-instalação) • [Como Usar](#-como-usar) • [Configuração](#-configuração) • [Desenvolvimento](#-desenvolvimento)
 
@@ -18,11 +19,37 @@
 
 ---
 
-## 🚀 Por que Dahora App?
+## � Segurança & Qualidade
+
+### Status de Implementação
+- ✅ **Phase 1:** Security Hardening (66 testes)
+  - Hotkey validation
+  - Pydantic schemas
+  - Type hints
+  
+- ✅ **Phase 4:** Single Instance Manager (21 testes)
+  - Windows mutex
+  - Instance protection
+  
+- ✅ **Phase 5:** Thread Synchronization (24 testes)
+  - Race condition fixes
+  - Safe shutdown coordination
+  
+**Total:** 178/178 testes passando (100%)
+
+### Documentação
+Veja [docs/](docs/) para documentação completa:
+- [ARCHITECTURE.md](docs/ARCHITECTURE.md) - Arquitetura detalhada
+- [HACKS.md](docs/HACKS.md) - Problemas identificados e soluções
+- [DEVELOPMENT_HISTORY.md](docs/DEVELOPMENT_HISTORY.md) - Histórico de desenvolvimento
+
+---
+
+## �🚀 Por que Dahora App?
 
 Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sistema leve e poderoso que revoluciona como você lida com timestamps. Ele roda silenciosamente na bandeja do sistema e permite que você cole a data e hora atual formatada em qualquer lugar, com um único atalho.
 
-**Novo na v0.2.3:** Documentação unificada e ajustes de consistência na interface moderna.
+**Novo na v0.2.3:** Segurança reforçada, thread-safe synchronization, single instance guarantee, 178 testes automatizados passando.
 
 ## ✨ Funcionalidades
 
