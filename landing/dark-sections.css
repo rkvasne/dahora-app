@@ -153,11 +153,11 @@
     background: 
         radial-gradient(900px circle at var(--mx, 50%) var(--my, 50%), rgba(0,120,212,0.08), transparent 40%),
         radial-gradient(1200px circle at 80% 100%, rgba(43,136,216,0.05), transparent 50%),
-        linear-gradient(180deg, var(--hero-dark-1) 0%, var(--hero-dark-2) 50%, var(--hero-dark-3) 100%);
+        linear-gradient(180deg, #2d3e54 0%, #1e2d42 50%, #0f172a 100%);
     color: white;
     position: relative;
     overflow: hidden;
-}
+}}
 
 .section-dark .section-title,
 .section-dark .section-subtitle {

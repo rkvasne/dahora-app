@@ -573,7 +573,7 @@
                     <img src="assets/dahora_icon.png" alt="Logo" class="brand-icon" style="width: 32px; height: 32px;">
                     <div class="logo" style="font-size: 1.25rem; color: var(--primary-color); font-weight: 700;">Dahora App</div>
                 </div>
-                <p style="margin-top: 16px; font-size: 14px; line-height: 1.6;" data-i18n="footer.desc">Aplicativo Windows para colar timestamps formatados com atalhos personalizáveis.</p>
+                <p style="margin-top: 0; font-size: 14px; line-height: 1.6;" data-i18n="footer.desc">Paste timestamps instantly.</p>
             </div>
             <div class="footer-links">
                 <h4 style="color: #fff; margin-bottom: 20px; font-size: 16px;" data-i18n="footer.links">Links Rápidos</h4>
@@ -617,8 +617,8 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p style="margin: 0; font-size: 13px;" data-i18n="footer.copyright">© 2025 Dahora App v0.2.4 • Desenvolvido por <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a></p>
-            <p style="margin: 12px 0 0 0; font-size: 13px;" data-i18n="footer.privacy">100% Open Source • Zero Telemetry • Offline First</p>
+            <p style="margin: 0 0 6px 0; font-size: 15px;" data-i18n="footer.copyright-main">© 2025 <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Kvasne</a> • Dahora App v0.2.4</p>
+            <p style="margin: 0; font-size: 13px;" data-i18n="footer.copyright-dev">Desenvolvido por <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a></p>
         </div>
     </footer>
 
@@ -763,14 +763,14 @@
                 'dev.role': 'Full Stack Developer',
                 'dev.bio': 'Especialista em criar ferramentas que unem produtividade e design. Criador do <strong>ProfitColors</strong>, <strong>Dahora App</strong> e <strong>Taskvasne</strong>. Focado em simplicidade e usabilidade.',
                 'dev.contact': 'Contato',
-                'footer.desc': 'Aplicativo Windows para colar timestamps formatados com atalhos personalizáveis.',
+                'footer.desc': 'Cole timestamps instantaneamente.',
                 'footer.links': 'Links Rápidos',
                 'footer.social': 'Conecte-se',
                 'footer.developed_by': 'Criado por',
                 'footer.docs': 'Documentação',
                 'footer.license': 'Licença MIT',
-                'footer.copyright': '© 2025 Dahora App v0.2.4 • Desenvolvido por <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a>',
-                'footer.privacy': '100% Open Source • Zero Telemetry • Offline First',
+                'footer.copyright-main': '© 2025 <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Kvasne</a> • Dahora App v0.2.4',
+                'footer.copyright-dev': 'Desenvolvido por <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a>',
                 'footer.contact': 'Contato: <a href="mailto:rkvasne@gmail.com" style="color: var(--text-light); text-decoration: none;">rkvasne@gmail.com</a>'
             },
             'en': {
@@ -872,14 +872,14 @@
                 'dev.role': 'Full Stack Developer',
                 'dev.bio': 'Specialist in creating tools that combine productivity and design. Creator of <strong>ProfitColors</strong>, <strong>Dahora App</strong> and <strong>Taskvasne</strong>. Focused on simplicity and usability.',
                 'dev.contact': 'Contato',
-                'footer.desc': 'Windows app to paste formatted timestamps with customizable shortcuts.',
+                'footer.desc': 'Paste timestamps instantly.',
                 'footer.links': 'Quick Links',
                 'footer.social': 'Connect',
                 'footer.developed_by': 'Developed with 💙 by',
                 'footer.docs': 'Documentation',
                 'footer.license': 'MIT License',
-                'footer.copyright': '© 2025 Dahora App v0.2.4 • Developed by <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a>',
-                'footer.privacy': '100% Open Source • Zero Telemetry • Offline First',
+                'footer.copyright-main': '© 2025 <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Kvasne</a> • Dahora App v0.2.4',
+                'footer.copyright-dev': 'Developed by <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a>',
                 'footer.contact': 'Contact: <a href="mailto:rkvasne@gmail.com" style="color: var(--text-light); text-decoration: none;">rkvasne@gmail.com</a>'
             }
         };
@@ -899,6 +899,9 @@
                 }
             });
         }
+
+        // Initialize with PT-BR
+        updateLanguage('pt-BR');
 
         langToggle.addEventListener('click', () => {
             const newLang = currentLang === 'pt-BR' ? 'en' : 'pt-BR';

@@ -3,20 +3,28 @@
     border-top: 1px solid rgba(255, 255, 255, 0.03);
     padding: 60px 40px 20px;
     background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-    margin-top: 80px;
+    margin-top: 0;
 }
 
 .footer-content {
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 40% 30% 30%;
     gap: 40px;
     margin-bottom: 40px;
+    align-items: flex-start;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .footer-brand p {
-    margin-top: 16px;
+    margin: 0;
+    padding: 0;
     font-size: 14px;
     color: rgba(255, 255, 255, 0.5);
     line-height: 1.6;
@@ -26,8 +34,13 @@
 .footer-social h4 {
     color: rgba(255, 255, 255, 0.8);
     margin-bottom: 20px;
+    margin-top: 0;
     font-size: 16px;
     font-weight: 600;
+    line-height: 1.2;
+    height: 32px;
+    display: flex;
+    align-items: center;
 }
 
 .link-list {
@@ -81,7 +94,7 @@
     text-align: center;
     padding-top: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.03);
-    font-size: 13px;
+    font-size: 14px;
     color: rgba(255, 255, 255, 0.4);
 }
 
@@ -119,6 +132,11 @@
     color: var(--primary-color);
     font-weight: 700;
     font-family: 'Poppins', sans-serif;
+    line-height: 1.2;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    height: 32px;
 }
 
 /* Responsive Footer */
