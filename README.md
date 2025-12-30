@@ -7,7 +7,7 @@
 **O gerenciador de timestamps definitivo para Windows.**  
 *Cole datas e horas formatadas instantaneamente com atalhos personalizáveis.*
 
-[![Version](https://img.shields.io/badge/version-0.2.3-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
+[![Version](https://img.shields.io/badge/version-0.2.4-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
 [![Python](https://img.shields.io/badge/python-3.8+-green.svg?style=for-the-badge)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg?style=for-the-badge)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-262%2F262-brightgreen.svg?style=for-the-badge)](tests/)
@@ -44,9 +44,10 @@
 
 ### Documentação
 Veja [docs/](docs/) para documentação completa:
+- [DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md) - Índice centralizado (comece aqui!)
 - [ARCHITECTURE.md](docs/ARCHITECTURE.md) - Arquitetura detalhada
 - [HACKS.md](docs/HACKS.md) - Problemas identificados e soluções
-- [DEVELOPMENT_HISTORY.md](docs/DEVELOPMENT_HISTORY.md) - Histórico de desenvolvimento
+- [DEVELOPMENT_HISTORY.md](docs/DEVELOPMENT_HISTORY.md) - Histórico técnico
 - [PHASE_6_PROGRESS.md](PHASE_6_PROGRESS.md) - Progresso da Fase 6 (completa)
 
 ---
