@@ -55,14 +55,40 @@
 
 ---
 
-## 📖 Documentos de Fase (Histórico)
+## 📖 Documentos de Fase (Completos & Consolidados)
 
-Os seguintes documentos rastreiam o progresso histórico de cada fase:
+Os seguintes documentos rastreiam o progresso histórico de cada fase com resumos completos:
 
-- **[PHASE_4_SUMMARY.md](PHASE_4_SUMMARY.md)** - Single Instance Manager Phase
-- **[PHASE_5_SUMMARY.md](PHASE_5_SUMMARY.md)** - Thread Synchronization Phase
-- **[PHASE_6_PROGRESS.md](PHASE_6_PROGRESS.md)** - Callback Logic Consolidation Phase
-- **[CONSOLIDATED_STATUS.md](CONSOLIDATED_STATUS.md)** - Status consolidado de todas as fases
+### Phase 1: Security Hardening
+- **[PHASE_1_SUMMARY.md](PHASE_1_SUMMARY.md)** - ✅ Resumo completo (66 testes)
+  - HotkeyValidator implementation
+  - Pydantic schemas
+  - Input validation & security
+
+### Phase 4: Single Instance Manager
+- **[PHASE_4_SUMMARY.md](PHASE_4_SUMMARY.md)** - ✅ Resumo completo (21 testes)
+  - Singleton pattern implementation
+  - Windows named pipes
+  - Instance synchronization
+
+### Phase 5: Thread Synchronization
+- **[PHASE_5_SUMMARY.md](PHASE_5_SUMMARY.md)** - ✅ Resumo completo (24 testes)
+  - ThreadSyncManager implementation
+  - UI thread synchronization
+  - Event handling
+
+### Phase 6: Callback Logic Consolidation
+- **[PHASE_6_SUMMARY.md](PHASE_6_SUMMARY.md)** - ✅ Resumo completo (84 testes)
+  - CallbackManager & Registry pattern
+  - Handler implementations (4 handlers)
+  - Integration tests
+  - *Consolidação dos antigos PHASE_6_PLAN.md e PHASE_6_PROGRESS.md*
+
+### Status Consolidado
+- **[CONSOLIDATED_STATUS.md](CONSOLIDATED_STATUS.md)** - Visão geral de todas as fases
+
+### Relatório Final
+- **[FINAL_REPORT_v0.2.4.md](FINAL_REPORT_v0.2.4.md)** - Relatório executivo da versão
 
 ---
 
