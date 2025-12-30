@@ -1,3 +1,11 @@
+# ⚠️ ARQUIVO DESCONTINUADO
+
+**Este documento foi consolidado em:** [PHASE_6_SUMMARY.md](PHASE_6_SUMMARY.md)
+
+Consulte o novo documento consolidado para informações atualizadas sobre a Phase 6.
+
+---
+
 # PHASE 6: Callback Logic Consolidation
 
 ## Objetivo
