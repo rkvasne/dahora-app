@@ -11,6 +11,8 @@ from threading import RLock
 from typing import Dict, Any, List, Optional, Tuple
 from dahora_app.constants import SETTINGS_FILE
 from dahora_app.utils import atomic_write_json
+from dahora_app.schemas import SettingsSchema
+from pydantic import ValidationError
 
 
 class SettingsManager:
@@ -47,7 +49,63 @@ class SettingsManager:
     
     def validate_settings(self, settings_dict: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Valida e sanitiza configurações carregadas
+        Valida e sanitiza configurações carregadas usando Pydantic schemas
+        
+        Args:
+            settings_dict: Dicionário com configurações brutas
+            
+        Returns:
+            Dicionário com configurações validadas
+        """
+        try:
+            # Tenta validação com Pydantic primeiro (mais rigorosa)
+            schema = SettingsSchema(
+                prefix=settings_dict.get("prefix", ""),
+                hotkey_copy_datetime=settings_dict.get("hotkey_copy_datetime", "ctrl+shift+q"),
+                hotkey_search_history=settings_dict.get("hotkey_search_history", "ctrl+shift+f"),
+                hotkey_refresh_menu=settings_dict.get("hotkey_refresh_menu", "ctrl+shift+r"),
+                max_history_items=settings_dict.get("max_history_items", 100),
+                clipboard_monitor_interval=settings_dict.get("clipboard_monitor_interval", 3.0),
+                clipboard_idle_threshold=settings_dict.get("clipboard_idle_threshold", 30),
+                datetime_format=settings_dict.get("datetime_format", "%d.%m.%Y-%H:%M"),
+                bracket_open=settings_dict.get("bracket_open", "["),
+                bracket_close=settings_dict.get("bracket_close", "]"),
+                notification_duration=settings_dict.get("notification_duration", 2),
+                notification_enabled=settings_dict.get("notification_enabled", True),
+                custom_shortcuts=settings_dict.get("custom_shortcuts", []),
+                default_shortcut_id=settings_dict.get("default_shortcut_id", None),
+            )
+            
+            # Converte schema validado para dict
+            return {
+                "prefix": schema.prefix,
+                "hotkey_copy_datetime": schema.hotkey_copy_datetime,
+                "hotkey_search_history": schema.hotkey_search_history,
+                "hotkey_refresh_menu": schema.hotkey_refresh_menu,
+                "max_history_items": schema.max_history_items,
+                "clipboard_monitor_interval": schema.clipboard_monitor_interval,
+                "clipboard_idle_threshold": schema.clipboard_idle_threshold,
+                "datetime_format": schema.datetime_format,
+                "notification_duration": schema.notification_duration,
+                "notification_enabled": schema.notification_enabled,
+                "bracket_open": schema.bracket_open,
+                "bracket_close": schema.bracket_close,
+                "custom_shortcuts": [s.model_dump() for s in schema.custom_shortcuts],
+                "default_shortcut_id": schema.default_shortcut_id,
+            }
+        
+        except ValidationError as e:
+            # Se validação Pydantic falha, faz fallback para validação manual (compat)
+            logging.warning(f"Validação Pydantic falhou, usando validação manual: {e}")
+            return self._validate_settings_manual(settings_dict)
+        
+        except Exception as e:
+            logging.error(f"Erro ao validar settings: {e}")
+            return self._get_default_settings()
+    
+    def _validate_settings_manual(self, settings_dict: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Validação manual compatível (fallback para Pydantic)
         
         Args:
             settings_dict: Dicionário com configurações brutas
@@ -141,23 +199,27 @@ class SettingsManager:
                 "default_shortcut_id": default_shortcut_id,
             }
         except Exception as e:
-            logging.error(f"Erro ao validar settings: {e}")
-            return {
-                "prefix": "",
-                "hotkey_copy_datetime": "ctrl+shift+q",
-                "hotkey_search_history": "ctrl+shift+f",
-                "hotkey_refresh_menu": "ctrl+shift+r",
-                "max_history_items": 100,
-                "clipboard_monitor_interval": 3,
-                "clipboard_idle_threshold": 30,
-                "datetime_format": "%d.%m.%Y-%H:%M",
-                "notification_duration": 2,
-                "notification_enabled": True,
-                "bracket_open": "[",
-                "bracket_close": "]",
-                "custom_shortcuts": [],
-                "default_shortcut_id": None,
-            }
+            logging.error(f"Erro em validação manual: {e}")
+            return self._get_default_settings()
+    
+    def _get_default_settings(self) -> Dict[str, Any]:
+        """Retorna configurações padrão"""
+        return {
+            "prefix": "",
+            "hotkey_copy_datetime": "ctrl+shift+q",
+            "hotkey_search_history": "ctrl+shift+f",
+            "hotkey_refresh_menu": "ctrl+shift+r",
+            "max_history_items": 100,
+            "clipboard_monitor_interval": 3.0,
+            "clipboard_idle_threshold": 30,
+            "datetime_format": "%d.%m.%Y-%H:%M",
+            "notification_duration": 2,
+            "notification_enabled": True,
+            "bracket_open": "[",
+            "bracket_close": "]",
+            "custom_shortcuts": [],
+            "default_shortcut_id": None,
+        }
     
     def load(self) -> None:
         """Carrega configurações do arquivo"""
