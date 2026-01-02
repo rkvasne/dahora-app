@@ -25,7 +25,15 @@ O build gera o `.exe` em `dist/`.
 
 ## 3) Gerar ZIP para download
 
-Exemplo (PowerShell):
+✅ Recomendado: o `build.py` já gera automaticamente um ZIP **somente com o artefato final** em `dist/`.
+
+```powershell
+py build.py
+# (opcional) desabilitar zip automático:
+# py build.py --no-zip
+```
+
+Alternativa (PowerShell):
 
 ```powershell
 $exe = Get-ChildItem dist -Filter "DahoraApp_v*.exe" | Select-Object -First 1
@@ -34,6 +42,15 @@ $zip = Join-Path "dist" ($exe.BaseName + ".zip")
 if (Test-Path $zip) { Remove-Item $zip -Force }
 Compress-Archive -Path $exe.FullName -DestinationPath $zip
 Write-Host "ZIP gerado: $zip"
+```
+
+⚠️ Evite criar ZIP “na raiz do repositório” (ex: `dahora-app-0.2.4.zip` compactando a pasta toda).
+Isso costuma incluir arquivos desnecessários (builds antigos, docs antigas, caches etc.). O ZIP de release deve conter apenas o executável (onefile) ou a pasta `dist/<nome>/` (onedir).
+
+Dica: existe um helper que faz essa limpeza e garante o ZIP correto:
+
+```bat
+scripts\prepare_release_artifacts.bat
 ```
 
 ## 4) Git LFS (artefatos grandes)
@@ -62,8 +79,8 @@ Isso configura hooks de Git para rastrear arquivos automaticamente.
 As regras ficam em `.gitattributes`. Para garantir rastreamento de `.exe` e `.zip`, mantenha:
 
 ```gitattributes
-*.exe filter=lfs diff=lfs merge=lfs -text
-*.zip filter=lfs diff=lfs merge=lfs -text
+dist/*.exe filter=lfs diff=lfs merge=lfs -text
+dist/*.zip filter=lfs diff=lfs merge=lfs -text
 ```
 
 Se precisar adicionar mais tipos (ex: `.iso`, `.dmg`):
@@ -78,15 +95,15 @@ git commit -m "chore: Rastrear .iso no Git LFS"
 
 #### Passo 1: Preparar arquivo
 ```powershell
-# Seu .exe ou .zip está em dist/ ou raiz
+# Seu .exe e .zip devem estar em dist/
 ls dist/*.exe
-ls *.zip
+ls dist/*.zip
 ```
 
 #### Passo 2: Adicionar ao Git (com -f se no .gitignore)
 ```powershell
 git add -f dist/DahoraApp_v0.2.4.exe
-git add DahoraApp_v0.2.4.zip
+git add dist/DahoraApp_v0.2.4.zip
 git add .gitattributes
 ```
 
@@ -184,14 +201,14 @@ git lfs pull
 
 # 4. Pronto! Arquivos .exe e .zip estarão completos
 ls dist/*.exe
-ls *.zip
+ls dist/*.zip
 ```
 
 ### 4.7) Checklist antes de Push
 
 - [ ] `git lfs version` retorna versão (LFS instalado)
 - [ ] `.gitattributes` contém `*.exe` e `*.zip`
-- [ ] Arquivo adicionado: `git add -f seu_arquivo.exe`
+- [ ] Arquivo adicionado: `git add dist/seu_arquivo.exe` e `git add dist/seu_arquivo.zip`
 - [ ] `.gitattributes` adicionado: `git add .gitattributes`
 - [ ] Commit realizado: `git commit -m "..."`
 - [ ] Push seguro: `git push origin main` (mostra upload LFS)

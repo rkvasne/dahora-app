@@ -10,6 +10,40 @@ import os
 import time
 
 
+def _create_release_zip(exe_name: str) -> str | None:
+    """Cria um ZIP somente com o artefato final em dist/.
+
+    - Se existir dist/<exe_name>.exe (onefile), zipa apenas o .exe.
+    - Se existir dist/<exe_name>/ (onedir), zipa a pasta inteira.
+    """
+    from pathlib import Path
+    import zipfile
+
+    dist_dir = Path('dist')
+    exe_path = dist_dir / f'{exe_name}.exe'
+    onedir_path = dist_dir / exe_name
+    zip_path = dist_dir / f'{exe_name}.zip'
+
+    if zip_path.exists():
+        zip_path.unlink()
+
+    if exe_path.exists():
+        with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED) as zf:
+            zf.write(exe_path, arcname=exe_path.name)
+        return str(zip_path)
+
+    if onedir_path.exists() and onedir_path.is_dir():
+        with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED) as zf:
+            for file_path in onedir_path.rglob('*'):
+                if file_path.is_dir():
+                    continue
+                arcname = str(file_path.relative_to(dist_dir))
+                zf.write(file_path, arcname=arcname)
+        return str(zip_path)
+
+    return None
+
+
 def build_executable():
     """Gera o executável usando PyInstaller"""
     print(">>> Iniciando build do Dahora App...")
@@ -158,6 +192,13 @@ def build_executable():
         subprocess.run(cmd, check=True)
         print("\n>>> Build concluido com sucesso!")
         print(f">>> Executavel: dist/{exe_name}.exe")
+
+        if '--no-zip' not in sys.argv:
+            zip_created = _create_release_zip(exe_name)
+            if zip_created:
+                print(f">>> ZIP gerado: {zip_created}")
+            else:
+                print(">>> Aviso: Não foi possível gerar ZIP (artefato não encontrado em dist/)")
     except subprocess.CalledProcessError as e:
         print(f"\n>>> Erro ao gerar executavel: {e}")
         sys.exit(1)

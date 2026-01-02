@@ -108,6 +108,27 @@ scripts/
 ### Versão do executável
 
 O `rebuild_clean.bat` procura automaticamente por `dist\DahoraApp_v*.exe`.
+
+### 📦 **prepare_release_artifacts** (recomendado para release)
+
+Prepara os arquivos corretos para enviar ao Git LFS, evitando ZIP do repositório inteiro.
+
+Executa:
+- Move (por padrão) `DahoraApp_v*.zip/.exe` e `dahora-app-*.zip` fora de `dist/` para `.release_trash/`.
+- Garante que exista `dist/DahoraApp_vX.Y.Z.zip` contendo apenas o `dist/DahoraApp_vX.Y.Z.exe`.
+- Imprime os comandos `git add` recomendados.
+
+Uso:
+
+```bat
+scripts\prepare_release_artifacts.bat
+```
+
+Ou:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\prepare_release_artifacts.ps1
+```
 Isso evita ter que atualizar o script a cada incremento de versão.
 
 Para detalhes do processo de release (ZIP/LFS), veja [docs/RELEASE.md](../docs/RELEASE.md).

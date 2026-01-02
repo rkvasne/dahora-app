@@ -1,13 +1,13 @@
 # Build artifacts
 build/
-dist/
+dist/*
 *.exe
 *.pyz
 *.zip
 
 # Allow versioned release artifacts committed via Git LFS
-!DahoraApp_v*.zip
-!DahoraApp_v*.exe
+!dist/DahoraApp_v*.zip
+!dist/DahoraApp_v*.exe
 !DahoraApp_v*.spec
 
 # Arquivos temporários e logs
@@ -38,6 +38,9 @@ __pycache__/
 .Python
 env/
 venv/
+
+# Release helper trash (arquivos movidos da raiz)
+.release_trash/
 
 # PyInstaller
 *.manifest
