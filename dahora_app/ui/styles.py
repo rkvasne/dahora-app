@@ -3,6 +3,9 @@ Estilos Windows 11 para a aplicação
 """
 import tkinter as tk
 from tkinter import ttk, font
+from typing import Any, cast
+
+Window = tk.Tk | tk.Toplevel
 
 
 class Windows11Style:
@@ -104,7 +107,7 @@ class Windows11Style:
             return 'dark' # Fallback seguro
 
     @staticmethod
-    def apply_dark_title_bar(window: tk.Tk):
+    def apply_dark_title_bar(window: Window):
         """
         Força a barra de título escura no Windows 10/11
         """
@@ -129,7 +132,7 @@ class Windows11Style:
             pass
 
     @staticmethod
-    def configure_window(window: tk.Tk, title: str = "Dahora App", size: str = "700x450"):
+    def configure_window(window: Window, title: str = "Dahora App", size: str = "700x450"):
         """Configura janela com estilo moderno"""
         window.title(title)
         window.geometry(size)
@@ -157,7 +160,7 @@ class Windows11Style:
     @staticmethod
     def configure_listbox(listbox: tk.Listbox):
         """Configura Listbox com estilo moderno e melhor interatividade"""
-        listbox.configure(
+        cast(Any, listbox).configure(
             background=Windows11Style.COLORS['surface'],
             foreground=Windows11Style.COLORS['text'],
             selectbackground=Windows11Style.COLORS['accent'],
@@ -193,7 +196,7 @@ class Windows11Style:
             pass
 
     @staticmethod
-    def configure_styles(window: tk.Tk):
+    def configure_styles(window: Window):
         """Configura todos os estilos com design moderno"""
         style = ttk.Style(window)
         

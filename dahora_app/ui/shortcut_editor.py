@@ -30,8 +30,8 @@ class ShortcutEditorDialog:
         self.preview_label: Optional[ttk.Label] = None
         
         self.is_detecting = False
-        self.detected_keys = set()
-        self._detect_keyboard_hook = None
+        self.detected_keys: set[str] = set()
+        self._detect_keyboard_hook: Optional[Any] = None
     
     def show(self) -> None:
         """Mostra o dialog de edição"""
@@ -55,31 +55,32 @@ class ShortcutEditorDialog:
                 logging.error(f"Parent window não é válida: {e}")
                 raise Exception("Janela pai não é mais válida")
             
-            self.window = tk.Toplevel(self.parent)
+            window = tk.Toplevel(self.parent)
+            self.window = window
             logging.info("tk.Toplevel criado com sucesso")
             
             # Aplica estilo Windows 11
-            Windows11Style.configure_window(self.window, title, "600x500")
-            Windows11Style.configure_styles(self.window)
+            Windows11Style.configure_window(window, title, "600x500")
+            Windows11Style.configure_styles(window)
             logging.info("Estilos aplicados")
             
-            self.window.resizable(False, False)
-            self.window.transient(self.parent)
-            self.window.grab_set()  # Torna a janela modal
+            window.resizable(False, False)
+            window.transient(self.parent)
+            window.grab_set()  # Torna a janela modal
             logging.info("Propriedades da janela configuradas")
             
             self._create_window_content()
             logging.info("Conteúdo da janela criado")
             
             # Força a janela para frente e foca
-            self.window.lift()
-            self.window.focus_force()
-            self.window.attributes('-topmost', True)
-            self.window.after(100, lambda: self.window.attributes('-topmost', False))
+            window.lift()
+            window.focus_force()
+            window.attributes('-topmost', True)
+            window.after(100, lambda: window.attributes('-topmost', False))
             
             # Verifica se a janela foi realmente criada
-            self.window.update_idletasks()
-            if self.window.winfo_exists():
+            window.update_idletasks()
+            if window.winfo_exists():
                 logging.info("Janela de edição exibida com sucesso")
             else:
                 logging.error("Janela foi criada mas não existe")
@@ -159,9 +160,12 @@ class ShortcutEditorDialog:
         """Cria o conteúdo da janela com design moderno"""
         try:
             logging.info("Criando conteúdo moderno da janela de edição")
+            window = self.window
+            if window is None:
+                raise Exception("Janela não inicializada")
             
             # Frame principal com padding generoso
-            main_frame = Windows11Style.create_modern_card(self.window, padding=24)
+            main_frame = Windows11Style.create_modern_card(window, padding=24)
             main_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
             
             # Título da seção
@@ -253,17 +257,17 @@ class ShortcutEditorDialog:
             self._validate_hotkey()
             
             # Centraliza janela
-            self.window.update_idletasks()
-            x = self.parent.winfo_x() + (self.parent.winfo_width() // 2) - (self.window.winfo_width() // 2)
-            y = self.parent.winfo_y() + (self.parent.winfo_height() // 2) - (self.window.winfo_height() // 2)
-            self.window.geometry(f"+{x}+{y}")
+            window.update_idletasks()
+            x = self.parent.winfo_x() + (self.parent.winfo_width() // 2) - (window.winfo_width() // 2)
+            y = self.parent.winfo_y() + (self.parent.winfo_height() // 2) - (window.winfo_height() // 2)
+            window.geometry(f"+{x}+{y}")
             
             # Protocolo de fechamento
-            self.window.protocol("WM_DELETE_WINDOW", self._on_cancel_clicked)
+            window.protocol("WM_DELETE_WINDOW", self._on_cancel_clicked)
             
             # Atalhos de teclado
-            self.window.bind('<Escape>', lambda e: self._on_cancel_clicked())
-            self.window.bind('<Return>', lambda e: self._on_save_clicked())
+            window.bind('<Escape>', lambda e: self._on_cancel_clicked())
+            window.bind('<Return>', lambda e: self._on_save_clicked())
             
             logging.info("Janela moderna de edição criada com sucesso")
             
@@ -313,6 +317,9 @@ class ShortcutEditorDialog:
     
     def _start_detecting(self) -> None:
         """Inicia detecção de teclas"""
+        window = self.window
+        if window is None:
+            return
         try:
             import keyboard  # Lazy import apenas quando necessário
         except ImportError:
@@ -323,10 +330,10 @@ class ShortcutEditorDialog:
         self.detected_keys.clear()
         
         # Cria janela de detecção
-        detect_window = tk.Toplevel(self.window)
+        detect_window = tk.Toplevel(window)
         detect_window.title("Detectar Teclas")
         detect_window.geometry("400x200")
-        detect_window.transient(self.window)
+        detect_window.transient(window)
         detect_window.grab_set()
         
         ttk.Label(detect_window, text="Pressione a combinação de teclas desejada...", 
@@ -372,8 +379,8 @@ class ShortcutEditorDialog:
         
         # Centraliza
         detect_window.update_idletasks()
-        x = self.window.winfo_x() + (self.window.winfo_width() // 2) - (detect_window.winfo_width() // 2)
-        y = self.window.winfo_y() + (self.window.winfo_height() // 2) - (detect_window.winfo_height() // 2)
+        x = window.winfo_x() + (window.winfo_width() // 2) - (detect_window.winfo_width() // 2)
+        y = window.winfo_y() + (window.winfo_height() // 2) - (detect_window.winfo_height() // 2)
         detect_window.geometry(f"+{x}+{y}")
     
     def _stop_detecting(self, detect_window: tk.Toplevel, hotkey: Optional[str]) -> None:

@@ -42,13 +42,13 @@ class ModernShortcutEditor:
         self.var_enabled = ctk.BooleanVar(master=self.parent, value=self.shortcut.get("enabled", True))
         
         # Labels de feedback
-        self.validation_label = None
-        self.preview_label = None
+        self.validation_label: Optional[ModernLabel] = None
+        self.preview_label: Optional[ctk.CTkLabel] = None
         
         # Estado de detecção
         self.is_detecting = False
-        self.detected_keys = set()
-        self._detect_pressed_mods = set()
+        self.detected_keys: set[str] = set()
+        self._detect_pressed_mods: set[str] = set()
         self._detect_main_key: Optional[str] = None
     
     def show(self) -> None:
@@ -234,18 +234,22 @@ class ModernShortcutEditor:
     
     def _start_detecting(self) -> None:
         """Inicia detecção de teclas"""
+        window = self.window
+        if window is None:
+            return
+
         self.is_detecting = True
         self.detected_keys.clear()
         self._detect_pressed_mods.clear()
         self._detect_main_key = None
         
         # Janela de detecção
-        detect = ctk.CTkToplevel(self.window)
+        detect = ctk.CTkToplevel(window)
         detect.title("Detectar Teclas")
         detect.geometry("400x180")
         detect.resizable(False, False)
         detect.configure(fg_color=self.colors['bg'])
-        detect.transient(self.window)
+        detect.transient(window)
         detect.grab_set()
         
         # Dark title bar
@@ -362,8 +366,8 @@ class ModernShortcutEditor:
         
         # Centraliza
         detect.update_idletasks()
-        x = self.window.winfo_x() + (self.window.winfo_width() // 2) - (detect.winfo_width() // 2)
-        y = self.window.winfo_y() + (self.window.winfo_height() // 2) - (detect.winfo_height() // 2)
+        x = window.winfo_x() + (window.winfo_width() // 2) - (detect.winfo_width() // 2)
+        y = window.winfo_y() + (window.winfo_height() // 2) - (detect.winfo_height() // 2)
         detect.geometry(f"+{x}+{y}")
     
     def _stop_detecting(self, detect_window: ctk.CTkToplevel, hotkey: Optional[str]) -> None:

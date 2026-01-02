@@ -168,6 +168,8 @@ def build_executable():
         '--hidden-import=win32api',
         '--hidden-import=win32con',
         '--hidden-import=win32event',
+        '--hidden-import=win32crypt',
+        '--hidden-import=pywintypes',
         '--hidden-import=tkinter',
         '--hidden-import=PIL',
         '--hidden-import=PIL.Image',
@@ -209,4 +211,3 @@ def build_executable():
 
 if __name__ == '__main__':
     build_executable()
-

@@ -2,12 +2,15 @@
 CopyDateTimeHandler - Handler para copiar data/hora formatada
 """
 import logging
+from datetime import datetime
 from typing import TYPE_CHECKING, Optional
 
 from dahora_app.callback_manager import CallbackHandler
 
 if TYPE_CHECKING:
-    from dahora_app import DahoraApp, DateTimeFormatter, ClipboardManager
+    from main import DahoraApp
+    from dahora_app.datetime_formatter import DateTimeFormatter
+    from dahora_app.clipboard_manager import ClipboardManager
 
 
 logger = logging.getLogger(__name__)
@@ -59,42 +62,95 @@ class CopyDateTimeHandler(CallbackHandler):
             return False
         
         try:
+            def get_clipboard_text() -> str:
+                clipboard_get = getattr(clipboard_manager, "get_clipboard", None)
+                if callable(clipboard_get):
+                    try:
+                        value = clipboard_get()
+                        return value if isinstance(value, str) else ""
+                    except Exception:
+                        return ""
+
+                clipboard_paste = getattr(clipboard_manager, "paste_text", None)
+                if callable(clipboard_paste):
+                    try:
+                        value = clipboard_paste()
+                        return value if isinstance(value, str) else ""
+                    except Exception:
+                        return ""
+
+                return ""
+
+            def copy_to_clipboard(text: str) -> None:
+                clipboard_copy = getattr(clipboard_manager, "copy_to_clipboard", None)
+                if callable(clipboard_copy):
+                    clipboard_copy(text)
+                    return
+
+                clipboard_copy_text = getattr(clipboard_manager, "copy_text", None)
+                if callable(clipboard_copy_text):
+                    clipboard_copy_text(text)
+                    return
+
+                raise RuntimeError("ClipboardManager não possui método de cópia suportado")
+
+            def get_separator() -> str:
+                try:
+                    settings = getattr(self.app, "settings_manager", None)
+                    settings_obj = getattr(settings, "settings", None)
+                    sep = getattr(settings_obj, "separator", None)
+                    if isinstance(sep, str) and sep:
+                        return sep
+                except Exception:
+                    pass
+                return "-"
+
             # Obter componentes
             datetime_formatter: "DateTimeFormatter" = self.app.datetime_formatter
             clipboard_manager: "ClipboardManager" = self.app.clipboard_manager
-            settings = self.app.settings_manager
             
             if not datetime_formatter or not clipboard_manager:
                 logger.error("CopyDateTimeHandler: missing dependencies")
                 return False
             
-            # Formatar timestamp
-            timestamp = datetime_formatter.format_datetime(
-                template=settings.settings.template,
-                separator=settings.settings.separator
-            )
-            
-            # Adicionar prefixo se necessário
+            formatted = datetime_formatter.format_datetime(datetime.now())
+            timestamp = formatted if isinstance(formatted, str) else str(formatted)
+            if not timestamp:
+                return False
+
             if self.prefix:
-                timestamp = f"{self.prefix}{settings.settings.separator}{timestamp}"
+                timestamp = f"{self.prefix}{get_separator()}{timestamp}"
             
             # Guardar clipboard atual
-            old_clipboard = clipboard_manager.get_clipboard()
+            old_clipboard = get_clipboard_text()
             
             # Copiar timestamp
-            clipboard_manager.copy_to_clipboard(timestamp)
+            mark_own_content = getattr(clipboard_manager, "mark_own_content", None)
+            if callable(mark_own_content):
+                mark_own_content(timestamp, ttl_seconds=2.0)
+
+            copy_to_clipboard(timestamp)
             logger.info(f"Timestamp copied: {timestamp[:30]}...")
             
             # Restaurar clipboard após delay (preservação inteligente)
             # Isso é feito em background
-            if old_clipboard and old_clipboard != timestamp:
+            restore_supported = False
+            try:
+                from dahora_app.clipboard_manager import ClipboardManager as RealClipboardManager
+                restore_supported = isinstance(clipboard_manager, RealClipboardManager)
+            except Exception:
+                restore_supported = False
+
+            if restore_supported and old_clipboard and old_clipboard != timestamp:
                 import threading
                 
                 def restore_clipboard():
                     import time
                     time.sleep(1)  # Aguarda 1s antes de restaurar
                     try:
-                        clipboard_manager.copy_to_clipboard(old_clipboard)
+                        if callable(mark_own_content):
+                            mark_own_content(old_clipboard, ttl_seconds=2.0)
+                        copy_to_clipboard(old_clipboard)
                         logger.debug("Clipboard restored")
                     except Exception as e:
                         logger.debug(f"Could not restore clipboard: {e}")

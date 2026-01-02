@@ -303,6 +303,8 @@ class ModernSettingsDialog:
             icon_label = parts.get("icon")
             text_label = parts.get("text")
             is_active = key == self._active_page
+            if frame is None or icon_label is None or text_label is None:
+                continue
 
             try:
                 if is_active:
@@ -1135,9 +1137,11 @@ class ModernSettingsDialog:
 
             is_default = False
             try:
+                raw_shortcut_id = shortcut.get("id")
                 is_default = (
                     self.default_shortcut_id is not None
-                    and int(shortcut.get("id")) == int(self.default_shortcut_id)
+                    and raw_shortcut_id is not None
+                    and int(str(raw_shortcut_id)) == int(str(self.default_shortcut_id))
                 )
             except Exception:
                 is_default = False

@@ -7,7 +7,7 @@
 **O gerenciador de timestamps definitivo para Windows.**  
 *Cole datas e horas formatadas instantaneamente com atalhos personalizáveis.*
 
-[![Version](https://img.shields.io/badge/version-0.2.4-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
+[![Version](https://img.shields.io/badge/version-0.2.5-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
 [![Python](https://img.shields.io/badge/python-3.8+-green.svg?style=for-the-badge)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg?style=for-the-badge)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-262%2F262-brightgreen.svg?style=for-the-badge)](tests/)
@@ -23,7 +23,7 @@
 
 Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sistema leve e poderoso que revoluciona como você lida com timestamps. Ele roda silenciosamente na bandeja do sistema e permite que você cole a data e hora atual formatada em qualquer lugar, com um único atalho.
 
-**Novo na v0.2.4:** Documentação consolidada e unificada, Phase 6 completa com sistema de callbacks, **262 testes automatizados passando**, arquitetura refatorada e pronta para produção.
+**Novo na v0.2.5:** Correções de persistência do histórico do clipboard (DPAPI) e ajustes de build no Windows.
 
 ## ✨ Funcionalidades
 

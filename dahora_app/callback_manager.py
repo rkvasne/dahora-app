@@ -209,7 +209,7 @@ def initialize_callbacks() -> CallbackRegistry:
     return get_callback_registry()
 
 
-def with_error_handling(handler_name: str = None):
+def with_error_handling(handler_name: Optional[str] = None):
     """
     Decorator para adicionar tratamento de erro automático em handlers
     

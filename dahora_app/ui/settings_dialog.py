@@ -3,7 +3,7 @@ Janela de Configurações Avançadas do Dahora App
 """
 import logging
 import threading
-from typing import Optional, Callable
+from typing import Optional, Callable, Any
 from dahora_app.ui.styles import Windows11Style
 from dahora_app.ui.icon_manager import IconManager
 
@@ -30,7 +30,7 @@ class SettingsDialog:
         self.on_save_callback: Optional[Callable] = None
         
         # Valores atuais (serão preenchidos externamente)
-        self.current_settings = {}
+        self.current_settings: dict[str, Any] = {}
     
     def set_current_settings(self, settings: dict) -> None:
         """Define as configurações atuais"""

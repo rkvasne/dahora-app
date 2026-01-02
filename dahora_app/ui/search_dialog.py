@@ -3,7 +3,7 @@ Janela de Busca no Histórico do Dahora App
 """
 import logging
 import threading
-from typing import Optional, Callable, List, Dict
+from typing import Optional, Callable, List, Dict, Any
 from datetime import datetime
 from dahora_app.ui.styles import Windows11Style
 from dahora_app.ui.icon_manager import IconManager
@@ -107,7 +107,7 @@ class SearchDialog:
             search_entry.focus_set()
             
             # Variável para armazenar resultados filtrados
-            filtered_results = []
+            filtered_results: List[Dict[str, Any]] = []
             
             def perform_search(*args):
                 """Executa a busca"""

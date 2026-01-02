@@ -20,9 +20,8 @@ menu_builder = MenuBuilder()
 
 # Define callbacks dummy
 menu_builder.set_copy_datetime_callback(lambda icon, item: print("Copy datetime"))
-menu_builder.set_set_prefix_callback(lambda: print("Set prefix"))
 menu_builder.set_show_search_callback(lambda: print("Show search"))
-menu_builder.set_show_settings_callback(lambda: print("Show settings"))
+menu_builder.set_show_custom_shortcuts_callback(lambda: print("Show settings"))
 menu_builder.set_refresh_menu_callback(lambda icon, item: print("Refresh"))
 menu_builder.set_get_recent_items_callback(lambda limit: [])
 menu_builder.set_copy_from_history_callback(lambda text: print(f"Copy: {text}"))

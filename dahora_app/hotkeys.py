@@ -19,7 +19,7 @@ class HotkeyManager:
     def __init__(self):
         """Inicializa o gerenciador de hotkeys"""
         self._lock = threading.RLock()
-        self.registered_hotkeys = []
+        self.registered_hotkeys: List[str] = []
         self.copy_datetime_callback: Optional[Callable] = None
         self.refresh_menu_callback: Optional[Callable] = None
         self.search_callback: Optional[Callable] = None
@@ -28,7 +28,7 @@ class HotkeyManager:
         # Handles para hotkeys do próprio app (remove preciso, sem afetar custom shortcuts)
         self._app_hotkey_handles: Dict[str, Any] = {}
         self._app_hotkey_strings: Dict[str, str] = {}
-        self._ctrl_c_hook = None
+        self._ctrl_c_hook: Optional[Any] = None
 
         # Hotkeys configuráveis do app (padrões)
         self.hotkey_copy_datetime = HOTKEY_COPY_DATETIME
@@ -280,7 +280,7 @@ class HotkeyManager:
             validator = HotkeyValidator()
             if not validator.is_valid(hotkey):
                 is_valid, reason = validator.validate_with_reason(hotkey)
-                return False, reason
+                return False, reason or "Hotkey inválido"
             
             # Verifica se é hotkey reservado
             if hotkey in self.reserved_hotkeys:
@@ -335,11 +335,19 @@ class HotkeyManager:
         Returns:
             Dict[int, str]: Mapeamento de shortcut_id -> status ("ok", "erro: ...")
         """
-        results = {}
+        results: Dict[int, str] = {}
         
         for shortcut in custom_shortcuts:
             try:
-                shortcut_id = shortcut.get("id")
+                raw_id = shortcut.get("id")
+                if isinstance(raw_id, int):
+                    shortcut_id = raw_id
+                else:
+                    try:
+                        shortcut_id = int(str(raw_id))
+                    except Exception:
+                        logging.warning(f"Shortcut inválido (id={raw_id!r}): não é um inteiro")
+                        continue
                 hotkey = shortcut.get("hotkey", "").strip().lower()
                 enabled = shortcut.get("enabled", True)
                 

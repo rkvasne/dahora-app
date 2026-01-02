@@ -3,6 +3,7 @@ Gerenciamento de clipboard e histórico
 """
 import json
 import logging
+import os
 import time
 from datetime import datetime
 from threading import Lock
@@ -27,6 +28,8 @@ class ClipboardManager:
         self._own_content_expiry: Dict[str, float] = {}
 
         self._dpapi_entropy = b"DahoraApp-clipboard-history-v1"
+        self._history_write_disabled = False
+        self._history_write_disabled_reason = ""
 
     def mark_own_content(self, text: str, ttl_seconds: float = 2.0) -> None:
         if not text:
@@ -53,11 +56,13 @@ class ClipboardManager:
                 return False
             return True
 
-    def _write_history_locked(self) -> None:
+    def _write_history_locked(self, *, force: bool = False) -> None:
+        if self._history_write_disabled and not force:
+            return
         try:
             plain = json.dumps(self.clipboard_history, ensure_ascii=False).encode("utf-8")
             blob = dpapi_encrypt_bytes(plain, self._dpapi_entropy)
-            payload = {"dpapi": 1, "blob": b64encode_bytes(blob)}
+            payload = {"dpapi": 1, "blob": b64encode_bytes(blob), "fallback": self.clipboard_history}
             atomic_write_json(HISTORY_FILE, payload)
         except Exception:
             atomic_write_json(HISTORY_FILE, self.clipboard_history)
@@ -73,12 +78,28 @@ class ClipboardManager:
         needs_migration = False
         try:
             with self.history_lock:
+                history_write_disabled = False
+                history_write_disabled_reason = ""
                 with open(HISTORY_FILE, "r", encoding="utf-8") as f:
                     raw = json.load(f)
 
-                if isinstance(raw, dict) and raw.get("dpapi") == 1 and isinstance(raw.get("blob"), str):
-                    decrypted = dpapi_decrypt_bytes(b64decode_str(raw.get("blob")), self._dpapi_entropy)
-                    loaded = json.loads(decrypted.decode("utf-8"))
+                if isinstance(raw, dict) and raw.get("dpapi") == 1:
+                    blob_str = raw.get("blob")
+                    if isinstance(blob_str, str):
+                        try:
+                            decrypted = dpapi_decrypt_bytes(b64decode_str(blob_str), self._dpapi_entropy)
+                            loaded = json.loads(decrypted.decode("utf-8"))
+                        except Exception as e:
+                            fallback = raw.get("fallback")
+                            if isinstance(fallback, list):
+                                loaded = fallback
+                            else:
+                                loaded = []
+                                history_write_disabled = False
+                                history_write_disabled_reason = str(e)
+                    else:
+                        loaded = raw
+                        needs_migration = isinstance(raw, list)
                 else:
                     loaded = raw
                     needs_migration = isinstance(raw, list)
@@ -86,13 +107,25 @@ class ClipboardManager:
                 self.clipboard_history = loaded if isinstance(loaded, list) else []
                 if len(self.clipboard_history) > MAX_HISTORY_ITEMS:
                     self.clipboard_history = self.clipboard_history[-MAX_HISTORY_ITEMS:]
+                self._history_write_disabled = history_write_disabled
+                self._history_write_disabled_reason = history_write_disabled_reason
         except FileNotFoundError:
             self.clipboard_history = []
+            self._history_write_disabled = False
+            self._history_write_disabled_reason = ""
+        except json.JSONDecodeError as e:
+            logging.warning(f"Falha ao carregar histórico (JSON inválido): {e}")
+            self.clipboard_history = []
+            self._history_write_disabled = False
+            self._history_write_disabled_reason = ""
         except Exception as e:
             logging.warning(f"Falha ao carregar histórico: {e}")
             self.clipboard_history = []
+            if os.path.exists(HISTORY_FILE):
+                self._history_write_disabled = True
+                self._history_write_disabled_reason = str(e)
 
-        if needs_migration:
+        if needs_migration and not self._history_write_disabled:
             try:
                 self.save_history()
             except Exception:
@@ -149,7 +182,7 @@ class ClipboardManager:
             total_items = len(self.clipboard_history)
             self.clipboard_history = []
             try:
-                self._write_history_locked()
+                self._write_history_locked(force=True)
                 logging.info(f"Histórico limpo com sucesso! {total_items} itens removidos")
             except Exception as e:
                 logging.error(f"Falha ao salvar histórico limpo: {e}")

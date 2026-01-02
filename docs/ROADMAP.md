@@ -1,6 +1,6 @@
 # 🗺️ Roadmap — Dahora App
 
-> **Última atualização:** Janeiro 2026 | **Versão atual:** v0.2.4
+> **Última atualização:** Janeiro 2026 | **Versão atual:** v0.2.5
 
 Roadmap de alto nível para próximas melhorias. Detalhes específicos devem ser documentados em issues/discussions no GitHub.
 

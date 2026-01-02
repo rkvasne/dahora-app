@@ -8,7 +8,7 @@ import sys
 import socket
 import tempfile
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Any, Optional, Tuple
 
 try:
     import win32event
@@ -30,8 +30,8 @@ class SingleInstanceManager:
             app_name: Nome da aplicação (usado para criar nomes únicos)
         """
         self.app_name = app_name
-        self.mutex_handle = None
-        self.socket_server = None
+        self.mutex_handle: Optional[Any] = None
+        self.socket_server: Optional[socket.socket] = None
         self.is_instance_owner = False
         self._cleanup_called = False
     

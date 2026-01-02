@@ -1,6 +1,6 @@
 # 📚 Índice de Documentação - Dahora App
 
-> **Ponto central de navegação** para toda documentação do projeto Dahora App v0.2.4
+> **Ponto central de navegação** para toda documentação do projeto Dahora App v0.2.5
 
 ---
 
@@ -32,7 +32,7 @@
 - **[PRICING.md](PRICING.md)** - Análise de mercado e precificação
 
 ### Relatórios de Versão
-- **[REPORTS/v0.2.4.md](REPORTS/v0.2.4.md)** - 📊 Relatório final v0.2.4 (atual)
+- **[REPORTS/v0.2.4.md](REPORTS/v0.2.4.md)** - 📊 Relatório final v0.2.4
 
 ### Landing Page
 - **[LANDING/analysis.md](LANDING/analysis.md)** - Análise e recomendações da landing page
@@ -53,7 +53,7 @@
 ## 📊 Relatórios e Análises
 
 ### Relatórios de Versão (docs/REPORTS/)
-- **[v0.2.4.md](REPORTS/v0.2.4.md)** - 🎯 Relatório final v0.2.4 (atual)
+- **[v0.2.4.md](REPORTS/v0.2.4.md)** - 🎯 Relatório final v0.2.4
   - Status de todas as fases
   - Métricas consolidadas
   - Arquivos criados/modificados
@@ -139,5 +139,5 @@ docs/
 
 ---
 
-**Última atualização:** Janeiro 2026 | **Versão:** v0.2.4
+**Última atualização:** Janeiro 2026 | **Versão:** v0.2.5
 

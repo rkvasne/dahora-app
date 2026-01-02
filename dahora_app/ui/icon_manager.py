@@ -106,7 +106,7 @@ class IconManager:
         """
         if getattr(sys, 'frozen', False):
             # Se estiver rodando como executável (PyInstaller)
-            base_dir = sys._MEIPASS
+            base_dir = getattr(sys, "_MEIPASS", "")
         else:
             # Se estiver rodando do código fonte
             # ui -> dahora_app -> raiz

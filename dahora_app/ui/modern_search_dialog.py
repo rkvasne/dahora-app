@@ -4,7 +4,7 @@ Janela de Busca Moderna usando CustomTkinter
 import customtkinter as ctk
 import threading
 import logging
-from typing import Optional, Callable, List, Dict
+from typing import Optional, Callable, List, Dict, Any, cast
 from datetime import datetime
 import tkinter as tk
 
@@ -26,13 +26,13 @@ class ModernSearchDialog:
         self.notification_callback = notification_callback
         self.get_history_callback: Optional[Callable] = None
         self.copy_callback: Optional[Callable] = None
-        self.window = None
+        self.window: Optional[ctk.CTkToplevel] = None
         self.parent: Optional[ctk.CTk] = None
         self.colors = ModernTheme.get_colors()
         self.filtered_results: List[Dict] = []
         self.selected_index = -1
         self.result_buttons: List[ctk.CTkFrame] = []
-        self._results_container = None
+        self._results_container: Optional[Any] = None
     
     def set_get_history_callback(self, callback: Callable) -> None:
         self.get_history_callback = callback
@@ -51,11 +51,20 @@ class ModernSearchDialog:
             except Exception:
                 pass
             self._show_window()
+            try:
+                self.window.after(0, self._perform_search)
+            except Exception:
+                pass
             return
 
         try:
             self._create_window()
             self._show_window()
+            try:
+                if self.window is not None:
+                    self.window.after(0, self._perform_search)
+            except Exception:
+                pass
         except Exception as e:
             logging.error(f"Erro ao abrir busca: {e}")
             if self.notification_callback:
@@ -69,28 +78,29 @@ class ModernSearchDialog:
         if self.parent is None:
             raise RuntimeError("ModernSearchDialog precisa de parent (CTk root) antes de show().")
 
-        self.window = ctk.CTkToplevel(self.parent)
+        window = ctk.CTkToplevel(self.parent)
+        self.window = window
         # Evita renderização progressiva (mostra apenas no final)
-        self.window.withdraw()
-        self.window.title("Dahora App - Buscar no Histórico")
-        self.window.geometry("650x550")
-        self.window.minsize(500, 400)
-        self.window.configure(fg_color=self.colors['bg'])
+        window.withdraw()
+        window.title("Dahora App - Buscar no Histórico")
+        window.geometry("650x550")
+        window.minsize(500, 400)
+        window.configure(fg_color=self.colors['bg'])
         
         # Dark title bar
         if self.theme == "dark":
             try:
                 import ctypes
                 from ctypes import windll, c_int, byref, sizeof
-                self.window.update_idletasks()
-                hwnd = windll.user32.GetParent(self.window.winfo_id())
+                window.update_idletasks()
+                hwnd = windll.user32.GetParent(window.winfo_id())
                 value = c_int(1)
                 windll.dwmapi.DwmSetWindowAttribute(hwnd, 20, byref(value), sizeof(value))
             except Exception:
                 pass
         
         # Container sem padding horizontal externo (scrollbar no canto)
-        outer = ctk.CTkFrame(self.window, fg_color="transparent")
+        outer = ctk.CTkFrame(window, fg_color="transparent")
         outer.pack(fill="both", expand=True, padx=0, pady=0)
 
         # Top (padded)
@@ -135,7 +145,10 @@ class ModernSearchDialog:
         self.results_frame.pack(fill="both", expand=True, padx=0, pady=(12, 12))
         # CTkScrollableFrame usa um frame interno para os filhos.
         # Usar esse container evita destruir canvas/scrollbar ao limpar resultados.
-        self._results_container = getattr(self.results_frame, "_scrollable_frame", self.results_frame)
+        results_container = getattr(self.results_frame, "_scrollable_frame", None)
+        if results_container is None:
+            results_container = self.results_frame
+        self._results_container = results_container
 
         # Botões (padded)
         buttons = ctk.CTkFrame(outer, fg_color="transparent")
@@ -156,8 +169,8 @@ class ModernSearchDialog:
         ).pack(side="right", padx=(0, 8))
         
         # Atalhos
-        self.window.bind('<Escape>', lambda e: self._on_close())
-        self.window.protocol("WM_DELETE_WINDOW", self._on_close)
+        window.bind('<Escape>', lambda e: self._on_close())
+        window.protocol("WM_DELETE_WINDOW", self._on_close)
         
         # Não exibe aqui; show() chama _show_window() depois.
         
@@ -167,23 +180,25 @@ class ModernSearchDialog:
         # Não chama mainloop aqui: o loop Tk roda uma vez no app.
 
     def _center_window(self) -> None:
-        if not self.window:
+        window = self.window
+        if window is None:
             return
-        self.window.update_idletasks()
-        w = self.window.winfo_width()
-        h = self.window.winfo_height()
+        window.update_idletasks()
+        w = window.winfo_width()
+        h = window.winfo_height()
         if w <= 1 or h <= 1:
             try:
-                self.window.after(10, self._center_window)
+                window.after(10, self._center_window)
             except Exception:
                 pass
             return
-        x = (self.window.winfo_screenwidth() // 2) - (w // 2)
-        y = (self.window.winfo_screenheight() // 2) - (h // 2)
-        self.window.geometry(f"+{x}+{y}")
+        x = (window.winfo_screenwidth() // 2) - (w // 2)
+        y = (window.winfo_screenheight() // 2) - (h // 2)
+        window.geometry(f"+{x}+{y}")
 
     def _show_window(self) -> None:
-        if not self.window:
+        window = self.window
+        if window is None:
             return
 
         # Centraliza antes de exibir para evitar "pulo" visual.
@@ -192,20 +207,20 @@ class ModernSearchDialog:
         except Exception:
             pass
         try:
-            self.window.deiconify()
+            window.deiconify()
         except Exception:
             pass
         try:
-            self.window.after_idle(self._center_window)
+            window.after_idle(self._center_window)
         except Exception:
             self._center_window()
         try:
-            self.window.after(60, self._center_window)
+            window.after(60, self._center_window)
         except Exception:
             pass
-        self.window.lift()
+        window.lift()
         try:
-            self.window.focus_force()
+            window.focus_force()
         except Exception:
             pass
 
@@ -224,8 +239,8 @@ class ModernSearchDialog:
                 pass
 
         try:
-            self.window.after_idle(_focus_search)
-            self.window.after(120, _focus_search)
+            window.after_idle(_focus_search)
+            window.after(120, _focus_search)
         except Exception:
             _focus_search()
     
@@ -235,7 +250,7 @@ class ModernSearchDialog:
         
         # Limpa resultados
         container = self._results_container or getattr(self.results_frame, "_scrollable_frame", self.results_frame)
-        for widget in container.winfo_children():
+        for widget in cast(Any, container).winfo_children():
             widget.destroy()
         self.result_buttons.clear()
         self.filtered_results.clear()

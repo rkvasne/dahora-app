@@ -7,7 +7,7 @@ Requer: GitHub token salvo em ~/.github_token
 import os
 import sys
 import json
-import requests
+import requests  # type: ignore[import-untyped]
 from pathlib import Path
 
 # Configuração

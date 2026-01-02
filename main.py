@@ -12,7 +12,7 @@ import pyperclip
 import pystray
 import keyboard
 import time
-from typing import Optional
+from typing import Optional, Any, cast
 
 # HACK: Forçar Dark Mode em menus nativos do Windows (Bandeja/Pystray)
 # Isso usa APIs não documentadas do Windows para garantir que o menu de contexto
@@ -20,7 +20,7 @@ from typing import Optional
 # DEVE SER EXECUTADO ANTES DE QUALQUER OUTRA COISA DE UI
 try:
     import ctypes
-    uxtheme = ctypes.windll.uxtheme
+    uxtheme = cast(Any, ctypes.windll.uxtheme)
     
     # Tenta SetPreferredAppMode (Ordinal 135) - Win 10 1903+ / Win 11
     # 2 = Force Dark Mode
@@ -44,8 +44,10 @@ except Exception:
     pass
 
 try:
-    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
-    sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+    if sys.stdout is not None:
+        cast(Any, sys.stdout).reconfigure(encoding='utf-8', errors='replace')
+    if sys.stderr is not None:
+        cast(Any, sys.stderr).reconfigure(encoding='utf-8', errors='replace')
 except Exception:
     pass
 

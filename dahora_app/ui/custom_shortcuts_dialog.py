@@ -180,10 +180,12 @@ class CustomShortcutsDialog:
     def _create_scrollable_frame(self, parent) -> tuple:
         """Cria um frame scrollável para conteúdo de aba - SEM scrollbar visível"""
         # Canvas para scroll
-        canvas = tk.Canvas(parent, 
-                          bg=Windows11Style.COLORS['bg'],
-                          highlightthickness=0,
-                          borderwidth=0)
+        canvas: Any = tk.Canvas(
+            parent,
+            bg=Windows11Style.COLORS['bg'],
+            highlightthickness=0,
+            borderwidth=0,
+        )
         
         # Frame scrollável
         scrollable_frame = ttk.Frame(canvas, style="TFrame")

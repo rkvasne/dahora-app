@@ -15,6 +15,18 @@ from dahora_app.schemas import SettingsSchema
 from pydantic import ValidationError
 
 
+def _parse_int(value: Any) -> Optional[int]:
+    try:
+        if value is None:
+            return None
+        s = str(value).strip()
+        if s == "":
+            return None
+        return int(s)
+    except Exception:
+        return None
+
+
 class SettingsManager:
     """Gerenciador de configurações do aplicativo"""
     
@@ -114,6 +126,17 @@ class SettingsManager:
             Dicionário com configurações validadas
         """
         try:
+            def _parse_int(value: Any) -> Optional[int]:
+                try:
+                    if value is None:
+                        return None
+                    s = str(value).strip()
+                    if s == "":
+                        return None
+                    return int(s)
+                except Exception:
+                    return None
+
             # Valida prefix
             prefix = str(settings_dict.get("prefix", ""))
             if len(prefix) > 100:
@@ -171,16 +194,16 @@ class SettingsManager:
             # Se não definido, tenta escolher um padrão coerente
             if default_shortcut_id is None and custom_shortcuts:
                 enabled = [s for s in custom_shortcuts if s.get("enabled", True)]
-                pick = (enabled[0] if enabled else custom_shortcuts[0])
-                default_shortcut_id = int(pick.get("id"))
+                pick: Optional[Dict[str, Any]] = (enabled[0] if enabled else custom_shortcuts[0])
+                default_shortcut_id = _parse_int(pick.get("id")) if pick else None
 
             # Se definido mas não existe, re-seleciona
             if default_shortcut_id is not None:
-                ids = {int(s.get("id")) for s in custom_shortcuts}
+                ids = {i for s in custom_shortcuts for i in [_parse_int(s.get("id"))] if i is not None}
                 if default_shortcut_id not in ids:
                     enabled = [s for s in custom_shortcuts if s.get("enabled", True)]
                     pick = (enabled[0] if enabled else (custom_shortcuts[0] if custom_shortcuts else None))
-                    default_shortcut_id = int(pick.get("id")) if pick else None
+                    default_shortcut_id = _parse_int(pick.get("id")) if pick else None
             
             return {
                 "prefix": prefix,
@@ -249,12 +272,14 @@ class SettingsManager:
 
                 # Garante que o default_shortcut_id ainda é válido após migração
                 if self.custom_shortcuts:
-                    ids = {int(s.get("id")) for s in self.custom_shortcuts}
+                    ids = {i for s in self.custom_shortcuts for i in [_parse_int(s.get("id"))] if i is not None}
                     if self.default_shortcut_id not in ids:
                         enabled = [s for s in self.custom_shortcuts if s.get("enabled", True)]
                         pick = (enabled[0] if enabled else self.custom_shortcuts[0])
-                        self.default_shortcut_id = int(pick.get("id"))
-                        self.save()
+                        picked_id = _parse_int(pick.get("id"))
+                        if picked_id is not None:
+                            self.default_shortcut_id = picked_id
+                            self.save()
         except FileNotFoundError:
             pass  # Usa padrões do __init__
         except json.JSONDecodeError as e:

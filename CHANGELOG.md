@@ -7,9 +7,15 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Não lançado]
 
+## [0.2.5] - 2026-01-02
+
 ### Corrigido
-- Histórico do clipboard criptografado localmente no Windows (DPAPI).
-- Timestamps gerados pelo app não são adicionados ao histórico.
+- Persistência do histórico do clipboard quando DPAPI falha ao carregar arquivo antigo.
+- Busca do histórico (UI moderna) executa automaticamente ao abrir.
+- Botão minimizar removido da janela Sobre (UI moderna).
+
+### Manutenção
+- Build (PyInstaller): inclusão explícita de dependências do DPAPI (win32crypt/pywintypes).
 
 ## [0.2.4] - 2025-12-30
 

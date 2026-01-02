@@ -62,6 +62,17 @@ class ModernAboutDialog:
                 windll.dwmapi.DwmSetWindowAttribute(hwnd, 20, byref(value), sizeof(value))
             except Exception:
                 pass
+
+        try:
+            import ctypes
+            from ctypes import windll
+            self.window.update_idletasks()
+            hwnd = windll.user32.GetParent(self.window.winfo_id()) or self.window.winfo_id()
+            style = windll.user32.GetWindowLongW(hwnd, -16)
+            windll.user32.SetWindowLongW(hwnd, -16, style & ~0x20000)
+            windll.user32.SetWindowPos(hwnd, None, 0, 0, 0, 0, 0x0001 | 0x0002 | 0x0004 | 0x0020)
+        except Exception:
+            pass
         
         # Container
         main = ctk.CTkFrame(self.window, fg_color="transparent")

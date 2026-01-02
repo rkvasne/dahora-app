@@ -132,10 +132,10 @@ class ThreadSyncManager:
     
     def create_daemon_thread(
         self,
-        target: Callable,
+        target: Callable[..., Any],
         name: str = "",
-        args: tuple = (),
-        kwargs: dict = None
+        args: tuple[Any, ...] = (),
+        kwargs: Optional[dict[str, Any]] = None
     ) -> threading.Thread:
         """
         Cria thread daemon segura
@@ -150,9 +150,16 @@ class ThreadSyncManager:
             threading.Thread: Thread criada (não iniciada)
         """
         kwargs = kwargs or {}
+
+        def safe_target(*target_args: Any, **target_kwargs: Any) -> Any:
+            try:
+                return target(*target_args, **target_kwargs)
+            except Exception:
+                logging.exception("[ThreadSync] Exceção não tratada na thread daemon")
+                return None
         
         thread = threading.Thread(
-            target=target,
+            target=safe_target,
             name=name or f"DahoraThread-{id(target)}",
             args=args,
             kwargs=kwargs,
@@ -164,10 +171,10 @@ class ThreadSyncManager:
     
     def start_daemon_thread(
         self,
-        target: Callable,
+        target: Callable[..., Any],
         name: str = "",
-        args: tuple = (),
-        kwargs: dict = None,
+        args: tuple[Any, ...] = (),
+        kwargs: Optional[dict[str, Any]] = None,
         timeout: Optional[float] = None
     ) -> Optional[threading.Thread]:
         """
