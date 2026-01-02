@@ -192,6 +192,7 @@ dahora-app/
 ## 🤝 Contribuindo
 
 Valorizamos contribuições! Sinta-se à vontade para abrir issues ou enviar pull requests.
+Este projeto é aberto para contribuições da comunidade.
 
 1. Faça um Fork do projeto
 2. Crie sua Feature Branch (`git checkout -b feature/MinhaFeature`)
