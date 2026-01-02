@@ -93,6 +93,14 @@ git commit -m "chore: Rastrear .iso no Git LFS"
 
 ### 4.4) Fluxo Completo de Envio (Push)
 
+✅ Atalho (1 comando):
+
+```bat
+scripts\push_release_lfs.bat
+```
+
+Isso executa: prepara artefatos (limpa raiz/gera ZIP) → `git add` → `git commit` → `git push` → valida `git lfs ls-files`.
+
 #### Passo 1: Preparar arquivo
 ```powershell
 # Seu .exe e .zip devem estar em dist/
