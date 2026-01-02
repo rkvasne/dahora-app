@@ -8,7 +8,7 @@ import tkinter as tk
 from tkinter import ttk
 
 # Adiciona o diretório do projeto ao path
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
     from dahora_app.ui.styles import Windows11Style

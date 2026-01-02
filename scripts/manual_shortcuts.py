@@ -4,7 +4,7 @@ Script de teste para verificar se os atalhos estão funcionando
 """
 import sys
 import os
-sys.path.insert(0, os.path.dirname(__file__))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from dahora_app.settings import SettingsManager
 

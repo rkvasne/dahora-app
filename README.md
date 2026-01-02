@@ -19,40 +19,7 @@
 
 ---
 
-## 🔒 Segurança & Qualidade
-
-### Status de Implementação
-- ✅ **Phase 1:** Security Hardening (66 testes)
-  - Hotkey validation
-  - Pydantic schemas
-  - Type hints
-  
-- ✅ **Phase 4:** Single Instance Manager (21 testes)
-  - Windows mutex
-  - Instance protection
-  
-- ✅ **Phase 5:** Thread Synchronization (24 testes)
-  - Race condition fixes
-  - Safe shutdown coordination
-  
-- ✅ **Phase 6:** Callback Logic Consolidation (84 testes)
-  - CallbackManager base (31 testes)
-  - Handler implementations (35 testes)
-  - Integration tests (18 testes)
-  
-**Total:** 262/262 testes passando (100%)
-
-### Documentação
-Veja [docs/](docs/) para documentação completa:
-- [docs/INDEX.md](docs/INDEX.md) - Índice centralizado (comece aqui!)
-- [ARCHITECTURE.md](docs/ARCHITECTURE.md) - Arquitetura detalhada
-- [HACKS.md](docs/HACKS.md) - Problemas identificados e soluções
-- [DEVELOPMENT_HISTORY.md](docs/DEVELOPMENT_HISTORY.md) - Histórico técnico
-- [RELEASE.md](docs/RELEASE.md) - Processo de build/release e Git LFS
-
----
-
-## 🚀 Por que Dahora App?
+##  Por que Dahora App?
 
 Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sistema leve e poderoso que revoluciona como você lida com timestamps. Ele roda silenciosamente na bandeja do sistema e permite que você cole a data e hora atual formatada em qualquer lugar, com um único atalho.
 
@@ -186,6 +153,37 @@ dahora-app/
     ├── RELEASE.md               # Build/Release/ZIP/LFS
     └── PRICING.md               # Business
 ```
+
+## 🔒 Segurança & Qualidade
+
+### Status de Implementação
+- ✅ **Phase 1:** Security Hardening (66 testes)
+  - Hotkey validation
+  - Pydantic schemas
+  - Type hints
+  
+- ✅ **Phase 4:** Single Instance Manager (21 testes)
+  - Windows mutex
+  - Instance protection
+  
+- ✅ **Phase 5:** Thread Synchronization (24 testes)
+  - Race condition fixes
+  - Safe shutdown coordination
+  
+- ✅ **Phase 6:** Callback Logic Consolidation (84 testes)
+  - CallbackManager base (31 testes)
+  - Handler implementations (35 testes)
+  - Integration tests (18 testes)
+  
+**Total:** 262/262 testes passando (100%)
+
+### Documentação
+Veja [docs/](docs/) para documentação completa:
+- [docs/INDEX.md](docs/INDEX.md) - Índice centralizado (comece aqui!)
+- [ARCHITECTURE.md](docs/ARCHITECTURE.md) - Arquitetura detalhada
+- [HACKS.md](docs/HACKS.md) - Problemas identificados e soluções
+- [DEVELOPMENT_HISTORY.md](docs/DEVELOPMENT_HISTORY.md) - Histórico técnico
+- [RELEASE.md](docs/RELEASE.md) - Processo de build/release e Git LFS
 
 ---
 

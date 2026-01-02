@@ -8,7 +8,7 @@ import tkinter as tk
 from tkinter import messagebox
 
 # Adiciona o diretório do projeto ao path
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def test_shortcut_editor():
     """Testa se o ShortcutEditorDialog pode ser aberto"""

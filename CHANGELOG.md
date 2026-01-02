@@ -112,8 +112,8 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   - `configure_listbox()`: Configuração mais robusta
 
 - **Testes de modernização**: Scripts de teste criados
-  - `test_ui_modernization.py`: Teste completo da interface moderna
-  - `test_shortcut_editor.py`: Teste específico do editor de atalhos
+  - `scripts/manual_ui_modernization.py`: Teste completo da interface moderna
+  - `scripts/manual_shortcut_editor.py`: Teste específico do editor de atalhos
   - Validação de todos os componentes modernizados
 
 ### 🎉 Experiência do Usuário
@@ -124,8 +124,8 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### 📁 Arquivos Modificados
 - `dahora_app/ui/styles.py`: Melhorias extensivas em todos os componentes
-- `test_ui_modernization.py`: Novo script de teste da interface
-- `test_shortcut_editor.py`: Novo teste específico do editor
+- `scripts/manual_ui_modernization.py`: Novo script de teste da interface
+- `scripts/manual_shortcut_editor.py`: Novo teste específico do editor
 
 ### 🎯 Resultados
 - **Abas com tamanho consistente**: Problema da aba ativa menor resolvido
