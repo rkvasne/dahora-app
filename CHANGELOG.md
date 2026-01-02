@@ -1,75 +1,75 @@
-# Changelog
+# Registro de Mudanças
 
-All notable changes to this project will be documented in this file.
+Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
+e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.2.4] - 2025-12-30
 
-### Added
-- **Complete Phase 6 Implementation:**
-  - CallbackManager base module (265 lines)
-  - 4 handler implementations (495 lines)
-  - Integration tests (370 lines)
-  - 84 new tests (all passing)
+### Adicionado
+- **Implementação Completa da Phase 6:**
+  - Módulo base CallbackManager (265 linhas)
+  - 4 implementações de handlers (495 linhas)
+  - Testes de integração (370 linhas)
+  - 84 novos testes (todos passando)
 
-- **Consolidated Documentation:**
-  - New `DOCUMENTATION_INDEX.md` as central reference
-  - Unified status tracking across all phases
-  - Standardized format and structure
+- **Documentação Consolidada:**
+  - Novo `DOCUMENTATION_INDEX.md` como referência central
+  - Rastreamento de status unificado entre todas as fases
+  - Formato e estrutura padronizados
 
-### Changed
-- Version incremented to 0.2.4 (documentation consolidation release)
-- Unified documentation structure across all folders
-- Removed redundant status files in favor of centralized tracking
-- Enhanced docs/README.md with consolidated references
+### Alterado
+- Versão incrementada para 0.2.4 (release de consolidação de documentação)
+- Estrutura de documentação unificada em todas as pastas
+- Removidos arquivos de status redundantes em favor do rastreamento centralizado
+- Aprimorado docs/README.md com referências consolidadas
 
-### Improved
-- Documentation consistency across all files
-- Internal link validation and standardization
-- Version tracking in all documentation points
+### Melhorado
+- Consistência de documentação em todos os arquivos
+- Validação de links internos e padronização
+- Rastreamento de versão em todos os pontos de documentação
 
-### Metrics
-- **Tests:** 262/262 passing (100%)
-- **Code:** 4500+ lines added
-- **Documentation:** 3000+ lines added
-- **Breaking Changes:** ZERO
-- **Backward Compatibility:** 100% maintained
+### Métricas
+- **Testes:** 262/262 passando (100%)
+- **Código:** 4500+ linhas adicionadas
+- **Documentação:** 3000+ linhas adicionadas
+- **Mudanças Quebrantáveis:** ZERO
+- **Compatibilidade com Versões Anteriores:** 100% mantida
 
 ---
 
 ## [0.2.3] - 2025-12-30
 
-### Added
-- Unified documentation index and guides in `docs/`.
-- Release guide describing build, ZIP packaging and Git LFS usage.
+### Adicionado
+- Índice de documentação unificada e guias em `docs/`.
+- Guia de release descrevendo build, empacotamento ZIP e uso de Git LFS.
 
-### Changed
-- Version metadata aligned to `0.2.3` (app constants, build output name, Windows manifest).
-- Installation instructions now prefer the `.zip` artifact.
+### Alterado
+- Metadados de versão alinhados para `0.2.3` (constantes da app, nome do build, manifesto do Windows).
+- Instruções de instalação agora preferem o artefato `.zip`.
 
-### Fixed
-- About dialogs now render the current app version (no hardcoded value).
+### Corrigido
+- Diálogos sobre agora renderizam a versão atual da app (sem valor hardcoded).
 
-### Chore
-- Git LFS now tracks `*.zip` artifacts (in addition to `*.exe`).
+### Manutenção
+- Git LFS agora rastreia artefatos `*.zip` (além de `*.exe`).
 
 ## [0.2.3-ui-modernization] - 2025-12-29 🎨 **INTERFACE ULTRA-MODERNA: WINDOWS 11 FLUENT DESIGN**
 
-### 🎨 Complete UI Modernization
-- **Tabs redesenhadas**: Corrigido problema onde aba ativa ficava menor que as outras
+### 🎨 Modernização Completa da Interface
+- **Abas redesenhadas**: Corrigido problema onde aba ativa ficava menor que as outras
   - Padding uniforme (24x14) para todas as abas
   - Remoção de margens desnecessárias (`tabmargins=[0,0,0,0]`)
   - Estados consistentes (selected, active, !active) com cores apropriadas
   - Foco visual removido (`focuscolor='none'`) para visual mais limpo
 
-### ✨ Enhanced Components
+### ✨ Componentes Aprimorados
 - **Scrollbars modernas**: Estilo overlay minimalista
   - Largura reduzida (12px) para visual mais sutil
   - Cores adaptativas com hover states melhorados
   - Background transparente que se mistura ao fundo
-  - Arrows coloridas que respondem a interações
+  - Setas coloridas que respondem a interações
 
 - **Botões ultra-modernos**: Padding aumentado (24x12) e efeitos visuais
   - Cursor "hand2" em todos os botões para melhor UX
@@ -79,11 +79,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Inputs aprimorados**: Experiência de digitação melhorada
   - Padding generoso (16x12) para melhor usabilidade
-  - Cursor colorido (accent color) para melhor visibilidade
+  - Cursor colorido (cor de destaque) para melhor visibilidade
   - Estados de foco mais definidos
   - Bordas que respondem dinamicamente ao foco
 
-### 🎯 Visual Enhancements
+### 🎯 Aprimoramentos Visuais
 - **Cards com elevação**: Simulação de sombras e profundidade
   - Múltiplas bordas sutis para efeito de elevação
   - Background diferenciado para criar hierarquia visual
@@ -94,7 +94,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Preparação para efeitos hover (comentado para não interferir)
   - Estilo de ativação removido para visual mais limpo
 
-### 🛠️ Technical Improvements
+### 🛠️ Melhorias Técnicas
 - **Métodos utilitários aprimorados**:
   - `create_modern_card()`: Agora com simulação de sombra
   - `create_modern_button()`: Efeitos hover personalizados
@@ -105,19 +105,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `test_shortcut_editor.py`: Teste específico do editor de atalhos
   - Validação de todos os componentes modernizados
 
-### 🎉 User Experience
+### 🎉 Experiência do Usuário
 - **Interface mais próxima do Windows 11**: Visual nativo e familiar
 - **Menos ruído visual**: Bordas removidas, foco limpo, cores sutis
-- **Melhor feedback**: Cursors apropriados, hover states, transições suaves
+- **Melhor feedback**: Cursores apropriados, hover states, transições suaves
 - **Consistência total**: Todos os componentes seguem o mesmo padrão
 
-### 📁 Files Modified
+### 📁 Arquivos Modificados
 - `dahora_app/ui/styles.py`: Melhorias extensivas em todos os componentes
 - `test_ui_modernization.py`: Novo script de teste da interface
 - `test_shortcut_editor.py`: Novo teste específico do editor
 
-### 🎯 Results
-- **Tabs com tamanho consistente**: Problema da aba ativa menor resolvido
+### 🎯 Resultados
+- **Abas com tamanho consistente**: Problema da aba ativa menor resolvido
 - **Scrollbars overlay**: Visual moderno similar ao Windows 11
 - **Botões responsivos**: Feedback visual imediato em todas as interações
 - **Interface profissional**: Visual indistinguível de apps nativos do Windows
@@ -249,9 +249,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 ## [0.2.2-site-update] - 2025-12-29 🌐 **LANDING PAGE: TEXTOS E UX**
 
-### 🔄 Changed
+### 🔄 Alterado
 - **Copywriting Refinado**: Textos da Landing Page (`index.html`) ajustados para serem menos promocionais e mais diretos.
-- **Faq Contrast Fix**: Correção de contraste nas respostas do FAQ no modo claro (`landing/faq.css`).
+- **Correção de Contraste no FAQ**: Correção de contraste nas respostas do FAQ no modo claro (`landing/faq.css`).
 - **Seção Novidades**: Textos dos cards simplificados e padronizados (Sentence Case).
 - **SEO**: Meta description atualizada para ser mais informativa e menos "marketing".
 
@@ -259,8 +259,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.2] - 2025-11-29 🎨 **MODERNIZAÇÃO UI: WINDOWS 11 FLUENT DESIGN**
 
-### ✨ Added
-- **🎨 Windows 11 Fluent Design**:
+### ✨ Adicionado
+- **🎨 Design Fluent do Windows 11**:
   - **Inputs Modernos**: Caixas de texto com altura ~32px, padding refinado e cores flat.
   - **Botões Flat**: Sem bordas, cores de fundo distintas (#333333) e hover states suaves.
   - **Botão Primário**: Azul vibrante (#4CC2FF) com texto preto para ações principais.
@@ -268,7 +268,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Cards & Panels**: Remoção de bordas desnecessárias para um visual mais limpo e "clean".
   - **Abas Modernas**: Navegação por abas sem bordas, com destaque de cor no texto.
 
-### 🔄 Changed
+### 🔄 Alterado
 - **Refatoração de Estilos**: Centralização e padronização de todos os estilos em `Windows11Style`.
 - **Limpeza de Código**: Remoção do arquivo legado `dahora_app.py`.
 - **Organização de Arquivos**: Scripts movidos para `scripts/`, assets para `assets/`.
@@ -284,22 +284,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.1] - 2025-11-06 🔧 **FIX: Registro Automático de Atalhos**
 
-### 🐛 Fixed
+### 🐛 Corrigido
 - **Registro automático de custom shortcuts**: Atalhos agora são registrados **instantaneamente** ao adicionar/editar
 - **Problema anterior**: Atalhos só funcionavam após reiniciar o app
 - **Solução**: Implementados wrappers que registram/desregistram hotkeys em tempo real
 
-### ✨ Added
+### ✨ Adicionado
 - **`_on_add_custom_shortcut_wrapper()`**: Registra hotkey imediatamente ao adicionar
 - **`_on_update_custom_shortcut_wrapper()`**: Re-registra hotkey ao atualizar
 - **`_on_remove_custom_shortcut_wrapper()`**: Desregistra hotkey ao remover
 - **Import de `Optional`**: Adicionado para type hints nos novos métodos
 
-### 🔄 Changed
+### 🔄 Alterado
 - Custom shortcuts dialog agora usa wrappers com registro automático
 - Logs informativos mostram status de registro em tempo real
 
-### 📝 Technical Details
+### 📝 Detalhes Técnicos
 - Arquivos modificados: `main.py` (3 novos métodos)
 - Versão atualizada em `constants.py`: 0.2.0 → 0.2.1
 - Build atualizado: `dahora_app_v0.2.1.spec`
@@ -323,7 +323,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Timestamps não vão mais para o histórico** (desnecessário - sempre pode gerar novo)
 - **Comportamento do clipboard mudou** (preservado automaticamente)
 
-### ✨ Added
+### ✨ Adicionado
 - **⚡ Colagem Automática**: 
   - Atalhos customizados colam timestamp diretamente onde cursor está
   - Sistema salva clipboard atual, cola e restaura automaticamente
@@ -375,27 +375,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Labels concisos estilo Windows
   - Sem emojis nos botões
 
-### 🛠️ Fixed
+### 🛠️ Corrigido
 - Aplicação de atalhos configurados no menu após salvar
 - Sincronização de bracket_open/close ao salvar configurações
 - Import faltante de `keyboard` e `time` no main.py
 
-### 📚 Documentation
+### 📚 Documentação
 - README.md completamente reescrito para v0.2.0
 - Seção de uso atualizada com guia passo a passo
 - Landing page (index.html) atualizada com novos recursos
 - CHANGELOG.md com entrada detalhada da v0.2.0
 
-### 🎯 Technical Details
+### 🎯 Detalhes Técnicos
 - Arquivos novos: `custom_shortcuts_dialog.py`, `about_dialog.py`, `styles.py`
 - 21 arquivos modificados, 3477 inserções, 126 deleções
 - Versão atualizada em todos os pontos: `__init__.py`, `constants.py`, about dialog
 
 ---
 
-## [0.1.1] - 2025-11-04 🧹 **CLEANUP & ORGANIZATION**
+## [0.1.1] - 2025-11-04 🧹 **LIMPEZA & ORGANIZAÇÃO**
 
-### Changed
+### Alterado
 - **📁 Documentação Reorganizada e Limpa**:
   - Criada pasta `docs/` para centralizar documentação técnica
   - Criado `docs/DEVELOPMENT_HISTORY.md` consolidando histórico completo
@@ -421,14 +421,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Movidos: `rebuild_clean.bat`, `test_menu.py`, `test_minimal.py`
   - Atualizado `rebuild_clean.bat` para versão 0.1.1
 
-### Fixed
+### Corrigido
 - **🔧 Correção de Ícone**:
   - Build agora usa `icon.ico` (azul) em vez de gerar ícone laranja
   - Removida função `ensure_icon_exists()` do `build.py`
   - Atualizados `main.py`, `dahora_app.py`, `icon_manager.py`
   - Ícone azul padronizado em todo o projeto
 
-### Documentation
+### Documentação
 - **📚 Documentos Consolidados**:
   - `DEVELOPMENT_HISTORY.md` unifica Fases 1-3, correções e padronizações
   - `ORGANIZATION_SUMMARY.md` documenta reorganização
@@ -442,7 +442,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🎯 MVP Completo!
 Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora App com todas as funcionalidades essenciais implementadas, testadas e documentadas.
 
-### Added
+### Adicionado
 - **🔍 Busca no Histórico (Tarefa 13)**:
   - Janela moderna de busca com Tkinter (265 linhas)
   - Busca em tempo real (KeyRelease) - digita e filtra instantaneamente
@@ -477,7 +477,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
   - Solução de problemas atualizada
   - Documentação da arquitetura modular
 
-### Changed
+### Alterado
 - **SettingsManager expandido** com 8 configurações:
   - `hotkey_copy_datetime` (padrão: "ctrl+shift+q")
   - `hotkey_refresh_menu` (padrão: "ctrl+shift+r")
@@ -499,7 +499,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
   - "Configurações" (NOVO)
   - Mantém itens anteriores: Copiar Data/Hora, Definir Prefixo, Recarregar, Histórico, Limpar, Sobre, Sair
 
-### Fixed
+### Corrigido
 - **Revert: Tentativa de atualização automática do menu**:
   - Removida tentativa de callback `on_history_updated_callback` (não funciona com pystray)
   - Documentação atualizada explicando limitação técnica do pystray
@@ -507,7 +507,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
   - Soluções alternativas documentadas: "Recarregar Itens", `Ctrl+Shift+R`, ou fechar/abrir menu
   - Busca (`Ctrl+Shift+F`) sempre mostra dados atualizados
 
-### Technical
+### Técnica
 - **7 novos arquivos criados**:
   - `dahora_app/ui/settings_dialog.py` (259L) - Janela de configurações com 4 abas
   - `dahora_app/ui/search_dialog.py` (265L) - Janela de busca no histórico
@@ -525,13 +525,13 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
   - ✅ Build testado: ~31MB executável
   - ✅ Zero regressões
 
-### Documentation
+### Documentação
 - README.md: 168 linhas adicionadas, 39 linhas removidas
 - Seção "Estrutura do Projeto" com árvore completa
 - Guia de uso expandido com todas as features
 - Documentação de limitações técnicas (menu não atualiza em tempo real)
 
-### Performance
+### Desempenho
 - Busca em tempo real sem travamentos
 - Aplicação de configurações instantânea (exceto hotkeys)
 - Janelas responsivas com feedback visual imediato
@@ -548,7 +548,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 
 ## [0.0.9] - 2025-11-04
 
-### Added
+### Adicionado
 - **Arquitetura Modular Completa**: Refatoração total de `dahora_app.py` (1126 linhas) em 14 módulos especializados
 - **13 Módulos Python Criados**:
   - `dahora_app/constants.py` (48L) - Constantes e configurações globais
@@ -569,14 +569,14 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 - **Type hints**: Adicionadas anotações de tipo em 10+ funções críticas para melhor manutenibilidade
 - **Documentação arquitetural**: README.md completo explicando cada módulo e seus benefícios
 
-### Changed
+### Alterado
 - **Responsabilidade única**: Cada módulo agora tem uma função clara e bem definida
 - **Build system**: `build.py` atualizado para usar `main.py` ao invés de `dahora_app.py`
 - **Imports organizados**: Importações explícitas mostram dependências claras entre módulos
 - **Testes atualizados**: Todos os testes agora importam e usam módulos reais ao invés de mocks
 - **Código ~160 linhas mais limpo**: Remoção de duplicações e código morto da sprint anterior
 
-### Improved
+### Melhorado
 - **Testabilidade**: Componentes podem ser testados isoladamente com facilidade
 - **Manutenibilidade**: Código organizado e fácil de entender com arquitetura clara
 - **Reutilização**: Módulos podem ser importados e usados em outros projetos Python
@@ -599,7 +599,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 - **Build testado**: Executável `dahora_app_v0.0.7.exe` (31.3 MB) funcionando perfeitamente
 - **Tempo de desenvolvimento**: 6h (50% mais rápido que as 12h estimadas)
 
-### Documentation
+### Documentação
 - Documentação completa em `dahora_app/README.md` com:
   - Visão geral da arquitetura modular
   - Descrição detalhada de cada módulo
@@ -607,14 +607,14 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
   - Benefícios da modularização
   - Guia de testes
 
-### Tests
+### Testes
 - ✅ 15/15 testes passando (100%)
 - ✅ Cobertura de 95% do código
 - ✅ Testes integrados com módulos reais
 - ✅ Fixtures reutilizáveis em `conftest.py`
 - ✅ Tempo de execução: 0.32s
 
-### Performance
+### Desempenho
 - Código organizado em ~1650 linhas distribuídas em 14 arquivos
 - Redução de acoplamento entre componentes
 - Melhor isolamento de responsabilidades
@@ -622,7 +622,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 
 ## [0.0.8] - 2025-11-04
 
-### Added
+### Adicionado
 - Implementa rotação automática de logs com `RotatingFileHandler` (limite de 5MB, mantém 3 backups)
 - Adiciona validação e sanitização de configurações do usuário
 - Implementa aviso de privacidade na primeira execução do aplicativo
@@ -630,7 +630,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 - Adiciona nova seção "Privacidade e Segurança" na documentação (README.md)
 - Adiciona arquivo `CHECKLIST_MELHORIAS.md` com 134 tarefas de melhoria organizadas por prioridade
 
-### Fixed
+### Corrigido
 - **CRÍTICO:** Corrige path hardcoded em `build.py` que impedia build em outras máquinas
   - Substitui `E:\Dahora\dahora-app\icon.ico` por caminho relativo usando `os.path.dirname(__file__)`
   - Build agora é portável e funciona em qualquer máquina/diretório
@@ -638,25 +638,25 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 - Implementa sanitização de caracteres de controle ASCII em configurações
 - Adiciona limite de 100 caracteres para prefixo com truncamento automático
 
-### Changed
+### Alterado
 - Renomeia arquivo de log de `qopas.log` para `dahora.log` (mais consistente com nome do app)
 - Melhora documentação sobre armazenamento de dados no README
 - Logs agora incluem mensagem informativa sobre sistema de rotação no startup
 - Settings são automaticamente validados antes de serem aplicados
 
-### Security
+### Segurança
 - Implementa validação de entrada para prevenir caracteres perigosos em configurações
 - Adiciona aviso transparente sobre dados armazenados localmente
 - Documenta práticas de privacidade (zero telemetria, dados 100% locais)
 
-### Technical
+### Técnica
 - Adiciona import `from logging.handlers import RotatingFileHandler`
 - Cria função `validate_settings()` para sanitização de configurações
 - Cria função `show_privacy_notice()` para primeira execução
 - Atualiza `load_settings()` com validação integrada
 - Build testado e funcionando: `dahora_app_v0.0.7.exe` (31.3 MB)
 
-### Documentation
+### Documentação
 - Expande seção "Armazenamento de dados" com detalhes sobre todos os arquivos
 - Adiciona informações sobre rotação automática de logs
 - Documenta política de privacidade e segurança
@@ -698,55 +698,55 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 - Automação de build com `python build.py` e upload de assets (.exe e .sha256)
 - Extração automática de notas do `CHANGELOG.md` para compor o corpo do release
 
-### Technical
+### Técnica
 - Dispara em `push` de tags `v*` (ex.: `v0.0.7-1`)
 - Calcula SHA-256 no runner e anexa ao release
 - Usa `softprops/action-gh-release@v1` para criar o release e enviar arquivos
 
 ## [0.0.7] - 2025-11-04
 
-### Changed
+### Alterado
 - Notificação rápida via Tkinter ajustada para ~1.5s e visual próximo ao Windows
 - Clique esquerdo no ícone aciona a mesma notificação curta do atalho
 - README atualizado (versões, comportamento das notificações e clique esquerdo)
 - `build.py` atualizado para gerar `dahora_app_v0.0.7.exe`
 
-### Added
+### Adicionado
 - Exceção no `.gitignore` para versionar `001_pyinstaller.spec`
 
-### Removed
+### Removido
 - Arquivo obsoleto `qopas_app_v0.0.5.spec` (limpeza)
 
-### Technical
+### Técnica
 - `001_pyinstaller.spec` canônico incluído no repositório
 
 ## [0.0.6] - 2025-11-03
 
-### Added
-- Janela “Definir Prefixo” atualizada com visual próximo ao Windows 11 (ttk, tema `vista`)
-- Atalho interno `Ctrl+Shift+R` para “Recarregar Itens” no menu da bandeja
-- Item do menu renomeado para “Recarregar Itens” e posicionado acima do histórico
+### Adicionado
+- Janela "Definir Prefixo" atualizada com visual próximo ao Windows 11 (ttk, tema `vista`)
+- Atalho interno `Ctrl+Shift+R` para "Recarregar Itens" no menu da bandeja
+- Item do menu renomeado para "Recarregar Itens" e posicionado acima do histórico
 
-### Changed
+### Alterado
 - Documentação revisada e unificada (README e CHANGELOG)
 - Correção de referências antigas para `dahora_app.py`
 - README atualizado com executável correto `dahora_app_v0.0.6.exe`
-- Ordem dos botões na janela de prefixo ajustada para “Cancelar | Salvar”
+- Ordem dos botões na janela de prefixo ajustada para "Cancelar | Salvar"
 
-### Removed
+### Removido
 - Documentos redundantes/obsoletos: `CLAUDE.md` e `SUGESTOES_NOMES.md`
 
-### Technical
+### Técnica
 - `build.py` atualizado para gerar `dahora_app_v0.0.6.exe`
 - Mantida estratégia segura de atualização de menu via ação dedicada
 
 ## [0.0.4] - 2025-11-02
 
-### Added
+### Adicionado
 - **Atualização de ícone personalizado**: Novo arquivo icon.ico incorporado no executável
 - **Versão 0.0.4**: Executável atualizado com novo ícone do sistema bandeja
 
-### Changed
+### Alterado
 - **Atualização de build**: PyInstaller configurado para usar o novo arquivo icon.ico (10,052 bytes)
 - **Versão incrementada**: Atualizada de v0.0.3 para v0.0.4 para refletir nova versão do ícone
 
@@ -756,18 +756,18 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 
 ## [0.0.5] - 2025-11-02
 
-### Added
+### Adicionado
 - **Monitoramento inteligente de clipboard**: Sistema adaptativo que reduz sobrecarga do sistema
 - **Detecção de Ctrl+C**: Captura automaticamente quando usuário pressiona Ctrl+C
 - **Polling adaptativo**: Intervalos dinâmicos de 0.5s a 10s baseados em atividade
 - **Otimização de recursos**: Maior intervalo quando clipboard está ocioso (>30s)
 
-### Changed
+### Alterado
 - **Performance clipboard monitoring**: Substituído polling constante por detecção inteligente
 - **Eficiência do sistema**: Reduz consumo de CPU quando não há atividade no clipboard
 - **Hotkeys expandidas**: Agora captura Ctrl+Shift+Q e Ctrl+C globalmente
 
-### Technical
+### Técnica
 - **Intelligent polling**: 0.5s resposta rápida com atividade, até 10s quando ocioso
 - **Activity detection**: Detecta mudanças reais no clipboard em vez de verificação constante
 - **Ctrl+C interception**: Adiciona conteúdo ao histórico quando Ctrl+C é pressionado
@@ -777,14 +777,14 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 
 ## [0.0.3] - 2025-11-02
 
-### Added
+### Adicionado
 - **Melhoria no monitoramento de clipboard**: Intervalo atualizado de 1 para 3 segundos para melhor performance
 - **Funcionalidade de limpeza de histórico**: Opção "Limpar Histórico" no menu de clique direito para remover todo o histórico de clipboard
 - **Histórico persistente**: Agora o histórico é salvo em `clipboard_history.json` e mantém entre reinicializações
 - **Monitoramento ativo**: Clipboard é monitorado automaticamente a cada 3 segundos, detectando novas cópias
 - **Interface aprimorada**: Melhor feedback visual e notificações ao limpar histórico
 
-### Fixed
+### Corrigido
 - **Corrigido bug de limpeza de histórico**: A função de limpar histórico agora funciona corretamente, removendo permanentemente todos os itens do arquivo
 - **Corrigido bug de menu recursivo**: Eliminada recursão infinita ao atualizar menu após definir prefixo
 - **Corrigido ícone de bandeja**: O ícone personalizado agora é carregado corretamente no executável sem erros
@@ -796,13 +796,13 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 
 ## [0.0.2] - 2025-01-02
 
-### Added
+### Adicionado
 - **Melhoria no monitoramento de clipboard**: O histórico agora é atualizado instantaneamente sempre que o clipboard é modificado, não apenas ao iniciar o aplicativo
 - **Melhoria no intervalo de monitoramento**: Reduzido de 2 para 1 segundo para detecção mais rápida de mudanças
 - **Logging aprimorado**: Adicionado logs detalhados para monitoramento do clipboard em `dahora.log`
 - **Inicialização aprimorada**: O aplicativo agora inicializa o estado atual do clipboard ao iniciar para evitar duplicações
 
-### Fixed
+### Corrigido
 - **Corrigido bug de histórico de clipboard**: O histórico só era atualizado ao abrir o aplicativo, não em tempo real
 - **Corrigida inicialização do estado do clipboard**: Agora captura o estado atual do clipboard ao iniciar para comparação correta
 - **Melhorado tratamento de erros**: Logging detalhado para depuração de problemas de clipboard
@@ -812,7 +812,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 
 ## [0.0.1] - 2025-01-02
 
-### Added
+### Adicionado
 - Versão inicial do Qopas App 0.0.1
 - Sistema de bandeja do Windows (system tray) com ícone de relógio personalizado
 - Copia data e hora para a área de transferência no formato `[DD.MM.AAAA-HH:MM]`
@@ -830,13 +830,13 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 - Script de build automatizado com PyInstaller
 - Documentação completa em README.md e CLAUDE.md
 
-### Changed
+### Alterado
 - Alterado hotkey global de `Ctrl+Shift+D` para `Ctrl+Shift+Q` para evitar conflitos
 - Interface melhorada com tooltips claros e mensagens intuitivas
 - Notificações otimizadas para 2 segundos de duração
 - Menu organizado com submenus para histórico de clipboard
 
-### Technical
+### Técnica
 - PyInstaller para build de executável Windows
 - Python 3.8+ como dependência
 - Bibliotecas: pystray, pyperclip, keyboard, Pillow, winotify, pywin32
@@ -844,7 +844,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 - Repositório GitHub: https://github.com/rkvasne/dahora-app
 - Executável nomeado como `qopas_app_v0.0.1.exe` com identificação de versão
 
-### Fixed
+### Corrigido
 - Corrigido erro de menu em `pystray` usando método `__add__` ao invés de `add`
 - Melhorado tratamento de erros e exceções
 - Corrigida inicialização de múltiplas instâncias
