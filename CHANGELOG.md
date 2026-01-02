@@ -685,7 +685,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 - Correção no PowerShell ao gerar o nome do arquivo `.sha256` (remoção de subexpressão `$(...)`); agora o arquivo é criado como `<basename>.sha256.txt`
 
 ### Technical
-- Ajuste no passo "Compute SHA-256" do workflow `001_release.yml` usando variáveis simples (`$basename`) para montar o nome do arquivo
+- Ajuste no passo "Compute SHA-256" do workflow `release.yml` usando variáveis simples (`$basename`) para montar o nome do arquivo
 - A execução do workflow em tags `v*` deve anexar `.exe` e `.sha256.txt` corretamente ao release
 
 ## [0.0.7-1] - 2025-11-04
@@ -694,7 +694,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 - Release de teste para validar o workflow de build e release por tag (GitHub Actions)
 
 ### Added
-- Workflow `.github/workflows/001_release.yml` (Windows runner)
+- Workflow `.github/workflows/release.yml` (Windows runner)
 - Automação de build com `python build.py` e upload de assets (.exe e .sha256)
 - Extração automática de notas do `CHANGELOG.md` para compor o corpo do release
 

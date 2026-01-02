@@ -202,7 +202,7 @@ Há dois jeitos comuns:
 
 ### A) Via GitHub Releases (automático por tag)
 
-Existe um workflow em `.github/workflows/001_release.yml` que roda quando você cria uma tag `vX.Y.Z`.
+Existe um workflow em `.github/workflows/release.yml` que roda quando você cria uma tag `vX.Y.Z`.
 
 Passos:
 
