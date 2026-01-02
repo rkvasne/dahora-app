@@ -72,6 +72,18 @@
         line-height: 1.5; /* Mais compacto */
     }
 
+    .hero-differentiators {
+        grid-template-columns: 1fr;
+        gap: 0.75rem 1rem;
+        padding: 0 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .differentiator {
+        font-size: 0.9rem;
+        padding: 0.6rem 0.75rem;
+    }
+
     .hero-badges {
         flex-wrap: wrap;
         justify-content: center;

@@ -56,7 +56,7 @@ Veja [docs/](docs/) para documentação completa:
 
 Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sistema leve e poderoso que revoluciona como você lida com timestamps. Ele roda silenciosamente na bandeja do sistema e permite que você cole a data e hora atual formatada em qualquer lugar, com um único atalho.
 
-**Novo na v0.2.3:** Segurança reforçada, thread-safe synchronization, single instance guarantee, **262 testes automatizados passando**, sistema de callbacks consolidado.
+**Novo na v0.2.4:** Documentação consolidada e unificada, Phase 6 completa com system de callbacks, **262 testes automatizados passando**, arquitetura refatorada e pronta para produção.
 
 ## ✨ Funcionalidades
 
@@ -88,8 +88,8 @@ Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sist
 Não requer Python instalado. Basta baixar e rodar.
 
 1. Vá para a página de [Releases](https://github.com/rkvasne/dahora-app/releases).
-2. Baixe o arquivo `DahoraApp_v0.2.3.zip`.
-3. Extraia o ZIP e execute `DahoraApp_v0.2.3.exe`. O ícone aparecerá na bandeja do sistema (próximo ao relógio).
+2. Baixe o arquivo `DahoraApp_v0.2.4.zip`.
+3. Extraia o ZIP e execute `DahoraApp_v0.2.4.exe`. O ícone aparecerá na bandeja do sistema (próximo ao relógio).
 
 ### Opção 2: Rodar do Código Fonte
 
