@@ -28,6 +28,9 @@ clipboard_history.json
 # Configurações do usuário
 settings.local.json
 
+# GitHub Token (segurança)
+.github_token
+
 # Cache e temp files
 __pycache__/
 *.pyc
