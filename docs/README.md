@@ -35,6 +35,6 @@ Diretório central da documentação técnica do projeto.
 
 ### Qualidade
 - Verificar links internos antes de commit
-- Executar testes: `pytest tests/`
+- Executar testes: `py -m pytest`
 - Manter consistência de versão em toda documentação
 

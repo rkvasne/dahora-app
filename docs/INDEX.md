@@ -73,13 +73,12 @@ docs/
 ├── DEVELOPMENT_HISTORY.md      # Histórico narrativo
 ├── HACKS.md                    # Workarounds documentados
 ├── PRICING.md                  # Análise de mercado
-├── RELEASE.md                  # Processo de release
+├── RELEASE.md                  # Processo de build e release
 ├── ROADMAP.md                  # Próximos passos
 ├── GITHUB_CLI_GUIDE.md         # GitHub CLI completo
 ├── WINDOWS_PYTHON_SETUP.md     # Setup Python Windows
 ├── REPORTS/                    # Relatórios de versão
 │   ├── v0.2.4.md
-│   └── ARCHIVE/
 └── LANDING/                    # Análises da landing
     └── analysis.md
 ```
@@ -133,7 +132,7 @@ docs/
 - Verifique links antes de commit
 
 ### Qualidade Antes de Commit
-- ✅ Executar testes: `pytest tests/`
+- ✅ Executar testes: `py -m pytest`
 - ✅ Verificar links internos
 - ✅ Atualizar `CHANGELOG.md`
 - ✅ Versão consistente em todos os arquivos

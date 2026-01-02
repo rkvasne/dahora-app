@@ -28,7 +28,7 @@ RELEASES = {
 - 84 novos testes (todos passando)
 
 ### 📚 Documentação Consolidada
-- Novo DOCUMENTATION_INDEX.md como referência central
+- Novo docs/INDEX.md como referência central
 - Rastreamento de status unificado entre todas as fases
 - Formato e estrutura padronizados em toda documentação
 

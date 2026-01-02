@@ -13,12 +13,12 @@ Este diretório contém a suíte de testes do Dahora App.
 
 ### Executar todos os testes:
 ```bash
-pytest tests/
+py -m pytest tests/
 ```
 
 ### Executar com cobertura:
 ```bash
-pytest tests/ --cov=. --cov-report=html
+py -m pytest tests/ --cov=. --cov-report=html
 ```
 
 Obs.: a cobertura pode variar conforme o ambiente e dependências.
@@ -26,24 +26,24 @@ Obs.: a cobertura pode variar conforme o ambiente e dependências.
 ### Executar testes específicos:
 ```bash
 # Apenas testes de formatação de data/hora
-pytest tests/test_datetime_formatter.py
+py -m pytest tests/test_datetime_formatter.py
 
 # Apenas testes de settings
-pytest tests/test_settings.py
+py -m pytest tests/test_settings.py
 
 # Teste específico
-pytest tests/test_settings.py::test_validate_settings_basic
+py -m pytest tests/test_settings.py::test_validate_settings_basic
 ```
 
 ### Executar em modo verbose:
 ```bash
-pytest tests/ -v
+py -m pytest tests/ -v
 ```
 
 ### Ver apenas testes que falharam:
 ```bash
-pytest tests/ -x  # Para no primeiro erro
-pytest tests/ --lf  # Roda apenas os últimos que falharam
+py -m pytest tests/ -x  # Para no primeiro erro
+py -m pytest tests/ --lf  # Roda apenas os últimos que falharam
 ```
 
 ## 📁 Estrutura de Arquivos
@@ -120,7 +120,7 @@ Factory fixture para criar arquivos JSON corrompidos (útil para testar tratamen
 Para gerar relatório HTML de cobertura:
 
 ```bash
-pytest tests/ --cov=. --cov-report=html
+py -m pytest tests/ --cov=. --cov-report=html
 start htmlcov/index.html  # Windows
 ```
 
@@ -155,13 +155,13 @@ Para debug detalhado:
 
 ```bash
 # Mostrar prints durante os testes
-pytest tests/ -s
+py -m pytest tests/ -s
 
 # Mostrar variáveis locais em falhas
-pytest tests/ -l
+py -m pytest tests/ -l
 
 # Debug com pdb (Python debugger)
-pytest tests/ --pdb
+py -m pytest tests/ --pdb
 ```
 
 ## ✅ Checklist para Novos Testes

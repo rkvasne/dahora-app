@@ -412,21 +412,21 @@ if not valid:
 
 ```bash
 # Todos os testes
-pytest
+py -m pytest
 
 # Testes específicos
-pytest tests/test_hotkey_validator.py -v
-pytest tests/test_schemas.py -v
+py -m pytest tests/test_hotkey_validator.py -v
+py -m pytest tests/test_schemas.py -v
 
 # Com coverage
-pytest --cov=dahora_app tests/
+py -m pytest --cov=dahora_app tests/
 ```
 
 ## 10. Dependências Adicionadas
 
 ### Pydantic v2.0+
 ```
-pip install pydantic>=2.0
+py -m pip install pydantic>=2.0
 ```
 
 **Uso:**

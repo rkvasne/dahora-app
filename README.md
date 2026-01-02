@@ -19,7 +19,7 @@
 
 ---
 
-## � Segurança & Qualidade
+## 🔒 Segurança & Qualidade
 
 ### Status de Implementação
 - ✅ **Phase 1:** Security Hardening (66 testes)
@@ -44,15 +44,15 @@
 
 ### Documentação
 Veja [docs/](docs/) para documentação completa:
-- [DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md) - Índice centralizado (comece aqui!)
+- [docs/INDEX.md](docs/INDEX.md) - Índice centralizado (comece aqui!)
 - [ARCHITECTURE.md](docs/ARCHITECTURE.md) - Arquitetura detalhada
 - [HACKS.md](docs/HACKS.md) - Problemas identificados e soluções
 - [DEVELOPMENT_HISTORY.md](docs/DEVELOPMENT_HISTORY.md) - Histórico técnico
-- [PHASE_6_PROGRESS.md](PHASE_6_PROGRESS.md) - Progresso da Fase 6 (completa)
+- [RELEASE.md](docs/RELEASE.md) - Processo de build/release e Git LFS
 
 ---
 
-## �🚀 Por que Dahora App?
+## 🚀 Por que Dahora App?
 
 Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sistema leve e poderoso que revoluciona como você lida com timestamps. Ele roda silenciosamente na bandeja do sistema e permite que você cole a data e hora atual formatada em qualquer lugar, com um único atalho.
 
