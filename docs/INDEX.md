@@ -5,7 +5,8 @@ Bem-vindo à documentação do Dahora App! Esta página serve como mapa de naveg
 ## 📚 Estrutura de Documentação
 
 ### 🚀 Começando
-- **[README.md](README.md)** - Visão geral do projeto, recursos e instruções básicas
+- **[README.md](../README.md)** - Visão geral do projeto, recursos e instruções básicas
+- **[WINDOWS_PYTHON_SETUP.md](WINDOWS_PYTHON_SETUP.md)** - ⚠️ IMPORTANTE! Use `py` em vez de `python` no Windows
 - **[GITHUB_TOKEN_SETUP.md](GITHUB_TOKEN_SETUP.md)** - Configuração de autenticação GitHub
 
 ### 📖 Guias e Procedimentos

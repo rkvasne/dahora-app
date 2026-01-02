@@ -99,10 +99,10 @@ git clone https://github.com/rkvasne/dahora-app.git
 cd dahora-app
 
 # 2. Instale as dependências
-pip install -r requirements.txt
+py -m pip install -r requirements.txt
 
 # 3. Execute
-python main.py
+py main.py
 ```
 
 ---
@@ -150,7 +150,8 @@ Os dados são salvos localmente em `%APPDATA%\DahoraApp`.
 
 Toda a documentação técnica e de negócio está organizada na pasta `docs/`:
 
-- **[📚 Índice da Documentação](docs/README.md):** Mapa e convenções da documentação.
+- **[📚 Índice da Documentação](docs/INDEX.md):** Mapa completo e convenções da documentação (comece aqui!).
+- **[⚠️ IMPORTANTE: Python no Windows](docs/WINDOWS_PYTHON_SETUP.md):** LEIA ISTO SE ESTIVER NO WINDOWS! Use `py` em vez de `python`.
 - **[🚀 Release (Build/ZIP/LFS)](docs/RELEASE.md):** Processo atualizado de build e publicação.
 - **[📜 Histórico de Desenvolvimento](docs/DEVELOPMENT_HISTORY.md):** Detalhes profundos sobre cada fase de desenvolvimento, migrações e decisões técnicas.
 - **[🗺️ Roadmap](docs/ROADMAP.md):** Próximos passos em alto nível.
