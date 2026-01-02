@@ -212,7 +212,7 @@ O Dahora App foi construído com privacidade em mente:
 
 <div align="center">
 
-**Feito com 💙 por [Rafael Kvasne](https://github.com/rkvasne)**
+**Desenvolvido por [Raphael Kvasne](https://github.com/rkvasne)**
 
 [![License](https://img.shields.io/badge/license-MIT-orange.svg?style=flat-square)](LICENSE)
 
