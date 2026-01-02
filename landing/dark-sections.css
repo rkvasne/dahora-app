@@ -247,54 +247,113 @@ body:not(.dark-mode) .section-dark .section-title {
         radial-gradient(800px circle at 20% 30%, rgba(0,120,212,0.1), transparent 50%),
         radial-gradient(600px circle at 80% 70%, rgba(43,136,216,0.08), transparent 50%),
         linear-gradient(135deg, #020617 0%, #0f172a 100%); /* Deep space */
-    padding: 5rem 2rem; /* Mais compacto */
+    padding: 6rem 2rem; /* Mais espaçamento vertical */
     color: white;
     text-align: center;
 }
 
 .download-box {
-    max-width: 600px;
+    max-width: 650px; /* Um pouco mais largo */
     margin: 0 auto;
     background: rgba(255, 255, 255, 0.03);
-    padding: 3rem; /* Mais equilibrado */
-    border-radius: 1.5rem; /* Menos arredondado */
+    padding: 0; /* Padding movido para elementos internos ou controlado via grid/flex se fosse o caso, mas vamos usar padding interno no conteudo */
+    border-radius: 1.5rem;
     backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.25); /* Mais sutil */
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+    overflow: hidden; /* Para o footer não vazar */
+    position: relative;
+}
+
+/* Highlight topo do card */
+.download-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
 }
 
 .download-box h2 {
     font-size: 2.5rem;
-    margin-bottom: 1rem;
+    margin-top: 3rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.9) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .download-box p {
-    font-size: 1.2rem;
-    opacity: 0.95;
-    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    opacity: 0.8;
+    margin-bottom: 2.5rem;
+}
+
+/* Botão Grande de Download */
+.btn-download-large {
+    font-size: 1.25rem;
+    padding: 1.2rem 3.5rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 10px 20px -5px rgba(255, 69, 0, 0.4); /* Sombra laranja mais forte */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-download-large:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 30px -5px rgba(255, 69, 0, 0.5);
 }
 
 .download-info {
     display: flex;
     justify-content: center;
-    gap: 2rem;
-    margin-top: 1.5rem;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
     flex-wrap: wrap;
+    padding: 0 2rem;
 }
 
 .download-detail {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 1rem;
+    font-size: 0.95rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.9);
 }
 
-/* CUSTOMIZAÇÃO: python build.py com contraste */
-.download code {
-    background: rgba(255,255,255,0.25);
-    padding: 0.5rem 1rem;
+/* Footer do Card (Compile from source) */
+.download-footer {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.download-footer p {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.download-footer code {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.6rem 1.2rem;
     border-radius: 0.5rem;
-    border: 1px solid rgba(255,255,255,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     font-weight: 600;
-    color: white;
+    color: var(--secondary-color); /* Cyan/Blue */
+    font-family: 'Fira Code', monospace;
+    font-size: 1rem;
+    display: inline-block;
+    transition: all 0.2s;
+}
+
+.download-footer code:hover {
+    background: rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+    cursor: text;
+}
 }
