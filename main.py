@@ -359,6 +359,7 @@ class DahoraApp:
         try:
             # Formata com prefixo específico
             dt_string = self.datetime_formatter.format_with_prefix(prefix)
+            self.clipboard_manager.mark_own_content(dt_string)
             
             # SALVA o clipboard atual (preserva o que o usuário tinha copiado)
             clipboard_backup = None
@@ -417,6 +418,7 @@ class DahoraApp:
     def copy_datetime(self, icon=None, item=None, source=None):
         """Copia a data e hora para a área de transferência"""
         dt_string = self._format_datetime_for_default_shortcut()
+        self.clipboard_manager.mark_own_content(dt_string)
         self.clipboard_manager.copy_text(dt_string)
         
         # NÃO adiciona timestamp ao histórico (desnecessário - sempre pode gerar novo)
@@ -451,6 +453,7 @@ class DahoraApp:
         """Ctrl+Shift+Q: cola data/hora onde o cursor está, preservando clipboard."""
         try:
             dt_string = self._format_datetime_for_default_shortcut()
+            self.clipboard_manager.mark_own_content(dt_string)
 
             clipboard_backup = None
             try:

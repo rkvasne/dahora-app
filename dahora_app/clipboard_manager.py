@@ -12,7 +12,7 @@ from dahora_app.constants import (
     HISTORY_FILE, MAX_HISTORY_ITEMS,
     CLIPBOARD_MONITOR_INTERVAL, CLIPBOARD_IDLE_THRESHOLD
 )
-from dahora_app.utils import atomic_write_json
+from dahora_app.utils import atomic_write_json, dpapi_encrypt_bytes, dpapi_decrypt_bytes, b64encode_bytes, b64decode_str
 
 
 class ClipboardManager:
@@ -24,6 +24,43 @@ class ClipboardManager:
         self.clipboard_history: List[Dict[str, str]] = []
         self.last_clipboard_content = ""
         self.paused = False
+        self._own_content_expiry: Dict[str, float] = {}
+
+        self._dpapi_entropy = b"DahoraApp-clipboard-history-v1"
+
+    def mark_own_content(self, text: str, ttl_seconds: float = 2.0) -> None:
+        if not text:
+            return
+
+        now = time.time()
+        with self.history_lock:
+            self._own_content_expiry[text] = now + float(ttl_seconds)
+            expired_keys = [k for k, v in self._own_content_expiry.items() if v <= now]
+            for k in expired_keys:
+                self._own_content_expiry.pop(k, None)
+
+    def _is_own_content(self, text: str) -> bool:
+        if not text:
+            return False
+
+        now = time.time()
+        with self.history_lock:
+            expiry = self._own_content_expiry.get(text)
+            if expiry is None:
+                return False
+            if expiry <= now:
+                self._own_content_expiry.pop(text, None)
+                return False
+            return True
+
+    def _write_history_locked(self) -> None:
+        try:
+            plain = json.dumps(self.clipboard_history, ensure_ascii=False).encode("utf-8")
+            blob = dpapi_encrypt_bytes(plain, self._dpapi_entropy)
+            payload = {"dpapi": 1, "blob": b64encode_bytes(blob)}
+            atomic_write_json(HISTORY_FILE, payload)
+        except Exception:
+            atomic_write_json(HISTORY_FILE, self.clipboard_history)
     
     def toggle_pause(self) -> bool:
         """Alterna estado de pausa do monitoramento"""
@@ -33,10 +70,20 @@ class ClipboardManager:
     
     def load_history(self) -> None:
         """Carrega o histórico do arquivo ou inicia com lista vazia"""
+        needs_migration = False
         try:
             with self.history_lock:
                 with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-                    self.clipboard_history = json.load(f)
+                    raw = json.load(f)
+
+                if isinstance(raw, dict) and raw.get("dpapi") == 1 and isinstance(raw.get("blob"), str):
+                    decrypted = dpapi_decrypt_bytes(b64decode_str(raw.get("blob")), self._dpapi_entropy)
+                    loaded = json.loads(decrypted.decode("utf-8"))
+                else:
+                    loaded = raw
+                    needs_migration = isinstance(raw, list)
+
+                self.clipboard_history = loaded if isinstance(loaded, list) else []
                 if len(self.clipboard_history) > MAX_HISTORY_ITEMS:
                     self.clipboard_history = self.clipboard_history[-MAX_HISTORY_ITEMS:]
         except FileNotFoundError:
@@ -44,12 +91,18 @@ class ClipboardManager:
         except Exception as e:
             logging.warning(f"Falha ao carregar histórico: {e}")
             self.clipboard_history = []
+
+        if needs_migration:
+            try:
+                self.save_history()
+            except Exception:
+                pass
     
     def save_history(self) -> None:
         """Salva o histórico no arquivo"""
         try:
             with self.history_lock:
-                atomic_write_json(HISTORY_FILE, self.clipboard_history)
+                self._write_history_locked()
         except Exception as e:
             logging.warning(f"Falha ao salvar histórico: {e}")
     
@@ -81,7 +134,7 @@ class ClipboardManager:
             if len(self.clipboard_history) > MAX_HISTORY_ITEMS:
                 self.clipboard_history = self.clipboard_history[-MAX_HISTORY_ITEMS:]
             
-            atomic_write_json(HISTORY_FILE, self.clipboard_history)
+            self._write_history_locked()
             logging.info(f"Histórico atualizado: total={len(self.clipboard_history)}; último='{text[:50]}...'")
     
     def clear_history(self) -> int:
@@ -96,7 +149,7 @@ class ClipboardManager:
             total_items = len(self.clipboard_history)
             self.clipboard_history = []
             try:
-                atomic_write_json(HISTORY_FILE, [])
+                self._write_history_locked()
                 logging.info(f"Histórico limpo com sucesso! {total_items} itens removidos")
             except Exception as e:
                 logging.error(f"Falha ao salvar histórico limpo: {e}")
@@ -187,7 +240,8 @@ class ClipboardManager:
                 if current_content and current_content.strip():
                     if current_content != self.last_clipboard_content:
                         logging.info(f"Clipboard mudou de '{self.last_clipboard_content[:30] if self.last_clipboard_content else 'vazio'}' para '{current_content[:30]}...'")
-                        self.add_to_history(current_content)
+                        if not self._is_own_content(current_content):
+                            self.add_to_history(current_content)
                         self.last_clipboard_content = current_content
                         last_activity_time = current_time
                         

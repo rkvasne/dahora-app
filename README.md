@@ -71,9 +71,9 @@ Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sist
 - **Visual Profissional:** Cards e painéis com estética moderna.
 
 ### 📋 Histórico Inteligente
-- **Armazenamento Seletivo:** Armazena apenas textos úteis, ignora timestamps.
+- **Armazenamento Seletivo:** Não salva timestamps gerados pelo próprio app no histórico.
 - **Busca Rápida:** Pressione `Ctrl+Shift+F` para busca instantânea no histórico.
-- **Privacidade:** Dados locais, zero telemetria.
+- **Privacidade:** Dados locais, zero telemetria, histórico criptografado no Windows (DPAPI).
 
 ### ⚙️ Controle Total
 - **Painel Completo:** 5 abas para controle total do aplicativo.

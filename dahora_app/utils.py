@@ -3,6 +3,7 @@ Funções utilitárias do Dahora App
 """
 import os
 import json
+import base64
 from typing import Any
 
 
@@ -124,6 +125,39 @@ def atomic_write_json(path: str, obj: Any) -> None:
     with open(tmp_path, "w", encoding="utf-8") as f:
         json.dump(obj, f, ensure_ascii=False, indent=2)
     os.replace(tmp_path, path)
+
+
+def atomic_write_bytes(path: str, data: bytes) -> None:
+    tmp_path = path + ".tmp"
+    with open(tmp_path, "wb") as f:
+        f.write(data)
+    os.replace(tmp_path, path)
+
+
+def dpapi_encrypt_bytes(data: bytes, entropy: bytes) -> bytes:
+    import win32crypt
+
+    encrypted = win32crypt.CryptProtectData(data, None, entropy, None, None, 0)
+    if isinstance(encrypted, tuple):
+        return encrypted[1]
+    return encrypted
+
+
+def dpapi_decrypt_bytes(blob: bytes, entropy: bytes) -> bytes:
+    import win32crypt
+
+    decrypted = win32crypt.CryptUnprotectData(blob, None, entropy, None, None, 0)
+    if isinstance(decrypted, tuple):
+        return decrypted[1]
+    return decrypted
+
+
+def b64encode_bytes(data: bytes) -> str:
+    return base64.b64encode(data).decode("ascii")
+
+
+def b64decode_str(data: str) -> bytes:
+    return base64.b64decode((data or "").encode("ascii"))
 
 
 def truncate_text(text: str, max_length: int = 50, suffix: str = "...") -> str:

@@ -199,7 +199,8 @@ notifications: NotificationSchema
 
 **Características:**
 - Monitora mudanças em clipboard
-- Armazena histórico com timestamps
+- Armazena histórico criptografado no Windows (DPAPI)
+- Ignora timestamps gerados pelo próprio app
 - Suporta formatação customizável de timestamps
 - Detecta inatividade para aplicar prefix
 
