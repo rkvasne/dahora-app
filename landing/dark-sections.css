@@ -71,36 +71,6 @@
     font-weight: 400; /* Mais leve */
 }
 
-.hero-differentiators {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem 1.5rem;
-    margin-bottom: 2rem;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.differentiator {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 0.95rem;
-    font-weight: 500;
-    padding: 0.75rem 1rem;
-    background: rgba(100, 150, 200, 0.08);
-    border-left: 3px solid rgba(100, 150, 200, 0.4);
-    border-radius: 4px;
-    transition: all 0.3s ease;
-}
-
-.differentiator:hover {
-    background: rgba(100, 150, 200, 0.15);
-    border-left-color: rgba(100, 150, 200, 0.7);
-    transform: translateX(4px);
-}
-
 .hero-version {
     display: inline-flex;
     align-items: center;
