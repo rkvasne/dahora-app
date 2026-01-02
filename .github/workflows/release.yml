@@ -30,14 +30,18 @@ jobs:
         shell: pwsh
         run: python build.py
 
-      - name: Locate EXE artifact
+      - name: Locate artifacts
         id: locate
         shell: pwsh
         run: |
           $exe = Get-ChildItem -Path dist -Filter *.exe | Select-Object -First 1 -ExpandProperty FullName
           if (-not $exe) { throw "No .exe found in dist" }
+          $zip = Get-ChildItem -Path dist -Filter *.zip | Select-Object -First 1 -ExpandProperty FullName
+          if (-not $zip) { throw "No .zip found in dist" }
           echo "artifact=$exe" | Out-File -Append $Env:GITHUB_OUTPUT
           echo "basename=$(Split-Path $exe -Leaf)" | Out-File -Append $Env:GITHUB_OUTPUT
+          echo "zipartifact=$zip" | Out-File -Append $Env:GITHUB_OUTPUT
+          echo "zipbasename=$(Split-Path $zip -Leaf)" | Out-File -Append $Env:GITHUB_OUTPUT
 
       - name: Compute SHA-256
         id: hash
@@ -69,8 +73,15 @@ jobs:
           } else {
             $slice = @("Release $version")
           }
+          $header = @(
+            "## 📥 Download (Windows)",
+            "",
+            "- Baixe o arquivo do app em **Assets** (ex: `DahoraApp_v$version.zip`).",
+            "- Evite **Source code (zip/tar.gz)**: é o código-fonte e pode conter pointers do Git LFS.",
+            ""
+          )
           $out = "dist/release_notes_$version.md"
-          $slice | Set-Content $out
+          $header + $slice | Set-Content $out
           echo "notes_path=$out" | Out-File -Append $Env:GITHUB_OUTPUT
 
       - name: Create GitHub Release and upload assets
@@ -81,6 +92,18 @@ jobs:
           body_path: ${{ steps.notes.outputs.notes_path }}
           files: |
             ${{ steps.locate.outputs.artifact }}
+            ${{ steps.locate.outputs.zipartifact }}
             ${{ steps.hash.outputs.hashfile }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload stable assets (latest)
+        shell: pwsh
+        run: |
+          gh release upload "${{ github.ref_name }}" `
+            "${{ steps.locate.outputs.artifact }}#DahoraApp_latest.exe" `
+            "${{ steps.locate.outputs.zipartifact }}#DahoraApp_latest.zip" `
+            --clobber `
+            --repo "${{ github.repository }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

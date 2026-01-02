@@ -53,6 +53,22 @@ Dica: existe um helper que faz essa limpeza e garante o ZIP correto:
 scripts\prepare_release_artifacts.bat
 ```
 
+## 3.1) Distribuição correta (GitHub Releases)
+
+O GitHub sempre mostra dois downloads automáticos: **Source code (zip)** e **Source code (tar.gz)**. Eles são úteis para devs, mas **não são o instalador do app** e podem conter pointers do Git LFS.
+
+✅ Para usuários finais, sempre publique e recomende baixar pelos **Assets** do release:
+- `DahoraApp_vX.Y.Z.zip` (recomendado)
+- (opcional) `DahoraApp_vX.Y.Z.exe`
+
+✅ Para ter um link fixo de “última versão”, publique também assets com nome estável:
+- `DahoraApp_latest.zip`
+- `DahoraApp_latest.exe`
+
+Links recomendados:
+- Página do release: https://github.com/rkvasne/dahora-app/releases/latest
+- Download direto: https://github.com/rkvasne/dahora-app/releases/latest/download/DahoraApp_latest.zip
+
 ## 4) Git LFS (artefatos grandes)
 
 Este repositório usa Git LFS para binários grandes (`.exe` e `.zip`).
