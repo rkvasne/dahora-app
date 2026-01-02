@@ -133,57 +133,78 @@ gh --version
 
 ## Autenticação
 
-### Configuração Única por Máquina
+### Método 1: Autenticação Interativa (Recomendado)
 
-GitHub CLI usa **autenticação baseada em token**, que funciona para **todos os projetos** do seu Windows.
+```powershell
+gh auth login
+```
+
+**Siga as instruções:**
+1. Escolha **GitHub.com**
+2. Protocolo: **HTTPS**
+3. Autenticar com credenciais: **Login via navegador** (recomendado)
+4. Copie o código exibido
+5. Abra o navegador e cole o código
+6. Autorize o GitHub CLI
+
+### Método 2: Token de Acesso Pessoal (Para Automação)
 
 #### Passo 1: Gerar Personal Access Token (PAT)
 
 1. Acesse: https://github.com/settings/tokens?type=pat
 2. Clique em **"Generate new token"** → **"Generate new token (classic)"**
 3. Configure:
-   - **Nome:** `GitHub CLI Access`
+   - **Nome:** `Dahora Release Updates` ou `GitHub CLI Access`
    - **Expiration:** `90 days` (ou sua preferência)
    - **Scopes** (marque):
-     - ✅ `repo` (acesso completo a repositórios)
-     - ✅ `workflow` (gerenciar GitHub Actions)
+     - ✅ `repo` (Controle total de repositórios)
+     - ✅ `workflow` (Atualizar workflows do GitHub Actions)
      - ✅ `gist` (opcional)
 
 4. Clique em **"Generate token"**
 5. **COPIE o token** (aparece apenas uma vez!)
 
-#### Passo 2: Salvar o Token Localmente
+#### Passo 2: Configurar Token
 
-**Opção A: Via CLI (Recomendado)**
+**Opção A: Autenticação via CLI (Recomendado)**
 ```powershell
-gh auth login
-# Siga as instruções interativas
+gh auth login --with-token
+# Cole o token e pressione Enter
+# Ou:
+echo "ghp_your_token_here" | gh auth login --with-token
 ```
 
-**Opção B: Armazenar em arquivo**
+**Opção B: Salvar em Arquivo (Para Scripts)**
 ```powershell
 $token = "ghp_xxxxxxxxxxxxxxxxxxxx"  # Cole seu token aqui
 $token | Out-File -FilePath "$HOME\.github_token" -Encoding UTF8
+Write-Host "✅ Token salvo em: $HOME\.github_token"
 
-# Adicione ao .gitignore de cada projeto:
-echo ".github_token" >> .gitignore
+# Autenticar usando o arquivo:
+gh auth login --with-token < $HOME\.github_token
 ```
 
 #### Passo 3: Verificar Autenticação
 
 ```powershell
 gh auth status
-# Resultado esperado:
-# ✓ Logged in to github.com as seu-usuario
-# ✓ Git operations for github.com configured to use https protocol.
 ```
 
-#### Passo 4: Usar o Token em Scripts
-
-```powershell
-$env:GH_TOKEN = (Get-Content "$HOME\.github_token" -Raw).Trim()
-gh release list --repo seu-usuario/seu-repo
+Resultado esperado:
 ```
+github.com
+  ✓ Logged in to github.com as SEU_USUARIO
+  ✓ Git operations configured to use https protocol
+  ✓ Token: *******************
+```
+
+### ⚠️ Segurança do Token
+
+- **NÃO compartilhe** o token com ninguém
+- Arquivo `.github_token` deve estar no `.gitignore`
+- Revogue tokens não utilizados em: https://github.com/settings/tokens
+- Use tokens com escopo mínimo necessário
+- Renove tokens periodicamente
 
 ---
 

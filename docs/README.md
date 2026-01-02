@@ -1,37 +1,40 @@
-# 📚 Documentação — Dahora App
+# 📚 Documentação Técnica — Dahora App
 
-Esta pasta concentra a documentação técnica do projeto.
+Diretório central da documentação técnica do projeto.
 
-## ✅ Por onde começar
+---
 
-- **Índice centralizado (recomendado):** veja o [DOCUMENTATION_INDEX.md](../DOCUMENTATION_INDEX.md) na raiz
-- **Uso e instalação (usuário final):** veja o [README.md](../README.md) na raiz do repositório
-- **Notas de release (mudanças por versão):** [CHANGELOG.md](../CHANGELOG.md)
-- **Processo de build/release (inclui Git LFS e ZIP):** [RELEASE.md](RELEASE.md)
+## 🎯 Navegação Rápida
 
-## 🗺️ Documentação Técnica
+### 👉 **[INDEX.md](INDEX.md)** - Comece aqui!
+> Índice completo de toda a documentação do projeto
 
-- **Arquitetura e Design:** [ARCHITECTURE.md](ARCHITECTURE.md)
-- **Problemas e Soluções:** [HACKS.md](HACKS.md)
-- **Histórico de Desenvolvimento:** [DEVELOPMENT_HISTORY.md](DEVELOPMENT_HISTORY.md)
-- **Roadmap (futuro):** [ROADMAP.md](ROADMAP.md)
-- **Pesquisa de Mercado:** [PRICING.md](PRICING.md)
+### Para Usuários
+- **[../README.md](../README.md)** - Instalação e uso do aplicativo
+- **[../CHANGELOG.md](../CHANGELOG.md)** - Histórico de mudanças
 
-## 🧭 Convenções
+### Para Desenvolvedores
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Arquitetura técnica
+- **[DEVELOPMENT_HISTORY.md](DEVELOPMENT_HISTORY.md)** - Histórico narrativo
+- **[HACKS.md](HACKS.md)** - Workarounds documentados
 
-- **Fonte da verdade de versão:** `dahora_app/constants.py` (`APP_VERSION`).
-- **Links internos:** use caminhos relativos (`docs/…`, `tests/…`, etc).
-- **Atualização mínima obrigatória ao mudar versão:**
+### Para Manutenedores
+- **[RELEASE.md](RELEASE.md)** - Processo de build e release
+- **[GITHUB_CLI_GUIDE.md](GITHUB_CLI_GUIDE.md)** - GitHub CLI e autenticação
+
+---
+
+## 📋 Convenções do Projeto
+
+### Versionamento
+- **Fonte da verdade:** `dahora_app/constants.py` (`APP_VERSION`)
+- **Atualizar ao mudar versão:**
   - `dahora_app/constants.py`
-  - `README.md` (badge + arquivo de download)
+  - `README.md` (badge e download)
   - `CHANGELOG.md` (entrada `## [X.Y.Z]`)
-  - `docs/RELEASE.md` (se o processo mudar)
 
-## ✅ Qualidade
-
-Antes de enviar mudanças:
-- Garanta que links internos não quebraram.
-- Garanta que a versão exibida é consistente nos pontos principais.
-- Rode testes (`pytest`).
-- Consulte [DOCUMENTATION_INDEX.md](../DOCUMENTATION_INDEX.md) para estrutura completa.
+### Qualidade
+- Verificar links internos antes de commit
+- Executar testes: `pytest tests/`
+- Manter consistência de versão em toda documentação
 

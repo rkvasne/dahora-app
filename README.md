@@ -56,7 +56,7 @@ Veja [docs/](docs/) para documentação completa:
 
 Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sistema leve e poderoso que revoluciona como você lida com timestamps. Ele roda silenciosamente na bandeja do sistema e permite que você cole a data e hora atual formatada em qualquer lugar, com um único atalho.
 
-**Novo na v0.2.4:** Documentação consolidada e unificada, Phase 6 completa com system de callbacks, **262 testes automatizados passando**, arquitetura refatorada e pronta para produção.
+**Novo na v0.2.4:** Documentação consolidada e unificada, Phase 6 completa com sistema de callbacks, **262 testes automatizados passando**, arquitetura refatorada e pronta para produção.
 
 ## ✨ Funcionalidades
 
@@ -148,15 +148,18 @@ Os dados são salvos localmente em `%APPDATA%\DahoraApp`.
 
 ## 📚 Documentação
 
-Toda a documentação técnica e de negócio está organizada na pasta `docs/`:
+Toda documentação está organizada em `docs/` com índice centralizado:
 
-- **[📚 Índice da Documentação](docs/INDEX.md):** Mapa completo e convenções da documentação (comece aqui!).
-- **[⚠️ IMPORTANTE: Python no Windows](docs/WINDOWS_PYTHON_SETUP.md):** LEIA ISTO SE ESTIVER NO WINDOWS! Use `py` em vez de `python`.
-- **[🚀 Release (Build/ZIP/LFS)](docs/RELEASE.md):** Processo atualizado de build e publicação.
-- **[📜 Histórico de Desenvolvimento](docs/DEVELOPMENT_HISTORY.md):** Detalhes profundos sobre cada fase de desenvolvimento, migrações e decisões técnicas.
-- **[🗺️ Roadmap](docs/ROADMAP.md):** Próximos passos em alto nível.
-- **[💰 Análise de Precificação](docs/PRICING.md):** Estudo de mercado, estratégias de monetização e análise de valor.
-- **[📝 Changelog](CHANGELOG.md):** Registro oficial de mudanças por versão.
+### 👉 **[docs/INDEX.md](docs/INDEX.md)** - Índice Central (comece aqui!)
+
+### Destaques:
+- **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** - Arquitetura técnica detalhada
+- **[DEVELOPMENT_HISTORY.md](docs/DEVELOPMENT_HISTORY.md)** - Histórico narrativo de desenvolvimento
+- **[RELEASE.md](docs/RELEASE.md)** - Processo de build, release e Git LFS
+- **[GITHUB_CLI_GUIDE.md](docs/GITHUB_CLI_GUIDE.md)** - GitHub CLI e autenticação
+- **[HACKS.md](docs/HACKS.md)** - Soluções criativas documentadas
+- **[ROADMAP.md](docs/ROADMAP.md)** - Próximos passos
+- **[CHANGELOG.md](CHANGELOG.md)** - Registro oficial de mudanças
 
 ## 📂 Estrutura do Projeto
 

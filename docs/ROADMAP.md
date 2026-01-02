@@ -1,8 +1,10 @@
 # 🗺️ Roadmap — Dahora App
 
-Este documento mantém **um roadmap de alto nível** (curto e acionável). O detalhamento deve ficar em issues/discussions.
+> **Última atualização:** Janeiro 2026 | **Versão atual:** v0.2.4
 
-## 🎯 Foco atual
+Roadmap de alto nível para próximas melhorias. Detalhes específicos devem ser documentados em issues/discussions no GitHub.
+
+--- 🎯 Foco atual
 
 - Estabilidade e consistência da UI moderna (CustomTkinter)
 - Padronização de documentação e processo de release
