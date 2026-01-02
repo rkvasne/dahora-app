@@ -76,7 +76,7 @@ jobs:
           $header = @(
             "## 📥 Download (Windows)",
             "",
-            "- Baixe o arquivo do app em **Assets** (ex: `DahoraApp_v$version.zip`).",
+            "- Baixe o arquivo do app em **Assets**: `DahoraApp_latest.zip` (recomendado) ou `DahoraApp_v$version.zip`.",
             "- Evite **Source code (zip/tar.gz)**: é o código-fonte e pode conter pointers do Git LFS.",
             ""
           )
@@ -100,10 +100,11 @@ jobs:
       - name: Upload stable assets (latest)
         shell: pwsh
         run: |
-          gh release upload "${{ github.ref_name }}" `
-            "${{ steps.locate.outputs.artifact }}#DahoraApp_latest.exe" `
-            "${{ steps.locate.outputs.zipartifact }}#DahoraApp_latest.zip" `
-            --clobber `
-            --repo "${{ github.repository }}"
+          $exeTmp = Join-Path $env:RUNNER_TEMP "DahoraApp_latest.exe"
+          $zipTmp = Join-Path $env:RUNNER_TEMP "DahoraApp_latest.zip"
+          Copy-Item -Force "${{ steps.locate.outputs.artifact }}" $exeTmp
+          Copy-Item -Force "${{ steps.locate.outputs.zipartifact }}" $zipTmp
+
+          gh release upload "${{ github.ref_name }}" $exeTmp $zipTmp --clobber --repo "${{ github.repository }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
