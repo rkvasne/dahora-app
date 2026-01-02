@@ -58,7 +58,6 @@ Não requer Python instalado. Basta baixar e rodar.
    - https://github.com/rkvasne/dahora-app/releases/latest/download/DahoraApp_latest.zip
 2. (Alternativa) Vá para a página de [Releases](https://github.com/rkvasne/dahora-app/releases) e baixe o `DahoraApp_vX.Y.Z.zip`.
 3. Extraia o ZIP e execute `DahoraApp_vX.Y.Z.exe`. O ícone aparecerá na bandeja do sistema (próximo ao relógio).
-4. Não use “Source code (zip/tar.gz)”: isso é o código-fonte (não é o executável).
 
 ### Opção 2: Rodar do Código Fonte
 

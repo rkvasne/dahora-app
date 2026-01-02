@@ -77,7 +77,6 @@ jobs:
             "## 📥 Download (Windows)",
             "",
             "- Baixe o arquivo do app em **Assets**: `DahoraApp_latest.zip` (recomendado) ou `DahoraApp_v$version.zip`.",
-            "- Evite **Source code (zip/tar.gz)**: é o código-fonte e pode conter pointers do Git LFS.",
             ""
           )
           $out = "dist/release_notes_$version.md"

@@ -53,11 +53,9 @@ Dica: existe um helper que faz essa limpeza e garante o ZIP correto:
 scripts\prepare_release_artifacts.bat
 ```
 
-## 3.1) Distribuição correta (GitHub Releases)
+## 3.1) Distribuição recomendada (GitHub Releases)
 
-O GitHub sempre mostra dois downloads automáticos: **Source code (zip)** e **Source code (tar.gz)**. Eles são úteis para devs, mas **não são o instalador do app** e podem conter pointers do Git LFS.
-
-✅ Para usuários finais, sempre publique e recomende baixar pelos **Assets** do release:
+✅ Para usuários finais, publique e recomende baixar pelos **Assets** do release:
 - `DahoraApp_vX.Y.Z.zip` (recomendado)
 - (opcional) `DahoraApp_vX.Y.Z.exe`
 
