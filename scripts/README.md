@@ -2,81 +2,78 @@
 
 Esta pasta contém scripts auxiliares para desenvolvimento e testes.
 
+> Navegação: [README do projeto](../README.md) • [Documentação (índice)](../docs/INDEX.md)
+
 ---
 
 ## 📋 SCRIPTS DISPONÍVEIS
 
-### 🔨 **rebuild_clean.bat**
-**Descrição:** Script de build limpo completo
+Este diretório contém scripts de apoio. O fluxo oficial de build/release está em [docs/RELEASE.md](../docs/RELEASE.md).
 
-**O que faz:**
-1. Fecha processos `dahora_app*.exe` em execução
-2. Remove cache do PyInstaller (`build/`, `dist/`, `__pycache__/`)
-3. Remove arquivos `.pyc`
-4. Executa `py build.py`
-5. Verifica se o executável foi criado
+### 📦 Build / Release
 
-**Como usar:**
-```bash
+#### **rebuild_clean.bat**
+Build limpo: remove caches/artefatos e executa `py build.py`.
+
+```powershell
 scripts\rebuild_clean.bat
 ```
 
-**Quando usar:**
-- Antes de fazer release
-- Quando o build está com problemas
-- Para garantir build limpo sem cache
+#### **prepare_release_artifacts.bat / prepare_release_artifacts.ps1**
+Prepara artefatos para release e evita ZIP do repositório inteiro.
 
----
-
-### 🧪 **test_menu.py**
-**Descrição:** Testa geração de itens do menu
-
-**O que faz:**
-- Cria instância do `MenuBuilder`
-- Define callbacks dummy
-- Gera itens do menu
-- Exibe lista de itens gerados
-
-**Como usar:**
-```bash
-# Da raiz do projeto:
-py scripts\test_menu.py
-
-# Ou dentro da pasta scripts:
-cd scripts
-py test_menu.py
+```powershell
+scripts\prepare_release_artifacts.bat
+# ou
+powershell -ExecutionPolicy Bypass -File scripts\prepare_release_artifacts.ps1
 ```
 
-**Quando usar:**
-- Para verificar estrutura do menu
-- Para debugar problemas de menu
-- Para validar callbacks
+#### **push_release_lfs.bat / push_release_lfs.ps1**
+Ajuda a publicar artefatos grandes via Git LFS.
 
----
+#### **standardize-releases.ps1**
+Padroniza nomes/artefatos de releases.
 
-### 🔬 **test_minimal.py**
-**Descrição:** Versão minimalista para isolar problemas
+#### **update_releases.py**
+Auxilia atualização/organização de releases (uso interno).
 
-**O que faz:**
-- Testa importações básicas
-- Testa criação de ícone simples
-- Testa inicialização do pystray
-- Logging detalhado de cada etapa
+### 🧩 Ícones
 
-**Como usar:**
-```bash
-# Da raiz do projeto:
+#### **convert_icon.py**
+Conversão/manipulação de ícones (uso em build/branding).
+
+#### **generate_icons_all.py**
+Geração em lote de ícones (variações/tamanhos).
+
+#### **limpar_cache_icones.ps1**
+Limpa cache relacionado a ícones (Windows/build).
+
+### 🔎 Debug / Diagnóstico
+
+#### **debug_dahora.py**
+Script de debug do app em ambiente de desenvolvimento.
+
+#### **test_minimal.py**
+Execução mínima para isolar problemas de import/importações/UI/tray.
+
+```powershell
 py scripts\test_minimal.py
-
-# Ou dentro da pasta scripts:
-cd scripts
-py test_minimal.py
 ```
 
-**Quando usar:**
-- Para isolar problemas de importação
-- Para debugar inicialização
-- Para testar ambiente mínimo
+#### **test_menu.py**
+Testa geração do menu da bandeja.
+
+```powershell
+py scripts\test_menu.py
+```
+
+### 🧪 Experimentos / Manuais
+
+#### **manual_shortcuts.py / manual_shortcut_editor.py**
+Scripts auxiliares para testar/validar atalhos e editor.
+
+#### **manual_ui_modernization.py**
+Script auxiliar relacionado à modernização de UI (uso interno).
 
 ---
 
@@ -84,10 +81,23 @@ py test_minimal.py
 
 ```
 scripts/
-├── README.md              (este arquivo)
-├── rebuild_clean.bat      (build limpo)
-├── test_menu.py           (teste de menu)
-└── test_minimal.py        (teste minimalista)
+├── README.md
+├── convert_icon.py
+├── debug_dahora.py
+├── generate_icons_all.py
+├── limpar_cache_icones.ps1
+├── manual_shortcut_editor.py
+├── manual_shortcuts.py
+├── manual_ui_modernization.py
+├── prepare_release_artifacts.bat
+├── prepare_release_artifacts.ps1
+├── push_release_lfs.bat
+├── push_release_lfs.ps1
+├── rebuild_clean.bat
+├── standardize-releases.ps1
+├── test_menu.py
+├── test_minimal.py
+└── update_releases.py
 ```
 
 ---

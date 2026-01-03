@@ -1,5 +1,7 @@
 # ⚠️ IMPORTANTE: Python no Windows
 
+> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [Release](RELEASE.md)
+
 ## Para Agentes de IA / Contribuidores
 
 **LEIA ISTO PRIMEIRO se estiver trabalhando neste projeto no Windows!**

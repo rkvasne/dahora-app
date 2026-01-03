@@ -2,6 +2,8 @@
 
 Diretório central da documentação técnica do projeto.
 
+> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
+
 ---
 
 ## 🎯 Navegação Rápida

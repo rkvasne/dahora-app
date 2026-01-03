@@ -7,6 +7,10 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Não lançado]
 
+### Documentação
+- Consolidada navegação e links internos entre documentos.
+- Removidos documentos obsoletos de análise/relatórios antigos.
+
 ## [0.2.5] - 2026-01-02
 
 ### Corrigido
@@ -26,7 +30,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   - Testes de integração (370 linhas)
   - 84 novos testes (todos passando)
 
-- **Documentação Consolidada e Unificada (2026-01-02):**
+- **Documentação Consolidada e Unificada:**
   - Novo [docs/INDEX.md](docs/INDEX.md) como ponto central único de navegação
   - Unificado GITHUB_CLI_GUIDE.md (inclui autenticação completa)
   - Removido arquivos redundantes: STATUS.md, GITHUB_TOKEN_SETUP.md, GUIDES/RELEASE_PROCESS.md

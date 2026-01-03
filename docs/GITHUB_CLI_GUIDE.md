@@ -1,5 +1,7 @@
 # GitHub CLI - Guia Completo
 
+> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [Release](RELEASE.md)
+
 ## 📚 Índice
 1. [O que é GitHub CLI?](#o-que-é-github-cli)
 2. [Diferença entre Git e GitHub CLI](#diferença-entre-git-e-github-cli)

@@ -2,6 +2,8 @@
 
 > **Ponto central de navegação** para toda documentação do projeto Dahora App v0.2.5
 
+> Navegação: [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
+
 ---
 
 ## 🚀 Começando (Novos Usuários)
@@ -31,12 +33,6 @@
 - **[ROADMAP.md](ROADMAP.md)** - Próximos passos e melhorias planejadas
 - **[PRICING.md](PRICING.md)** - Análise de mercado e precificação
 
-### Relatórios de Versão
-- **[REPORTS/v0.2.4.md](REPORTS/v0.2.4.md)** - 📊 Relatório final v0.2.4
-
-### Landing Page
-- **[LANDING/analysis.md](LANDING/analysis.md)** - Análise e recomendações da landing page
-
 ---
 
 ## 🔧 Ferramentas de Desenvolvimento
@@ -48,18 +44,9 @@
 ### Python no Windows
 - **[WINDOWS_PYTHON_SETUP.md](WINDOWS_PYTHON_SETUP.md)** - ⚠️ Crítico: diferença entre `python` e `py`
 
----
-
-## 📊 Relatórios e Análises
-
-### Relatórios de Versão (docs/REPORTS/)
-- **[v0.2.4.md](REPORTS/v0.2.4.md)** - 🎯 Relatório final v0.2.4
-  - Status de todas as fases
-  - Métricas consolidadas
-  - Arquivos criados/modificados
-
-### Análises de Negócio (docs/LANDING/)
-- **[analysis.md](LANDING/analysis.md)** - Análise da landing page
+### Pastas auxiliares
+- **[scripts/README.md](../scripts/README.md)** - Scripts utilitários (build/debug/release)
+- **[tests/README.md](../tests/README.md)** - Suíte de testes e como executar
 
 ---
 
@@ -76,11 +63,7 @@ docs/
 ├── RELEASE.md                  # Processo de build e release
 ├── ROADMAP.md                  # Próximos passos
 ├── GITHUB_CLI_GUIDE.md         # GitHub CLI completo
-├── WINDOWS_PYTHON_SETUP.md     # Setup Python Windows
-├── REPORTS/                    # Relatórios de versão
-│   ├── v0.2.4.md
-└── LANDING/                    # Análises da landing
-    └── analysis.md
+└── WINDOWS_PYTHON_SETUP.md     # Setup Python Windows
 ```
 
 ---

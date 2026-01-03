@@ -1,5 +1,7 @@
 # Arquitetura da Dahora App
 
+> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [Release](RELEASE.md)
+
 Documentação detalhada sobre a estrutura, componentes e padrões de design utilizados no projeto.
 
 ## 1. Visão Geral
@@ -29,7 +31,7 @@ dahora_app/
 │   ├── modern_shortcut_editor.py  # Editor de atalhos
 │   ├── modern_search_dialog.py    # Diálogo de busca
 │   ├── modern_about_dialog.py     # Diálogo sobre
-│   ├── modern_styles.py           # Estilos Qt
+│   ├── modern_styles.py           # Estilos da UI moderna
 │   ├── icon_manager.py            # Gerenciador de ícones
 │   └── ... (deprecated)           # Versões antigas mantidas para compatibilidade
 └── __pycache__/                   # Cache Python
@@ -462,7 +464,7 @@ Validado e aplicado
 
 1. **Integração de APIs:** Usar schemas para validar dados de APIs externas
 2. **Testes de Integração:** UI + Schemas + HotkeyValidator
-3. **Documentação de HAACKs:** Identificar e documentar workarounds
+3. **Documentação de HACKs:** Identificar e documentar workarounds
 4. **Performance:** Caching de validação, otimização de clipboard monitor
 5. **Testes de Estresse:** Validar com 100+ custom shortcuts
 

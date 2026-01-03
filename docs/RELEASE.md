@@ -1,5 +1,7 @@
 # 🚀 Release — Dahora App
 
+> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
+
 Este guia descreve o fluxo recomendado para gerar um executável, empacotar em ZIP e versionar os artefatos (incluindo Git LFS), mantendo o repositório consistente.
 
 ## 1) Atualizar versão

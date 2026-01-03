@@ -9,8 +9,8 @@
 
 [![Version](https://img.shields.io/badge/version-0.2.5-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
 [![Python](https://img.shields.io/badge/python-3.8+-green.svg?style=for-the-badge)](https://www.python.org/)
-[![License](https://img.shields.io/badge/license-MIT-orange.svg?style=for-the-badge)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-262%2F262-brightgreen.svg?style=for-the-badge)](tests/)
+[![License](https://img.shields.io/badge/license-MIT-orange.svg?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
+[![Tests](https://img.shields.io/badge/tests-automated-brightgreen.svg?style=for-the-badge)](tests/README.md)
 [![Architecture](https://img.shields.io/badge/architecture-secure-brightblue.svg?style=for-the-badge)](docs/ARCHITECTURE.md)
 
 [Features](#-funcionalidades) • [Instalação](#-instalação) • [Como Usar](#-como-usar) • [Configuração](#-configuração) • [Desenvolvimento](#-desenvolvimento)
@@ -40,7 +40,7 @@ Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sist
 ### 📋 Histórico Inteligente
 - **Armazenamento Seletivo:** Não salva timestamps gerados pelo próprio app no histórico.
 - **Busca Rápida:** Pressione `Ctrl+Shift+F` para busca instantânea no histórico.
-- **Privacidade:** Dados locais, zero telemetria, histórico criptografado no Windows (DPAPI).
+- **Privacidade:** Totalmente offline (sem telemetria), dados locais e histórico criptografado no Windows (DPAPI).
 
 ### ⚙️ Controle Total
 - **Painel Completo:** 5 abas para controle total do aplicativo.
@@ -135,6 +135,7 @@ Toda documentação está organizada em `docs/` com índice centralizado:
 dahora-app/
 ├── main.py                      # Entry point
 ├── build.py                     # Script de build (PyInstaller)
+├── index.html                   # Landing page (site)
 ├── assets/                      # Imagens e recursos
 ├── scripts/                     # Scripts utilitários (ícones, debug)
 │   └── README.md                # Doc dos scripts
@@ -143,16 +144,23 @@ dahora-app/
 │   └── README.md                # Doc dos testes
 │
 ├── dahora_app/                  # Core package
-│   ├── ui/                      # Interface Gráfica (Tkinter/Pystray)
-│   ├── managers/                # Lógica de negócio
-│   └── utils.py                 # Utilitários
+│   ├── handlers/                # Handlers de ações (callbacks)
+│   ├── ui/                      # Interface (CustomTkinter/Pystray)
+│   ├── clipboard_manager.py     # Monitoramento e histórico
+│   ├── hotkeys.py               # Hotkeys globais
+│   ├── settings.py              # Configurações e persistência
+│   └── constants.py             # Constantes (APP_VERSION)
 │
 └── docs/                        # Documentação Centralizada
-    ├── DEVELOPMENT_HISTORY.md   # Histórico detalhado
-    ├── README.md                # Índice da documentação
-    ├── ROADMAP.md               # Roadmap
+    ├── INDEX.md                 # Índice centralizado (comece aqui!)
+    ├── ARCHITECTURE.md          # Arquitetura técnica
+    ├── DEVELOPMENT_HISTORY.md   # Histórico narrativo
+    ├── GITHUB_CLI_GUIDE.md      # GitHub CLI (autenticação, releases, workflows)
+    ├── HACKS.md                 # Workarounds e decisões não-ideais
+    ├── PRICING.md               # Estudo histórico de precificação
     ├── RELEASE.md               # Build/Release/ZIP/LFS
-    └── PRICING.md               # Business
+    ├── ROADMAP.md               # Próximos passos
+    └── WINDOWS_PYTHON_SETUP.md  # Setup Python no Windows (use `py`)
 ```
 
 ## 🔒 Segurança & Qualidade
@@ -179,12 +187,7 @@ dahora-app/
 **Total:** 262/262 testes passando (100%)
 
 ### Documentação
-Veja [docs/](docs/) para documentação completa:
-- [docs/INDEX.md](docs/INDEX.md) - Índice centralizado (comece aqui!)
-- [ARCHITECTURE.md](docs/ARCHITECTURE.md) - Arquitetura detalhada
-- [HACKS.md](docs/HACKS.md) - Problemas identificados e soluções
-- [DEVELOPMENT_HISTORY.md](docs/DEVELOPMENT_HISTORY.md) - Histórico técnico
-- [RELEASE.md](docs/RELEASE.md) - Processo de build/release e Git LFS
+Comece por [docs/INDEX.md](docs/INDEX.md).
 
 ---
 
@@ -204,8 +207,8 @@ Este projeto é aberto para contribuições da comunidade.
 ## 🔒 Privacidade
 
 O Dahora App foi construído com privacidade em mente:
-*   **Zero Telemetria:** Nenhum dado sai do seu computador.
-*   **Offline:** Funciona 100% sem internet.
+*   **Totalmente offline:** Nenhum dado sai do seu computador.
+*   **Sem telemetria:** Não há rastreamento.
 *   **Dados Locais:** Histórico e configurações ficam apenas na sua máquina.
 
 ---
@@ -213,7 +216,5 @@ O Dahora App foi construído com privacidade em mente:
 <div align="center">
 
 **Desenvolvido por [Raphael Kvasne](https://github.com/rkvasne)**
-
-[![License](https://img.shields.io/badge/license-MIT-orange.svg?style=flat-square)](LICENSE)
 
 </div>

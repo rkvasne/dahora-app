@@ -1,7 +1,9 @@
 # 📜 HISTÓRICO DE DESENVOLVIMENTO - DAHORA APP
 
 **Projeto:** Dahora App - Sistema de Bandeja para Data/Hora  
-**Última atualização:** 30/12/2025
+**Última atualização:** 03/01/2026
+
+> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
 > Nota: o **histórico narrativo** fica aqui; o registro oficial de mudanças por versão fica no [CHANGELOG.md](../CHANGELOG.md).
 
@@ -9,13 +11,27 @@
 
 ## 📋 ÍNDICE
 
-1. [v0.2.3 - Documentação Unificada & Release](#v023---documentação-unificada--release) 🚀 **ATUAL!**
-2. [v0.2.2 - Produtividade & Dark Mode Web](#v022---produtividade--dark-mode-web)
-3. [v0.2.0 - Revolução: Cola Automaticamente](#v020---revolução-cola-automaticamente)
-4. [Migração CSS (Fases 1-3)](#migração-css-fases-1-3)
-5. [Correção de Ícone](#correção-de-ícone)
-6. [Padronização do Projeto](#padronização-do-projeto)
-7. [Customizações de UI](#customizações-de-ui)
+1. [v0.2.5 - Privacidade (DPAPI) & Ajustes de UI/Landing](#v025---privacidade-dpapi--ajustes-de-uilanding) 🚀 **ATUAL**
+2. [v0.2.3 - Documentação Unificada & Release](#v023---documentação-unificada--release)
+3. [v0.2.2 - Produtividade & Dark Mode Web](#v022---produtividade--dark-mode-web)
+4. [v0.2.0 - Revolução: Cola Automaticamente](#v020---revolução-cola-automaticamente)
+5. [Migração CSS (Fases 1-3)](#migração-css-fases-1-3)
+6. [Correção de Ícone](#correção-de-ícone)
+7. [Padronização do Projeto](#padronização-do-projeto)
+8. [Customizações de UI](#customizações-de-ui)
+
+---
+
+## 🚀 V0.2.5 - PRIVACIDADE (DPAPI) & AJUSTES DE UI/LANDING
+
+**Data:** 02/01/2026  
+**Status:** ✅ COMPLETA
+
+### ✨ Principais Mudanças
+
+- Correção de persistência do histórico do clipboard em cenários onde DPAPI falha ao migrar arquivo antigo.
+- Ajustes na UI moderna: melhoria do fluxo de busca e remoção de controles não necessários na janela Sobre.
+- Refinos na landing (`index.html`): badges e textos alinhados (mensagem de privacidade como “Totalmente offline”).
 
 ---
 
@@ -489,12 +505,8 @@ dahora-app/
 
 ## 🎯 PRÓXIMOS PASSOS
 
-1. ✅ v0.2.0 Release - COMPLETA!
-2. ✅ Documentação atualizada
-3. ✅ Landing page atualizada
-4. ⏳ Build novo executável v0.2.0
-5. ⏳ Release GitHub com .exe
-6. 🔮 Próximas features em ROADMAP.md
+1. ✅ v0.2.5 (estado atual) estabilizado e documentado
+2. 🔮 Próximas features em [ROADMAP.md](ROADMAP.md)
 
 ---
 

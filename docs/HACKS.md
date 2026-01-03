@@ -1,4 +1,6 @@
-# HAACKs em main.py - Documentação de Workarounds
+# HACKs em main.py — Documentação de Workarounds
+
+> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [Arquitetura](ARCHITECTURE.md)
 
 Este documento detalha os **workarounds, hacks e soluções não-ideais** encontradas em `main.py` que precisam ser revisitadas e possivelmente melhoradas.
 

@@ -1,5 +1,7 @@
 # 💰 ANÁLISE DE PRECIFICAÇÃO E VALOR DE MERCADO - DAHORA APP
 
+> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md)
+
 > **ℹ️ NOTA INFORMATIVA:**  
 > Este documento é um **estudo de viabilidade e análise de mercado** realizado durante o desenvolvimento do projeto.  
 > O **Dahora App é 100% GRATUITO e OPEN SOURCE**.  
@@ -14,7 +16,7 @@
 
 **Data da Análise:** Novembro 2025  
 **Versão do Aplicativo (na época da análise):** 0.0.2  
-**Versão atual do projeto (referência):** 0.2.3  
+**Versão atual do projeto (referência):** 0.2.5  
 **Tipo:** Utilitário Windows - System Tray
 
 > Este documento é **histórico** e serve como estudo de caso. Alguns números e comparações podem não refletir o estado atual do produto.
