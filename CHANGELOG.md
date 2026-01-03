@@ -11,6 +11,12 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Consolidada navegação e links internos entre documentos.
 - Removidos documentos obsoletos de análise/relatórios antigos.
 
+### Landing Page
+- Atualizados números e stack para refletir o estado atual (262 testes, 100% cobertura, CustomTkinter).
+- Unificada linguagem de privacidade (offline + dados locais) e removido log de console.
+- Adicionadas novas seções: Como Funciona, Guia Rápido, Executável & Segurança, Compatibilidade & Limitações, Changelog & Roadmap.
+- Adicionados links de confiança no bloco de download (Código-fonte, Privacidade, Segurança, Licença).
+
 ## [0.2.5] - 2026-01-02
 
 ### Corrigido

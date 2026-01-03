@@ -33,6 +33,16 @@
 - **[ROADMAP.md](ROADMAP.md)** - Próximos passos e melhorias planejadas
 - **[PRICING.md](PRICING.md)** - Análise de mercado e precificação
 
+### Produto
+- **[PRD.md](PRD.md)** - Requisitos do produto (formal)
+
+### Políticas do Repositório
+- **[PRIVACY.md](../PRIVACY.md)** - Política de privacidade (offline/sem telemetria)
+- **[SECURITY.md](../SECURITY.md)** - Como reportar vulnerabilidades
+- **[CONTRIBUTING.md](../CONTRIBUTING.md)** - Como contribuir
+- **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** - Código de conduta
+- **[LICENSE](../LICENSE)** - Licença (MIT)
+
 ---
 
 ## 🔧 Ferramentas de Desenvolvimento
@@ -59,6 +69,7 @@ docs/
 ├── ARCHITECTURE.md             # Arquitetura técnica
 ├── DEVELOPMENT_HISTORY.md      # Histórico narrativo
 ├── HACKS.md                    # Workarounds documentados
+├── PRD.md                      # Requisitos do produto (formal)
 ├── PRICING.md                  # Análise de mercado
 ├── RELEASE.md                  # Processo de build e release
 ├── ROADMAP.md                  # Próximos passos
