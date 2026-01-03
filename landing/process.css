@@ -42,15 +42,22 @@
     transform: translateX(-50%);
     width: 32px;
     height: 32px;
-    background: var(--gradient-primary);
-    color: white;
+    background: rgba(56, 189, 248, 0.1); /* Sky Blue Light (igual aos icones hero) */
+    color: var(--primary-color);
     font-weight: 700;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 0.9rem;
-    box-shadow: 0 4px 6px -1px rgba(255, 69, 0, 0.3);
+    box-shadow: var(--shadow-sm);
+    border: 2px solid var(--primary-light); /* Borda destacada */
+}
+
+body.dark-mode .step-number {
+    background: rgba(56, 189, 248, 0.1);
+    color: #38bdf8; /* Sky 400 */
+    border-color: rgba(56, 189, 248, 0.4);
 }
 
 .step-icon {
