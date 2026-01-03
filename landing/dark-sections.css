@@ -89,28 +89,58 @@
 
 .hero-badges {
     display: flex;
-    gap: 1rem;
     justify-content: center;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
     flex-wrap: wrap;
-    margin-bottom: 2rem;
+    padding: 0 1rem;
 }
 
-.badge {
-    background: rgba(255, 255, 255, 0.03);
-    color: rgba(255, 255, 255, 0.9);
-    padding: 0.5rem 1rem;
-    border-radius: 8px; /* Menos arredondado para tech feel */
-    font-size: 0.85rem;
-    font-weight: 500;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(4px);
-    transition: all 0.3s ease;
+.hero-badge-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.8);
+    transition: transform 0.2s;
+    cursor: default;
 }
 
-.badge:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
+.hero-badge-item:hover {
+    transform: translateY(-2px);
+    color: white;
+}
+
+.hero-badge-item i {
+    font-size: 1.2rem;
+    color: #38bdf8; /* Sky 400 */
+    background: rgba(56, 189, 248, 0.1);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px; /* Squircle */
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    transition: all 0.2s;
+}
+
+.hero-badge-item:hover i {
+    background: rgba(56, 189, 248, 0.2);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+}
+
+/* Responsividade dos badges do hero */
+@media (max-width: 600px) {
+    .hero-badges {
+        gap: 1.5rem;
+    }
+    
+    .hero-badge-item {
+        width: calc(50% - 1rem); /* 2 por linha */
+        font-size: 0.85rem;
+    }
 }
 
 .hero-buttons {
@@ -358,20 +388,19 @@ body:not(.dark-mode) .section-dark .section-title {
     }
     
     .download-detail {
-        flex-direction: row;
-        width: 100%;
-        justify-content: flex-start;
-        background: rgba(255, 255, 255, 0.03);
-        padding: 0.8rem 1rem;
-        border-radius: 0.8rem;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        width: calc(50% - 1rem); /* 2 por linha, igual ao hero */
+        flex-direction: column; /* Ícone em cima, igual ao hero */
+        justify-content: center;
+        background: transparent;
+        padding: 0;
+        border: none;
     }
     
     .download-detail i {
-        width: 36px;
-        height: 36px;
-        font-size: 1rem;
-        margin-right: 0.5rem;
+        width: 48px; /* Tamanho original */
+        height: 48px;
+        font-size: 1.2rem;
+        margin-right: 0;
     }
 }
 
