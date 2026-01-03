@@ -208,6 +208,48 @@
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
 }
 
+.download {
+    padding: 6rem 2rem;
+    background: 
+        radial-gradient(900px circle at var(--mx, 50%) var(--my, 50%), rgba(0,120,212,0.08), transparent 40%),
+        radial-gradient(1200px circle at 80% 100%, rgba(43,136,216,0.05), transparent 50%),
+        linear-gradient(180deg, #2d3e54 0%, #1e2d42 50%, #0f172a 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.download::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+.download-box {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.download-info {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
 /* Links de confiança na seção de download */
 .download-trust-links {
     margin-top: 1rem;
@@ -239,7 +281,7 @@
 
 .download-box h2 {
     font-size: 2.5rem;
-    margin-top: 3rem;
+    margin-top: 0;
     margin-bottom: 0.5rem;
     background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.9) 100%);
     -webkit-background-clip: text;
