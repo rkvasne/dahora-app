@@ -162,6 +162,11 @@ body.dark-mode .lang-btn {
 /* ===== SECTIONS ===== */
 .section {
     padding: 6rem 2rem; /* Espaçamento mais equilibrado */
+    background-color: var(--bg-white);
+}
+
+.section-alt {
+    background-color: var(--light-bg);
 }
 
 .container {

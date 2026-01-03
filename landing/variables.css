@@ -55,8 +55,8 @@
 body.dark-mode {
     --text-dark: #f8fafc; /* Slate 50 */
     --text-gray: #cbd5e1; /* Slate 300 */
-    --bg-white: #020617; /* Slate 950 */
-    --light-bg: #0f172a; /* Slate 900 */
+    --bg-white: #020617; /* Slate 950 (Fundo padrão mais escuro) */
+    --light-bg: #1e293b; /* Slate 800 (Fundo alternado mais claro) */
     --border-color: #1e293b; /* Slate 800 */
     --header-bg: rgba(2, 6, 23, 0.85);
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);

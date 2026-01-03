@@ -301,7 +301,35 @@ body:not(.dark-mode) .section-dark .section-title {
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+/* Links de confiança na seção de download */
+.download-trust-links {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    justify-content: center;
+    font-size: 0.9rem;
+    opacity: 0.95;
+}
+
+.download-trust-links a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.2s;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.3);
+}
+
+.download-trust-links a:hover {
+    color: white;
+    border-bottom-style: solid;
+}
+
+/* ===== FOOTER (Ajustes finos para dark mode) ===== */
+.main-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .download-box h2 {
