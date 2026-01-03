@@ -363,12 +363,12 @@ body:not(.dark-mode) .section-dark .section-title {
 }
 
 .download-info {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    justify-items: center;
-    gap: 0;
-    margin-bottom: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 1rem;
     padding: 0 1rem;
+    flex-wrap: wrap;
 }
 
 .download-detail {

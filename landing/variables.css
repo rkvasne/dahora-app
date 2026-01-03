@@ -18,14 +18,14 @@
     --gradient-primary-hover: var(--gradient-orange-red-hover);
 
     /* ===== TEXTOS (MELHORADO PARA PROFISSIONALISMO) ===== */
-    --text-dark: #1e293b; /* Slate 800 - Mais suave que 900 */
-    --text-gray: #475569; /* Slate 600 - Melhor contraste */
-    --text-light: #64748b; /* Slate 500 - Mais legível */
+    --text-dark: #0f172a; /* Slate 900 - Mais contraste */
+    --text-gray: #334155; /* Slate 700 - Melhor leitura */
+    --text-light: #475569; /* Slate 600 */
 
     /* ===== FUNDOS ===== */
     --bg-white: #ffffff;
-    --border-color: #f1f5f9; /* Slate 100 - Bordas ultra sutis */
-    --light-bg: #f8fafc; /* Slate 50 - Quase branco, muito limpo */
+    --border-color: #e2e8f0; /* Slate 200 - Bordas visíveis */
+    --light-bg: #f1f5f9; /* Slate 100 - Diferença visível do branco */
     --dark-bg: #0f172a; /* Slate 900 */
     --dark-card: #1e293b; /* Slate 800 */
 
