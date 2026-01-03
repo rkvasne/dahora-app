@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="landing/styles.css">
     <link rel="stylesheet" href="landing/dark-sections.css">
     <link rel="stylesheet" href="landing/faq.css">
+    <link rel="stylesheet" href="landing/process.css">
     <link rel="stylesheet" href="landing/footer.css">
     <link rel="stylesheet" href="landing/responsive.css">
 </head>
@@ -342,26 +343,41 @@
                 <h2 class="section-title" data-i18n="how.title">🧠 Como Funciona</h2>
                 <p class="section-subtitle" data-i18n="how.subtitle">Do atalho até a colagem, em segundos.</p>
             </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-keyboard"></i></div>
-                    <h3 data-i18n="how.card1.title">1) Você pressiona o atalho</h3>
+            
+            <!-- Process Flow / Diagram Style -->
+            <div class="process-flow">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-keyboard"></i></div>
+                    <h3 data-i18n="how.card1.title">Você pressiona o atalho</h3>
                     <p data-i18n="how.card1.desc">Ex.: <code>Ctrl+Shift+Q</code> (configurável).</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-clock"></i></div>
-                    <h3 data-i18n="how.card2.title">2) O app monta o timestamp</h3>
+                
+                <div class="step-arrow"><i class="fas fa-chevron-right"></i></div>
+
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-clock"></i></div>
+                    <h3 data-i18n="how.card2.title">App monta timestamp</h3>
                     <p data-i18n="how.card2.desc">Com formato e delimitadores do seu jeito.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-i-cursor"></i></div>
-                    <h3 data-i18n="how.card3.title">3) Cola direto no cursor</h3>
+
+                <div class="step-arrow"><i class="fas fa-chevron-right"></i></div>
+
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-i-cursor"></i></div>
+                    <h3 data-i18n="how.card3.title">Cola no cursor</h3>
                     <p data-i18n="how.card3.desc">Sem abrir janelas, sem interrupções.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-clipboard-check"></i></div>
-                    <h3 data-i18n="how.card4.title">4) Preserva seu clipboard</h3>
-                    <p data-i18n="how.card4.desc">Cola o timestamp e restaura o conteúdo anterior.</p>
+
+                <div class="step-arrow"><i class="fas fa-chevron-right"></i></div>
+
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon"><i class="fas fa-clipboard-check"></i></div>
+                    <h3 data-i18n="how.card4.title">Preserva clipboard</h3>
+                    <p data-i18n="how.card4.desc">Restaura seu conteúdo original.</p>
                 </div>
             </div>
         </div>

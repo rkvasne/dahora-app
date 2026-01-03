@@ -65,7 +65,7 @@ body.dark-mode .faq {
 }
 
 body.dark-mode .faq-question {
-    color: var(--text-light);
+    color: var(--text-dark); /* Máximo contraste (Slate 50) */
 }
 
 body.dark-mode .faq-question:hover {
