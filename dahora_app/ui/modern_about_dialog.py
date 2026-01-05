@@ -5,6 +5,7 @@ import customtkinter as ctk
 import webbrowser
 from PIL import Image
 import logging
+import time
 
 from dahora_app.ui.modern_styles import ModernTheme, ModernLabel, ModernFrame, ModernButton
 from dahora_app.ui.icon_manager import IconManager
@@ -24,16 +25,29 @@ class ModernAboutDialog:
     
     def show(self):
         """Mostra a janela"""
+        start = time.perf_counter()
         if self.window is not None:
             try:
                 self.window.deiconify()
             except Exception:
                 pass
+            t_show = time.perf_counter()
             self._show_window()
+            show_ms = (time.perf_counter() - t_show) * 1000
+            total_ms = (time.perf_counter() - start) * 1000
+            logging.info(f"[UI] ModernAboutDialog.show reuse show={show_ms:.1f}ms total={total_ms:.1f}ms")
             return
         
+        t_create = time.perf_counter()
         self._create_window()
+        create_ms = (time.perf_counter() - t_create) * 1000
+
+        t_show = time.perf_counter()
         self._show_window()
+        show_ms = (time.perf_counter() - t_show) * 1000
+
+        total_ms = (time.perf_counter() - start) * 1000
+        logging.info(f"[UI] ModernAboutDialog.show create={create_ms:.1f}ms show={show_ms:.1f}ms total={total_ms:.1f}ms")
     
     def _create_window(self):
         """Cria a janela"""
@@ -97,7 +111,7 @@ class ModernAboutDialog:
 
         ModernLabel(
             main,
-            text="Gerenciador Inteligente de Clipboard",
+            text="Gerenciador Inteligente de Área de Transferência",
             style="muted",
         ).pack(pady=(0, 16))
         

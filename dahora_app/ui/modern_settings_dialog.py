@@ -5,6 +5,7 @@ Interface Windows 11 com cantos arredondados e componentes modernos
 import customtkinter as ctk
 from typing import Callable, Optional, List, Dict, Any
 import logging
+import time
 import tkinter as tk
 from tkinter import messagebox
 
@@ -44,6 +45,10 @@ class ModernSettingsDialog:
         self.var_idle_threshold = None
         self.var_notifications_enabled = None
         self.var_notification_duration = None
+        self.var_log_max_bytes = None
+        self.var_log_backup_count = None
+        self.var_ui_prewarm_delay_ms = None
+        self.var_tray_menu_cache_window_ms = None
         self.var_hotkey_search = None
         self.var_hotkey_refresh = None
         
@@ -58,6 +63,7 @@ class ModernSettingsDialog:
         self._pages: Dict[str, ctk.CTkFrame] = {}
         self._nav_buttons: Dict[str, Dict[str, Any]] = {}
         self._active_page: str = ""
+        self._pages_host: Optional[ctk.CTkFrame] = None
 
         # Tooltips
         self._tooltip_window: Optional[tk.Toplevel] = None
@@ -102,23 +108,43 @@ class ModernSettingsDialog:
     
     def show(self) -> None:
         """Mostra o dialog"""
+        start = time.perf_counter()
         if self.window is not None:
             # Reuso da janela: evita recriar tabs/widgets (bem mais rápido)
             try:
                 self.window.deiconify()
             except Exception:
                 pass
+            t_apply = time.perf_counter()
             self._apply_current_settings_to_controls()
+            apply_ms = (time.perf_counter() - t_apply) * 1000
+
+            t_show = time.perf_counter()
             self._show_window()
+            show_ms = (time.perf_counter() - t_show) * 1000
+
+            total_ms = (time.perf_counter() - start) * 1000
+            logging.info(f"[UI] ModernSettingsDialog.show reuse apply={apply_ms:.1f}ms show={show_ms:.1f}ms total={total_ms:.1f}ms")
             return
 
         if self.parent is None:
             # Para estabilidade, este diálogo deve ser um Toplevel de um root único.
             raise RuntimeError("ModernSettingsDialog precisa de parent (CTk root) antes de show().")
         
+        t_create = time.perf_counter()
         self._create_window()
+        create_ms = (time.perf_counter() - t_create) * 1000
+
+        t_apply = time.perf_counter()
         self._apply_current_settings_to_controls()
+        apply_ms = (time.perf_counter() - t_apply) * 1000
+
+        t_show = time.perf_counter()
         self._show_window()
+        show_ms = (time.perf_counter() - t_show) * 1000
+
+        total_ms = (time.perf_counter() - start) * 1000
+        logging.info(f"[UI] ModernSettingsDialog.show create={create_ms:.1f}ms apply={apply_ms:.1f}ms show={show_ms:.1f}ms total={total_ms:.1f}ms")
 
     def set_parent(self, parent: ctk.CTk) -> None:
         self.parent = parent
@@ -188,21 +214,19 @@ class ModernSettingsDialog:
 
         pages_host = ctk.CTkFrame(body, fg_color="transparent")
         pages_host.pack(side="left", fill="both", expand=True, padx=0, pady=0)
+        self._pages_host = pages_host
 
         # Páginas (equivalentes às abas antigas)
         self._pages.clear()
         self._nav_buttons.clear()
 
         self._pages["shortcuts"] = self._create_shortcuts_page(pages_host)
-        self._pages["format"] = self._create_format_page(pages_host)
-        self._pages["notifications"] = self._create_notifications_page(pages_host)
-        self._pages["hotkeys"] = self._create_hotkeys_page(pages_host)
-        self._pages["about"] = self._create_about_page(pages_host)
 
         self._create_nav_button(rail, key="shortcuts", icon="🎯", label="Atalhos")
         self._create_nav_button(rail, key="format", icon="📅", label="Formato")
         self._create_nav_button(rail, key="notifications", icon="🔔", label="Notificações")
-        self._create_nav_button(rail, key="hotkeys", icon="⌨️", label="Teclas")
+        self._create_nav_button(rail, key="hotkeys", icon="⌨️", label="Atalhos")
+        self._create_nav_button(rail, key="advanced", icon="🛠️", label="Avançado")
         self._create_nav_button(rail, key="about", icon="ℹ️", label="Sobre")
 
         # Página inicial
@@ -231,7 +255,7 @@ class ModernSettingsDialog:
         )
         btn_save.pack(side="right")
 
-        self._attach_tooltip(btn_save, "Salva as configurações. Hotkeys são aplicados automaticamente.")
+        self._attach_tooltip(btn_save, "Salva as configurações. Atalhos são aplicados automaticamente.")
         
         # Protocolo de fechamento
         self.window.protocol("WM_DELETE_WINDOW", self._on_close)
@@ -339,7 +363,21 @@ class ModernSettingsDialog:
 
     def _show_page(self, key: str) -> None:
         if key not in self._pages:
-            return
+            host = self._pages_host
+            if host is None:
+                return
+            if key == "format":
+                self._pages[key] = self._create_format_page(host)
+            elif key == "notifications":
+                self._pages[key] = self._create_notifications_page(host)
+            elif key == "hotkeys":
+                self._pages[key] = self._create_hotkeys_page(host)
+            elif key == "advanced":
+                self._pages[key] = self._create_advanced_page(host)
+            elif key == "about":
+                self._pages[key] = self._create_about_page(host)
+            else:
+                return
 
         for k, page in self._pages.items():
             try:
@@ -422,6 +460,19 @@ class ModernSettingsDialog:
                 self.var_hotkey_search.set(self.current_settings.get("hotkey_search_history", "ctrl+shift+f"))
             if self.var_hotkey_refresh is not None:
                 self.var_hotkey_refresh.set(self.current_settings.get("hotkey_refresh_menu", "ctrl+shift+r"))
+            if self.var_log_max_bytes is not None:
+                raw = self.current_settings.get("log_max_bytes", 1 * 1024 * 1024)
+                try:
+                    mb = max(1, int(int(raw) // (1024 * 1024)))
+                except Exception:
+                    mb = 1
+                self.var_log_max_bytes.set(mb)
+            if self.var_log_backup_count is not None:
+                self.var_log_backup_count.set(self.current_settings.get("log_backup_count", 1))
+            if self.var_ui_prewarm_delay_ms is not None:
+                self.var_ui_prewarm_delay_ms.set(self.current_settings.get("ui_prewarm_delay_ms", 700))
+            if self.var_tray_menu_cache_window_ms is not None:
+                self.var_tray_menu_cache_window_ms.set(self.current_settings.get("tray_menu_cache_window_ms", 200))
 
             self.shortcuts_data = self.current_settings.get("custom_shortcuts", [])
             try:
@@ -827,11 +878,16 @@ class ModernSettingsDialog:
                style="muted").pack(anchor="w", pady=(0, 14))
         
         # Formato
-        ModernLabel(inner, text="Formato de Data/Hora").pack(anchor="w", pady=(0, 6))
+        format_label = ModernLabel(inner, text="Formato de Data/Hora")
+        format_label.pack(anchor="w", pady=(0, 6))
         self.var_datetime_format = ctk.StringVar(
             value=self.current_settings.get("datetime_format", "%d.%m.%Y-%H:%M"))
-        ModernEntry(inner, textvariable=self.var_datetime_format, 
-                   width=400).pack(anchor="w", pady=(0, 8))
+        format_entry = ModernEntry(inner, textvariable=self.var_datetime_format, width=400)
+        format_entry.pack(anchor="w", pady=(0, 8))
+        self._attach_tooltip(
+            format_entry,
+            "Define como a data/hora será gerada (strftime).\nPadrão: %d.%m.%Y-%H:%M\nExemplo: 29.11.2025-22:45",
+        )
         ModernLabel(inner, 
              text="Códigos: %d=dia, %m=mês, %Y=ano, %H=hora, %M=minuto", 
              style="muted", justify="left", wraplength=560).pack(anchor="w", pady=(0, 16))
@@ -846,42 +902,67 @@ class ModernSettingsDialog:
         # Abertura
         open_frame = ctk.CTkFrame(delim_frame, fg_color="transparent")
         open_frame.pack(side="left", padx=(0, 32))
-        ModernLabel(open_frame, text="Abertura").pack(anchor="w", pady=(0, 6))
+        bracket_open_label = ModernLabel(open_frame, text="Abertura")
+        bracket_open_label.pack(anchor="w", pady=(0, 6))
         self.var_bracket_open = ctk.StringVar(
             value=self.current_settings.get("bracket_open", "["))
-        ModernEntry(open_frame, textvariable=self.var_bracket_open, 
-                   width=80).pack(anchor="w")
+        bracket_open_entry = ModernEntry(open_frame, textvariable=self.var_bracket_open, width=80)
+        bracket_open_entry.pack(anchor="w")
+        self._attach_tooltip(
+            bracket_open_entry,
+            "Caractere único usado antes do timestamp.\nExemplos: [  (  {",
+        )
         
         # Fechamento
         close_frame = ctk.CTkFrame(delim_frame, fg_color="transparent")
         close_frame.pack(side="left")
-        ModernLabel(close_frame, text="Fechamento").pack(anchor="w", pady=(0, 6))
+        bracket_close_label = ModernLabel(close_frame, text="Fechamento")
+        bracket_close_label.pack(anchor="w", pady=(0, 6))
         self.var_bracket_close = ctk.StringVar(
             value=self.current_settings.get("bracket_close", "]"))
-        ModernEntry(close_frame, textvariable=self.var_bracket_close, 
-                   width=80).pack(anchor="w")
+        bracket_close_entry = ModernEntry(close_frame, textvariable=self.var_bracket_close, width=80)
+        bracket_close_entry.pack(anchor="w")
+        self._attach_tooltip(
+            bracket_close_entry,
+            "Caractere único usado depois do timestamp.\nDeve ser diferente do de abertura.\nExemplos: ]  )  }",
+        )
         
         # Histórico
         ModernLabel(inner, text="Configurações de Histórico", 
                    style="heading").pack(anchor="w", pady=(0, 16))
         
-        ModernLabel(inner, text="Máximo de itens").pack(anchor="w", pady=(0, 6))
+        max_history_label = ModernLabel(inner, text="Máximo de itens")
+        max_history_label.pack(anchor="w", pady=(0, 6))
         self.var_max_history = ctk.IntVar(
             value=self.current_settings.get("max_history_items", 100))
-        ModernEntry(inner, textvariable=self.var_max_history, 
-                   width=120).pack(anchor="w", pady=(0, 16))
+        max_history_entry = ModernEntry(inner, textvariable=self.var_max_history, width=120)
+        max_history_entry.pack(anchor="w", pady=(0, 16))
+        self._attach_tooltip(
+            max_history_entry,
+            "Quantidade máxima de itens guardados no histórico.\nFaixa: 10–1000. Padrão: 100.\nValores maiores usam mais memória e deixam o menu maior.",
+        )
         
-        ModernLabel(inner, text="Intervalo de monitoramento (seg)").pack(anchor="w", pady=(0, 6))
+        monitor_interval_label = ModernLabel(inner, text="Intervalo de monitoramento (seg)")
+        monitor_interval_label.pack(anchor="w", pady=(0, 6))
         self.var_monitor_interval = ctk.DoubleVar(
             value=self.current_settings.get("clipboard_monitor_interval", 3.0))
-        ModernEntry(inner, textvariable=self.var_monitor_interval, 
-                   width=120).pack(anchor="w", pady=(0, 16))
+        monitor_interval_entry = ModernEntry(inner, textvariable=self.var_monitor_interval, width=120)
+        monitor_interval_entry.pack(anchor="w", pady=(0, 16))
+        self._attach_tooltip(
+            monitor_interval_entry,
+            "Frequência com que o app verifica alterações na área de transferência.\nFaixa: 0,5–60 s. Padrão: 3,0 s.\nValores menores reagem mais rápido, mas podem consumir mais CPU.",
+        )
         
-        ModernLabel(inner, text="Tempo ocioso para pausar (seg)").pack(anchor="w", pady=(0, 6))
+        idle_threshold_label = ModernLabel(inner, text="Tempo sem mudanças na área de transferência (seg)")
+        idle_threshold_label.pack(anchor="w", pady=(0, 6))
         self.var_idle_threshold = ctk.DoubleVar(
             value=self.current_settings.get("clipboard_idle_threshold", 30.0))
-        ModernEntry(inner, textvariable=self.var_idle_threshold, 
-                   width=120).pack(anchor="w")
+        idle_threshold_entry = ModernEntry(inner, textvariable=self.var_idle_threshold, width=120)
+        idle_threshold_entry.pack(anchor="w")
+        self._attach_tooltip(
+            idle_threshold_entry,
+            "Após esse tempo sem mudanças na área de transferência, o monitoramento usa no mínimo 5 s entre verificações (se você estiver usando um intervalo menor).\nFaixa: 5–300 s. Padrão: 30 s.",
+        )
 
         return tab
     
@@ -908,7 +989,13 @@ class ModernSettingsDialog:
         inner.pack(fill="both", expand=True, padx=16, pady=16)
 
         # Título
-        self._create_icon_title_row(inner, icon="🔔", title="Configurações de Notificações", style="heading").pack(anchor="w", pady=(0, 8))
+        notifications_title_row = self._create_icon_title_row(inner, icon="🔔", title="Configurações de Notificações", style="heading")
+        notifications_title_row.pack(anchor="w", pady=(0, 8))
+        self._attach_tooltip(
+            notifications_title_row,
+            "Define se o Dahora App exibe notificações do Windows e por quanto tempo.\nAs notificações ajudam a confirmar ações sem abrir janelas.",
+            prefer_above=True,
+        )
         ModernLabel(
             inner,
             text="Configure como as notificações serão exibidas",
@@ -923,9 +1010,9 @@ class ModernSettingsDialog:
         switch_frame = ctk.CTkFrame(inner, fg_color="transparent")
         switch_frame.pack(fill="x", pady=(0, 8))
 
-        ctk.CTkSwitch(
+        notifications_switch = ctk.CTkSwitch(
             switch_frame,
-            text="Habilitar notificações do sistema",
+            text="Habilitar notificações do Windows",
             variable=self.var_notifications_enabled,
             fg_color=self.colors['bg_tertiary'],
             progress_color=self.colors['accent'],
@@ -933,7 +1020,12 @@ class ModernSettingsDialog:
             button_hover_color=self.colors['text'],
             text_color=self.colors['text'],
             font=("Segoe UI", ModernTheme.FONT_SIZE_BASE),
-        ).pack(anchor="w")
+        )
+        notifications_switch.pack(anchor="w")
+        self._attach_tooltip(
+            notifications_switch,
+            "Quando desativado, o app não exibirá notificações do Windows ao acionar atalhos, copiar do histórico ou salvar configurações.",
+        )
 
         ModernLabel(
             inner,
@@ -952,9 +1044,12 @@ class ModernSettingsDialog:
         self.var_notification_duration = ctk.IntVar(
             value=self.current_settings.get("notification_duration", 2)
         )
-        ModernEntry(
-            duration_frame, textvariable=self.var_notification_duration, width=80
-        ).pack(side="left", padx=(0, 8))
+        notification_duration_entry = ModernEntry(duration_frame, textvariable=self.var_notification_duration, width=80)
+        notification_duration_entry.pack(side="left", padx=(0, 8))
+        self._attach_tooltip(
+            notification_duration_entry,
+            "Duração (em segundos) que a notificação fica visível.\nFaixa: 1–10. Padrão: 2.",
+        )
         ModernLabel(duration_frame, text="segundos").pack(side="left")
 
         # Tipos
@@ -1016,8 +1111,12 @@ class ModernSettingsDialog:
         )
         self.var_hotkey_search = ctk.StringVar(
             value=self.current_settings.get("hotkey_search_history", "ctrl+shift+f"))
-        ModernEntry(inner, textvariable=self.var_hotkey_search, 
-                   width=300).pack(anchor="w", pady=(0, 16))
+        hotkey_search_entry = ModernEntry(inner, textvariable=self.var_hotkey_search, width=300)
+        hotkey_search_entry.pack(anchor="w", pady=(0, 16))
+        self._attach_tooltip(
+            hotkey_search_entry,
+            "Atalho global para abrir a Busca no Histórico.\nExemplo: ctrl+shift+f.\nDica: evite atalhos usados pelo sistema e por outros apps.",
+        )
         
         # Refresh
         self._create_icon_title_row(inner, icon="🔄", title="Recarregar Menu", style="default").pack(
@@ -1025,8 +1124,12 @@ class ModernSettingsDialog:
         )
         self.var_hotkey_refresh = ctk.StringVar(
             value=self.current_settings.get("hotkey_refresh_menu", "ctrl+shift+r"))
-        ModernEntry(inner, textvariable=self.var_hotkey_refresh, 
-                   width=300).pack(anchor="w", pady=(0, 16))
+        hotkey_refresh_entry = ModernEntry(inner, textvariable=self.var_hotkey_refresh, width=300)
+        hotkey_refresh_entry.pack(anchor="w", pady=(0, 16))
+        self._attach_tooltip(
+            hotkey_refresh_entry,
+            "Atalho global para recarregar os itens do menu da bandeja.\nExemplo: ctrl+shift+r.",
+        )
         
         # Orientações
         self._create_icon_title_row(inner, icon="💡", title="Orientações", style="heading").pack(
@@ -1055,6 +1158,151 @@ class ModernSettingsDialog:
             wraplength=560,
         ).pack(anchor="w", pady=(0, 16))
         
+        return tab
+
+    def _create_advanced_page(self, parent: ctk.CTkFrame) -> ctk.CTkFrame:
+        tab = ctk.CTkFrame(parent, fg_color="transparent")
+
+        scroll_frame = ModernScrollableFrame(tab)
+        scroll_frame.pack(fill="both", expand=True, padx=0, pady=0)
+
+        content = ctk.CTkFrame(scroll_frame, fg_color="transparent")
+        content.pack(fill="both", expand=True, padx=(12, 8), pady=(0, 12))
+
+        card = ModernFrame(
+            content,
+            fg_color=self.colors['bg_secondary'],
+            border_width=1,
+            border_color=self.colors['border'],
+            corner_radius=ModernTheme.CORNER_RADIUS,
+        )
+        card.pack(fill="both", expand=True)
+        inner = ctk.CTkFrame(card, fg_color="transparent")
+        inner.pack(fill="both", expand=True, padx=16, pady=16)
+
+        advanced_title_row = self._create_icon_title_row(inner, icon="🛠️", title="Configurações Avançadas", style="heading")
+        advanced_title_row.pack(anchor="w", pady=(0, 8))
+        self._attach_tooltip(
+            advanced_title_row,
+            "Ajustes finos para tamanho de logs, pré-aquecimento da UI e cache do menu.\nRecomendado manter os valores padrão salvo necessidade específica.",
+            prefer_above=True,
+        )
+        ModernLabel(
+            inner,
+            text="Ajuste limites de log e otimizações internas",
+            style="muted",
+        ).pack(anchor="w", pady=(0, 16))
+
+        logs_title_row = self._create_icon_title_row(inner, icon="📄", title="Logs", style="heading")
+        logs_title_row.pack(anchor="w", pady=(0, 12))
+        self._attach_tooltip(
+            logs_title_row,
+            "Controla o tamanho do arquivo de log do Dahora App e quantos backups antigos serão mantidos.\nÚtil para limitar uso de disco ou manter mais histórico de diagnóstico.",
+            prefer_above=True,
+        )
+
+        log_frame = ctk.CTkFrame(inner, fg_color="transparent")
+        log_frame.pack(fill="x", pady=(0, 12))
+
+        left_log = ctk.CTkFrame(log_frame, fg_color="transparent")
+        left_log.pack(side="left", padx=(0, 24))
+
+        log_size_label = ModernLabel(left_log, text="Tamanho máximo do arquivo (MB)")
+        log_size_label.pack(anchor="w", pady=(0, 6))
+        self._attach_tooltip(
+            log_size_label,
+            "Tamanho máximo do arquivo de log antes de girar para um backup.\nValores recomendados: 1–5 MB.\nValores menores geram arquivos menores; maiores mantêm mais histórico.",
+            prefer_above=False,
+        )
+        self.var_log_max_bytes = ctk.IntVar(
+            value=int(self.current_settings.get("log_max_bytes", 1 * 1024 * 1024) // (1024 * 1024))
+        )
+        ModernSpinbox(
+            left_log,
+            variable=self.var_log_max_bytes,
+            from_=1,
+            to=20,
+            step=1,
+            width=100,
+        ).pack(anchor="w")
+
+        right_log = ctk.CTkFrame(log_frame, fg_color="transparent")
+        right_log.pack(side="left")
+
+        log_backup_label = ModernLabel(right_log, text="Quantidade de backups")
+        log_backup_label.pack(anchor="w", pady=(0, 6))
+        self._attach_tooltip(
+            log_backup_label,
+            "Número de arquivos de log antigos mantidos além do log atual.\nRecomendado: 1 ou 2.\nAumente apenas se precisar investigar problemas com mais histórico.",
+            prefer_above=False,
+        )
+        self.var_log_backup_count = ctk.IntVar(
+            value=int(self.current_settings.get("log_backup_count", 1))
+        )
+        ModernSpinbox(
+            right_log,
+            variable=self.var_log_backup_count,
+            from_=0,
+            to=10,
+            step=1,
+            width=100,
+        ).pack(anchor="w")
+
+        perf_title_row = self._create_icon_title_row(inner, icon="⚡", title="Performance", style="heading")
+        perf_title_row.pack(anchor="w", pady=(4, 12))
+        self._attach_tooltip(
+            perf_title_row,
+            "Parâmetros que influenciam a responsividade da UI e o custo para recalcular o menu da bandeja.\nAjuste apenas se notar atrasos ou consumo excessivo.",
+            prefer_above=True,
+        )
+
+        perf_frame = ctk.CTkFrame(inner, fg_color="transparent")
+        perf_frame.pack(fill="x", pady=(0, 12))
+
+        left_perf = ctk.CTkFrame(perf_frame, fg_color="transparent")
+        left_perf.pack(side="left", padx=(0, 24))
+
+        prewarm_label = ModernLabel(left_perf, text="Delay para pré-aquecer UI (ms)")
+        prewarm_label.pack(anchor="w", pady=(0, 6))
+        self._attach_tooltip(
+            prewarm_label,
+            "Tempo de espera antes de rodar tarefas de pré-aquecimento da interface.\nPadrão: 700 ms.\nValores menores deixam o app pronto mais rápido, mas podem competir com a inicialização do sistema.\nValores maiores adiam otimizações para momentos mais ociosos.",
+            prefer_above=False,
+        )
+        self.var_ui_prewarm_delay_ms = ctk.IntVar(
+            value=int(self.current_settings.get("ui_prewarm_delay_ms", 700))
+        )
+        ModernSpinbox(
+            left_perf,
+            variable=self.var_ui_prewarm_delay_ms,
+            from_=0,
+            to=10000,
+            step=100,
+            width=120,
+        ).pack(anchor="w")
+
+        right_perf = ctk.CTkFrame(perf_frame, fg_color="transparent")
+        right_perf.pack(side="left")
+
+        tray_cache_label = ModernLabel(right_perf, text="Janela de cache do menu (ms)")
+        tray_cache_label.pack(anchor="w", pady=(0, 6))
+        self._attach_tooltip(
+            tray_cache_label,
+            "Tempo mínimo entre recálculos completos dos itens do menu da bandeja.\nPadrão: 200 ms.\nValores maiores reduzem trabalho em aberturas rápidas do menu; valores menores deixam o menu sempre atualizado, com pequeno custo extra.",
+            prefer_above=False,
+        )
+        self.var_tray_menu_cache_window_ms = ctk.IntVar(
+            value=int(self.current_settings.get("tray_menu_cache_window_ms", 200))
+        )
+        ModernSpinbox(
+            right_perf,
+            variable=self.var_tray_menu_cache_window_ms,
+            from_=0,
+            to=2000,
+            step=50,
+            width=120,
+        ).pack(anchor="w")
+
         return tab
     
     def _create_about_page(self, parent: ctk.CTkFrame) -> ctk.CTkFrame:
@@ -1188,17 +1436,87 @@ class ModernSettingsDialog:
         """Salva todas as configurações"""
         try:
             if self.on_save_callback:
+                max_history_items = self.var_max_history.get() if self.var_max_history else 100
+                try:
+                    max_history_items = int(max_history_items)
+                except Exception:
+                    max_history_items = 100
+                if max_history_items < 10:
+                    max_history_items = 10
+                if max_history_items > 1000:
+                    max_history_items = 1000
+                if self.var_max_history:
+                    self.var_max_history.set(max_history_items)
+
+                clipboard_monitor_interval = self.var_monitor_interval.get() if self.var_monitor_interval else 3.0
+                try:
+                    clipboard_monitor_interval = float(clipboard_monitor_interval)
+                except Exception:
+                    clipboard_monitor_interval = 3.0
+                if clipboard_monitor_interval < 0.5:
+                    clipboard_monitor_interval = 0.5
+                if clipboard_monitor_interval > 60.0:
+                    clipboard_monitor_interval = 60.0
+                if self.var_monitor_interval:
+                    self.var_monitor_interval.set(clipboard_monitor_interval)
+
+                clipboard_idle_threshold = self.var_idle_threshold.get() if self.var_idle_threshold else 30.0
+                try:
+                    clipboard_idle_threshold = float(clipboard_idle_threshold)
+                except Exception:
+                    clipboard_idle_threshold = 30.0
+                if clipboard_idle_threshold < 5.0:
+                    clipboard_idle_threshold = 5.0
+                if clipboard_idle_threshold > 300.0:
+                    clipboard_idle_threshold = 300.0
+                if self.var_idle_threshold:
+                    self.var_idle_threshold.set(clipboard_idle_threshold)
+
+                notification_duration = self.var_notification_duration.get() if self.var_notification_duration else 2
+                try:
+                    notification_duration = int(notification_duration)
+                except Exception:
+                    notification_duration = 2
+                if notification_duration < 1:
+                    notification_duration = 1
+                if notification_duration > 10:
+                    notification_duration = 10
+                if self.var_notification_duration:
+                    self.var_notification_duration.set(notification_duration)
+
+                bracket_open = self.var_bracket_open.get() if self.var_bracket_open else "["
+                bracket_close = self.var_bracket_close.get() if self.var_bracket_close else "]"
+                bracket_open = str(bracket_open).strip()
+                bracket_close = str(bracket_close).strip()
+                if len(bracket_open) != 1 or bracket_open in "\n\r\t":
+                    bracket_open = "["
+                if len(bracket_close) != 1 or bracket_close in "\n\r\t":
+                    bracket_close = "]"
+                if bracket_open == bracket_close:
+                    if bracket_open != "]":
+                        bracket_close = "]"
+                    else:
+                        bracket_close = "["
+                if self.var_bracket_open:
+                    self.var_bracket_open.set(bracket_open)
+                if self.var_bracket_close:
+                    self.var_bracket_close.set(bracket_close)
+
                 settings = {
                     "datetime_format": self.var_datetime_format.get().strip() if self.var_datetime_format else "%d.%m.%Y-%H:%M",
-                    "bracket_open": self.var_bracket_open.get() if self.var_bracket_open else "[",
-                    "bracket_close": self.var_bracket_close.get() if self.var_bracket_close else "]",
-                    "max_history_items": self.var_max_history.get() if self.var_max_history else 100,
-                    "clipboard_monitor_interval": self.var_monitor_interval.get() if self.var_monitor_interval else 3.0,
-                    "clipboard_idle_threshold": self.var_idle_threshold.get() if self.var_idle_threshold else 30.0,
+                    "bracket_open": bracket_open,
+                    "bracket_close": bracket_close,
+                    "max_history_items": max_history_items,
+                    "clipboard_monitor_interval": clipboard_monitor_interval,
+                    "clipboard_idle_threshold": clipboard_idle_threshold,
                     "notification_enabled": self.var_notifications_enabled.get() if self.var_notifications_enabled else True,
-                    "notification_duration": self.var_notification_duration.get() if self.var_notification_duration else 2,
+                    "notification_duration": notification_duration,
                     "hotkey_search_history": self.var_hotkey_search.get().strip() if self.var_hotkey_search else "ctrl+shift+f",
                     "hotkey_refresh_menu": self.var_hotkey_refresh.get().strip() if self.var_hotkey_refresh else "ctrl+shift+r",
+                    "log_max_bytes": (int(self.var_log_max_bytes.get()) * 1024 * 1024) if self.var_log_max_bytes else (1 * 1024 * 1024),
+                    "log_backup_count": self.var_log_backup_count.get() if self.var_log_backup_count else 1,
+                    "ui_prewarm_delay_ms": self.var_ui_prewarm_delay_ms.get() if self.var_ui_prewarm_delay_ms else 700,
+                    "tray_menu_cache_window_ms": self.var_tray_menu_cache_window_ms.get() if self.var_tray_menu_cache_window_ms else 200,
                     "default_shortcut_id": self.default_shortcut_id,
                 }
                 self.on_save_callback(settings)

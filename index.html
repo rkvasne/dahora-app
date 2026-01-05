@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dahora App v0.2.5 - Kvasne.com</title>
+    <title>Dahora App v0.2.6 - Kvasne.com</title>
     <meta name="description"
-        content="Aplicativo Windows para colar timestamps formatados com atalhos personalizáveis. Preserva o clipboard, sem notificações e funciona offline.">
-    <meta name="keywords" content="Windows, clipboard, data hora, busca, configurações, histórico, MVP, pystray">
+        content="Aplicativo Windows para colar timestamps formatados com atalhos personalizáveis. Preserva a área de transferência, sem notificações e funciona offline.">
+    <meta name="keywords" content="Windows, área de transferência, data hora, busca, configurações, histórico, MVP, pystray">
     <link rel="icon" type="image/x-icon" href="icon.ico">
     <link rel="icon" type="image/png" href="assets/dahora_icon.png">
 
@@ -64,12 +64,12 @@
     <!-- Hero Section -->
     <section id="inicio" class="hero">
         <div class="hero-container animate-fade-in">
-            <div class="hero-version" data-i18n="hero.version">ATUALIZAÇÃO V.0.2.5</div>
+            <div class="hero-version" data-i18n="hero.version">ATUALIZAÇÃO V.0.2.6</div>
             <img src="assets/dahora_icon.png" alt="Dahora App Icon" class="hero-icon">
             <h1 class="hero-title">Dahora App</h1>
             <p class="hero-subtitle" data-i18n="hero.subtitle">
                 Cole datas e horas sem quebrar seu fluxo<br>
-                Automaticamente na posição do cursor • Preserve seu clipboard
+                Automaticamente na posição do cursor • Preserve sua área de transferência
             </p>
             <div class="hero-badges">
                 <div class="hero-badge-item">
@@ -82,7 +82,7 @@
                 </div>
                 <div class="hero-badge-item">
                     <i class="fab fa-github"></i>
-                    <span data-i18n="hero.badge.opensource">Open Source</span>
+                    <span data-i18n="hero.badge.opensource">Código aberto</span>
                 </div>
             </div>
             <div class="hero-buttons">
@@ -103,7 +103,7 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title" data-i18n="features.title">⚡ Recursos Principais</h2>
-                <p class="section-subtitle" data-i18n="features.subtitle">Tudo que você precisa para gerenciar clipboard e data/hora</p>
+                <p class="section-subtitle" data-i18n="features.subtitle">Tudo que você precisa para gerenciar a área de transferência e data/hora</p>
             </div>
             <div class="features-grid">
                 <!-- Colagem Automática -->
@@ -112,7 +112,7 @@
                     <h3 data-i18n="features.card1.title">⚡ Colagem Automática</h3>
                     <p data-i18n="features.card1.desc">
                         • Cola direto onde cursor está<br>
-                        • Clipboard preservado<br>
+                        • Área de transferência preservada<br>
                         • Zero notificações<br>
                         • Execução invisível
                     </p>
@@ -185,34 +185,34 @@
     <section id="novidades" class="section section-dark">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title" data-i18n="news.title">🚀 Novidades da v0.2.5</h2>
+                <h2 class="section-title" data-i18n="news.title">🚀 Novidades da v0.2.6</h2>
                 <p class="section-subtitle" data-i18n="news.subtitle">Foco total na sua produtividade e facilidade de uso.</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-bolt"></i></div>
-                    <h3 data-i18n="news.card1.title">🎨 Interface Moderna e Limpa</h3>
+                    <h3 data-i18n="news.card1.title">⚙️ Configurações Avançadas</h3>
                     <p data-i18n="news.card1.desc">
-                        Interface renovada com design limpo e organizado.
-                        Foco na usabilidade e experiência do usuário.
+                        Ajuste logs, prewarm da UI e cache do menu do tray
+                        diretamente no painel de configurações.
                     </p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-keyboard"></i></div>
-                    <h3 data-i18n="news.card2.title">🎯 Atalhos Personalizados Ilimitados</h3>
+                    <h3 data-i18n="news.card2.title">🏷️ Descrição em Atalhos</h3>
                     <p data-i18n="news.card2.desc">
-                        Crie atalhos ilimitados com prefixos personalizados.
-                        Interface CRUD completa para gerenciar com eficiência.
+                        Campo opcional para descrever atalhos personalizados,
+                        facilitando organização e identificação.
                     </p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-clipboard"></i></div>
-                    <h3 data-i18n="news.card3.title">🔄 Clipboard Preservado</h3>
+                    <h3 data-i18n="news.card3.title">⏱️ Monitoramento Configurável</h3>
                     <p data-i18n="news.card3.desc">
-                        Sistema preserva seu clipboard automaticamente.
-                        Cola timestamp e restaura o conteúdo original.
+                        Intervalo e limiar de inatividade do clipboard agora
+                        são aplicados conforme as configurações do usuário.
                     </p>
                 </div>
 
@@ -259,11 +259,11 @@
                     <h3 data-i18n="tech.card1.title">Stack Tecnológico</h3>
                     <p data-i18n="tech.card1.desc">
                         • Python 3.8+<br>
-                        • pystray (system tray)<br>
-                        • pyperclip (clipboard)<br>
-                        • keyboard (hotkeys)<br>
+                        • pystray (bandeja do sistema)<br>
+                        • pyperclip (área de transferência)<br>
+                        • keyboard (atalhos)<br>
                         • Pillow (ícones)<br>
-                        • winotify (toast notifications)<br>
+                        • winotify (notificações do Windows)<br>
                         • CustomTkinter (UI moderna)
                     </p>
                 </div>
@@ -285,7 +285,7 @@
                     <div class="feature-icon"><i class="fas fa-flask"></i></div>
                     <h3 data-i18n="tech.card3.title">Testes & Qualidade</h3>
                     <p data-i18n="tech.card3.desc">
-                        • 262 testes automatizados<br>
+                        • 266 testes automatizados<br>
                         • 100% cobertura de código<br>
                         • pytest com fixtures<br>
                         • CI/CD ready<br>
@@ -375,7 +375,7 @@
                 <div class="process-step">
                     <div class="step-number">4</div>
                     <div class="step-icon"><i class="fas fa-clipboard-check"></i></div>
-                    <h3 data-i18n="how.card4.title">Preserva clipboard</h3>
+                    <h3 data-i18n="how.card4.title">Preserva a área de transferência</h3>
                     <p data-i18n="how.card4.desc">Restaura seu conteúdo original.</p>
                 </div>
             </div>
@@ -392,7 +392,7 @@
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-bolt"></i></div>
                     <h3 data-i18n="quick.card1.title">Atalhos padrão</h3>
-                    <p data-i18n="quick.card1.desc"><code>Ctrl+Shift+Q</code> cola no cursor.<br><code>Ctrl+Shift+F</code> abre a busca no histórico.<br><code>Ctrl+Shift+R</code> recarrega o menu da bandeja.</p>
+                    <p data-i18n="quick.card1.desc"><code>Ctrl+Shift+Q</code> cola no cursor.<br><code>Ctrl+Shift+F</code> abre a busca no histórico.<br><code>Ctrl+Shift+R</code> recarrega o menu da bandeja do sistema.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-sliders-h"></i></div>
@@ -402,7 +402,7 @@
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
                     <h3 data-i18n="quick.card3.title">Dicas rápidas</h3>
-                    <p data-i18n="quick.card3.desc">Se um atalho conflitar, troque a combinação.<br>Ao mudar hotkeys, pode ser necessário reiniciar o app.</p>
+                    <p data-i18n="quick.card3.desc">Se um atalho conflitar, troque a combinação.<br>Ao mudar atalhos, pode ser necessário reiniciar o app.</p>
                 </div>
             </div>
         </div>
@@ -444,7 +444,7 @@
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fab fa-windows"></i></div>
                     <h3 data-i18n="compat.card1.title">Windows 10/11</h3>
-                    <p data-i18n="compat.card1.desc">Funciona em Windows 10 e 11 com bandeja do sistema e hotkeys globais.</p>
+                    <p data-i18n="compat.card1.desc">Funciona em Windows 10 e 11 com bandeja do sistema e atalhos globais.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-window-maximize"></i></div>
@@ -454,7 +454,7 @@
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-info-circle"></i></div>
                     <h3 data-i18n="compat.card3.title">Limitações conhecidas</h3>
-                    <p data-i18n="compat.card3.desc">O menu da bandeja pode precisar ser fechado e aberto para “atualizar” (limitação do <code>pystray</code>). Use <code>Ctrl+Shift+R</code> para recarregar.</p>
+                    <p data-i18n="compat.card3.desc">O menu da bandeja do sistema pode precisar ser fechado e aberto para “atualizar” (limitação do <code>pystray</code>). Use <code>Ctrl+Shift+R</code> para recarregar.</p>
                 </div>
             </div>
         </div>
@@ -492,7 +492,7 @@
                     <div class="feature-icon install-number" style="margin: 0 auto 1.5rem; font-size: 3rem;">3️⃣</div>
                     <h3 data-i18n="install.step3.title">Pronto!</h3>
                     <p data-i18n="install.step3.desc">
-                        O ícone aparece na bandeja do Windows.
+                        O ícone aparece na bandeja do sistema do Windows.
                         Pressione <code>Ctrl+Shift+Q</code> para colar no cursor.
                     </p>
                 </div>
@@ -514,7 +514,7 @@
                     <span data-i18n="install.warning.instruction">Clique em <span style="text-decoration: underline;">Mais informações</span> → <span style="font-weight: 700;">Executar assim mesmo</span>.</span>
                 </p>
                 
-                <p style="margin-bottom: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                <p style="margin-bottom: 1rem; font-size: 0.9rem; opacity: 0.8;" data-i18n="install.warning.p2">
                     Se preferir, verifique o código no GitHub e/ou compile você mesmo com <code>py build.py</code>.
                 </p>
 
@@ -552,6 +552,9 @@
             <div class="download-footer">
                 <p data-i18n="download.compile">Ou compile do código-fonte:</p>
                 <code>py build.py</code>
+                <p style="margin-top: 0.75rem; font-size: 0.9rem; opacity: 0.85;" data-i18n="download.support">
+                    Curtiu? Apoie o projeto com uma doação via <a href="https://github.com/sponsors/rkvasne" target="_blank" rel="noopener noreferrer">GitHub Sponsors</a>.
+                </p>
             </div>
         </div>
     </section>
@@ -593,19 +596,19 @@
                 </button>
                 <div class="faq-answer" data-i18n="faq.a3">
                     Todos os dados são armazenados localmente no seu computador em <code>%APPDATA%\DahoraApp</code>.
-                    Isso inclui configurações (settings.json), histórico do clipboard (clipboard_history.json) e logs.
+                    Isso inclui configurações (settings.json), histórico da área de transferência (clipboard_history.json) e logs.
                     Nada é enviado para a internet. Zero telemetria, 100% privado.
                 </div>
             </div>
 
             <div class="faq-item">
                 <button class="faq-question" onclick="toggleFAQ(this)">
-                    <span data-i18n="faq.q4">Como funciona o histórico do clipboard?</span>
+                    <span data-i18n="faq.q4">Como funciona o histórico da área de transferência?</span>
                     <span class="faq-icon">▼</span>
                 </button>
                 <div class="faq-answer" data-i18n="faq.a4">
-                    O app monitora automaticamente tudo que você copia (Ctrl+C) e salva em um histórico de até 1000
-                    itens (configurável). Você pode acessar os últimos 5 itens direto no menu da bandeja, ou usar
+                    O app monitora automaticamente tudo que você copia (Ctrl+C) na área de transferência e salva em um histórico de até 1000
+                    itens (configurável). Você pode acessar os últimos 5 itens direto no menu da bandeja do sistema, ou usar
                     Ctrl+Shift+F para buscar em todo o histórico com busca instantânea.
                 </div>
             </div>
@@ -618,13 +621,13 @@
                 <div class="faq-answer" data-i18n="faq.a5">
                     Sim! Na janela de Configurações (clique direito no ícone → Configurações), você pode personalizar
                     todos os atalhos globais na aba "Atalhos". Nota: é necessário reiniciar o app após alterar atalhos,
-                    pois hotkeys globais precisam ser re-registradas no Windows.
+                    pois atalhos globais precisam ser re-registrados no Windows.
                 </div>
             </div>
 
             <div class="faq-item">
                 <button class="faq-question" onclick="toggleFAQ(this)">
-                    <span data-i18n="faq.q6">O menu da bandeja não atualiza automaticamente?</span>
+                    <span data-i18n="faq.q6">O menu da bandeja do sistema não atualiza automaticamente?</span>
                     <span class="faq-icon">▼</span>
                 </button>
                 <div class="faq-answer" data-i18n="faq.a6">
@@ -654,7 +657,7 @@
                 </button>
                 <div class="faq-answer" data-i18n="faq.a8">
                     Sim! O Dahora App foi testado e funciona perfeitamente no Windows 10 e Windows 11. Todos os recursos
-                    (bandeja do sistema, hotkeys globais, notificações toast) são totalmente compatíveis com ambas as
+                    (bandeja do sistema, atalhos globais, notificações do Windows) são totalmente compatíveis com ambas as
                     versões.
                 </div>
             </div>
@@ -755,7 +758,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p style="margin: 0 0 6px 0; font-size: 15px;" data-i18n="footer.copyright-main">© 2026 <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Kvasne</a> • Dahora App v0.2.5</p>
+            <p style="margin: 0 0 6px 0; font-size: 15px;" data-i18n="footer.copyright-main">© 2026 <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Kvasne</a> • Dahora App v0.2.6</p>
             <p style="margin: 0; font-size: 13px;" data-i18n="footer.copyright-dev">Desenvolvido por <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a></p>
         </div>
     </footer>
@@ -806,20 +809,18 @@
                 'nav.download': 'Download',
                 'nav.faq': 'FAQ',
                 'nav.github': 'GitHub',
-                'hero.version': 'ATUALIZAÇÃO V.0.2.5',
+                'hero.version': 'ATUALIZAÇÃO V.0.2.6',
                 'hero.title': 'Dahora App',
-                'hero.subtitle': 'Cole datas e horas sem quebrar seu fluxo.<br>Automaticamente na posição do cursor • Preserve seu clipboard • Funciona silenciosamente',
-                'hero.badge.windows': '🪟 Windows 10/11',
+                'hero.subtitle': 'Cole datas e horas sem quebrar seu fluxo<br>Automaticamente na posição do cursor • Preserve sua área de transferência',
+                'hero.badge.windows': 'Windows 10/11',
                 'hero.badge.telemetry': 'Sem telemetria',
-                'hero.badge.size': '⚡ ~31MB',
-                'hero.badge.tests': '✅ 262 testes',
-                'hero.badge.mvp': '🎯 Versão Estável',
+                'hero.badge.opensource': 'Código aberto',
                 'hero.btn.download': '💾 Download Grátis',
                 'hero.btn.github': '🔗 GitHub',
                 'features.title': '⚡ Recursos Principais',
-                'features.subtitle': 'Gerenciamento de clipboard e inserção de data/hora.',
+                'features.subtitle': 'Tudo que você precisa para gerenciar a área de transferência e data/hora',
                 'features.card1.title': '⚡ Colagem Automática',
-                'features.card1.desc': '• Cola na posição do cursor<br>• Clipboard preservado<br>• Sem notificações<br>• Execução invisível',
+                'features.card1.desc': '• Cola na posição do cursor<br>• Área de transferência preservada<br>• Sem notificações<br>• Execução invisível',
                 'features.card2.title': '🎯 Atalhos Ilimitados',
                 'features.card2.desc': '• Ctrl+Shift+1, Ctrl+Shift+2...<br>• Prefixo individual por atalho<br>• Interface CRUD completa<br>• Detecção automática de teclas',
                 'features.card3.title': '📋 Histórico Inteligente',
@@ -830,14 +831,14 @@
                 'features.card5.desc': '• Design Windows 11<br>• Fonte monoespaçada<br>• Botões sem emojis<br>• Padding padrão MS',
                 'features.card6.title': '🔒 Privado & Offline',
                 'features.card6.desc': '• Zero telemetria<br>• Totalmente offline<br>• Dados locais (%APPDATA%)<br>• Logs limpos',
-                'news.title': '🚀 Novidades da v0.2.5',
+                'news.title': '🚀 Novidades da v0.2.6',
                 'news.subtitle': 'Foco total na sua produtividade e facilidade de uso.',
-                'news.card1.title': '🎨 Interface Moderna e Limpa',
-                'news.card1.desc': 'Interface renovada com design limpo e organizado. Foco na usabilidade e experiência do usuário.',
-                'news.card2.title': '🎯 Atalhos Personalizados Ilimitados',
-                'news.card2.desc': 'Crie atalhos ilimitados com prefixos personalizados. Interface CRUD completa para gerenciar com eficiência.',
-                'news.card3.title': '🔄 Clipboard Preservado',
-                'news.card3.desc': 'Sistema preserva seu clipboard automaticamente. Cola timestamp e restaura o conteúdo original.',
+                'news.card1.title': '⚙️ Configurações Avançadas',
+                'news.card1.desc': 'Ajuste logs, prewarm da UI e cache do menu do tray diretamente no painel de configurações.',
+                'news.card2.title': '🏷️ Descrição em Atalhos',
+                'news.card2.desc': 'Campo opcional para descrever atalhos personalizados, facilitando organização e identificação.',
+                'news.card3.title': '⏱️ Monitoramento Configurável',
+                'news.card3.desc': 'Intervalo e limiar de inatividade do clipboard agora são aplicados conforme as configurações do usuário.',
                 'news.card4.title': '⚙️ 100% Configurável',
                 'news.card4.desc': 'Painel com 5 abas para controle total. Configure formatos, delimitadores e teclas.',
                 'news.card5.title': '🔇 Sem Notificações',
@@ -847,11 +848,11 @@
                 'tech.title': '🛠️ Detalhes Técnicos',
                 'tech.subtitle': 'Arquitetura sólida e profissional',
                 'tech.card1.title': 'Stack Tecnológico',
-                'tech.card1.desc': '• Python 3.8+<br>• pystray (system tray)<br>• pyperclip (clipboard)<br>• keyboard (hotkeys)<br>• Pillow (ícones)<br>• winotify (toast notifications)<br>• CustomTkinter (UI moderna)',
+                'tech.card1.desc': '• Python 3.8+<br>• pystray (bandeja do sistema)<br>• pyperclip (área de transferência)<br>• keyboard (atalhos)<br>• Pillow (ícones)<br>• winotify (notificações do Windows)<br>• CustomTkinter (UI moderna)',
                 'tech.card2.title': 'Padrões de Projeto',
                 'tech.card2.desc': '• Thread-safe com <code>Lock()</code><br>• Callback pattern<br>• Atomic writes<br>• Generator pattern<br>• Dependency injection<br>• Single responsibility',
                 'tech.card3.title': 'Testes & Qualidade',
-                'tech.card3.desc': '• 262 testes automatizados<br>• 100% cobertura de código<br>• pytest com fixtures<br>• CI/CD ready<br>• Type hints<br>• Rotating logs',
+                'tech.card3.desc': '• 266 testes automatizados<br>• 100% cobertura de código<br>• pytest com fixtures<br>• CI/CD ready<br>• Type hints<br>• Logs rotativos',
                 'tech.card4.title': 'Estrutura Modular',
                 'tech.card4.desc': '• 14 módulos Python<br>• ~2500+ linhas de código<br>• Separação UI/Core<br>• API clara<br>• Reutilizável<br>• Escalável',
                 'tech.card5.title': 'Segurança & Privacidade',
@@ -866,16 +867,16 @@
                 'how.card2.desc': 'Com formato e delimitadores do seu jeito.',
                 'how.card3.title': 'Cola direto no cursor',
                 'how.card3.desc': 'Sem abrir janelas, sem interrupções.',
-                'how.card4.title': 'Preserva seu clipboard',
+                'how.card4.title': 'Preserva a área de transferência',
                 'how.card4.desc': 'Cola o timestamp e restaura o conteúdo anterior.',
                 'quick.title': '📌 Guia Rápido',
                 'quick.subtitle': 'Atalhos essenciais e onde personalizar.',
                 'quick.card1.title': 'Atalhos padrão',
-                'quick.card1.desc': '<code>Ctrl+Shift+Q</code> cola no cursor.<br><code>Ctrl+Shift+F</code> abre a busca no histórico.<br><code>Ctrl+Shift+R</code> recarrega o menu da bandeja.',
+                'quick.card1.desc': '<code>Ctrl+Shift+Q</code> cola no cursor.<br><code>Ctrl+Shift+F</code> abre a busca no histórico.<br><code>Ctrl+Shift+R</code> recarrega o menu da bandeja do sistema.',
                 'quick.card2.title': 'Personalização',
                 'quick.card2.desc': 'Clique direito no ícone → <strong>Configurações</strong>.<br>Ajuste formato, prefixos e crie atalhos ilimitados.',
                 'quick.card3.title': 'Dicas rápidas',
-                'quick.card3.desc': 'Se um atalho conflitar, troque a combinação.<br>Ao mudar hotkeys, pode ser necessário reiniciar o app.',
+                'quick.card3.desc': 'Se um atalho conflitar, troque a combinação.<br>Ao mudar atalhos, pode ser necessário reiniciar o app.',
                 'exe.title': '🛡️ Executável & Segurança',
                 'exe.subtitle': 'Transparência total para você baixar com confiança.',
                 'exe.card1.title': 'Aviso do Windows',
@@ -887,17 +888,11 @@
                 'compat.title': '🪟 Compatibilidade & Limitações',
                 'compat.subtitle': 'O que esperar no dia a dia, sem surpresas.',
                 'compat.card1.title': 'Windows 10/11',
-                'compat.card1.desc': 'Funciona em Windows 10 e 11 com bandeja do sistema e hotkeys globais.',
+                'compat.card1.desc': 'Funciona em Windows 10 e 11 com bandeja do sistema e atalhos globais.',
                 'compat.card2.title': 'Funciona onde você digita',
                 'compat.card2.desc': 'A colagem acontece no app ativo, direto no cursor (ex.: editores, navegador, chats).',
                 'compat.card3.title': 'Limitações conhecidas',
-                'compat.card3.desc': 'O menu da bandeja pode precisar ser fechado e aberto para “atualizar” (limitação do <code>pystray</code>). Use <code>Ctrl+Shift+R</code> para recarregar.',
-                'roadmap.title': '🗺️ Changelog & Roadmap',
-                'roadmap.subtitle': 'Acompanhe o que mudou e o que está em avaliação.',
-                'roadmap.card1.title': 'Releases',
-                'roadmap.card1.desc': 'Veja histórico completo e downloads oficiais em <a href="https://github.com/rkvasne/dahora-app/releases" target="_blank" rel="noopener noreferrer">GitHub Releases</a>.',
-                'roadmap.card2.title': 'Próximos passos',
-                'roadmap.card2.desc': 'Itens em avaliação:<br>• assinatura digital<br>• instalador opcional<br>• melhorias no menu da bandeja<br>• mais presets de formato<br><br>Ideias e bugs ficam em <a href="https://github.com/rkvasne/dahora-app/issues" target="_blank" rel="noopener noreferrer">Issues</a>.',
+                'compat.card3.desc': 'O menu da bandeja do sistema pode precisar ser fechado e aberto para “atualizar” (limitação do <code>pystray</code>). Use <code>Ctrl+Shift+R</code> para recarregar.',
                 'install.title': '🚀 Como Instalar',
                 'install.subtitle': '3 passos simples para começar',
                 'install.step1.title': 'Download',
@@ -905,16 +900,18 @@
                 'install.step2.title': 'Executar',
                 'install.step2.desc': 'Clique duas vezes no arquivo .exe. Clique "Executar mesmo assim" se o Windows perguntar.',
                 'install.step3.title': 'Pronto!',
-                'install.step3.desc': 'O ícone aparece na bandeja do Windows. Pressione <code>Ctrl+Shift+Q</code> para colar no cursor.',
+                'install.step3.desc': 'O ícone aparece na bandeja do sistema do Windows. Pressione <code>Ctrl+Shift+Q</code> para colar no cursor.',
                 'install.warning.title': 'Aviso de Segurança do Windows',
-                'install.warning.desc': '<p style="color: var(--text-gray); line-height: 1.7; margin-bottom: 1rem;">O Windows pode exibir avisos como "Windows protegeu seu PC" ou "Aplicativo não reconhecido" ao executar este .exe, especialmente por não ter assinatura digital. <strong>Isso é esperado e não significa que o app seja malicioso.</strong></p><p style="color: var(--text-gray); line-height: 1.7;"><strong>Como liberar:</strong> Clique em "Mais informações" → "Executar assim mesmo". Se preferir, verifique o código no GitHub e/ou compile você mesmo com <code>py build.py</code>.</p>',
+                'install.warning.p1': 'O Windows pode exibir avisos como "Windows protegeu seu PC" ou "Aplicativo não reconhecido" ao executar este .exe, especialmente por não ter assinatura digital. <strong style="color: #fff;">Isso é esperado e não significa que o app seja malicioso.</strong>',
+                'install.warning.how_to': 'Como liberar:',
+                'install.warning.instruction': 'Clique em <span style="text-decoration: underline;">Mais informações</span> → <span style="font-weight: 700;">Executar assim mesmo</span>.',
+                'install.warning.p2': 'Se preferir, verifique o código no GitHub e/ou compile você mesmo com <code>py build.py</code>.',
+                'install.warning.show_images': 'Ver telas de exemplo',
                 'download.title': '<i class="fas fa-download" style="margin-right: 0.5rem; color: #fff;"></i> Download Grátis',
-                'download.subtitle': 'Última Versão',
+                'download.subtitle': 'Última Versão - Mais Produtividade!',
                 'download.btn': '💾 Baixar Dahora App',
-                'download.detail1': '~31MB',
-                'download.detail2': 'Windows 10/11',
-                'download.detail3': 'Sem instalação',
                 'download.compile': 'Ou compile do código-fonte:',
+                'download.support': 'Curtiu? Apoie o projeto com uma doação via <a href="https://github.com/sponsors/rkvasne" target="_blank" rel="noopener noreferrer">GitHub Sponsors</a>.',
                 'download.trust.github': 'Código-fonte',
                 'download.trust.privacy': 'Privacidade',
                 'download.trust.security': 'Segurança',
@@ -926,32 +923,27 @@
                 'faq.q2': 'Precisa de instalação?',
                 'faq.a2': 'Não! O Dahora App é um executável único (.exe) que você pode baixar e executar diretamente. Não há instaladores complexos ou configurações complicadas. Apenas baixe e execute.',
                 'faq.q3': 'Meus dados ficam salvos onde?',
-                'faq.a3': 'Todos os dados são armazenados localmente no seu computador em <code>%APPDATA%\\DahoraApp</code>. Isso inclui configurações (settings.json), histórico do clipboard (clipboard_history.json) e logs. Nada é enviado para a internet. Zero telemetria, 100% privado.',
-                'faq.q4': 'Como funciona o histórico do clipboard?',
-                'faq.a4': 'O app monitora automaticamente tudo que você copia (Ctrl+C) e salva em um histórico de até 1000 itens (configurável). Você pode acessar os últimos 5 itens direto no menu da bandeja, ou usar Ctrl+Shift+F para buscar em todo o histórico com busca instantânea.',
+                'faq.a3': 'Todos os dados são armazenados localmente no seu computador em <code>%APPDATA%\\DahoraApp</code>. Isso inclui configurações (settings.json), histórico da área de transferência (clipboard_history.json) e logs. Nada é enviado para a internet. Zero telemetria, 100% privado.',
+                'faq.q4': 'Como funciona o histórico da área de transferência?',
+                'faq.a4': 'O app monitora automaticamente tudo que você copia (Ctrl+C) na área de transferência e salva em um histórico de até 1000 itens (configurável). Você pode acessar os últimos 5 itens direto no menu da bandeja do sistema, ou usar Ctrl+Shift+F para buscar em todo o histórico com busca instantânea.',
                 'faq.q5': 'Posso personalizar os atalhos?',
-                'faq.a5': 'Sim! Na janela de Configurações (clique direito no ícone → Configurações), você pode personalizar todos os atalhos globais na aba "Atalhos". Nota: é necessário reiniciar o app após alterar atalhos, pois hotkeys globais precisam ser re-registradas no Windows.',
-                'faq.q6': 'O menu da bandeja não atualiza automaticamente?',
+                'faq.a5': 'Sim! Na janela de Configurações (clique direito no ícone → Configurações), você pode personalizar todos os atalhos globais na aba "Atalhos". Nota: é necessário reiniciar o app após alterar atalhos, pois atalhos globais precisam ser re-registrados no Windows.',
+                'faq.q6': 'O menu da bandeja do sistema não atualiza automaticamente?',
                 'faq.a6': 'É uma limitação técnica da biblioteca <code>pystray</code>. O menu só atualiza quando você fecha e abre novamente. Soluções: (1) Pressione Ctrl+Shift+R para recarregar manualmente, (2) Feche e abra o menu novamente, ou (3) Use a busca (Ctrl+Shift+F) que sempre mostra dados atualizados em tempo real.',
                 'faq.q7': 'É seguro? Tem vírus?',
                 'faq.a7': 'Sim, é totalmente seguro! O código é 100% open-source e pode ser auditado no GitHub. Não há telemetria, não coleta dados, não faz conexões externas. O Windows pode mostrar um aviso de "aplicativo não reconhecido" porque o executável não tem assinatura digital (que custa ~$500/ano). Você pode compilar o código você mesmo para ter certeza absoluta.',
                 'faq.q8': 'Funciona no Windows 11?',
-                'faq.a8': 'Sim! O Dahora App foi testado e funciona perfeitamente no Windows 10 e Windows 11. Todos os recursos (bandeja do sistema, hotkeys globais, notificações toast) são totalmente compatíveis com ambas as versões.',
+                'faq.a8': 'Sim! O Dahora App foi testado e funciona perfeitamente no Windows 10 e Windows 11. Todos os recursos (bandeja do sistema, atalhos globais, notificações do Windows) são totalmente compatíveis com ambas as versões.',
                 'faq.q9': 'Como contribuir com o projeto?',
-                'faq.a9': 'Sim — este projeto é open-source e aceita contribuições da comunidade. Você pode: (1) Reportar bugs abrindo uma <a href="https://github.com/rkvasne/dahora-app/issues" target="_blank" rel="noopener noreferrer">issue no GitHub</a>, (2) Sugerir novas funcionalidades, (3) Fazer um fork e enviar pull requests, (4) Melhorar a documentação, (5) Dar uma ⭐ no repositório. Veja o README.md para mais detalhes sobre desenvolvimento.',
-                'dev.label': 'DEVELOPER',
-                'dev.role': 'Full Stack Developer',
+                'faq.a9': 'Este projeto é open-source e aceita contribuições da comunidade. Você pode: (1) Reportar bugs abrindo uma <a href="https://github.com/rkvasne/dahora-app/issues" target="_blank" rel="noopener noreferrer">issue no GitHub</a>, (2) Sugerir novas funcionalidades, (3) Fazer um fork e enviar pull requests, (4) Melhorar a documentação, (5) Dar uma ⭐ no repositório. Veja o README.md para mais detalhes sobre desenvolvimento.',
+                'dev.label': 'DESENVOLVEDOR',
+                'dev.role': 'Desenvolvedor Full Stack',
                 'dev.bio': 'Especialista em criar ferramentas que unem produtividade e design. Criador do <strong>ProfitColors</strong>, <strong>Dahora App</strong> e <strong>Taskvasne</strong>. Focado em simplicidade e usabilidade.',
-                'dev.contact': 'Contato',
                 'footer.desc': 'Cole timestamps instantaneamente.',
                 'footer.links': 'Links Rápidos',
                 'footer.social': 'Conecte-se',
-                'footer.developed_by': 'Criado por',
-                'footer.docs': 'Documentação',
-                'footer.license': 'Licença MIT',
-                'footer.copyright-main': '© 2026 <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Kvasne</a> • Dahora App v0.2.5',
-                'footer.copyright-dev': 'Desenvolvido por <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a>',
-                'footer.contact': 'Contato: <a href="mailto:rkvasne@gmail.com" style="color: var(--text-light); text-decoration: none;">rkvasne@gmail.com</a>'
+                'footer.copyright-main': '© 2026 <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Kvasne</a> • Dahora App v0.2.6',
+                'footer.copyright-dev': 'Desenvolvido por <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a>'
             },
             'en': {
                 'nav.features': 'Features',
@@ -959,20 +951,18 @@
                 'nav.download': 'Download',
                 'nav.faq': 'FAQ',
                 'nav.github': 'GitHub',
-                'hero.version': 'UPDATE V.0.2.5',
+                'hero.version': 'UPDATE V.0.2.6',
                 'hero.title': 'Dahora App',
-                'hero.subtitle': 'Paste dates and times without breaking your flow.<br>Automatically at cursor position • Preserve your clipboard • Run invisible',
-                'hero.badge.windows': '🪟 Windows 10/11',
+                'hero.subtitle': 'Paste dates and times without breaking your flow<br>Automatically at cursor position • Preserve your clipboard',
+                'hero.badge.windows': 'Windows 10/11',
                 'hero.badge.telemetry': 'No telemetry',
-                'hero.badge.size': '⚡ ~31MB',
-                'hero.badge.tests': '✅ 262 tests',
-                'hero.badge.mvp': '🎯 Stable Version',
+                'hero.badge.opensource': 'Open source',
                 'hero.btn.download': '💾 Free Download',
                 'hero.btn.github': '🔗 GitHub',
                 'features.title': '⚡ Main Features',
-                'features.subtitle': 'Clipboard management and date/time insertion.',
+                'features.subtitle': 'Everything you need to manage your clipboard and timestamps',
                 'features.card1.title': '⚡ Auto Paste',
-                'features.card1.desc': '• Paste at cursor position<br>• Clipboard preserved<br>• No notifications<br>• Invisible execution',
+                'features.card1.desc': '• Paste at cursor position<br>• Clipboard preserved<br>• No notifications<br>• Runs in the background',
                 'features.card2.title': '🎯 Unlimited Shortcuts',
                 'features.card2.desc': '• Ctrl+Shift+1, Ctrl+Shift+2...<br>• Individual prefix per shortcut<br>• Full CRUD interface<br>• Auto key detection',
                 'features.card3.title': '📋 Smart History',
@@ -983,14 +973,14 @@
                 'features.card5.desc': '• Windows 11 Design<br>• Monospace font<br>• No-emoji buttons<br>• Standard MS padding',
                 'features.card6.title': '🔒 Private & Offline',
                 'features.card6.desc': '• Zero telemetry<br>• Fully offline<br>• Local data (%APPDATA%)<br>• Clean logs',
-                'news.title': '🚀 What\'s New in v0.2.5',
-                'news.subtitle': 'Key improvements in version 0.2.5.',
-                'news.card1.title': '🎨 Modern and Clean Interface',
-                'news.card1.desc': 'Renovated interface with clean and organized design. Focus on usability and user experience.',
-                'news.card2.title': '🎯 Unlimited Custom Shortcuts',
-                'news.card2.desc': 'Create unlimited shortcuts with custom prefixes. Complete CRUD interface for efficient management.',
-                'news.card3.title': '🔄 Preserved Clipboard',
-                'news.card3.desc': 'System automatically preserves your clipboard. Paste timestamp and restore original content.',
+                'news.title': '🚀 What\'s New in v0.2.6',
+                'news.subtitle': 'Focused on productivity and ease of use.',
+                'news.card1.title': '⚙️ Advanced Settings',
+                'news.card1.desc': 'Adjust logs, UI prewarm, and tray menu cache directly in the settings panel.',
+                'news.card2.title': '🏷️ Shortcut Descriptions',
+                'news.card2.desc': 'Optional description field for custom shortcuts, improving organization and identification.',
+                'news.card3.title': '⏱️ Configurable Monitoring',
+                'news.card3.desc': 'Clipboard monitor interval and idle threshold are applied from user settings.',
                 'news.card4.title': '⚙️ 100% Configurable',
                 'news.card4.desc': 'Panel with 5 tabs for total control. Configure formats, delimiters and keys.',
                 'news.card5.title': '🔇 No Notifications',
@@ -1004,13 +994,13 @@
                 'tech.card2.title': 'Design Patterns',
                 'tech.card2.desc': '• Thread-safe with <code>Lock()</code><br>• Callback pattern<br>• Atomic writes<br>• Generator pattern<br>• Dependency injection<br>• Single responsibility',
                 'tech.card3.title': 'Testing & Quality',
-                'tech.card3.desc': '• 262 automated tests<br>• 100% code coverage<br>• pytest with fixtures<br>• CI/CD ready<br>• Type hints<br>• Rotating logs',
+                'tech.card3.desc': '• 266 automated tests<br>• 100% code coverage<br>• pytest with fixtures<br>• CI/CD ready<br>• Type hints<br>• Rotating logs',
                 'tech.card4.title': 'Modular Structure',
                 'tech.card4.desc': '• 14 Python modules<br>• ~2500+ lines of code<br>• UI/Core separation<br>• Clear public API<br>• Reusable<br>• Scalable',
                 'tech.card5.title': 'Security & Privacy',
                 'tech.card5.desc': '• Zero telemetry<br>• Fully offline<br>• Local data (%APPDATA%)<br>• Atomic writes (anti-corruption)<br>• Auto validation<br>• Auditable open-source',
                 'tech.card6.title': 'Performance',
-                'tech.card6.desc': '• Build: ~31MB<br>• Startup: <1s<br>• Memória: ~30MB<br>• CPU idle: <1%<br>• Adaptive monitoring<br>• Optimized for continuous use',
+                'tech.card6.desc': '• Build: ~31MB<br>• Startup: <1s<br>• Memory: ~30MB<br>• CPU idle: <1%<br>• Adaptive monitoring<br>• Optimized for continuous use',
                 'how.title': '🧠 How It Works',
                 'how.subtitle': 'From hotkey to paste, in seconds.',
                 'how.card1.title': 'You press the hotkey',
@@ -1032,7 +1022,7 @@
                 'exe.title': '🛡️ Executable & Security',
                 'exe.subtitle': 'Full transparency so you can download with confidence.',
                 'exe.card1.title': 'Windows warning',
-                'exe.card1.desc': 'Windows may show an “unrecognized app” warning because there is no digital signature. This is expected and not a malware signal.',
+                'exe.card1.desc': 'Windows may show an “unrecognized app” warning because there is no digital signature. This is expected and not a sign of malware.',
                 'exe.card2.title': 'How to verify',
                 'exe.card2.desc': 'Download from <a href="https://github.com/rkvasne/dahora-app/releases" target="_blank" rel="noopener noreferrer">GitHub Releases</a> or compile from source with <code>py build.py</code>.',
                 'exe.card3.title': 'Privacy',
@@ -1045,12 +1035,6 @@
                 'compat.card2.desc': 'Pastes into the active app, right at the cursor (e.g., editors, browser, chats).',
                 'compat.card3.title': 'Known limitations',
                 'compat.card3.desc': 'The tray menu may need to be closed and opened to “refresh” (a <code>pystray</code> limitation). Use <code>Ctrl+Shift+R</code> to reload.',
-                'roadmap.title': '🗺️ Changelog & Roadmap',
-                'roadmap.subtitle': 'Track what changed and what is under evaluation.',
-                'roadmap.card1.title': 'Releases',
-                'roadmap.card1.desc': 'See full history and official downloads on <a href="https://github.com/rkvasne/dahora-app/releases" target="_blank" rel="noopener noreferrer">GitHub Releases</a>.',
-                'roadmap.card2.title': 'Next steps',
-                'roadmap.card2.desc': 'Under evaluation:<br>• digital signature<br>• optional installer<br>• tray menu improvements<br>• more format presets<br><br>Ideas and bugs live in <a href="https://github.com/rkvasne/dahora-app/issues" target="_blank" rel="noopener noreferrer">Issues</a>.',
                 'install.title': '🚀 How to Install',
                 'install.subtitle': '3 simple steps to get started',
                 'install.step1.title': 'Download',
@@ -1058,16 +1042,18 @@
                 'install.step2.title': 'Run',
                 'install.step2.desc': 'Double click the .exe file. Click "Run anyway" if Windows asks.',
                 'install.step3.title': 'Ready!',
-                'install.step3.desc': 'The icon appears in the Windows tray. Press <code>Ctrl+Shift+Q</code> to paste date/time.',
+                'install.step3.desc': 'The icon appears in the Windows tray. Press <code>Ctrl+Shift+Q</code> to paste at the cursor.',
                 'install.warning.title': 'Windows Security Warning',
-                'install.warning.desc': '<p style="color: var(--text-gray); line-height: 1.7; margin-bottom: 1rem;">Windows may show warnings like "Windows protected your PC" or "Unrecognized app" when running this .exe, especially because it is not digitally signed. <strong>This is expected and does not mean the app is malicious.</strong></p><p style="color: var(--text-gray); line-height: 1.7;"><strong>How to run:</strong> Click "More info" → "Run anyway". If you prefer, review the code on GitHub and/or compile it yourself using <code>python build.py</code>.</p>',
+                'install.warning.p1': 'Windows may show warnings like "Windows protected your PC" or "Unrecognized app" when running this .exe, especially because it is not digitally signed. <strong>This is expected and does not mean the app is malicious.</strong>',
+                'install.warning.how_to': 'How to run:',
+                'install.warning.instruction': 'Click <span style="text-decoration: underline;">More info</span> → <span style="font-weight: 700;">Run anyway</span>.',
+                'install.warning.p2': 'If you prefer, review the code on GitHub and/or compile it yourself with <code>py build.py</code>.',
+                'install.warning.show_images': 'View example screens',
                 'download.title': '<i class="fas fa-download" style="margin-right: 0.5rem; color: #fff;"></i> Free Download',
-                'download.subtitle': 'Latest Version',
+                'download.subtitle': 'Latest Version — More Productivity!',
                 'download.btn': '💾 Download Dahora App',
-                'download.detail1': '~31MB',
-                'download.detail2': 'Windows 10/11',
-                'download.detail3': 'No installer',
-                'download.compile': 'Or compile from source code:',
+                'download.compile': 'Or build from source:',
+                'download.support': 'Like it? Support the project with a donation via <a href="https://github.com/sponsors/rkvasne" target="_blank" rel="noopener noreferrer">GitHub Sponsors</a>.',
                 'download.trust.github': 'Source code',
                 'download.trust.privacy': 'Privacy',
                 'download.trust.security': 'Security',
@@ -1075,7 +1061,7 @@
                 'faq.title': '❓ Frequently Asked Questions',
                 'faq.subtitle': 'Everything you need to know about Dahora App',
                 'faq.q1': 'Is Dahora App free?',
-                'faq.a1': 'Yes! Dahora App is 100% free and open-source. You can download, use and modify without costs. The code is available on GitHub under MIT license.',
+                'faq.a1': 'Yes! Dahora App is 100% free and open-source. You can download, use, and modify it at no cost. The code is available on GitHub under the MIT License.',
                 'faq.q2': 'Does it need installation?',
                 'faq.a2': 'No! Dahora App is a single executable (.exe) that you can download and run directly. There are no complex installers or complicated settings. Just download and run.',
                 'faq.q3': 'Where is my data saved?',
@@ -1084,27 +1070,22 @@
                 'faq.a4': 'The app automatically monitors everything you copy (Ctrl+C) and saves it to a history of up to 1000 items (configurable). You can access the last 5 items directly in the tray menu, or use Ctrl+Shift+F to search the entire history with instant search.',
                 'faq.q5': 'Can I customize shortcuts?',
                 'faq.a5': 'Yes! In the Settings window (right click on icon → Settings), you can customize all global shortcuts in the "Shortcuts" tab. Note: app restart is required after changing shortcuts, as global hotkeys need to be re-registered in Windows.',
-                'faq.q6': 'Tray menu doesn\'t update automatically?',
+                'faq.q6': 'The tray menu doesn\'t update automatically?',
                 'faq.a6': 'It is a technical limitation of the <code>pystray</code> library. The menu only updates when you close and open it again. Solutions: (1) Press Ctrl+Shift+R to reload manually, (2) Close and open the menu again, or (3) Use search (Ctrl+Shift+F) which always shows real-time updated data.',
                 'faq.q7': 'Is it safe? Any virus?',
                 'faq.a7': 'Yes, it is totally safe! The code is 100% open-source and can be audited on GitHub. No telemetry, no data collection, no external connections. Windows might show an "unrecognized app" warning because the executable has no digital signature (which costs ~$500/year). You can compile the code yourself for absolute certainty.',
                 'faq.q8': 'Does it work on Windows 11?',
                 'faq.a8': 'Yes! Dahora App was tested and works perfectly on Windows 10 and Windows 11. All features (system tray, global hotkeys, toast notifications) are fully compatible with both versions.',
                 'faq.q9': 'How to contribute to the project?',
-                'faq.a9': 'Yes — this is an open-source project and contributions are welcome. You can: (1) Report bugs by opening an <a href="https://github.com/rkvasne/dahora-app/issues" target="_blank" rel="noopener noreferrer">issue on GitHub</a>, (2) Suggest new features, (3) Fork and send pull requests, (4) Improve documentation, (5) Give a ⭐ on the repository. Check README.md for more details on development.',
+                'faq.a9': 'This is an open-source project and contributions are welcome. You can: (1) Report bugs by opening an <a href="https://github.com/rkvasne/dahora-app/issues" target="_blank" rel="noopener noreferrer">issue on GitHub</a>, (2) Suggest new features, (3) Fork and send pull requests, (4) Improve documentation, (5) Give a ⭐ on the repository. Check README.md for more details on development.',
                 'dev.label': 'DEVELOPER',
                 'dev.role': 'Full Stack Developer',
                 'dev.bio': 'Specialist in creating tools that combine productivity and design. Creator of <strong>ProfitColors</strong>, <strong>Dahora App</strong> and <strong>Taskvasne</strong>. Focused on simplicity and usability.',
-                'dev.contact': 'Contato',
                 'footer.desc': 'Paste timestamps instantly.',
                 'footer.links': 'Quick Links',
                 'footer.social': 'Connect',
-                'footer.developed_by': 'Developed with 💙 by',
-                'footer.docs': 'Documentation',
-                'footer.license': 'MIT License',
-                'footer.copyright-main': '© 2026 <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Kvasne</a> • Dahora App v0.2.5',
-                'footer.copyright-dev': 'Developed by <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a>',
-                'footer.contact': 'Contact: <a href="mailto:rkvasne@gmail.com" style="color: var(--text-light); text-decoration: none;">rkvasne@gmail.com</a>'
+                'footer.copyright-main': '© 2026 <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Kvasne</a> • Dahora App v0.2.6',
+                'footer.copyright-dev': 'Developed by <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a>'
             }
         };
 

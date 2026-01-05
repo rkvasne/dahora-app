@@ -7,7 +7,7 @@ import os
 import time
 from datetime import datetime
 from threading import Lock
-from typing import List, Dict
+from typing import List, Dict, Optional
 import pyperclip
 from dahora_app.constants import (
     HISTORY_FILE, MAX_HISTORY_ITEMS,
@@ -30,6 +30,52 @@ class ClipboardManager:
         self._dpapi_entropy = b"DahoraApp-clipboard-history-v1"
         self._history_write_disabled = False
         self._history_write_disabled_reason = ""
+        self.max_history_items = int(MAX_HISTORY_ITEMS)
+        self.clipboard_monitor_interval_s = float(CLIPBOARD_MONITOR_INTERVAL)
+        self.clipboard_idle_threshold_s = float(CLIPBOARD_IDLE_THRESHOLD)
+
+    def set_max_history_items(self, max_items: int) -> None:
+        try:
+            v = int(max_items)
+        except Exception:
+            return
+
+        if v < 10:
+            v = 10
+        if v > 1000:
+            v = 1000
+
+        self.max_history_items = v
+        try:
+            with self.history_lock:
+                if len(self.clipboard_history) > self.max_history_items:
+                    self.clipboard_history = self.clipboard_history[-self.max_history_items :]
+                    self._write_history_locked()
+        except Exception:
+            pass
+
+    def set_monitoring_config(self, monitor_interval_s: float, idle_threshold_s: float) -> None:
+        try:
+            monitor = float(monitor_interval_s)
+        except Exception:
+            monitor = float(CLIPBOARD_MONITOR_INTERVAL)
+
+        try:
+            idle = float(idle_threshold_s)
+        except Exception:
+            idle = float(CLIPBOARD_IDLE_THRESHOLD)
+
+        if monitor < 0.5:
+            monitor = 0.5
+        if monitor > 60.0:
+            monitor = 60.0
+        if idle < 5.0:
+            idle = 5.0
+        if idle > 300.0:
+            idle = 300.0
+
+        self.clipboard_monitor_interval_s = monitor
+        self.clipboard_idle_threshold_s = idle
 
     def mark_own_content(self, text: str, ttl_seconds: float = 2.0) -> None:
         if not text:
@@ -105,8 +151,8 @@ class ClipboardManager:
                     needs_migration = isinstance(raw, list)
 
                 self.clipboard_history = loaded if isinstance(loaded, list) else []
-                if len(self.clipboard_history) > MAX_HISTORY_ITEMS:
-                    self.clipboard_history = self.clipboard_history[-MAX_HISTORY_ITEMS:]
+                if len(self.clipboard_history) > self.max_history_items:
+                    self.clipboard_history = self.clipboard_history[-self.max_history_items :]
                 self._history_write_disabled = history_write_disabled
                 self._history_write_disabled_reason = history_write_disabled_reason
         except FileNotFoundError:
@@ -164,8 +210,8 @@ class ClipboardManager:
             self.clipboard_history.append(new_item)
             
             # Mantém tamanho máximo
-            if len(self.clipboard_history) > MAX_HISTORY_ITEMS:
-                self.clipboard_history = self.clipboard_history[-MAX_HISTORY_ITEMS:]
+            if len(self.clipboard_history) > self.max_history_items:
+                self.clipboard_history = self.clipboard_history[-self.max_history_items :]
             
             self._write_history_locked()
             logging.info(f"Histórico atualizado: total={len(self.clipboard_history)}; último='{text[:50]}...'")
@@ -286,13 +332,18 @@ class ClipboardManager:
                 
                 # Polling adaptativo
                 time_idle = current_time - last_activity_time
-                if time_idle < CLIPBOARD_IDLE_THRESHOLD:
-                    sleep_time = 0.5  # Responde rápido quando há atividade
+                monitor_interval = float(self.clipboard_monitor_interval_s or CLIPBOARD_MONITOR_INTERVAL)
+                idle_threshold = float(self.clipboard_idle_threshold_s or CLIPBOARD_IDLE_THRESHOLD)
+                if time_idle < idle_threshold:
+                    sleep_time = monitor_interval
                 else:
-                    sleep_time = 5.0  # Intervalo maior quando ocioso
+                    sleep_time = max(5.0, monitor_interval)
                 
             except Exception as e:
                 logging.warning(f"Erro ao monitorar clipboard: {e}")
-                sleep_time = CLIPBOARD_MONITOR_INTERVAL
+                try:
+                    sleep_time = float(self.clipboard_monitor_interval_s or CLIPBOARD_MONITOR_INTERVAL)
+                except Exception:
+                    sleep_time = CLIPBOARD_MONITOR_INTERVAL
             
             time.sleep(sleep_time)

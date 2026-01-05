@@ -5,6 +5,7 @@ Define estruturas de dados seguras e validadas
 from typing import Optional, List, Dict, Any
 from pydantic import BaseModel, Field, field_validator, model_validator, ConfigDict
 import re
+from dahora_app.hotkey_validator import HotkeyValidator
 
 
 class CustomShortcutSchema(BaseModel):
@@ -15,6 +16,7 @@ class CustomShortcutSchema(BaseModel):
     hotkey: str = Field(..., min_length=3, max_length=50, description="Hotkey (ex: ctrl+shift+q)")
     prefix: str = Field(..., min_length=1, max_length=100, description="Prefixo para timestamp")
     enabled: bool = Field(default=True, description="Se atalho está ativo")
+    description: str = Field(default="", max_length=100, description="Descrição opcional do atalho")
     
     @field_validator('hotkey')
     @classmethod
@@ -22,16 +24,13 @@ class CustomShortcutSchema(BaseModel):
         """Valida formato básico de hotkey"""
         if not v or not isinstance(v, str):
             raise ValueError("Hotkey deve ser string")
-        
-        # Deve conter pelo menos um +
-        if '+' not in v:
-            raise ValueError("Hotkey deve conter pelo menos um '+' (ex: ctrl+shift+q)")
-        
-        # Verifica caracteres válidos
-        if not re.match(r'^[a-z0-9+\-_\s]*$', v.lower()):
-            raise ValueError("Hotkey contém caracteres inválidos")
-        
-        return v.lower().strip()
+
+        normalized = HotkeyValidator.normalize(v)
+        is_valid, reason = HotkeyValidator.validate_with_reason(normalized)
+        if not is_valid:
+            raise ValueError(reason or "Hotkey inválido")
+
+        return normalized
     
     @field_validator('prefix')
     @classmethod
@@ -73,6 +72,11 @@ class SettingsSchema(BaseModel):
     clipboard_idle_threshold: int = Field(default=30, ge=5, le=300, description="Limiar de inatividade em segundos")
     notification_duration: int = Field(default=2, ge=1, le=10, description="Duração da notificação em segundos")
     notification_enabled: bool = Field(default=True, description="Se notificações estão habilitadas")
+
+    log_max_bytes: int = Field(default=1 * 1024 * 1024, ge=128 * 1024, le=20 * 1024 * 1024, description="Tamanho máximo do log em bytes")
+    log_backup_count: int = Field(default=1, ge=0, le=10, description="Quantidade de backups do log")
+    ui_prewarm_delay_ms: int = Field(default=700, ge=0, le=10000, description="Delay para prewarm da UI (ms)")
+    tray_menu_cache_window_ms: int = Field(default=200, ge=0, le=2000, description="Janela de cache do menu do tray (ms)")
     
     # Custom shortcuts
     custom_shortcuts: List[CustomShortcutSchema] = Field(default_factory=list, max_length=10)

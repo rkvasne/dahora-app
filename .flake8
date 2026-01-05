@@ -1,0 +1,4 @@
+[flake8]
+max-line-length = 160
+extend-ignore = W293,E128,E402,E722,F401,W291,E301,E501,E203,E261,E302,E305,E701,E303,E741,F841,F824,F541,F811
+exclude = .venv,dist,build,.release_trash

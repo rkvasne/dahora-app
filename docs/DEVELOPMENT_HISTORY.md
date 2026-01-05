@@ -1,7 +1,7 @@
 # 📜 HISTÓRICO DE DESENVOLVIMENTO - DAHORA APP
 
-**Projeto:** Dahora App - Sistema de Bandeja para Data/Hora  
-**Última atualização:** 03/01/2026
+**Projeto:** Dahora App - System tray para Data/Hora  
+**Última atualização:** 05/01/2026
 
 > Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
@@ -11,14 +11,28 @@
 
 ## 📋 ÍNDICE
 
-1. [v0.2.5 - Privacidade (DPAPI) & Ajustes de UI/Landing](#v025---privacidade-dpapi--ajustes-de-uilanding) 🚀 **ATUAL**
-2. [v0.2.3 - Documentação Unificada & Release](#v023---documentação-unificada--release)
-3. [v0.2.2 - Produtividade & Dark Mode Web](#v022---produtividade--dark-mode-web)
-4. [v0.2.0 - Revolução: Cola Automaticamente](#v020---revolução-cola-automaticamente)
-5. [Migração CSS (Fases 1-3)](#migração-css-fases-1-3)
-6. [Correção de Ícone](#correção-de-ícone)
-7. [Padronização do Projeto](#padronização-do-projeto)
-8. [Customizações de UI](#customizações-de-ui)
+1. [v0.2.6 - Configurações Avançadas na UI & Monitoramento Configurável](#v026---configurações-avançadas-na-ui--monitoramento-configurável) 🚀 **ATUAL**
+2. [v0.2.5 - Privacidade (DPAPI) & Ajustes de UI/Landing](#v025---privacidade-dpapi--ajustes-de-uilanding)
+3. [v0.2.3 - Documentação Unificada & Release](#v023---documentação-unificada--release)
+4. [v0.2.2 - Produtividade & Dark Mode Web](#v022---produtividade--dark-mode-web)
+5. [v0.2.0 - Revolução: Cola Automaticamente](#v020---revolução-cola-automaticamente)
+6. [Migração CSS (Fases 1-3)](#migração-css-fases-1-3)
+7. [Correção de Ícone](#correção-de-ícone)
+8. [Padronização do Projeto](#padronização-do-projeto)
+9. [Customizações de UI](#customizações-de-ui)
+
+---
+
+## 🚀 V0.2.6 - CONFIGURAÇÕES AVANÇADAS NA UI & MONITORAMENTO CONFIGURÁVEL
+
+**Data:** 05/01/2026  
+**Status:** ✅ COMPLETA
+
+### ✨ Principais Mudanças
+
+- Exposição de configurações avançadas na UI moderna (logs, prewarm da UI e cache do menu do tray).
+- Campo de descrição opcional para atalhos personalizados (melhor identificação/organização).
+- Correção para que o monitoramento do clipboard respeite as configurações do usuário (intervalo e limiar de inatividade).
 
 ---
 
@@ -505,7 +519,7 @@ dahora-app/
 
 ## 🎯 PRÓXIMOS PASSOS
 
-1. ✅ v0.2.5 (estado atual) estabilizado e documentado
+1. ✅ v0.2.6 (estado atual) estabilizado e documentado
 2. 🔮 Próximas features em [ROADMAP.md](ROADMAP.md)
 
 ---

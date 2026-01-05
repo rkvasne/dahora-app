@@ -2,16 +2,18 @@
 
 Obrigado por considerar contribuir com o Dahora App.
 
+> Navegação: [README do projeto](README.md) • [Documentação (índice)](docs/INDEX.md) • [Testes](tests/README.md)
+
 ---
 
 ## 1) Comece aqui
 
-- Documentação (índice): `docs/INDEX.md`
-- Setup Windows/Python: `docs/WINDOWS_PYTHON_SETUP.md` (use `py`)
+- Documentação (índice): [docs/INDEX.md](docs/INDEX.md)
+- Configuração Windows/Python: [docs/WINDOWS_PYTHON_SETUP.md](docs/WINDOWS_PYTHON_SETUP.md) (use `py`)
 
 ---
 
-## 2) Setup do ambiente (Windows)
+## 2) Configuração do ambiente (Windows)
 
 1. Clone o repositório:
 
@@ -60,4 +62,3 @@ Abra uma issue com:
 - Resultado esperado vs atual
 - Versão do app
 - Logs relevantes (sem dados sensíveis)
-

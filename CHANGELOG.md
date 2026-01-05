@@ -7,15 +7,21 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Não lançado]
 
-### Documentação
-- Consolidada navegação e links internos entre documentos.
-- Removidos documentos obsoletos de análise/relatórios antigos.
+## [0.2.6] - 2026-01-05
 
-### Landing Page
-- Atualizados números e stack para refletir o estado atual (262 testes, 100% cobertura, CustomTkinter).
-- Unificada linguagem de privacidade (offline + dados locais) e removido log de console.
-- Adicionadas novas seções: Como Funciona, Guia Rápido, Executável & Segurança, Compatibilidade & Limitações, Changelog & Roadmap.
-- Adicionados links de confiança no bloco de download (Código-fonte, Privacidade, Segurança, Licença).
+### Adicionado
+- Configurações avançadas expostas na UI (logs, prewarm da UI e cache do menu do tray).
+- Campo de descrição opcional para atalhos personalizados.
+
+### Corrigido
+- Aplicação efetiva dos valores configuráveis de monitoramento do clipboard (intervalo e limiar de inatividade).
+
+### Documentação
+- Atualização geral da documentação (backend + frontend) para refletir as mudanças recentes.
+- Landing page atualizada (versão, novidades e contagem de testes).
+
+### Manutenção
+- Lint: flake8 ignora `.release_trash/` (artefatos de release).
 
 ## [0.2.5] - 2026-01-02
 
@@ -30,7 +36,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [0.2.4] - 2025-12-30
 
 ### Adicionado
-- **Implementação Completa da Phase 6:**
+- **Implementação Completa da Fase 6:**
   - Módulo base CallbackManager (265 linhas)
   - 4 implementações de handlers (495 linhas)
   - Testes de integração (370 linhas)
@@ -42,7 +48,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   - Removido arquivos redundantes: STATUS.md, GITHUB_TOKEN_SETUP.md, GUIDES/RELEASE_PROCESS.md
   - Simplificado docs/README.md para redirecionar ao INDEX.md
   - Padronizada estrutura e formatação de todos os documentos
-  - Quick Start guides organizados por perfil (Usuário, Desenvolvedor, Manutenedor)
+  - Guias de início rápido organizados por perfil (Usuário, Desenvolvedor, Manutenedor)
   - Convenções do projeto claramente documentadas
 
 ### Alterado
@@ -188,7 +194,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [0.2.2-color-improvements] - 2025-12-29 🎨 **MELHORIA SIGNIFICATIVA: ESQUEMA DE CORES**
 
-### 🎨 Enhanced
+### 🎨 Melhorado
 - **Detecção automática de tema**: Agora detecta automaticamente se o Windows está em modo claro ou escuro e aplica o esquema correspondente
 - **Modo escuro melhorado**: Background menos escuro (`#121212` → `#1C1C1C`) para reduzir fadiga visual
 - **Legibilidade aprimorada**: Texto branco puro (`#E0E0E0` → `#FFFFFF`) e texto secundário mais claro (`#A0A0A0` → `#B3B3B3`)
@@ -197,7 +203,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - **Modo claro otimizado**: Background mais suave (`#F3F3F3` → `#FAFAFA`) e melhor contraste de texto
 - **Botões aprimorados**: Botão primário com texto branco sobre azul e hover states mais consistentes
 
-### 🎯 Benefits
+### 🎯 Benefícios
 - Melhor legibilidade e contraste em ambos os modos
 - Menos fadiga visual com cores mais equilibradas
 - Consistência total com as diretrizes de design do Windows 11
@@ -205,25 +211,25 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [0.2.2-shortcut-editor-fix] - 2025-12-29 🔧 **CORREÇÃO CRÍTICA: EDIÇÃO DE ATALHOS NO FRONTEND**
 
-### 🐛 Fixed
+### 🐛 Corrigido
 - **Diálogo de edição de atalhos não abria**: Corrigido problema onde os botões "Adicionar" e "Editar" na aba "Atalhos Personalizados" não abriam o diálogo de edição
 - **Janela modal inadequada**: Implementado `grab_set()` para tornar o diálogo adequadamente modal
 - **Problemas de visibilidade**: Adicionado `lift()`, `focus_force()` e `topmost` temporário para garantir que o diálogo seja visível
 - **Validação de janela pai**: Adicionada verificação se a janela pai existe antes de criar o diálogo
 - **Limpeza inadequada**: Implementado `grab_release()` nos métodos de fechar/cancelar
 
-### ✨ Enhanced
+### ✨ Melhorado
 - **Atalhos de teclado**: Adicionado Escape (cancelar) e Enter (salvar) no diálogo de edição
 - **Mecanismo de fallback**: Se o diálogo principal falhar, usa `simpledialog` como backup
 - **Logging detalhado**: Adicionado logs abrangentes para debug do processo de criação do diálogo
 - **Protocolo de janela**: Adicionado tratamento adequado do botão de fechar (X)
 
-### 🧪 Tested
+### 🧪 Testado
 - Teste isolado confirmou funcionamento correto do diálogo
 - Aplicação principal testada com 3 atalhos personalizados existentes
 - Logs confirmam criação e exibição bem-sucedida do diálogo
 
-### 📁 Files Modified
+### 📁 Arquivos modificados
 - `dahora_app/ui/shortcut_editor.py`: Melhorias na criação e exibição do diálogo
 - `dahora_app/ui/custom_shortcuts_dialog.py`: Logging aprimorado e validação de janela
 
@@ -265,7 +271,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - **Experiência consistente** em todos os dispositivos
 - **Todas as animações preservadas**
 
-### 📁 Files Modified
+### 📁 Arquivos modificados
 - `index.html`: Copy otimizado e traduções atualizadas
 - `landing/variables.css`: Cores e sombras refinadas
 - `landing/styles.css`: Espaçamento e componentes otimizados
@@ -372,7 +378,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - **🆕 Tela Sobre Estilo Windows**:
   - Design nativo Windows com LabelFrames
-  - Link para GitHub Repository
+  - Link para repositório no GitHub
   - Informações de versão e recursos
 
 - **🔧 Configuração Total**:
@@ -381,7 +387,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   - Teclas de busca e refresh configuráveis
   - Atalhos dinâmicos exibidos no menu
 
-### 🔄 Changed
+### 🔄 Alterado
 - **📋 Histórico Inteligente**: 
   - Guarda apenas textos copiados pelo usuário (não timestamps)
   - Útil como backup quando Windows clipboard está desabilitado
@@ -480,7 +486,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
   - Atalho `F5` para refresh manual
   - Atalho `ESC` para fechar janela
   - **Hotkey global `Ctrl+Shift+F`** para abrir busca de qualquer lugar
-  - Item "Buscar no Histórico" no menu da bandeja
+  - Item "Buscar no Histórico" no menu do system tray
   - Callbacks configuráveis: get_history, copy, notification
   
 - **⚙️ Configurações Avançadas (Tarefa 11)**:
@@ -493,7 +499,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
   - Botão "Restaurar Padrões" funcional
   - **Aplicação SEM RESTART** (exceto hotkeys - aviso automático quando necessário)
   - Salva automaticamente em `settings.json`
-  - Item "Configurações" no menu da bandeja
+  - Item "Configurações" no menu do system tray
 
 - **📚 Documentação Completa**:
   - README.md completamente reescrito para MVP v0.1.0
@@ -563,7 +569,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 - Aplicação de configurações instantânea (exceto hotkeys)
 - Janelas responsivas com feedback visual imediato
 
-### Notes
+### Notas
 - **🎊 MVP COMPLETO!** Todas as funcionalidades essenciais implementadas
 - **🔍 Busca inteligente** no histórico com hotkey global
 - **⚙️ Configurações avançadas** com interface gráfica moderna
@@ -610,7 +616,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 - **Escalabilidade**: Fácil adicionar novos componentes sem afetar código existente
 - **Legibilidade**: Separação clara entre domínios (UI, clipboard, notificações, etc)
 
-### Technical
+### Técnico
 - **9 Classes gerenciadoras** criadas com responsabilidade única:
   - `SettingsManager`: Gerencia configurações com validação
   - `UsageCounter`: Contador de uso com persistência atômica
@@ -694,11 +700,11 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 ### Purpose
 - Release de teste para validar YAML e fix do passo de hash
 
-### Fixed
+### Corrigido
 - Indentação corrigida do passo "Compute SHA-256" no workflow para permanecer dentro de `steps`
 - Geração correta do nome do arquivo `.sha256` usando variável simples (`$basename`)
 
-### Technical
+### Técnico
 - Workflow acionado por tags `v*` com build em Windows e criação de release
 - Upload de `.exe` e `.sha256.txt` e extração de notas do `CHANGELOG.md`
 - Usa `softprops/action-gh-release@v1`
@@ -708,10 +714,10 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 ### Purpose
 - Release de teste para revalidar o workflow após correção no passo de hash
 
-### Fixed
+### Corrigido
 - Correção no PowerShell ao gerar o nome do arquivo `.sha256` (remoção de subexpressão `$(...)`); agora o arquivo é criado como `<basename>.sha256.txt`
 
-### Technical
+### Técnico
 - Ajuste no passo "Compute SHA-256" do workflow `release.yml` usando variáveis simples (`$basename`) para montar o nome do arquivo
 - A execução do workflow em tags `v*` deve anexar `.exe` e `.sha256.txt` corretamente ao release
 
@@ -720,7 +726,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 ### Purpose
 - Release de teste para validar o workflow de build e release por tag (GitHub Actions)
 
-### Added
+### Adicionado
 - Workflow `.github/workflows/release.yml` (Windows runner)
 - Automação de build com `python build.py` e upload de assets (.exe e .sha256)
 - Extração automática de notas do `CHANGELOG.md` para compor o corpo do release
@@ -751,7 +757,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 
 ### Adicionado
 - Janela "Definir Prefixo" atualizada com visual próximo ao Windows 11 (ttk, tema `vista`)
-- Atalho interno `Ctrl+Shift+R` para "Recarregar Itens" no menu da bandeja
+- Atalho interno `Ctrl+Shift+R` para "Recarregar Itens" no menu do system tray
 - Item do menu renomeado para "Recarregar Itens" e posicionado acima do histórico
 
 ### Alterado
@@ -841,16 +847,16 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 
 ### Adicionado
 - Versão inicial do Qopas App 0.0.1
-- Sistema de bandeja do Windows (system tray) com ícone de relógio personalizado
-- Copia data e hora para a área de transferência no formato `[DD.MM.AAAA-HH:MM]`
-- Tecla de atalho global: `Ctrl+Shift+Q` para copiar de qualquer lugar
-- Notificações toast de 2 segundos com auto-dismiss
+- System tray do Windows com ícone de relógio personalizado
+- Copia data e hora para o clipboard no formato `[DD.MM.AAAA-HH:MM]`
+- Hotkey global: `Ctrl+Shift+Q` para copiar de qualquer lugar
+- Notificações do Windows (toasts) de 2 segundos com auto-dismiss
 - Prevenção de múltiplas instâncias do aplicativo
 - Janela "Sobre" modal que fica aberta até o usuário fechar
 - Interface intuitiva com clique esquerdo (instruções) e clique direito (menu)
 - Contador de uso - quantas vezes o app foi acionado
 - Histórico de clipboard - mantém últimos 100 itens copiados
-- Monitoramento automático de clipboard - detecta mudanças na área de transferência
+- Monitoramento automático de clipboard - detecta mudanças no clipboard
 - Menu com acesso rápido aos 5 itens de clipboard mais recentes
 - Opção para limpar o histórico de clipboard manualmente
 - Ícone personalizado incluso no executável .exe

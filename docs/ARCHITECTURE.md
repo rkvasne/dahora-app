@@ -12,36 +12,38 @@ Dahora App é um aplicativo de gerenciamento de timestamps com clipboard e hotke
 
 ```
 dahora_app/
-├── __init__.py                    # Inicialização e exports principais
-├── main.py                        # Entrada da aplicação (no root)
-├── hotkeys.py                     # Gerenciador de hotkeys globais
-├── hotkey_validator.py            # Validação segura de hotkeys (NOVO)
-├── clipboard_manager.py           # Monitor de clipboard
-├── settings.py                    # Gerenciador de configurações persistentes
-├── schemas.py                     # Modelos Pydantic para validação (NOVO)
-├── notifications.py               # Sistema de notificações
-├── constants.py                   # Constantes do projeto
-├── utils.py                       # Funções utilitárias
-├── datetime_formatter.py           # Formatação de datas/horas
+├── __init__.py
+├── callback_manager.py            # Orquestra callbacks/handlers
+├── clipboard_manager.py           # Monitor de clipboard + histórico
+├── constants.py                   # Constantes do projeto (APP_VERSION, paths)
 ├── counter.py                     # Contador de eventos
-├── ui/                            # Interface gráfica
-│   ├── __init__.py
-│   ├── menu.py                    # Menu da bandeja
-│   ├── modern_settings_dialog.py  # Diálogo de configurações
-│   ├── modern_shortcut_editor.py  # Editor de atalhos
-│   ├── modern_search_dialog.py    # Diálogo de busca
-│   ├── modern_about_dialog.py     # Diálogo sobre
-│   ├── modern_styles.py           # Estilos da UI moderna
-│   ├── icon_manager.py            # Gerenciador de ícones
-│   └── ... (deprecated)           # Versões antigas mantidas para compatibilidade
-└── __pycache__/                   # Cache Python
+├── datetime_formatter.py          # Formatação de datas/horas
+├── handlers/                      # Handlers para ações do app
+│   ├── copy_datetime_handler.py
+│   ├── quit_app_handler.py
+│   ├── show_search_handler.py
+│   └── show_settings_handler.py
+├── hotkeys.py                     # Hotkeys globais
+├── hotkey_validator.py            # Validação segura de hotkeys
+├── notifications.py               # Notificações (Windows)
+├── schemas.py                     # Schemas (validação) para settings/dados
+├── settings.py                    # Configurações e persistência
+├── single_instance.py             # Garantia de instância única (Windows)
+├── thread_sync.py                 # Coordenação de threads / shutdown seguro
+├── utils.py                       # Utilitários
+└── ui/                            # Interface gráfica (diálogos/menu/estilos)
+    ├── menu.py
+    ├── modern_settings_dialog.py
+    ├── modern_shortcut_editor.py
+    ├── modern_search_dialog.py
+    ├── modern_about_dialog.py
+    ├── modern_styles.py
+    └── icon_manager.py
 
 tests/                             # Suíte de testes
-├── test_hotkey_validator.py       # 37 testes de validação de hotkeys (NOVO)
-├── test_schemas.py                # 29 testes de schemas Pydantic (NOVO)
-├── test_hotkey_manager_custom.py  # Testes de custom shortcuts
-├── test_custom_shortcuts.py       # Testes de atalhos
-└── ... (mais testes)
+├── conftest.py
+├── test_*.py
+└── README.md
 ```
 
 ## 2. Fluxo de Execução
@@ -50,13 +52,13 @@ tests/                             # Suíte de testes
 
 ```
 main.py
-  ├─> load settings
-  ├─> initialize HotkeyManager
-  ├─> setup HotkeyValidator (centralized)
-  ├─> setup clipboard monitoring
-  ├─> apply configured hotkeys
-  ├─> register custom shortcuts
-  └─> show system tray icon
+  ├─> carregar settings
+  ├─> inicializar HotkeyManager
+  ├─> configurar HotkeyValidator (centralizado)
+  ├─> configurar monitoramento do clipboard
+  ├─> aplicar hotkeys configuradas
+  ├─> registrar custom shortcuts
+  └─> exibir ícone no system tray
 ```
 
 ## 3. Componentes Principais
@@ -96,24 +98,21 @@ User hotkey input
 - Validação de formato (deve ter modificador + tecla)
 - Bloqueio de teclas perigosas (Escape, Pause)
 - Reserva apenas Ctrl+C para o sistema
-- Suporte para símbolos (exclam→!, at→@, etc)
+- Suporte para símbolos (ex.: `exclam` → `!`, `at` → `@`, etc.)
 - Normalização de hotkeys
 - Mensagens de erro detalhadas
 
-**Classes:**
+**API:**
 - `HotkeyValidator` - Classe principal
-  - `is_valid(hotkey)` - Retorna bool
-  - `validate_with_reason(hotkey)` - Retorna (bool, str_razao)
+  - `is_valid(hotkey, allow_reserved=False)` - Retorna bool
+  - `validate_with_reason(hotkey, allow_reserved=False)` - Retorna (bool, str_razao)
   - `normalize(hotkey)` - Padroniza formato
   - `parse(hotkey)` - Analisa componentes
-  - `suggest_free_hotkey()` - Sugere alternativa válida
 
 **Validações Realizadas:**
 - ✓ Formato: `modifier+key` (ex: `ctrl+shift+a`)
 - ✓ Bloqueio: Escape, Pause
-- ✓ Símbolos: Conversão automática (exclam→!, shift+1→!)
-- ✓ Tamanho: Min 3 chars (`a+b`), Max 50 chars
-- ✓ Caracteres válidos: `[a-z0-9+\-_\s]`
+- ✓ Símbolos: nomes e símbolos comuns (`exclam`, `at`, `!`, `@`, etc.)
 
 ### 3.3 SettingsManager (`settings.py`)
 
@@ -148,6 +147,7 @@ id: int                    # >= 1, único
 hotkey: str               # min 3, max 50 chars, deve ter '+'
 prefix: str               # max 100, sanitizado
 enabled: bool             # default True
+description: str          # opcional, max 100
 ```
 
 Validações:
@@ -171,6 +171,10 @@ custom_shortcuts: List[CustomShortcutSchema] # max 10
 default_shortcut_id: Optional[int] # existe em custom_shortcuts
 notification_duration: int # 1-10s, padrão: 2
 notification_enabled: bool # padrão: True
+log_max_bytes: int         # 128KB-20MB, padrão: 1MB
+log_backup_count: int      # 0-10, padrão: 1
+ui_prewarm_delay_ms: int   # 0-10000ms, padrão: 700
+tray_menu_cache_window_ms: int # 0-2000ms, padrão: 200
 ```
 
 Validações:
@@ -209,7 +213,7 @@ notifications: NotificationSchema
 ### 3.6 Interface Gráfica (`ui/`)
 
 **Componentes:**
-- `menu.py` - Menu de bandeja do Windows
+- `menu.py` - Menu do system tray do Windows
 - `modern_settings_dialog.py` - Diálogo de configurações (Pydantic-aware)
 - `modern_shortcut_editor.py` - Editor de custom shortcuts (com HotkeyValidator)
 - `modern_search_dialog.py` - Busca no histórico
@@ -313,7 +317,7 @@ Combinação de HotkeyValidator + verificações de conflito:
 
 - **Sanitização de Prefixo:** Remove caracteres de controle
 - **Brackets Validados:** Não podem ser whitespace, devem ser diferentes
-- **Limites Enforçados:** Max 100 histórico, max 10 custom shortcuts
+- **Limites Enforçados:** Max 1000 histórico, max 10 custom shortcuts
 - **Campos Extras:** Rejeitados pela Pydantic (extra='forbid')
 
 ### Tratamento de Erros

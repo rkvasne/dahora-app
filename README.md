@@ -7,7 +7,7 @@
 **O gerenciador de timestamps definitivo para Windows.**  
 *Cole datas e horas formatadas instantaneamente com atalhos personalizáveis.*
 
-[![Version](https://img.shields.io/badge/version-0.2.5-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
+[![Version](https://img.shields.io/badge/version-0.2.6-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
 [![Python](https://img.shields.io/badge/python-3.8+-green.svg?style=for-the-badge)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
 [![Tests](https://img.shields.io/badge/tests-automated-brightgreen.svg?style=for-the-badge)](tests/README.md)
@@ -21,9 +21,12 @@
 
 ##  Por que Dahora App?
 
-Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sistema leve e poderoso que revoluciona como você lida com timestamps. Ele roda silenciosamente na bandeja do sistema e permite que você cole a data e hora atual formatada em qualquer lugar, com um único atalho.
+Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sistema leve e poderoso que revoluciona como você lida com timestamps. Ele roda silenciosamente no system tray e permite que você cole a data e hora atual formatada em qualquer lugar, com uma única hotkey.
 
-**Novo na v0.2.5:** Correções de persistência do histórico do clipboard (DPAPI) e ajustes de build no Windows.
+**Novo na v0.2.6:** Configurações avançadas expostas na UI, descrição opcional em atalhos personalizados e ajustes no monitoramento do clipboard.
+
+> **Terminologia:** a UI/landing usam PT‑BR 100% (ex.: “área de transferência”, “bandeja do sistema”, “atalhos”).
+> A documentação técnica pode usar termos comuns em inglês (ex.: `clipboard`, `system tray`, `hotkeys`). Veja [docs/README.md](docs/README.md).
 
 ## ✨ Funcionalidades
 
@@ -57,7 +60,7 @@ Não requer Python instalado. Basta baixar e rodar.
 1. Baixe o arquivo `DahoraApp_latest.zip` (Assets do GitHub Release):
    - https://github.com/rkvasne/dahora-app/releases/latest/download/DahoraApp_latest.zip
 2. (Alternativa) Vá para a página de [Releases](https://github.com/rkvasne/dahora-app/releases) e baixe o `DahoraApp_vX.Y.Z.zip`.
-3. Extraia o ZIP e execute `DahoraApp_vX.Y.Z.exe`. O ícone aparecerá na bandeja do sistema (próximo ao relógio).
+3. Extraia o ZIP e execute `DahoraApp_vX.Y.Z.exe`. O ícone aparecerá no system tray (próximo ao relógio).
 
 ### Opção 2: Rodar do Código Fonte
 
@@ -77,14 +80,14 @@ py main.py
 
 ## 🎮 Como Usar
 
-### Atalhos Globais
+### Hotkeys Globais
 | Atalho | Ação |
 |--------|------|
 | `Ctrl+Shift+Q` | **Cola** o timestamp atual (ex: `[29.11.2025-22:45]`) |
 | `Ctrl+Shift+F` | Abre a **Busca no Histórico** |
-| `Ctrl+Shift+R` | Recarrega o menu da bandeja |
+| `Ctrl+Shift+R` | Recarrega o menu do system tray |
 
-### Menu da Bandeja
+### Menu do system tray
 Clique com o botão direito no ícone do relógio na barra de tarefas:
 
 - **Copiar Data/Hora:** Copia o timestamp para o clipboard (sem colar).
@@ -107,8 +110,13 @@ O Dahora App é altamente configurável através do menu **Configurações**:
 
 - **Geral:** Altere o formato da data (códigos `strftime`), delimitadores e comportamento ao iniciar.
 - **Histórico:** Ajuste quantos itens manter e a sensibilidade do monitoramento.
-- **Notificações:** Ative/desative toasts do Windows ou popups rápidos.
-- **Teclas:** Redefina os atalhos globais de busca e recarregamento.
+- **Notificações:** Ative/desative notificações do Windows (toasts) ou popups rápidos.
+- **Teclas:** Redefina as hotkeys globais de busca e recarregamento.
+- **Avançado:** Ajuste logs e otimizações internas.
+  - **Tamanho máximo do log (MB)** (`log_max_bytes`): padrão 1 MB (recomendado 1–5 MB).
+  - **Backups do log** (`log_backup_count`): padrão 1 (recomendado 1–2).
+  - **Delay de pré-aquecimento da UI (ms)** (`ui_prewarm_delay_ms`): padrão 700 ms.
+  - **Janela de cache do menu (ms)** (`tray_menu_cache_window_ms`): padrão 200 ms.
 
 Os dados são salvos localmente em `%APPDATA%\DahoraApp`.
 
@@ -160,31 +168,31 @@ dahora-app/
     ├── PRICING.md               # Estudo histórico de precificação
     ├── RELEASE.md               # Build/Release/ZIP/LFS
     ├── ROADMAP.md               # Próximos passos
-    └── WINDOWS_PYTHON_SETUP.md  # Setup Python no Windows (use `py`)
+    └── WINDOWS_PYTHON_SETUP.md  # Configuração do Python no Windows (use `py`)
 ```
 
 ## 🔒 Segurança & Qualidade
 
 ### Status de Implementação
-- ✅ **Phase 1:** Security Hardening (66 testes)
+- ✅ **Fase 1:** Endurecimento de segurança (66 testes)
   - Hotkey validation
   - Pydantic schemas
   - Type hints
   
-- ✅ **Phase 4:** Single Instance Manager (21 testes)
+- ✅ **Fase 4:** Gerenciador de instância única (21 testes)
   - Windows mutex
   - Instance protection
   
-- ✅ **Phase 5:** Thread Synchronization (24 testes)
+- ✅ **Fase 5:** Sincronização de threads (24 testes)
   - Race condition fixes
   - Safe shutdown coordination
   
-- ✅ **Phase 6:** Callback Logic Consolidation (84 testes)
-  - CallbackManager base (31 testes)
+- ✅ **Fase 6:** Consolidação da lógica de callbacks (84 testes)
+  - Base `CallbackManager` (31 testes)
   - Handler implementations (35 testes)
   - Integration tests (18 testes)
   
-**Total:** 262/262 testes passando (100%)
+**Total:** 266/266 testes passando (100%)
 
 ### Documentação
 Comece por [docs/INDEX.md](docs/INDEX.md).
@@ -193,23 +201,26 @@ Comece por [docs/INDEX.md](docs/INDEX.md).
 
 ## 🤝 Contribuindo
 
-Valorizamos contribuições! Sinta-se à vontade para abrir issues ou enviar pull requests.
-Este projeto é aberto para contribuições da comunidade.
+Veja [CONTRIBUTING.md](CONTRIBUTING.md).
 
-1. Faça um Fork do projeto
-2. Crie sua Feature Branch (`git checkout -b feature/MinhaFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a Branch (`git push origin feature/MinhaFeature`)
-5. Abra um Pull Request
+---
+
+## ☕ Apoie o projeto (opcional)
+
+Se o Dahora App te ajuda no dia a dia e você quiser apoiar o desenvolvimento, você pode fazer uma doação.
+
+- GitHub Sponsors: https://github.com/sponsors/rkvasne
+- Alternativas (opcional): abra uma issue/PR com a forma que você prefere apoiar.
+
+> Nota: o projeto continua open-source e gratuito; doações ajudam a manter o ritmo de melhorias.
 
 ---
 
 ## 🔒 Privacidade
 
-O Dahora App foi construído com privacidade em mente:
-*   **Totalmente offline:** Nenhum dado sai do seu computador.
-*   **Sem telemetria:** Não há rastreamento.
-*   **Dados Locais:** Histórico e configurações ficam apenas na sua máquina.
+**Resumo:** o Dahora App opera **totalmente offline** e **não coleta telemetria**.
+
+Detalhes em [PRIVACY.md](PRIVACY.md).
 
 ---
 

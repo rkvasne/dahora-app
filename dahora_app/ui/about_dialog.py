@@ -62,7 +62,7 @@ class AboutDialog:
 
         ttk.Label(
             main,
-            text="Gerenciador Inteligente de Clipboard",
+            text="Gerenciador Inteligente de Área de Transferência",
             font=("Segoe UI", 10),
             foreground="#aaaaaa",
         ).pack(pady=(0, 20))
@@ -83,8 +83,8 @@ class AboutDialog:
         # Informações
         info_text = (
             "O Dahora App facilita a inserção de timestamps formatados\n"
-            "no seu clipboard com atalhos de teclado personalizáveis.\n\n"
-            "• Colagem Automática & Preservação de Clipboard\n"
+            "na sua área de transferência com atalhos de teclado personalizáveis.\n\n"
+            "• Colagem Automática & Preservação da Área de Transferência\n"
             "• Atalhos Ilimitados & Prefixos Personalizados\n"
             "• Histórico Inteligente & Busca Rápida (Ctrl+Shift+F)\n"
             "• Zero Telemetria & 100% Offline"

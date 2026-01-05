@@ -54,14 +54,14 @@ Limpa cache relacionado a ícones (Windows/build).
 Script de debug do app em ambiente de desenvolvimento.
 
 #### **test_minimal.py**
-Execução mínima para isolar problemas de import/importações/UI/tray.
+Execução mínima para isolar problemas de import/importações/UI/system tray.
 
 ```powershell
 py scripts\test_minimal.py
 ```
 
 #### **test_menu.py**
-Testa geração do menu da bandeja.
+Testa geração do menu do system tray.
 
 ```powershell
 py scripts\test_menu.py

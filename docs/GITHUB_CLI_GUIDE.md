@@ -151,42 +151,11 @@ gh auth login
 
 ### Método 2: Token de Acesso Pessoal (Para Automação)
 
-#### Passo 1: Gerar Personal Access Token (PAT)
+Use esse método apenas quando você precisa automatizar ações do GitHub fora do login interativo (ex.: CI/CD).
 
-1. Acesse: https://github.com/settings/tokens?type=pat
-2. Clique em **"Generate new token"** → **"Generate new token (classic)"**
-3. Configure:
-   - **Nome:** `Dahora Release Updates` ou `GitHub CLI Access`
-   - **Expiration:** `90 days` (ou sua preferência)
-   - **Scopes** (marque):
-     - ✅ `repo` (Controle total de repositórios)
-     - ✅ `workflow` (Atualizar workflows do GitHub Actions)
-     - ✅ `gist` (opcional)
-
-4. Clique em **"Generate token"**
-5. **COPIE o token** (aparece apenas uma vez!)
-
-#### Passo 2: Configurar Token
-
-**Opção A: Autenticação via CLI (Recomendado)**
-```powershell
-gh auth login --with-token
-# Cole o token e pressione Enter
-# Ou:
-echo "ghp_your_token_here" | gh auth login --with-token
-```
-
-**Opção B: Salvar em Arquivo (Para Scripts)**
-```powershell
-$token = "ghp_xxxxxxxxxxxxxxxxxxxx"  # Cole seu token aqui
-$token | Out-File -FilePath "$HOME\.github_token" -Encoding UTF8
-Write-Host "✅ Token salvo em: $HOME\.github_token"
-
-# Autenticar usando o arquivo:
-gh auth login --with-token < $HOME\.github_token
-```
-
-#### Passo 3: Verificar Autenticação
+1. Gere um token em: https://github.com/settings/tokens
+2. Guarde o token em um gerenciador de segredos (ex.: GitHub Actions Secrets, Windows Credential Manager, etc.)
+3. Injete o token via variável de ambiente `GH_TOKEN` (não grave o token em arquivos no repositório).
 
 ```powershell
 gh auth status
@@ -203,7 +172,6 @@ github.com
 ### ⚠️ Segurança do Token
 
 - **NÃO compartilhe** o token com ninguém
-- Arquivo `.github_token` deve estar no `.gitignore`
 - Revogue tokens não utilizados em: https://github.com/settings/tokens
 - Use tokens com escopo mínimo necessário
 - Renove tokens periodicamente
@@ -217,9 +185,6 @@ github.com
 Você **NÃO precisa fazer nada especial**! O GitHub CLI está instalado globalmente.
 
 ```powershell
-# Navegue para o projeto:
-cd e:\novo-projeto
-
 # Use normalmente:
 gh release list
 gh pr create
@@ -242,19 +207,6 @@ gh release create v1.0.0 --title "v1.0.0 - Descrição" --notes "Notas da releas
 
 # Editar release existente:
 gh release edit v1.0.0 --title "Novo titulo"
-```
-
-### Com Autenticação Automática
-
-Se salvou o token em `$HOME\.github_token`:
-
-```powershell
-# No início do seu script PowerShell:
-Set-Alias gh "C:\Program Files\GitHub CLI\gh.exe"
-$env:GH_TOKEN = (Get-Content "$HOME\.github_token" -Raw).Trim()
-
-# Agora todos os comandos gh funcionam:
-gh release list --repo usuario/repo
 ```
 
 ---

@@ -132,7 +132,7 @@ Meta: **>90% de cobertura**
 
 - [ ] Testes de histórico de clipboard
 - [ ] Testes de contador
-- [ ] Testes de notificações toast
+- [ ] Testes de notificações do Windows (toasts)
 - [ ] Testes de menu do system tray
 - [ ] Testes de hotkeys (se possível)
 - [ ] Testes de single instance (mutex)

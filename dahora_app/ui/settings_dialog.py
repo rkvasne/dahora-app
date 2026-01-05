@@ -140,7 +140,7 @@ class SettingsDialog:
             # Threshold de ociosidade
             frame_idle = ttk.Frame(tab_history)
             frame_idle.pack(fill=tk.X, pady=5)
-            ttk.Label(frame_idle, text="Tempo ocioso para intervalo maior (s):", font=(default_font, 9), style="Card.TLabel").pack(side=tk.LEFT)
+            ttk.Label(frame_idle, text="Tempo sem mudanças na área de transferência (s):", font=(default_font, 9), style="Card.TLabel").pack(side=tk.LEFT)
             var_idle_threshold = tk.DoubleVar(value=self.current_settings.get("clipboard_idle_threshold", 30))
             ttk.Spinbox(frame_idle, from_=5, to=300, increment=5, textvariable=var_idle_threshold, width=10).pack(side=tk.RIGHT)
             
@@ -157,7 +157,7 @@ class SettingsDialog:
             frame_duration.pack(fill=tk.X, pady=5)
             ttk.Label(frame_duration, text="Duração da notificação (segundos):", font=(default_font, 9), style="Card.TLabel").pack(side=tk.LEFT)
             var_notification_duration = tk.IntVar(value=self.current_settings.get("notification_duration", 2))
-            ttk.Spinbox(frame_duration, from_=1, to=15, textvariable=var_notification_duration, width=10).pack(side=tk.RIGHT)
+            ttk.Spinbox(frame_duration, from_=1, to=10, textvariable=var_notification_duration, width=10).pack(side=tk.RIGHT)
             
             # === ABA 4: ATALHOS ===
             tab_hotkeys = ttk.Frame(notebook, padding=16, style="Card.TFrame")

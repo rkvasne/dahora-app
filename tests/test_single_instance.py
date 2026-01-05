@@ -1,10 +1,12 @@
 """
 Testes para SingleInstanceManager
 """
-import pytest
-import tempfile
-from pathlib import Path
-from dahora_app.single_instance import SingleInstanceManager, initialize_single_instance, cleanup_single_instance, is_first_instance
+from dahora_app.single_instance import (
+    SingleInstanceManager,
+    cleanup_single_instance,
+    initialize_single_instance,
+    is_first_instance,
+)
 
 
 class TestSingleInstanceManager:

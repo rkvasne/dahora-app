@@ -85,25 +85,24 @@ from dahora_app.constants import (
 # Imports para verificação de instância única
 # Movido para dahora_app/single_instance.py
 
-# Configuração de logging
+file_handler = None
 try:
     from logging.handlers import RotatingFileHandler
+
     file_handler = RotatingFileHandler(
         LOG_FILE,
+        mode="a",
         maxBytes=LOG_MAX_BYTES,
         backupCount=LOG_BACKUP_COUNT,
-        encoding='utf-8'
+        encoding="utf-8",
     )
-    file_handler.setFormatter(
-        logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+    file_handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
+    logging.basicConfig(level=logging.INFO, handlers=[file_handler, logging.StreamHandler(sys.stdout)])
+    logging.info(
+        f"Sistema de rotação de logs ativado ({LOG_MAX_BYTES/1024/1024}MB, {LOG_BACKUP_COUNT} backups)"
     )
-    logging.basicConfig(
-        level=logging.INFO,
-        handlers=[file_handler, logging.StreamHandler(sys.stdout)]
-    )
-    logging.info(f"Sistema de rotação de logs ativado ({LOG_MAX_BYTES/1024/1024}MB, {LOG_BACKUP_COUNT} backups)")
 except Exception as e:
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.INFO, handlers=[logging.StreamHandler(sys.stdout)])
     logging.warning(f"Falha ao configurar rotação de logs: {e}")
 
 # Variáveis globais
@@ -145,6 +144,22 @@ class DahoraApp:
         self.counter.load()
         self.clipboard_manager.load_history()
         self.settings_manager.load()
+
+        try:
+            self.clipboard_manager.set_max_history_items(int(self.settings_manager.max_history_items))
+            self.clipboard_manager.set_monitoring_config(
+                float(self.settings_manager.clipboard_monitor_interval),
+                float(self.settings_manager.clipboard_idle_threshold),
+            )
+        except Exception:
+            pass
+
+        try:
+            if file_handler is not None:
+                file_handler.maxBytes = int(self.settings_manager.log_max_bytes)
+                file_handler.backupCount = int(self.settings_manager.log_backup_count)
+        except Exception:
+            pass
         
         # Sincroniza prefixo e brackets
         self.datetime_formatter.set_prefix(self.settings_manager.get_prefix())
@@ -234,6 +249,10 @@ class DahoraApp:
         self.menu_builder.hotkey_copy_datetime = self.settings_manager.hotkey_copy_datetime
         self.menu_builder.hotkey_search_history = self.settings_manager.hotkey_search_history
         self.menu_builder.hotkey_refresh_menu = self.settings_manager.hotkey_refresh_menu
+        try:
+            self.menu_builder.tray_menu_cache_window_ms = int(self.settings_manager.tray_menu_cache_window_ms)
+        except Exception:
+            pass
         self.menu_builder.set_get_recent_items_callback(self.clipboard_manager.get_recent_items)
         self.menu_builder.set_copy_from_history_callback(self._copy_from_history)
         self.menu_builder.set_clear_history_callback(self._clear_history)
@@ -256,6 +275,22 @@ class DahoraApp:
         # Atualiza o settings_manager
         self.settings_manager.update_all(settings)
         current_settings = self.settings_manager.get_all()
+
+        try:
+            self.clipboard_manager.set_max_history_items(int(current_settings.get("max_history_items", 100)))
+            self.clipboard_manager.set_monitoring_config(
+                float(current_settings.get("clipboard_monitor_interval", 3.0)),
+                float(current_settings.get("clipboard_idle_threshold", 30.0)),
+            )
+        except Exception:
+            pass
+
+        try:
+            if file_handler is not None:
+                file_handler.maxBytes = int(current_settings.get("log_max_bytes", self.settings_manager.log_max_bytes))
+                file_handler.backupCount = int(current_settings.get("log_backup_count", self.settings_manager.log_backup_count))
+        except Exception:
+            pass
         
         # Sincroniza componentes que dependem das configurações
         self.datetime_formatter.set_prefix(settings.get("prefix", ""))
@@ -268,6 +303,10 @@ class DahoraApp:
         self.menu_builder.hotkey_copy_datetime = current_settings.get("hotkey_copy_datetime", "ctrl+shift+q")
         self.menu_builder.hotkey_search_history = current_settings.get("hotkey_search_history", "ctrl+shift+f")
         self.menu_builder.hotkey_refresh_menu = current_settings.get("hotkey_refresh_menu", "ctrl+shift+r")
+        try:
+            self.menu_builder.tray_menu_cache_window_ms = int(current_settings.get("tray_menu_cache_window_ms", 200))
+        except Exception:
+            pass
 
         # Aplica hotkeys imediatamente (sem precisar reiniciar)
         copy_hk = current_settings.get("hotkey_copy_datetime") or previous_settings.get("hotkey_copy_datetime")
@@ -651,70 +690,76 @@ class DahoraApp:
 
     def _prewarm_ui(self) -> None:
         """Constrói as janelas em idle (ocultas) para abertura instantânea depois."""
+        total_start = time.perf_counter()
+        logging.info("[UI] Prewarm início")
+
+        def _prewarm_about() -> None:
+            about_start = time.perf_counter()
+            logging.info("[UI] Prewarm About início")
+            try:
+                if getattr(self.modern_about_dialog, "window", None) is None:
+                    self.modern_about_dialog._create_window()  # noqa: SLF001
+                    try:
+                        self.modern_about_dialog.window.withdraw()
+                    except Exception:
+                        pass
+                about_ms = (time.perf_counter() - about_start) * 1000
+                logging.info(f"[UI] Prewarm About fim em {about_ms:.1f}ms")
+            except Exception as e:
+                about_ms = (time.perf_counter() - about_start) * 1000
+                logging.warning(f"Falha ao pré-aquecer Sobre: {e}")
+                logging.info(f"[UI] Prewarm About falhou em {about_ms:.1f}ms")
+            total_ms = (time.perf_counter() - total_start) * 1000
+            logging.info(f"[UI] Prewarm fim total em {total_ms:.1f}ms")
+
+        def _prewarm_search() -> None:
+            search_start = time.perf_counter()
+            logging.info("[UI] Prewarm Search início")
+            try:
+                if getattr(self.modern_search_dialog, "window", None) is None:
+                    self.modern_search_dialog._create_window()  # noqa: SLF001
+                    try:
+                        self.modern_search_dialog.window.withdraw()
+                    except Exception:
+                        pass
+                search_ms = (time.perf_counter() - search_start) * 1000
+                logging.info(f"[UI] Prewarm Search fim em {search_ms:.1f}ms")
+            except Exception as e:
+                search_ms = (time.perf_counter() - search_start) * 1000
+                logging.warning(f"Falha ao pré-aquecer Busca: {e}")
+                logging.info(f"[UI] Prewarm Search falhou em {search_ms:.1f}ms")
+            try:
+                if self._ui_root is not None:
+                    self._ui_root.after(0, _prewarm_about)
+                else:
+                    _prewarm_about()
+            except Exception:
+                _prewarm_about()
+
+        settings_start = time.perf_counter()
+        logging.info("[UI] Prewarm Settings início")
         try:
-            # Settings é a mais pesada (tabs + widgets)
             self.modern_settings_dialog.set_current_settings(self.settings_manager.get_all())
-            # força criação sem mostrar
             if getattr(self.modern_settings_dialog, "window", None) is None:
                 self.modern_settings_dialog._create_window()  # noqa: SLF001
                 try:
                     self.modern_settings_dialog.window.withdraw()
                 except Exception:
                     pass
+            settings_ms = (time.perf_counter() - settings_start) * 1000
+            logging.info(f"[UI] Prewarm Settings fim em {settings_ms:.1f}ms")
         except Exception as e:
+            settings_ms = (time.perf_counter() - settings_start) * 1000
             logging.warning(f"Falha ao pré-aquecer Configurações: {e}")
-            # Se criou parcialmente, destrói para evitar janela "quebrada" (abas faltando/scroll).
-            try:
-                w = getattr(self.modern_settings_dialog, "window", None)
-                if w is not None:
-                    try:
-                        w.destroy()
-                    except Exception:
-                        pass
-                self.modern_settings_dialog.window = None
-            except Exception:
-                pass
-
-        # Search/About são leves, mas também podem ser pré-criadas
-        try:
-            if getattr(self.modern_search_dialog, "window", None) is None:
-                self.modern_search_dialog._create_window()  # noqa: SLF001
-                try:
-                    self.modern_search_dialog.window.withdraw()
-                except Exception:
-                    pass
-        except Exception as e:
-            logging.warning(f"Falha ao pré-aquecer Busca: {e}")
-            try:
-                w = getattr(self.modern_search_dialog, "window", None)
-                if w is not None:
-                    try:
-                        w.destroy()
-                    except Exception:
-                        pass
-                self.modern_search_dialog.window = None
-            except Exception:
-                pass
+            logging.info(f"[UI] Prewarm Settings falhou em {settings_ms:.1f}ms")
 
         try:
-            if getattr(self.modern_about_dialog, "window", None) is None:
-                self.modern_about_dialog._create_window()  # noqa: SLF001
-                try:
-                    self.modern_about_dialog.window.withdraw()
-                except Exception:
-                    pass
-        except Exception as e:
-            logging.warning(f"Falha ao pré-aquecer Sobre: {e}")
-            try:
-                w = getattr(self.modern_about_dialog, "window", None)
-                if w is not None:
-                    try:
-                        w.destroy()
-                    except Exception:
-                        pass
-                self.modern_about_dialog.window = None
-            except Exception:
-                pass
+            if self._ui_root is not None:
+                self._ui_root.after(0, _prewarm_search)
+            else:
+                _prewarm_search()
+        except Exception:
+            _prewarm_search()
 
     def _run_on_ui_thread(self, fn):
         """Agenda uma ação no loop Tk (thread-safe)."""
@@ -902,7 +947,7 @@ class DahoraApp:
 
             # Pré-aquece UI em background (depois que o app já subiu)
             try:
-                self._ui_root.after(700, self._prewarm_ui)
+                self._ui_root.after(int(self.settings_manager.ui_prewarm_delay_ms), self._prewarm_ui)
             except Exception:
                 pass
             

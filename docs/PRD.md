@@ -1,18 +1,18 @@
-# 📌 PRD — Dahora App (v0.2.5)
+# 📌 PRD — Dahora App (v0.2.6)
 
 > Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
 **Documento:** Product Requirements Document (PRD)  
 **Produto:** Dahora App — utilitário Windows para timestamps e clipboard  
-**Versão do produto (referência):** v0.2.5  
+**Versão do produto (referência):** v0.2.6  
 **Status:** Final  
-**Data:** 03/01/2026
+**Data:** 05/01/2026
 
 ---
 
 ## 1) Resumo Executivo
 
-O Dahora App é um utilitário para Windows 10/11 que roda na bandeja do sistema e permite inserir (colar) data/hora formatada diretamente na posição do cursor com atalhos globais. O app preserva o conteúdo do clipboard, oferece histórico e busca, e é projetado com privacidade como princípio: totalmente offline, sem telemetria, dados locais.
+O Dahora App é um utilitário para Windows 10/11 que roda no system tray e permite inserir (colar) data/hora formatada diretamente na posição do cursor com hotkeys globais. O app preserva o conteúdo do clipboard, oferece histórico e busca, e é projetado com privacidade como princípio: totalmente offline, sem telemetria, dados locais.
 
 ---
 
@@ -22,7 +22,7 @@ O Dahora App é um utilitário para Windows 10/11 que roda na bandeja do sistema
 Usuários que precisam registrar timestamps (logs, tickets, planilhas, chats, notas) perdem tempo ao digitar manualmente e frequentemente interrompem o fluxo ao alternar janelas, copiar/colar e ajustar formatação. Em muitos fluxos, “copiar timestamp” não basta: o usuário precisa inserir no cursor imediatamente.
 
 ### Oportunidade
-Automatizar a inserção de timestamps com atalhos globais, mantendo o clipboard original e oferecendo histórico/busca local, reduz fricção e aumenta produtividade em tarefas recorrentes.
+Automatizar a inserção de timestamps com hotkeys globais, mantendo o clipboard original e oferecendo histórico/busca local, reduz fricção e aumenta produtividade em tarefas recorrentes.
 
 ---
 
@@ -58,22 +58,22 @@ Automatizar a inserção de timestamps com atalhos globais, mantendo o clipboard
 
 ## 5) Casos de Uso (Core)
 
-1. Inserir timestamp no cursor com um atalho global.
+1. Inserir timestamp no cursor com uma hotkey global.
 2. Preservar clipboard: inserir timestamp sem “perder” o que o usuário tinha copiado.
 3. Criar e gerenciar atalhos personalizados com prefixos.
 4. Manter histórico local do clipboard e buscar rapidamente.
-5. Operar via bandeja do Windows (menu e acesso às telas).
+5. Operar via system tray do Windows (menu e acesso às telas).
 
 ---
 
 ## 6) Requisitos Funcionais
 
-### RF-01 — Execução em bandeja do sistema
-- O app deve iniciar e permanecer disponível na bandeja do Windows.
-- O usuário deve acessar ações principais pelo menu da bandeja.
+### RF-01 — Execução em system tray
+- O app deve iniciar e permanecer disponível no system tray do Windows.
+- O usuário deve acessar ações principais pelo menu do system tray.
 
-### RF-02 — Atalhos globais (padrões)
-- O app deve oferecer atalhos globais para ações essenciais:
+### RF-02 — Hotkeys globais (padrões)
+- O app deve oferecer hotkeys globais para ações essenciais:
   - Inserção (colar) de timestamp.
   - Abrir busca de histórico.
   - Recarregar menu/atalhos.
@@ -171,4 +171,3 @@ Automatizar a inserção de timestamps com atalhos globais, mantendo o clipboard
 - Binário `.exe` e pacote `.zip` via GitHub Releases (incluindo “latest”).
 - Documentação centralizada em `docs/` (índice único).
 - Suíte de testes e instruções para execução local.
-

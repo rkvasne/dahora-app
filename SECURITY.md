@@ -1,7 +1,7 @@
 # 🔐 Política de Segurança — Dahora App
 
-**Versão:** v0.2.5  
-**Data:** 03/01/2026
+**Versão:** v0.2.6  
+**Data:** 05/01/2026
 
 ---
 
@@ -33,4 +33,3 @@ O Dahora App é um utilitário local/offline. Ainda assim, são considerados pro
 
 - A versão suportada é a mais recente publicada em Releases.
 - Consulte o histórico em `CHANGELOG.md`.
-

@@ -12,57 +12,78 @@
 >
 > **Não há planos atuais de cobrar pelo uso do aplicativo.**
 
-## Dahora App - Sistema de Bandeja do Windows
+## Dahora App - Windows system tray
 
 **Data da Análise:** Novembro 2025  
 **Versão do Aplicativo (na época da análise):** 0.0.2  
-**Versão atual do projeto (referência):** 0.2.5  
-**Tipo:** Utilitário Windows - System Tray
+**Versão atual do projeto (referência):** 0.2.6  
+**Tipo:** Utilitário Windows - system tray
 
 > Este documento é **histórico** e serve como estudo de caso. Alguns números e comparações podem não refletir o estado atual do produto.
+>
+> **Revisão de aderência ao repositório:** 05/01/2026 (v0.2.6)
 
 ---
 
 ## 📋 Sumário Executivo
 
-O **Dahora App** é um utilitário leve para Windows que reside na bandeja do sistema, permitindo copiar data e hora formatada para a área de transferência. O aplicativo possui funcionalidades adicionais como histórico de clipboard, tecla de atalho global, e sistema de notificações toast.
+O **Dahora App** é um utilitário leve para Windows que reside no system tray, permitindo copiar e/ou colar data e hora formatada instantaneamente. Na versão atual (v0.2.6), além do core de timestamp, o app inclui histórico de clipboard com busca, hotkeys configuráveis (incluindo atalhos personalizados) e persistência local com proteção de histórico via DPAPI (quando aplicável).
 
-### Valor Estimado de Desenvolvimento: **R$ 1.000 - R$ 12.000**
-### Valor Comercial de Revenda: **R$ 50 - R$ 300** (one-time) ou **R$ 5 - R$ 15/mês** (subscription)
+> **Premissas (2026):** estimativas abaixo assumem um(a) dev solo, Windows, Python, com testes + documentação + processo de release. Valores são faixas **indicativas** (não são “cotação de mercado”).
+
+### Valor Estimado de Desenvolvimento: **R$ 10.000 - R$ 33.000**
+### Valor Comercial de Revenda (hipotético): **R$ 49 - R$ 149** (one-time) ou **R$ 9 - R$ 19/mês** (subscription)
 
 ---
 
 ## 🔍 Análise de Funcionalidades
 
 ### Funcionalidades Core (Essenciais)
-- ✅ Sistema tray (bandeja do sistema)
-- ✅ Copiar data/hora formatada: `[DD.MM.AAAA-HH:MM]`
-- ✅ Tecla de atalho global: `Ctrl+Shift+Q`
+- ✅ System tray
+- ✅ Copiar/colar data/hora formatada: `[DD.MM.AAAA-HH:MM]`
+- ✅ Hotkey global: `Ctrl+Shift+Q`
+- ✅ Preservação inteligente do clipboard (restaura conteúdo anterior)
 - ✅ Prevenção de múltiplas instâncias
-- ✅ Notificações toast do Windows
+- ✅ Notificações do Windows (toasts)
 - ✅ Ícone personalizado identificável
+- ✅ UI de configurações (painel) e tela Sobre
 
 **Complexidade:** Média-Baixa  
-**Tempo de desenvolvimento:** 15-25 horas  
-**Valor estimado:** R$ 1.500 - R$ 3.500
+**Tempo de desenvolvimento:** 25-45 horas  
+**Valor estimado:** R$ 3.000 - R$ 10.000
 
 ### Funcionalidades Avançadas (Diferenciais)
 - ✅ Histórico de clipboard (últimos 100 itens)
 - ✅ Monitoramento automático de clipboard
+- ✅ Busca no histórico (hotkey padrão `Ctrl+Shift+F`)
 - ✅ Contador de acionamentos
 - ✅ Configuração de prefixo personalizado
+- ✅ Atalhos personalizados (sem limite fixo; CRUD)
 - ✅ Menu de contexto com histórico acessível
 - ✅ Persistência de dados entre sessões
+- ✅ Histórico com proteção via DPAPI (quando disponível) + fallback seguro
 - ✅ Logging para diagnóstico
 
 **Complexidade:** Média  
-**Tempo de desenvolvimento:** +10-15 horas  
-**Valor estimado:** R$ 2.000 - R$ 4.000
+**Tempo de desenvolvimento:** +60-105 horas  
+**Valor estimado:** R$ 7.000 - R$ 23.000
 
 ### Total de Funcionalidades
 **Complexidade Total:** Média  
-**Tempo Total Estimado:** 25-40 horas  
-**Valor Total de Desenvolvimento:** R$ 3.500 - R$ 7.500
+**Tempo Total Estimado:** 85-150 horas  
+**Valor Total de Desenvolvimento:** R$ 10.000 - R$ 33.000
+
+---
+
+## ✅ Estado atual (v0.2.6) vs. análise original (v0.0.2)
+
+Esta análise foi feita no começo do projeto. Hoje, o repositório inclui (além do core):
+- UI moderna de configurações (múltiplas abas), busca no histórico e editor de atalhos personalizados
+- Suíte de testes automatizados (266/266 passando, conforme README/CI)
+- Documentação e processo de release com Git LFS (artefatos `.exe`/`.zip`)
+- Privacidade explícita (offline/sem telemetria) e política de segurança para reporte
+
+Isso não invalida o estudo de mercado, mas significa que as estimativas de esforço/valor abaixo devem ser lidas como **históricas**.
 
 ---
 
@@ -70,15 +91,17 @@ O **Dahora App** é um utilitário leve para Windows que reside na bandeja do si
 
 ### 1. Desenvolvimento Customizado
 
+> Nota: as faixas abaixo são referências genéricas e variam muito por escopo, região, reputação e nível de suporte. Para manter o doc sustentável, evite conversões fixas USD→BRL.
+
 #### A) Freelancers (Plataformas Online)
 - **Fiverr (Global):**
-  - Nível básico: US$ 50 - US$ 150 (R$ 250 - R$ 750)
-  - Nível intermediário: US$ 150 - US$ 400 (R$ 750 - R$ 2.000)
-  - Nível premium: US$ 400 - US$ 800 (R$ 2.000 - R$ 4.000)
+  - Nível básico: US$ 50 - US$ 150
+  - Nível intermediário: US$ 150 - US$ 400
+  - Nível premium: US$ 400 - US$ 800
 
 - **Upwork (Global):**
-  - Por hora (US$ 15-50/h): R$ 750 - R$ 5.000 (15-40h)
-  - Projeto fixo: US$ 300 - US$ 1.200 (R$ 1.500 - R$ 6.000)
+  - Por hora: US$ 15 - US$ 50/h (15-40h)
+  - Projeto fixo: US$ 300 - US$ 1.200
 
 - **Freelancers Brasileiros (99Freelas/Workana):**
   - Nível júnior: R$ 500 - R$ 1.500
@@ -87,54 +110,56 @@ O **Dahora App** é um utilitário leve para Windows que reside na bandeja do si
 
 #### B) Desenvolvedores Autônomos
 - **Brasil:**
-  - Taxa horária: R$ 80 - R$ 200/hora
-  - Projeto completo: R$ 2.000 - R$ 8.000
-  - Com suporte 3 meses: R$ 3.000 - R$ 10.000
+  - Taxa horária (referência): R$ 120 - R$ 220/hora
+  - Projeto completo (escopo similar ao v0.2.6): R$ 10.000 - R$ 33.000
+  - Com suporte 3 meses: R$ 12.000 - R$ 45.000
 
 - **Internacional (Leste Europeu/Ásia):**
   - Taxa horária: US$ 20 - US$ 40/hora
-  - Projeto completo: US$ 500 - US$ 1.600 (R$ 2.500 - R$ 8.000)
+  - Projeto completo: US$ 800 - US$ 3.500
 
 - **Internacional (EUA/Europa):**
   - Taxa horária: US$ 50 - US$ 150/hora
-  - Projeto completo: US$ 1.250 - US$ 6.000 (R$ 6.250 - R$ 30.000)
+  - Projeto completo: US$ 2.500 - US$ 12.000
 
 #### C) Agências de Desenvolvimento
 - **Brasil (Pequena/Média):**
-  - Projeto básico: R$ 5.000 - R$ 12.000
-  - Com UI/UX: R$ 8.000 - R$ 18.000
-  - Com testes e documentação: R$ 10.000 - R$ 25.000
+  - Projeto básico: R$ 15.000 - R$ 30.000
+  - Com UI/UX: R$ 20.000 - R$ 45.000
+  - Com testes e documentação: R$ 25.000 - R$ 60.000
 
 - **Internacional:**
-  - Pequena agência: US$ 3.000 - US$ 8.000 (R$ 15.000 - R$ 40.000)
-  - Agência média/grande: US$ 8.000 - US$ 20.000+ (R$ 40.000+)
+  - Pequena agência: US$ 3.000 - US$ 8.000
+  - Agência média/grande: US$ 8.000 - US$ 20.000+
 
 ---
 
 ### 2. Software Pronto (Revenda)
 
+> Nota: os modelos e faixas abaixo são **hipotéticos** (estudo) e não significam que o Dahora App ofereça hoje planos pagos ou recursos adicionais além do v0.2.6.
+
 #### A) Modelo One-Time (Compra Única)
 - **Versão Básica (sem histórico):**
-  - Preço: R$ 30 - R$ 80
+  - Preço: R$ 49 - R$ 79
   - Comparáveis: Utilitários simples do Microsoft Store
 
 - **Versão Completa (com histórico e features):**
-  - Preço: R$ 80 - R$ 200
+  - Preço: R$ 79 - R$ 149
   - Comparáveis: Clipboard managers premium
 
-- **Versão Professional (com cloud sync, mais recursos):**
-  - Preço: R$ 150 - R$ 300
+- **Versão Professional (hipotética; com cloud sync, mais recursos):**
+  - Preço: R$ 149 - R$ 299
   - Comparáveis: Ditto, ClipClip, ClipboardFusion (basic)
 
 #### B) Modelo Subscription (Mensal/Anual)
 - **Plano Mensal:**
-  - Básico: R$ 5 - R$ 10/mês
-  - Premium: R$ 10 - R$ 15/mês
+  - Básico: R$ 9 - R$ 12/mês
+  - Premium: R$ 13 - R$ 19/mês
   - Comparáveis: Clipboard managers com sync
 
 - **Plano Anual (desconto):**
-  - Básico: R$ 50 - R$ 100/ano (economia ~17%)
-  - Premium: R$ 100 - R$ 150/ano (economia ~17%)
+  - Básico: R$ 90 - R$ 120/ano (economia ~17%)
+  - Premium: R$ 130 - R$ 190/ano (economia ~17%)
 
 #### C) Modelo Freemium
 - **Versão Gratuita:**
@@ -144,7 +169,7 @@ O **Dahora App** é um utilitário leve para Windows que reside na bandeja do si
 
 - **Versão Premium (Upgrade):**
   - Todas as funcionalidades
-  - Preço: R$ 49 - R$ 99 one-time ou R$ 7 - R$ 12/mês
+  - Preço: R$ 79 - R$ 149 one-time ou R$ 9 - R$ 19/mês
 
 ---
 
@@ -152,9 +177,11 @@ O **Dahora App** é um utilitário leve para Windows que reside na bandeja do si
 
 ### Aplicativos Similares e Seus Preços
 
+> Nota: preços de concorrentes abaixo são **referências históricas** (Nov/2025) e podem ter mudado.
+
 | Aplicativo | Tipo | Preço | Funcionalidades |
 |------------|------|-------|-----------------|
-| **Ditto** | Clipboard Manager | Gratuito/Open Source | Histórico ilimitado, busca, sync opcional |
+| **Ditto** | Clipboard Manager | Gratuito/Open Source | Histórico, busca, sync (opcional) |
 | **ClipClip** | Clipboard Manager | US$ 29.95 (one-time) | Histórico, busca, snippets |
 | **ClipboardFusion** | Clipboard Manager | US$ 9.99 (one-time) | Histórico, transformações |
 | **ClipX** | Clipboard Manager | Gratuito | Histórico simples |
@@ -166,7 +193,7 @@ O **Dahora App** é um utilitário leve para Windows que reside na bandeja do si
 - ✅ Adicional: Histórico de clipboard (valor agregado)
 - ⚠️ Desvantagem: Não é um clipboard manager completo
 
-**Preço Recomendado:** R$ 49 - R$ 99 (one-time) ou R$ 5 - R$ 10/mês
+**Preço Recomendado (hipotético):** R$ 79 - R$ 149 (one-time) ou R$ 9 - R$ 19/mês
 
 ---
 
@@ -176,40 +203,43 @@ O **Dahora App** é um utilitário leve para Windows que reside na bandeja do si
 
 | Funcionalidade | Horas | Taxa (R$/h) | Valor (R$) |
 |----------------|-------|-------------|------------|
-| Setup inicial e estrutura | 2-3h | 100-150 | R$ 200 - R$ 450 |
-| System tray integration | 3-4h | 100-150 | R$ 300 - R$ 600 |
-| Copiar data/hora formatada | 1-2h | 100-150 | R$ 100 - R$ 300 |
-| Tecla de atalho global | 2-3h | 100-150 | R$ 200 - R$ 450 |
-| Notificações toast | 2-3h | 100-150 | R$ 200 - R$ 450 |
-| Prevenção múltiplas instâncias | 1-2h | 100-150 | R$ 100 - R$ 300 |
-| Histórico de clipboard | 4-6h | 100-150 | R$ 400 - R$ 900 |
-| Monitoramento clipboard | 2-3h | 100-150 | R$ 200 - R$ 450 |
-| Configuração prefixo | 2-3h | 100-150 | R$ 200 - R$ 450 |
-| Persistência de dados | 2-3h | 100-150 | R$ 200 - R$ 450 |
-| Logging e diagnóstico | 1-2h | 100-150 | R$ 100 - R$ 300 |
-| Ícone personalizado | 1-2h | 100-150 | R$ 100 - R$ 300 |
-| Build e distribuição | 2-3h | 100-150 | R$ 200 - R$ 450 |
-| Testes e correções | 3-5h | 100-150 | R$ 300 - R$ 750 |
-| **TOTAL** | **28-44h** | **100-150** | **R$ 2.800 - R$ 6.600** |
+| Configuração inicial e estrutura | 4-6h | 120-220 | R$ 480 - R$ 1.320 |
+| Integração com system tray | 4-8h | 120-220 | R$ 480 - R$ 1.760 |
+| Copiar/colar timestamp + preservação do clipboard | 3-6h | 120-220 | R$ 360 - R$ 1.320 |
+| Hotkeys globais + validação | 8-14h | 120-220 | R$ 960 - R$ 3.080 |
+| Notificações do Windows (toasts) + fallback | 3-6h | 120-220 | R$ 360 - R$ 1.320 |
+| Prevenção de múltiplas instâncias | 2-4h | 120-220 | R$ 240 - R$ 880 |
+| Histórico de clipboard + DPAPI + fallback | 8-14h | 120-220 | R$ 960 - R$ 3.080 |
+| Monitoramento de clipboard | 4-8h | 120-220 | R$ 480 - R$ 1.760 |
+| Busca no histórico (UI + lógica) | 6-10h | 120-220 | R$ 720 - R$ 2.200 |
+| UI de configurações (painel) | 10-18h | 120-220 | R$ 1.200 - R$ 3.960 |
+| Atalhos personalizados (CRUD + integração hotkeys) | 10-18h | 120-220 | R$ 1.200 - R$ 3.960 |
+| Persistência de settings + atomic writes | 4-8h | 120-220 | R$ 480 - R$ 1.760 |
+| Logging e diagnóstico | 2-5h | 120-220 | R$ 240 - R$ 1.100 |
+| Ícone e assets | 1-3h | 120-220 | R$ 120 - R$ 660 |
+| Build/release (PyInstaller + ZIP + LFS/processo) | 6-12h | 120-220 | R$ 720 - R$ 2.640 |
+| Testes automatizados + correções | 12-24h | 120-220 | R$ 1.440 - R$ 5.280 |
+| Documentação (uso + arquitetura + release) | 4-8h | 120-220 | R$ 480 - R$ 1.760 |
+| **TOTAL** | **85-150h** | **120-220** | **R$ 10.000 - R$ 33.000** |
 
 ### Custos Adicionais (Opcionais)
 
 | Item | Custo Estimado (R$) |
 |------|---------------------|
-| Design profissional de ícone | R$ 200 - R$ 500 |
-| UI/UX refinada (se interface gráfica) | R$ 1.000 - R$ 3.000 |
-| Documentação completa | R$ 500 - R$ 1.500 |
-| Certificado de assinatura digital (Windows) | R$ 200 - R$ 500/ano |
-| Hosting/Website para download | R$ 50 - R$ 200/ano |
-| Marketing básico | R$ 500 - R$ 2.000 |
-| Suporte técnico (3 meses) | R$ 1.000 - R$ 3.000 |
+| Design profissional de ícone (se desejado) | R$ 300 - R$ 900 |
+| Certificado de assinatura digital (Windows) | R$ 300 - R$ 1.500/ano |
+| Instalador profissional (NSIS/Inno Setup) | R$ 1.000 - R$ 4.000 |
+| Sistema de atualização automática | R$ 2.000 - R$ 10.000 |
+| Hosting/Website para download | R$ 0 - R$ 300/ano |
+| Marketing básico | R$ 500 - R$ 5.000 |
+| Suporte técnico (3 meses) | R$ 2.000 - R$ 8.000 |
 
 ---
 
 ## 🎯 Estratégias de Monetização
 
 ### 1. Modelo One-Time Payment
-**Preço Recomendado:** R$ 49 - R$ 99
+**Preço Recomendado (hipotético):** R$ 79 - R$ 149
 
 **Prós:**
 - Receita imediata
@@ -221,14 +251,14 @@ O **Dahora App** é um utilitário leve para Windows que reside na bandeja do si
 - Precisa de volume de vendas para sustentar
 
 **Projeção de Vendas (Anual):**
-- 50 vendas: R$ 2.450 - R$ 4.950
-- 100 vendas: R$ 4.900 - R$ 9.900
-- 500 vendas: R$ 24.500 - R$ 49.500
+- 50 vendas: R$ 3.950 - R$ 7.450
+- 100 vendas: R$ 7.900 - R$ 14.900
+- 500 vendas: R$ 39.500 - R$ 74.500
 
 ---
 
 ### 2. Modelo Subscription
-**Preço Recomendado:** R$ 5 - R$ 10/mês ou R$ 50 - R$ 100/ano
+**Preço Recomendado (hipotético):** R$ 9 - R$ 19/mês ou R$ 90 - R$ 190/ano
 
 **Prós:**
 - Receita recorrente previsível
@@ -240,14 +270,14 @@ O **Dahora App** é um utilitário leve para Windows que reside na bandeja do si
 - Taxa de churn (cancelamentos)
 
 **Projeção de Receita Mensal:**
-- 50 assinantes: R$ 250 - R$ 500/mês
-- 100 assinantes: R$ 500 - R$ 1.000/mês
-- 500 assinantes: R$ 2.500 - R$ 5.000/mês
+- 50 assinantes: R$ 450 - R$ 950/mês
+- 100 assinantes: R$ 900 - R$ 1.900/mês
+- 500 assinantes: R$ 4.500 - R$ 9.500/mês
 
 ---
 
 ### 3. Modelo Freemium
-**Preço Premium:** R$ 49 - R$ 99 (one-time) ou R$ 7 - R$ 12/mês
+**Preço Premium (hipotético):** R$ 79 - R$ 149 (one-time) ou R$ 9 - R$ 19/mês
 
 **Prós:**
 - Acesso amplo (versão gratuita)
@@ -259,13 +289,13 @@ O **Dahora App** é um utilitário leve para Windows que reside na bandeja do si
 - Precisa de volume significativo de usuários
 
 **Projeção com 1.000 usuários (2% conversão):**
-- 20 conversões × R$ 49 = R$ 980 (one-time)
-- 20 conversões × R$ 7/mês = R$ 140/mês
+- 20 conversões × (R$ 79 - R$ 149) = R$ 1.580 - R$ 2.980 (one-time)
+- 20 conversões × (R$ 9 - R$ 19/mês) = R$ 180 - R$ 380/mês
 
 ---
 
 ### 4. Modelo Enterprise/B2B
-**Preço Recomendado:** R$ 500 - R$ 2.000 (licença empresarial)
+**Preço Recomendado (hipotético):** R$ 1.000 - R$ 5.000 (licença empresarial)
 
 **Funcionalidades Adicionais:**
 - Licenças múltiplas
@@ -285,19 +315,19 @@ O **Dahora App** é um utilitário leve para Windows que reside na bandeja do si
 ### Fase 1: Lançamento (Primeiros 6 meses)
 - **Modelo:** Freemium
 - **Versão Gratuita:** Funcionalidades básicas
-- **Versão Premium:** R$ 49 (one-time) ou R$ 7/mês
+- **Versão Premium:** R$ 79 - R$ 149 (one-time) ou R$ 9 - R$ 19/mês
 - **Objetivo:** Construir base de usuários
 
 ### Fase 2: Crescimento (6-12 meses)
 - **Modelo:** Freemium + One-Time
-- **Versão Premium:** R$ 79 (one-time) ou R$ 10/mês
+- **Versão Premium:** R$ 79 - R$ 149 (one-time) ou R$ 9 - R$ 19/mês
 - **Objetivo:** Monetizar base estabelecida
 
 ### Fase 3: Consolidação (12+ meses)
 - **Modelo:** Subscription com múltiplos planos
-- **Básico:** R$ 5/mês
-- **Premium:** R$ 10/mês (todos os recursos)
-- **Enterprise:** R$ 500 - R$ 2.000 (customizado)
+- **Básico:** R$ 9/mês
+- **Premium:** R$ 19/mês (todos os recursos)
+- **Enterprise:** R$ 1.000 - R$ 5.000 (customizado)
 - **Objetivo:** Receita recorrente estável
 
 ---
@@ -312,7 +342,7 @@ O **Dahora App** é um utilitário leve para Windows que reside na bandeja do si
 
 2. **Simplicidade:**
    - Leve e rápido
-   - Não consome recursos
+  - Baixo consumo de recursos
    - Fácil de usar
 
 3. **Funcionalidades Úteis:**
@@ -322,7 +352,7 @@ O **Dahora App** é um utilitário leve para Windows que reside na bandeja do si
 
 4. **Qualidade Técnica:**
    - Código bem estruturado
-   - Sem bugs conhecidos
+  - Sem bugs críticos conhecidos (até a data)
    - Prevenção de múltiplas instâncias
 
 ### O que pode aumentar ainda mais o valor:
@@ -330,7 +360,7 @@ O **Dahora App** é um utilitário leve para Windows que reside na bandeja do si
 1. **Recursos Cloud:**
    - Sync entre dispositivos
    - Backup automático
-   - Histórico ilimitado
+  - Histórico ilimitado (hipotético)
 
 2. **Customização Avançada:**
    - Múltiplos formatos de data/hora
@@ -353,22 +383,22 @@ O **Dahora App** é um utilitário leve para Windows que reside na bandeja do si
 
 ### Persona 1: Profissional de Escritório
 - **Necessidade:** Copiar data/hora em relatórios/planilhas
-- **Disposição a pagar:** R$ 30 - R$ 80
+- **Disposição a pagar (hipotética):** R$ 49 - R$ 79
 - **Modelo preferido:** One-time payment
 
 ### Persona 2: Desenvolvedor/Técnico
 - **Necessidade:** Timestamps em logs/código
-- **Disposição a pagar:** R$ 50 - R$ 150
+- **Disposição a pagar (hipotética):** R$ 79 - R$ 149
 - **Modelo preferido:** One-time ou subscription baixa
 
 ### Persona 3: Estudante/Usuário Casual
 - **Necessidade:** Organização e produtividade
-- **Disposição a pagar:** R$ 20 - R$ 50
+- **Disposição a pagar (hipotética):** R$ 0 - R$ 49
 - **Modelo preferido:** Freemium (grátis ou muito barato)
 
 ### Persona 4: Empresa/Equipe
 - **Necessidade:** Padronização e eficiência
-- **Disposição a pagar:** R$ 500 - R$ 2.000
+- **Disposição a pagar (hipotética):** R$ 1.000 - R$ 5.000
 - **Modelo preferido:** Licença empresarial
 
 ---
@@ -376,31 +406,31 @@ O **Dahora App** é um utilitário leve para Windows que reside na bandeja do si
 ## 📝 Checklist de Preparação para Venda
 
 ### Técnico
-- [ ] Build do executável otimizado
+- [x] Build do executável e empacotamento ZIP (processo documentado)
 - [ ] Certificado digital para assinatura
 - [ ] Instalador profissional (NSIS/Inno Setup)
 - [ ] Sistema de atualização automática
-- [ ] Licenciamento/ativacao
-- [ ] Anti-pirataria básica
+- [ ] Licenciamento/ativação (não aplicável ao modelo open source atual)
+- [ ] Anti-pirataria básica (não aplicável ao modelo open source atual)
 
 ### Marketing
-- [ ] Website/landing page
+- [x] Site/landing page
 - [ ] Screenshots e vídeo demo
-- [ ] Documentação de uso
+- [x] Documentação de uso
 - [ ] FAQ
-- [ ] Changelog
-- [ ] Política de privacidade
+- [x] Changelog
+- [x] Política de privacidade
 
 ### Distribuição
 - [ ] Microsoft Store
 - [ ] Website próprio
 - [ ] Plataformas alternativas (FileHorse, Softonic)
-- [ ] GitHub/GitLab (versão gratuita)
+- [x] GitHub/GitLab (versão gratuita)
 
 ### Suporte
 - [ ] Email de suporte
-- [ ] Documentação online
-- [ ] Canal de feedback
+- [x] Documentação online
+- [x] Canal de feedback (Issues)
 - [ ] Sistema de tickets
 
 ---
@@ -411,38 +441,38 @@ O **Dahora App** é um utilitário leve para Windows que reside na bandeja do si
 
 **Modelo Freemium:**
 - **Gratuito:** Funcionalidades básicas (copia data/hora, tecla de atalho)
-- **Premium:** R$ 49 (one-time) ou R$ 7/mês
+- **Premium:** R$ 79 - R$ 149 (one-time) ou R$ 9 - R$ 19/mês
   - Histórico de clipboard
   - Prefixo personalizado
   - Contador de uso
-  - Sem anúncios/limitações
+  - Sem anúncios; sem limitações artificiais além de limites técnicos (ex.: capacidade do histórico)
 
 ### Projeção Realista (Ano 1):
 
 **Cenário Conservador:**
 - 100 usuários gratuitos
-- 5 conversões (5%): R$ 245 (one-time) ou R$ 35/mês
-- **Receita Total:** R$ 245 - R$ 420
+- 5 conversões (5%): R$ 395 - R$ 745 (one-time) ou R$ 45 - R$ 95/mês
+- **Receita Total:** R$ 395 - R$ 745 (one-time) ou R$ 540 - R$ 1.140/ano (subscription)
 
 **Cenário Otimista:**
 - 1.000 usuários gratuitos
-- 50 conversões (5%): R$ 2.450 (one-time) ou R$ 350/mês
-- **Receita Total:** R$ 2.450 - R$ 4.200
+- 50 conversões (5%): R$ 3.950 - R$ 7.450 (one-time) ou R$ 450 - R$ 950/mês
+- **Receita Total:** R$ 3.950 - R$ 7.450 (one-time) ou R$ 5.400 - R$ 11.400/ano (subscription)
 
 **Cenário Realista:**
 - 500 usuários gratuitos
-- 20 conversões (4%): R$ 980 (one-time) ou R$ 140/mês
-- **Receita Total:** R$ 980 - R$ 1.680
+- 20 conversões (4%): R$ 1.580 - R$ 2.980 (one-time) ou R$ 180 - R$ 380/mês
+- **Receita Total:** R$ 1.580 - R$ 2.980 (one-time) ou R$ 2.160 - R$ 4.560/ano (subscription)
 
 ---
 
 ## 📌 Conclusão
 
-O **Dahora App** tem um **valor de desenvolvimento estimado entre R$ 3.500 - R$ 7.500**, considerando todas as funcionalidades implementadas.
+O **Dahora App** tem um **valor de desenvolvimento estimado entre R$ 10.000 - R$ 33.000** considerando o escopo atual do v0.2.6 (UI, testes, docs e release). Como este documento é um estudo, trate a faixa como referência, não como orçamento.
 
 Para **revenda como produto**, recomenda-se:
-- **Versão básica:** R$ 30 - R$ 50 (one-time)
-- **Versão completa:** R$ 49 - R$ 99 (one-time) ou R$ 7 - R$ 10/mês
+- **Versão básica:** R$ 49 - R$ 79 (one-time)
+- **Versão completa:** R$ 79 - R$ 149 (one-time) ou R$ 9 - R$ 19/mês
 - **Modelo freemium:** Melhor estratégia para ganho de tração
 
 O aplicativo possui **diferencial claro** (foco em data/hora) e **qualidade técnica sólida**, posicionando-o como um produto viável no mercado de utilitários Windows.
@@ -450,6 +480,6 @@ O aplicativo possui **diferencial claro** (foco em data/hora) e **qualidade téc
 ---
 
 **Documento gerado em:** Novembro 2025  
-**Versão:** 1.0  
-**Última atualização:** 02/11/2025
+**Versão:** 1.2  
+**Última atualização:** 05/01/2026 (revisão de consistência com o repositório v0.2.6)
 

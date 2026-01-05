@@ -162,6 +162,34 @@ class TestSettingsSchema:
         
         with pytest.raises(ValidationError):
             SettingsSchema(clipboard_monitor_interval=100)  # > 60
+
+    def test_log_max_bytes_bounds(self):
+        with pytest.raises(ValidationError):
+            SettingsSchema(log_max_bytes=1000)  # < 128KB
+
+        with pytest.raises(ValidationError):
+            SettingsSchema(log_max_bytes=25 * 1024 * 1024)  # > 20MB
+
+    def test_log_backup_count_bounds(self):
+        with pytest.raises(ValidationError):
+            SettingsSchema(log_backup_count=-1)
+
+        with pytest.raises(ValidationError):
+            SettingsSchema(log_backup_count=11)
+
+    def test_ui_prewarm_delay_ms_bounds(self):
+        with pytest.raises(ValidationError):
+            SettingsSchema(ui_prewarm_delay_ms=-1)
+
+        with pytest.raises(ValidationError):
+            SettingsSchema(ui_prewarm_delay_ms=10001)
+
+    def test_tray_menu_cache_window_ms_bounds(self):
+        with pytest.raises(ValidationError):
+            SettingsSchema(tray_menu_cache_window_ms=-1)
+
+        with pytest.raises(ValidationError):
+            SettingsSchema(tray_menu_cache_window_ms=2001)
     
     def test_extra_fields_rejected(self):
         with pytest.raises(ValidationError):

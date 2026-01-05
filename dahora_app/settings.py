@@ -45,6 +45,11 @@ class SettingsManager:
         self.datetime_format = "%d.%m.%Y-%H:%M"
         self.notification_duration = 2
         self.notification_enabled = True
+
+        self.log_max_bytes = 1 * 1024 * 1024
+        self.log_backup_count = 1
+        self.ui_prewarm_delay_ms = 700
+        self.tray_menu_cache_window_ms = 200
         
         # Caracteres de delimitação configuráveis
         self.bracket_open = "["
@@ -84,6 +89,10 @@ class SettingsManager:
                 bracket_close=settings_dict.get("bracket_close", "]"),
                 notification_duration=settings_dict.get("notification_duration", 2),
                 notification_enabled=settings_dict.get("notification_enabled", True),
+                log_max_bytes=settings_dict.get("log_max_bytes", 1 * 1024 * 1024),
+                log_backup_count=settings_dict.get("log_backup_count", 1),
+                ui_prewarm_delay_ms=settings_dict.get("ui_prewarm_delay_ms", 700),
+                tray_menu_cache_window_ms=settings_dict.get("tray_menu_cache_window_ms", 200),
                 custom_shortcuts=settings_dict.get("custom_shortcuts", []),
                 default_shortcut_id=settings_dict.get("default_shortcut_id", None),
             )
@@ -100,6 +109,10 @@ class SettingsManager:
                 "datetime_format": schema.datetime_format,
                 "notification_duration": schema.notification_duration,
                 "notification_enabled": schema.notification_enabled,
+                "log_max_bytes": schema.log_max_bytes,
+                "log_backup_count": schema.log_backup_count,
+                "ui_prewarm_delay_ms": schema.ui_prewarm_delay_ms,
+                "tray_menu_cache_window_ms": schema.tray_menu_cache_window_ms,
                 "bracket_open": schema.bracket_open,
                 "bracket_close": schema.bracket_close,
                 "custom_shortcuts": [s.model_dump() for s in schema.custom_shortcuts],
@@ -169,13 +182,50 @@ class SettingsManager:
             # Valida notificações
             notification_duration = int(settings_dict.get("notification_duration", 2))
             if notification_duration < 1: notification_duration = 1
-            if notification_duration > 15: notification_duration = 15
+            if notification_duration > 10: notification_duration = 10
             
             notification_enabled = bool(settings_dict.get("notification_enabled", True))
+
+            log_max_bytes = _parse_int(settings_dict.get("log_max_bytes", 1 * 1024 * 1024)) or (1 * 1024 * 1024)
+            if log_max_bytes < (128 * 1024):
+                log_max_bytes = 128 * 1024
+            if log_max_bytes > (20 * 1024 * 1024):
+                log_max_bytes = 20 * 1024 * 1024
+
+            log_backup_count = _parse_int(settings_dict.get("log_backup_count", 1))
+            if log_backup_count is None:
+                log_backup_count = 1
+            if log_backup_count < 0:
+                log_backup_count = 0
+            if log_backup_count > 10:
+                log_backup_count = 10
+
+            ui_prewarm_delay_ms = _parse_int(settings_dict.get("ui_prewarm_delay_ms", 700))
+            if ui_prewarm_delay_ms is None:
+                ui_prewarm_delay_ms = 700
+            if ui_prewarm_delay_ms < 0:
+                ui_prewarm_delay_ms = 0
+            if ui_prewarm_delay_ms > 10000:
+                ui_prewarm_delay_ms = 10000
+
+            tray_menu_cache_window_ms = _parse_int(settings_dict.get("tray_menu_cache_window_ms", 200))
+            if tray_menu_cache_window_ms is None:
+                tray_menu_cache_window_ms = 200
+            if tray_menu_cache_window_ms < 0:
+                tray_menu_cache_window_ms = 0
+            if tray_menu_cache_window_ms > 2000:
+                tray_menu_cache_window_ms = 2000
             
             # Valida brackets configuráveis
-            bracket_open = str(settings_dict.get("bracket_open", "["))[:5]  # Max 5 chars
-            bracket_close = str(settings_dict.get("bracket_close", "]"))[:5]  # Max 5 chars
+            bracket_open_raw = str(settings_dict.get("bracket_open", "[")).strip()
+            bracket_close_raw = str(settings_dict.get("bracket_close", "]")).strip()
+            bracket_open = "[" if len(bracket_open_raw) != 1 or bracket_open_raw in "\n\r\t" else bracket_open_raw
+            bracket_close = "]" if len(bracket_close_raw) != 1 or bracket_close_raw in "\n\r\t" else bracket_close_raw
+            if bracket_open == bracket_close:
+                if bracket_open != "]":
+                    bracket_close = "]"
+                else:
+                    bracket_close = "["
             
             # Valida custom_shortcuts (NOVO)
             custom_shortcuts = self._validate_custom_shortcuts(
@@ -216,6 +266,10 @@ class SettingsManager:
                 "datetime_format": datetime_format,
                 "notification_duration": notification_duration,
                 "notification_enabled": notification_enabled,
+                "log_max_bytes": log_max_bytes,
+                "log_backup_count": log_backup_count,
+                "ui_prewarm_delay_ms": ui_prewarm_delay_ms,
+                "tray_menu_cache_window_ms": tray_menu_cache_window_ms,
                 "bracket_open": bracket_open,
                 "bracket_close": bracket_close,
                 "custom_shortcuts": custom_shortcuts,
@@ -238,6 +292,10 @@ class SettingsManager:
             "datetime_format": "%d.%m.%Y-%H:%M",
             "notification_duration": 2,
             "notification_enabled": True,
+            "log_max_bytes": 1 * 1024 * 1024,
+            "log_backup_count": 1,
+            "ui_prewarm_delay_ms": 700,
+            "tray_menu_cache_window_ms": 200,
             "bracket_open": "[",
             "bracket_close": "]",
             "custom_shortcuts": [],
@@ -262,6 +320,10 @@ class SettingsManager:
                 self.datetime_format = validated["datetime_format"]
                 self.notification_duration = validated["notification_duration"]
                 self.notification_enabled = validated["notification_enabled"]
+                self.log_max_bytes = validated.get("log_max_bytes", 1 * 1024 * 1024)
+                self.log_backup_count = validated.get("log_backup_count", 1)
+                self.ui_prewarm_delay_ms = validated.get("ui_prewarm_delay_ms", 700)
+                self.tray_menu_cache_window_ms = validated.get("tray_menu_cache_window_ms", 200)
                 self.bracket_open = validated.get("bracket_open", "[")
                 self.bracket_close = validated.get("bracket_close", "]")
                 self.custom_shortcuts = validated.get("custom_shortcuts", [])
@@ -304,6 +366,10 @@ class SettingsManager:
                     "bracket_close": self.bracket_close,
                     "notification_duration": self.notification_duration,
                     "notification_enabled": self.notification_enabled,
+                    "log_max_bytes": self.log_max_bytes,
+                    "log_backup_count": self.log_backup_count,
+                    "ui_prewarm_delay_ms": self.ui_prewarm_delay_ms,
+                    "tray_menu_cache_window_ms": self.tray_menu_cache_window_ms,
                     "custom_shortcuts": self.custom_shortcuts,
                     "default_shortcut_id": self.default_shortcut_id,
                 })
@@ -334,6 +400,10 @@ class SettingsManager:
             "bracket_close": self.bracket_close,
             "notification_duration": self.notification_duration,
             "notification_enabled": self.notification_enabled,
+            "log_max_bytes": self.log_max_bytes,
+            "log_backup_count": self.log_backup_count,
+            "ui_prewarm_delay_ms": self.ui_prewarm_delay_ms,
+            "tray_menu_cache_window_ms": self.tray_menu_cache_window_ms,
             "custom_shortcuts": self.custom_shortcuts,
             "default_shortcut_id": self.default_shortcut_id,
         }
@@ -349,21 +419,116 @@ class SettingsManager:
         if "hotkey_refresh_menu" in settings:
             self.hotkey_refresh_menu = str(settings["hotkey_refresh_menu"])
         if "max_history_items" in settings:
-            self.max_history_items = int(settings["max_history_items"])
+            try:
+                max_items = int(settings["max_history_items"])
+                if max_items < 10:
+                    max_items = 10
+                if max_items > 1000:
+                    max_items = 1000
+                self.max_history_items = max_items
+            except Exception:
+                pass
         if "clipboard_monitor_interval" in settings:
-            self.clipboard_monitor_interval = float(settings["clipboard_monitor_interval"])
+            try:
+                monitor_interval = float(settings["clipboard_monitor_interval"])
+                if monitor_interval < 0.5:
+                    monitor_interval = 0.5
+                if monitor_interval > 60.0:
+                    monitor_interval = 60.0
+                self.clipboard_monitor_interval = monitor_interval
+            except Exception:
+                pass
         if "clipboard_idle_threshold" in settings:
-            self.clipboard_idle_threshold = float(settings["clipboard_idle_threshold"])
+            try:
+                idle_threshold = float(settings["clipboard_idle_threshold"])
+                if idle_threshold < 5.0:
+                    idle_threshold = 5.0
+                if idle_threshold > 300.0:
+                    idle_threshold = 300.0
+                self.clipboard_idle_threshold = int(idle_threshold)
+            except Exception:
+                pass
         if "datetime_format" in settings:
             self.datetime_format = str(settings["datetime_format"])
+        bracket_open_candidate = None
+        bracket_close_candidate = None
         if "bracket_open" in settings:
-            self.bracket_open = str(settings["bracket_open"])[:5]
+            bracket_open_candidate = str(settings["bracket_open"])
         if "bracket_close" in settings:
-            self.bracket_close = str(settings["bracket_close"])[:5]
+            bracket_close_candidate = str(settings["bracket_close"])
+        if bracket_open_candidate is not None or bracket_close_candidate is not None:
+            new_open = self.bracket_open
+            new_close = self.bracket_close
+
+            if bracket_open_candidate is not None:
+                bracket_open_value = bracket_open_candidate.strip()
+                if len(bracket_open_value) == 1 and bracket_open_value not in "\n\r\t":
+                    new_open = bracket_open_value
+            if bracket_close_candidate is not None:
+                bracket_close_value = bracket_close_candidate.strip()
+                if len(bracket_close_value) == 1 and bracket_close_value not in "\n\r\t":
+                    new_close = bracket_close_value
+
+            if new_open == new_close:
+                if new_open != "]":
+                    new_close = "]"
+                else:
+                    new_close = "["
+
+            self.bracket_open = new_open
+            self.bracket_close = new_close
         if "notification_duration" in settings:
-            self.notification_duration = int(settings["notification_duration"])
+            try:
+                duration_seconds = int(settings["notification_duration"])
+                if duration_seconds < 1:
+                    duration_seconds = 1
+                if duration_seconds > 10:
+                    duration_seconds = 10
+                self.notification_duration = duration_seconds
+            except Exception:
+                pass
         if "notification_enabled" in settings:
             self.notification_enabled = bool(settings["notification_enabled"])
+        if "log_max_bytes" in settings:
+            try:
+                log_max_bytes = int(settings["log_max_bytes"])
+                if log_max_bytes < (128 * 1024):
+                    log_max_bytes = 128 * 1024
+                if log_max_bytes > (20 * 1024 * 1024):
+                    log_max_bytes = 20 * 1024 * 1024
+                self.log_max_bytes = log_max_bytes
+            except Exception:
+                pass
+        if "log_backup_count" in settings:
+            try:
+                log_backup_count = int(settings["log_backup_count"])
+                if log_backup_count < 0:
+                    log_backup_count = 0
+                if log_backup_count > 10:
+                    log_backup_count = 10
+                self.log_backup_count = log_backup_count
+            except Exception:
+                pass
+        if "ui_prewarm_delay_ms" in settings:
+            try:
+                ui_prewarm_delay_ms = int(settings["ui_prewarm_delay_ms"])
+                if ui_prewarm_delay_ms < 0:
+                    ui_prewarm_delay_ms = 0
+                if ui_prewarm_delay_ms > 10000:
+                    ui_prewarm_delay_ms = 10000
+                self.ui_prewarm_delay_ms = ui_prewarm_delay_ms
+            except Exception:
+                pass
+        if "tray_menu_cache_window_ms" in settings:
+            try:
+                tray_menu_cache_window_ms = int(settings["tray_menu_cache_window_ms"])
+                if tray_menu_cache_window_ms < 0:
+                    tray_menu_cache_window_ms = 0
+                if tray_menu_cache_window_ms > 2000:
+                    tray_menu_cache_window_ms = 2000
+                self.tray_menu_cache_window_ms = tray_menu_cache_window_ms
+            except Exception:
+                pass
         if "custom_shortcuts" in settings:
             self.custom_shortcuts = self._validate_custom_shortcuts(settings["custom_shortcuts"])
         if "default_shortcut_id" in settings:

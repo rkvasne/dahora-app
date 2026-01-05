@@ -60,7 +60,7 @@ except:
 
 ---
 
-## 2. Console UTF-8 Setup
+## 2. Configuração de console UTF-8
 
 ### Localização
 **main.py, linhas 38-46**
@@ -85,8 +85,8 @@ except Exception:
 ```
 
 ### Por Que É um Hack
-1. **Dual Setup:** Tenta ctypes AND reconfigure (redundante)
-2. **Silent Failures:** Catches Exception, silenciosamente continua se falhar
+1. **Configuração dupla:** Tenta ctypes AND reconfigure (redundante)
+2. **Falhas silenciosas:** Catches Exception, silenciosamente continua se falhar
 3. **Plataforma Específica:** Só funciona em Windows
 4. **Não Garante Sucesso:** Pode falhar em alguns ambientes (terminals específicos, etc)
 
@@ -548,29 +548,122 @@ self.copy_datetime_callback: Optional[CopyDatetimeCallback] = None
 
 ---
 
-## Resumo de Prioridades
+## 11. Prewarm de UI (anti-freeze) + Logs de Performance
 
-| # | Hack | Severidade | Esforço | Prioridade |
-|---|------|-----------|--------|-----------|
-| 3 | Single Instance Mutex | 🔴 Alta | Médio | 🔴 CRÍTICO |
-| 1 | Dark Mode API | 🟡 Média | Alto | 🟢 Baixa |
-| 4 | Thread Sync | 🟡 Média | Médio | 🟡 Média |
-| 5 | UI Root Singleton | 🟡 Média | Médio | 🟡 Média |
-| 6 | Callbacks Wrappers | 🟠 Baixa | Alto | 🟡 Média |
-| 7 | Validação Dupla | 🟠 Baixa | Médio | 🟢 Baixa |
-| 2 | Console UTF-8 | 🟢 Baixa | Baixo | 🟢 Baixa |
-| 8 | Global Variables | 🟠 Baixa | Médio | 🟢 Baixa |
-| 9 | Timestamps UTC | 🟢 Baixa | Baixo | 🟢 Baixa |
-| 10 | Type Hints | 🟢 Baixa | Médio | 🟢 Baixa |
+### Localização
+**main.py, método `_prewarm_ui()`**
 
-## Próximos Passos
+### Problema
+A primeira abertura de algumas janelas modernas (Configurações/Busca/Sobre) podia causar um “freeze” perceptível por conta do custo de criação/layout (CustomTkinter/Tk).
 
-1. **Imediato:** Implementar single instance check (#3)
-2. **Curto Prazo:** Refatorar thread synchronization (#4, #5)
-3. **Médio Prazo:** Consolidar callbacks (#6) e validação (#7)
-4. **Longo Prazo:** Melhorar type hints (#10) e adicionar testes unitários
+### Solução Atual
+- O prewarm é agendado após o app subir (`after(700, ...)`) para não competir com o startup.
+- O prewarm é “fatiado” em passos (`after(0, ...)`) para ceder o loop do Tk entre diálogos.
+- Foram adicionados logs com `time.perf_counter()` (início/fim por diálogo e tempo total) para medir custo real.
+
+### Por Que Entra em HACKS
+1. **Chama métodos privados:** `_create_window()` dos diálogos modernos (dependência de implementação interna).
+2. **Ações de window manager:** `withdraw()`/`deiconify()` variam por ambiente e podem falhar silenciosamente.
+3. **Mitigação temporal:** evita travar no começo, mas não “resolve” o custo de criação em si.
+
+### Impacto
+- **Alto (UX):** reduz travamento perceptível no primeiro uso e gera métricas para diagnóstico.
+
+### Status
+**IMPLEMENTADO:** Com instrumentação de tempo e agendamento em idle.
 
 ---
 
-**Última Atualização:** December 2025
+## 12. Menu Dinâmico do Tray Calculado Mais de Uma Vez
+
+### Localização
+**dahora_app/ui/menu.py, método `create_dynamic_menu()`**
+
+### Problema
+Em alguns cenários, o gerador de itens do `pystray.Menu(...)` pode ser consumido mais de uma vez durante a mesma abertura do menu, o que duplica cálculo/logs e pode dar sensação de “trabalho em dobro”.
+
+### Solução Atual
+Cache curto por tempo (200ms) usando `time.monotonic()`:
+- Se o menu for pedido novamente dentro dessa janela, reutiliza a lista já calculada.
+- Fora do período, recalcula normalmente.
+
+### Por Que Entra em HACKS
+1. **Heurística por tempo:** não é uma garantia formal de “uma vez por abertura”.
+2. **Dependente do comportamento do pystray/Windows:** pode mudar conforme versões.
+
+### Impacto
+- **Médio (performance/ruído de log):** reduz cálculos duplicados e torna abertura do menu mais previsível.
+
+### Status
+**IMPLEMENTADO:** Cache temporal mínimo no gerador.
+
+---
+
+## 13. Política de Logs: Rotação 1MB sem “Limpar no Startup”
+
+### Localização
+**dahora_app/constants.py** e **main.py (configuração de logging)**
+
+### Problema
+Limpar logs na inicialização apaga histórico útil e pode remover arquivos não versionados que existam no diretório de dados do usuário.
+
+### Solução Atual
+- Rotação via `RotatingFileHandler` com:
+  - `LOG_MAX_BYTES = 1MB`
+  - `LOG_BACKUP_COUNT = 1`
+  - `mode="a"` (append)
+- Sem rotina de exclusão de logs no startup.
+
+### Impacto
+- **Alto (diagnóstico):** preserva histórico recente (até ~2MB somando log + 1 backup) sem crescer indefinidamente.
+
+### Status
+**IMPLEMENTADO:** Rotação ativa e sem limpeza automática.
+
+---
+
+## 14. Compatibilidade de Settings: `description` em `custom_shortcuts`
+
+### Localização
+**dahora_app/schemas.py (CustomShortcutSchema)** e **dahora_app/settings.py (fallback manual já suportava)**
+
+### Problema
+`SettingsSchema` usava `extra='forbid'`. Se `settings.json` tivesse `custom_shortcuts[].description`, o Pydantic rejeitava e caía no fallback manual.
+
+### Solução Atual
+Adicionar o campo `description` ao `CustomShortcutSchema`, mantendo `extra='forbid'` para continuar rejeitando campos desconhecidos de verdade.
+
+### Impacto
+- **Médio (robustez):** reduz warnings de validação e evita fallback desnecessário.
+
+### Status
+**IMPLEMENTADO:** Schema aceita `description`.
+
+---
+
+## Resumo de Prioridades
+
+| # | Hack | Severidade | Esforço | Prioridade | Status |
+|---|------|-----------|--------|-----------|--------|
+| 3 | Single Instance Mutex | 🔴 Alta | Médio | 🔴 CRÍTICO | ✅ Implementado (`single_instance.py`) |
+| 4 | Thread Sync | 🟡 Média | Médio | 🟡 Média | ✅ Implementado (`thread_sync.py`) |
+| 6 | Callbacks Wrappers | 🟠 Baixa | Alto | 🟡 Média | ✅ Implementado (CallbackManager + handlers) |
+| 5 | UI Root Singleton | 🟡 Média | Médio | 🟡 Média | 🟡 A avaliar (legado/UI) |
+| 7 | Validação Dupla | 🟠 Baixa | Médio | 🟢 Baixa | 🟡 Mantido (fallback seguro) |
+| 10 | Type Hints | 🟢 Baixa | Médio | 🟢 Baixa | 🟡 A melhorar |
+| 1 | Dark Mode API | 🟡 Média | Alto | 🟢 Baixa | 🟡 Não aplicável ao desktop |
+| 2 | Console UTF-8 | 🟢 Baixa | Baixo | 🟢 Baixa | ✅ Resolvido/mitigado |
+| 8 | Global Variables | 🟠 Baixa | Médio | 🟢 Baixa | 🟡 A revisar |
+| 9 | Timestamps UTC | 🟢 Baixa | Baixo | 🟢 Baixa | 🟡 Backlog |
+
+## Próximos Passos
+
+1. **Curto Prazo:** Melhorar type hints e checagem estática (mypy).
+2. **Curto Prazo:** Revisar dependências/arquivos UI legados e reduzir superfície de manutenção.
+3. **Médio Prazo:** Reavaliar a necessidade de validação duplicada (manter fallback apenas onde necessário).
+4. **Backlog:** Revisar “timestamps UTC” e variáveis globais onde houver impacto real.
+
+---
+
+**Última Atualização:** Janeiro 2026
 **Documento de Referência para Refatoração Futura**

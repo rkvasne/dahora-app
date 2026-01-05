@@ -344,11 +344,11 @@ class CustomShortcutsDialog:
         
         ttk.Label(content, text="Intervalo de monitoramento (segundos)", style="TLabel").pack(anchor="w", pady=(0, 6))
         self.var_monitor_interval = tk.DoubleVar(value=self.current_settings.get("clipboard_monitor_interval", 3.0))
-        ttk.Spinbox(content, from_=0.5, to=10.0, increment=0.5, textvariable=self.var_monitor_interval, width=15).pack(anchor="w", pady=(0, 16))
+        ttk.Spinbox(content, from_=0.5, to=60.0, increment=0.5, textvariable=self.var_monitor_interval, width=15).pack(anchor="w", pady=(0, 16))
         
-        ttk.Label(content, text="Tempo ocioso para pausar (segundos)", style="TLabel").pack(anchor="w", pady=(0, 6))
+        ttk.Label(content, text="Tempo sem mudanças na área de transferência (segundos)", style="TLabel").pack(anchor="w", pady=(0, 6))
         self.var_idle_threshold = tk.DoubleVar(value=self.current_settings.get("clipboard_idle_threshold", 30.0))
-        ttk.Spinbox(content, from_=10, to=300, increment=10, textvariable=self.var_idle_threshold, width=15).pack(anchor="w")
+        ttk.Spinbox(content, from_=5, to=300, increment=5, textvariable=self.var_idle_threshold, width=15).pack(anchor="w")
         
         # Bind mousewheel
         if hasattr(canvas, '_bind_children'):
@@ -372,7 +372,7 @@ class CustomShortcutsDialog:
         # Toggle
         self.var_notifications_enabled = tk.BooleanVar(
             value=self.current_settings.get("notification_enabled", True))
-        ttk.Checkbutton(content, text="🔔 Habilitar notificações do sistema", 
+        ttk.Checkbutton(content, text="🔔 Habilitar notificações do Windows", 
                        variable=self.var_notifications_enabled).pack(anchor="w", pady=(0, 8))
         ttk.Label(content, text="Exibe notificações quando atalhos são acionados", 
                  style="Muted.TLabel").pack(anchor="w", pady=(0, 24))
@@ -385,7 +385,7 @@ class CustomShortcutsDialog:
         
         self.var_notification_duration = tk.IntVar(
             value=self.current_settings.get("notification_duration", 2))
-        ttk.Spinbox(duration_frame, from_=1, to=15, textvariable=self.var_notification_duration, width=10).pack(side=tk.LEFT, padx=(0, 8))
+        ttk.Spinbox(duration_frame, from_=1, to=10, textvariable=self.var_notification_duration, width=10).pack(side=tk.LEFT, padx=(0, 8))
         ttk.Label(duration_frame, text="segundos", style="TLabel").pack(side=tk.LEFT)
         
         # Tipos
@@ -467,7 +467,7 @@ class CustomShortcutsDialog:
         
         # Recursos
         ttk.Label(content, text="🎯 Recursos Principais", style="Heading.TLabel").pack(anchor="w", pady=(0, 12))
-        features = "✅ Atalhos personalizados ilimitados\n✅ Prefixos customizados por atalho\n✅ Formato de data/hora configurável\n✅ Histórico inteligente de clipboard\n✅ Notificações personalizáveis\n✅ Tema automático (claro/escuro)"
+        features = "✅ Atalhos personalizados ilimitados\n✅ Prefixos customizados por atalho\n✅ Formato de data/hora configurável\n✅ Histórico inteligente da área de transferência\n✅ Notificações personalizáveis\n✅ Tema automático (claro/escuro)"
         ttk.Label(content, text=features, style="Muted.TLabel").pack(anchor="w", pady=(0, 24))
         
         # Dicas
@@ -535,15 +535,81 @@ class CustomShortcutsDialog:
         """Salva todas as configurações (tabs Geral e Notificações)"""
         try:
             if self.on_save_callback:
+                max_history_items = self.var_max_history.get() if self.var_max_history else 100
+                try:
+                    max_history_items = int(max_history_items)
+                except Exception:
+                    max_history_items = 100
+                if max_history_items < 10:
+                    max_history_items = 10
+                if max_history_items > 1000:
+                    max_history_items = 1000
+                if self.var_max_history:
+                    self.var_max_history.set(max_history_items)
+
+                clipboard_monitor_interval = self.var_monitor_interval.get() if self.var_monitor_interval else 3.0
+                try:
+                    clipboard_monitor_interval = float(clipboard_monitor_interval)
+                except Exception:
+                    clipboard_monitor_interval = 3.0
+                if clipboard_monitor_interval < 0.5:
+                    clipboard_monitor_interval = 0.5
+                if clipboard_monitor_interval > 60.0:
+                    clipboard_monitor_interval = 60.0
+                if self.var_monitor_interval:
+                    self.var_monitor_interval.set(clipboard_monitor_interval)
+
+                clipboard_idle_threshold = self.var_idle_threshold.get() if self.var_idle_threshold else 30.0
+                try:
+                    clipboard_idle_threshold = float(clipboard_idle_threshold)
+                except Exception:
+                    clipboard_idle_threshold = 30.0
+                if clipboard_idle_threshold < 5.0:
+                    clipboard_idle_threshold = 5.0
+                if clipboard_idle_threshold > 300.0:
+                    clipboard_idle_threshold = 300.0
+                if self.var_idle_threshold:
+                    self.var_idle_threshold.set(clipboard_idle_threshold)
+
+                notification_duration = self.var_notification_duration.get() if self.var_notification_duration else 2
+                try:
+                    notification_duration = int(notification_duration)
+                except Exception:
+                    notification_duration = 2
+                if notification_duration < 1:
+                    notification_duration = 1
+                if notification_duration > 10:
+                    notification_duration = 10
+                if self.var_notification_duration:
+                    self.var_notification_duration.set(notification_duration)
+
+                bracket_open = self.var_bracket_open.get() if self.var_bracket_open else "["
+                bracket_close = self.var_bracket_close.get() if self.var_bracket_close else "]"
+                bracket_open = str(bracket_open).strip()
+                bracket_close = str(bracket_close).strip()
+                if len(bracket_open) != 1 or bracket_open in "\n\r\t":
+                    bracket_open = "["
+                if len(bracket_close) != 1 or bracket_close in "\n\r\t":
+                    bracket_close = "]"
+                if bracket_open == bracket_close:
+                    if bracket_open != "]":
+                        bracket_close = "]"
+                    else:
+                        bracket_close = "["
+                if self.var_bracket_open:
+                    self.var_bracket_open.set(bracket_open)
+                if self.var_bracket_close:
+                    self.var_bracket_close.set(bracket_close)
+
                 settings = {
                     "datetime_format": self.var_datetime_format.get().strip() if self.var_datetime_format else "%d.%m.%Y-%H:%M",
-                    "bracket_open": self.var_bracket_open.get() if self.var_bracket_open else "[",
-                    "bracket_close": self.var_bracket_close.get() if self.var_bracket_close else "]",
-                    "max_history_items": self.var_max_history.get() if self.var_max_history else 100,
-                    "clipboard_monitor_interval": self.var_monitor_interval.get() if self.var_monitor_interval else 3.0,
-                    "clipboard_idle_threshold": self.var_idle_threshold.get() if self.var_idle_threshold else 30.0,
+                    "bracket_open": bracket_open,
+                    "bracket_close": bracket_close,
+                    "max_history_items": max_history_items,
+                    "clipboard_monitor_interval": clipboard_monitor_interval,
+                    "clipboard_idle_threshold": clipboard_idle_threshold,
                     "notification_enabled": self.var_notifications_enabled.get() if self.var_notifications_enabled else True,
-                    "notification_duration": self.var_notification_duration.get() if self.var_notification_duration else 2,
+                    "notification_duration": notification_duration,
                     "hotkey_search_history": self.var_hotkey_search.get().strip() if self.var_hotkey_search else "ctrl+shift+f",
                     "hotkey_refresh_menu": self.var_hotkey_refresh.get().strip() if self.var_hotkey_refresh else "ctrl+shift+r",
                 }

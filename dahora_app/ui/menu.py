@@ -3,6 +3,7 @@ Sistema de menus do Dahora App
 """
 import logging
 import pystray
+import time
 from typing import Callable, Optional, List, Dict
 from dahora_app.utils import truncate_text, sanitize_text_for_display, format_hotkey_display
 
@@ -20,13 +21,15 @@ class MenuBuilder:
         self.copy_from_history_callback: Optional[Callable] = None
         self.clear_history_callback: Optional[Callable] = None
         self.show_about_callback: Optional[Callable] = None
-        self.show_about_callback: Optional[Callable] = None
         self.quit_callback: Optional[Callable] = None
         self.toggle_pause_callback: Optional[Callable] = None
         self.is_paused_callback: Optional[Callable] = None
         self.hotkey_copy_datetime: str = "ctrl+shift+q"  # Padrão (ação principal)
         self.hotkey_search_history: str = "ctrl+shift+f"  # Padrão
         self.hotkey_refresh_menu: str = "ctrl+shift+r"  # Padrão
+        self.tray_menu_cache_window_ms: int = 200
+        self._last_dynamic_items: Optional[List] = None
+        self._last_dynamic_items_at: float = 0.0
 
     @staticmethod
     def _format_hotkey_display(hotkey: str) -> str:
@@ -209,7 +212,22 @@ class MenuBuilder:
         def dynamic_items():
             """Gerador de itens dinâmicos"""
             try:
-                items = self._get_dynamic_menu_items()
+                now = time.monotonic()
+                try:
+                    cache_window_s = max(0.0, float(self.tray_menu_cache_window_ms) / 1000.0)
+                except Exception:
+                    cache_window_s = 0.2
+
+                if (
+                    cache_window_s > 0
+                    and self._last_dynamic_items is not None
+                    and (now - self._last_dynamic_items_at) < cache_window_s
+                ):
+                    items = self._last_dynamic_items
+                else:
+                    items = self._get_dynamic_menu_items()
+                    self._last_dynamic_items = items
+                    self._last_dynamic_items_at = now
                 logging.info(f"[Menu] Itens calculados: {len(items)}")
                 for it in items:
                     yield it

@@ -28,6 +28,16 @@ Diretório central da documentação técnica do projeto.
 
 ## 📋 Convenções do Projeto
 
+### Glossário por superfície (terminologia)
+
+**Regra geral:** dentro de uma mesma superfície, evite misturar termos PT‑BR e termos técnicos em inglês.
+
+- **Frontend (landing) e UI do app (usuário final):** preferir PT‑BR 100%.
+  - Exemplos: “área de transferência”, “bandeja do sistema”, “atalhos”, “notificações do Windows”.
+- **Documentação (Markdown) e textos para dev/power users:** preferir termos técnicos comuns em inglês.
+  - Exemplos: `clipboard`, `system tray`, `hotkeys`, `toasts`.
+- **Código (identificadores):** manter nomes e APIs em inglês; strings exibidas ao usuário seguem o padrão da UI.
+
 ### Versionamento
 - **Fonte da verdade:** `dahora_app/constants.py` (`APP_VERSION`)
 - **Atualizar ao mudar versão:**

@@ -1,6 +1,6 @@
 # 📚 Índice de Documentação - Dahora App
 
-> **Ponto central de navegação** para toda documentação do projeto Dahora App v0.2.5
+> **Ponto central de navegação** para toda documentação do projeto Dahora App v0.2.6
 
 > Navegação: [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
@@ -74,7 +74,7 @@ docs/
 ├── RELEASE.md                  # Processo de build e release
 ├── ROADMAP.md                  # Próximos passos
 ├── GITHUB_CLI_GUIDE.md         # GitHub CLI completo
-└── WINDOWS_PYTHON_SETUP.md     # Setup Python Windows
+└── WINDOWS_PYTHON_SETUP.md     # Configuração do Python no Windows
 ```
 
 ---
@@ -82,16 +82,16 @@ docs/
 ## 🔗 Links Úteis
 
 ### Repositório
-- **[GitHub Repository](https://github.com/rkvasne/dahora-app)**
+- **[Repositório no GitHub](https://github.com/rkvasne/dahora-app)**
 - **[Releases](https://github.com/rkvasne/dahora-app/releases)**
 - **[Issues](https://github.com/rkvasne/dahora-app/issues)**
 
 ### Site
-- **[Landing Page](https://dahora-app.vercel.app/)**
+- **[Página do site (landing)](https://dahora-app.vercel.app/)**
 
 ---
 
-## 🎯 Quick Start por Perfil
+## 🎯 Início rápido por perfil
 
 ### 👤 Novo Usuário
 1. Leia [README.md](../README.md) - Instalação e uso
@@ -113,6 +113,8 @@ docs/
 
 ## ⚙️ Convenções do Projeto
 
+- **Terminologia (glossário por superfície):** veja [README.md](README.md#glossário-por-superfície-terminologia).
+
 ### Versionamento
 - **Fonte da verdade:** `dahora_app/constants.py` (`APP_VERSION`)
 - **Sempre atualizar:**
@@ -133,5 +135,5 @@ docs/
 
 ---
 
-**Última atualização:** Janeiro 2026 | **Versão:** v0.2.5
+**Última atualização:** Janeiro 2026 | **Versão:** v0.2.6
 

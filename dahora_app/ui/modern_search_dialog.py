@@ -4,6 +4,7 @@ Janela de Busca Moderna usando CustomTkinter
 import customtkinter as ctk
 import threading
 import logging
+import time
 from typing import Optional, Callable, List, Dict, Any, cast
 from datetime import datetime
 import tkinter as tk
@@ -45,26 +46,38 @@ class ModernSearchDialog:
 
     def show(self) -> None:
         """Mostra o diálogo"""
+        start = time.perf_counter()
         if self.window is not None:
             try:
                 self.window.deiconify()
             except Exception:
                 pass
+            t_show = time.perf_counter()
             self._show_window()
+            show_ms = (time.perf_counter() - t_show) * 1000
             try:
                 self.window.after(0, self._perform_search)
             except Exception:
                 pass
+            total_ms = (time.perf_counter() - start) * 1000
+            logging.info(f"[UI] ModernSearchDialog.show reuse show={show_ms:.1f}ms total={total_ms:.1f}ms")
             return
 
         try:
+            t_create = time.perf_counter()
             self._create_window()
+            create_ms = (time.perf_counter() - t_create) * 1000
+
+            t_show = time.perf_counter()
             self._show_window()
+            show_ms = (time.perf_counter() - t_show) * 1000
             try:
                 if self.window is not None:
                     self.window.after(0, self._perform_search)
             except Exception:
                 pass
+            total_ms = (time.perf_counter() - start) * 1000
+            logging.info(f"[UI] ModernSearchDialog.show create={create_ms:.1f}ms show={show_ms:.1f}ms total={total_ms:.1f}ms")
         except Exception as e:
             logging.error(f"Erro ao abrir busca: {e}")
             if self.notification_callback:
@@ -173,10 +186,7 @@ class ModernSearchDialog:
         window.protocol("WM_DELETE_WINDOW", self._on_close)
         
         # Não exibe aqui; show() chama _show_window() depois.
-        
-        # Busca inicial
-        self._perform_search()
-        
+
         # Não chama mainloop aqui: o loop Tk roda uma vez no app.
 
     def _center_window(self) -> None:

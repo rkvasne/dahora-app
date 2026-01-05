@@ -18,7 +18,7 @@
   powershell -ExecutionPolicy Bypass -File scripts\push_release_lfs.ps1
 
 .EXAMPLE
-  powershell -ExecutionPolicy Bypass -File scripts\push_release_lfs.ps1 -Message "v0.2.5: Binários para LFS"
+  powershell -ExecutionPolicy Bypass -File scripts\push_release_lfs.ps1 -Message "v0.2.6: Binários para LFS"
 #>
 
 [CmdletBinding()]

@@ -90,7 +90,7 @@ class SearchDialog:
             # Cabeçalho
             ttk.Label(
                 main,
-                text="Buscar no Histórico do Clipboard",
+                text="Buscar no Histórico da Área de Transferência",
                 font=(default_font, 12, "bold"),
                 style="Card.TLabel"
             ).pack(anchor=tk.W, pady=(0, 8))
