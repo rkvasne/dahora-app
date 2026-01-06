@@ -1,6 +1,6 @@
 # HACKs em main.py — Documentação de Workarounds
 
-> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [Arquitetura](ARCHITECTURE.md)
+> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
 Este documento detalha os **workarounds, hacks e soluções não-ideais** encontradas em `main.py` que precisam ser revisitadas e possivelmente melhoradas.
 
@@ -665,5 +665,5 @@ Adicionar o campo `description` ao `CustomShortcutSchema`, mantendo `extra='forb
 
 ---
 
-**Última Atualização:** Janeiro 2026
+**Última Atualização:** 6 de janeiro de 2026
 **Documento de Referência para Refatoração Futura**

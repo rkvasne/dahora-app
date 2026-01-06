@@ -210,11 +210,13 @@ Veja [CONTRIBUTING.md](CONTRIBUTING.md).
 Se o Dahora App te ajuda no dia a dia e você quiser apoiar o desenvolvimento, você pode fazer uma doação.
 
 - GitHub Sponsors: https://github.com/sponsors/rkvasne
-- Mercado Pago: https://link.mercadopago.com.br/kvasne
+- Mercado Pago (link): https://link.mercadopago.com.br/kvasne
 - PayPal: https://www.paypal.com/donate/?hosted_button_id=JJFQZK647286S
 - Pix (Brasil) — chave: `fa550c5d-fdaf-4484-b52b-760071fe524d`
 
-### QR codes
+### QR codes (Pix/PayPal)
+
+Os QR codes abaixo são apenas para **Pix** e **PayPal**. Para **Mercado Pago**, use o link acima.
 
 <table>
   <tr>

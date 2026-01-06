@@ -1,7 +1,7 @@
 # 📜 HISTÓRICO DE DESENVOLVIMENTO - DAHORA APP
 
 **Projeto:** Dahora App - System tray para Data/Hora  
-**Última atualização:** 05/01/2026
+**Última atualização:** 6 de janeiro de 2026
 
 > Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 

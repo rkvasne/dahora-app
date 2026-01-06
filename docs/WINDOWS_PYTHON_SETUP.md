@@ -1,6 +1,6 @@
 # ⚠️ IMPORTANTE: Python no Windows
 
-> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [Release](RELEASE.md)
+> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
 ## Para Agentes de IA / Contribuidores
 
@@ -145,7 +145,7 @@ Se encontrar `python` em:
 
 ---
 
-**Última atualização:** 2 de Janeiro de 2026
+**Última atualização:** 6 de janeiro de 2026
 
 **Atenção especial a:** Agentes de IA, contribuidores no Windows, automação de testes
 

@@ -481,5 +481,5 @@ O aplicativo possui **diferencial claro** (foco em data/hora) e **qualidade téc
 
 **Documento gerado em:** Novembro 2025  
 **Versão:** 1.2  
-**Última atualização:** 05/01/2026 (revisão de consistência com o repositório v0.2.6)
+**Última atualização:** 6 de janeiro de 2026 (revisão de consistência com o repositório v0.2.6)
 

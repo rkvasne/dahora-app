@@ -1,6 +1,6 @@
 # Arquitetura da Dahora App
 
-> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [Release](RELEASE.md)
+> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
 Documentação detalhada sobre a estrutura, componentes e padrões de design utilizados no projeto.
 
@@ -506,6 +506,6 @@ Validado e aplicado
 
 ---
 
-**Última Atualização:** December 2025
+**Última Atualização:** 6 de janeiro de 2026
 **Versão da Documentação:** 1.0
 **Status:** Completa e em produção

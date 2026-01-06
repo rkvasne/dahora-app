@@ -1,6 +1,6 @@
 # GitHub CLI - Guia Completo
 
-> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [Release](RELEASE.md)
+> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
 ## 📚 Índice
 1. [O que é GitHub CLI?](#o-que-é-github-cli)
@@ -348,5 +348,5 @@ Executar:
 
 ---
 
-**Última atualização:** 2 de Janeiro de 2026
+**Última atualização:** 6 de janeiro de 2026
 
