@@ -29,7 +29,6 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     z-index: 1;
     height: 100%; /* Ocupa toda altura disponível */
-    min-height: 320px; /* Altura mínima para harmonia visual */
 }
 
 .process-step:hover {
