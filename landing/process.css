@@ -6,10 +6,10 @@
 .process-flow {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
+    align-items: stretch; /* Garante que todos os cards tenham a mesma altura */
+    gap: 1.5rem; /* Aumentado o gap para harmonia */
     position: relative;
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -20,13 +20,14 @@
     align-items: center;
     text-align: center;
     position: relative;
-    padding: 1.5rem;
+    padding: 2rem 1.5rem 1.5rem; /* Mais padding no topo */
     background: var(--bg-white);
     border-radius: 1rem;
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--border-color);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     z-index: 1;
+    height: 100%; /* Ocupa toda altura disponível */
 }
 
 .process-step:hover {
@@ -37,12 +38,12 @@
 
 .step-number {
     position: absolute;
-    top: -15px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 50%; /* Centralizado verticalmente */
+    left: -16px; /* Metade para fora na esquerda */
+    transform: translateY(-50%);
     width: 32px;
     height: 32px;
-    background: rgba(56, 189, 248, 0.1); /* Sky Blue Light (igual aos icones hero) */
+    background: var(--bg-white); /* Fundo sólido para cobrir a borda */
     color: var(--primary-color);
     font-weight: 700;
     border-radius: 50%;
@@ -51,12 +52,13 @@
     justify-content: center;
     font-size: 0.9rem;
     box-shadow: var(--shadow-sm);
-    border: 2px solid var(--primary-light); /* Borda destacada */
+    border: 2px solid var(--primary-light);
+    z-index: 2;
 }
 
 body.dark-mode .step-number {
-    background: rgba(56, 189, 248, 0.1);
-    color: #38bdf8; /* Sky 400 */
+    background: var(--dark-card); /* Fundo sólido dark */
+    color: #38bdf8;
     border-color: rgba(56, 189, 248, 0.4);
 }
 
@@ -96,12 +98,12 @@ body.dark-mode .step-number {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100px; /* Altura aproximada do card body */
     color: var(--text-light);
-    font-size: 1.5rem;
-    opacity: 0.5;
+    font-size: 1.2rem;
+    opacity: 0.4;
     flex: 0 0 auto;
-    margin-top: 2rem;
+    margin-top: auto;
+    margin-bottom: auto; /* Centraliza verticalmente em relação ao container */
 }
 
 /* Dark Mode Adjustments */
