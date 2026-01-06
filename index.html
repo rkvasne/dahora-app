@@ -552,20 +552,55 @@
             <div class="download-footer">
                 <p data-i18n="download.compile">Ou compile do código-fonte:</p>
                 <code>py build.py</code>
-                <p style="margin-top: 0.75rem; font-size: 0.9rem; opacity: 0.85;" data-i18n="download.support">
-                    Curtiu? Apoie o projeto: <a href="https://github.com/sponsors/rkvasne" target="_blank" rel="noopener noreferrer">GitHub Sponsors</a> • <a href="https://link.mercadopago.com.br/kvasne" target="_blank" rel="noopener noreferrer">Mercado Pago</a> • <a href="https://www.paypal.com/donate/?hosted_button_id=JJFQZK647286S" target="_blank" rel="noopener noreferrer">PayPal</a> • Pix (Brasil): <code>fa550c5d-fdaf-4484-b52b-760071fe524d</code>
-                </p>
+            </div>
+        </div>
+    </section>
 
-                <div style="margin-top: 0.75rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-start; justify-content: center;">
+    <!-- Donation Section -->
+    <section id="donate" class="section" style="background: linear-gradient(135deg, rgba(255, 182, 193, 0.05) 0%, rgba(173, 216, 230, 0.05) 100%); padding: 4rem 2rem;">
+        <div class="container" style="max-width: 900px;">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="font-size: 2rem; margin-bottom: 0.5rem;" data-i18n="donate.title">☕ Apoie o Projeto</h2>
+                <p style="font-size: 1.1rem; opacity: 0.85;" data-i18n="donate.subtitle">Seu apoio ajuda a manter o desenvolvimento</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                <div style="text-align: center; padding: 1.5rem; background: rgba(255, 255, 255, 0.5); border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="font-size: 2rem; margin-bottom: 0.75rem;">🌟</div>
+                    <h3 style="margin: 0.5rem 0; font-size: 1.1rem;">GitHub Sponsors</h3>
+                    <a href="https://github.com/sponsors/rkvasne" target="_blank" rel="noopener noreferrer" style="color: #0969da; text-decoration: none; font-weight: 500;">github.com/sponsors/rkvasne</a>
+                </div>
+
+                <div style="text-align: center; padding: 1.5rem; background: rgba(255, 255, 255, 0.5); border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="font-size: 2rem; margin-bottom: 0.75rem;">💳</div>
+                    <h3 style="margin: 0.5rem 0; font-size: 1.1rem;">Mercado Pago (BR)</h3>
+                    <a href="https://link.mercadopago.com.br/kvasne" target="_blank" rel="noopener noreferrer" style="color: #0969da; text-decoration: none; font-weight: 500;">link.mercadopago.com.br/kvasne</a>
+                </div>
+
+                <div style="text-align: center; padding: 1.5rem; background: rgba(255, 255, 255, 0.5); border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="font-size: 2rem; margin-bottom: 0.75rem;">🌐</div>
+                    <h3 style="margin: 0.5rem 0; font-size: 1.1rem;">PayPal</h3>
+                    <a href="https://www.paypal.com/donate/?hosted_button_id=JJFQZK647286S" target="_blank" rel="noopener noreferrer" style="color: #0969da; text-decoration: none; font-weight: 500;">Doação via PayPal</a>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h3 style="margin: 0 0 1.5rem 0; font-size: 1.2rem;" data-i18n="donate.qr">📱 QR Codes (Pix / PayPal)</h3>
+                <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
                     <div style="text-align: center;">
-                        <div style="font-size: 0.85rem; opacity: 0.85; margin-bottom: 0.35rem;">Pix</div>
-                        <img src="landing/images/qr_pix.png" alt="QR code Pix" style="width: 140px; height: auto; border-radius: 8px;" loading="lazy" decoding="async" />
+                        <div style="font-weight: 600; margin-bottom: 0.75rem;">Pix (Brasil)</div>
+                        <img src="landing/images/qr_pix.png" alt="QR code Pix" style="width: 150px; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);" loading="lazy" decoding="async" />
+                        <div style="font-size: 0.85rem; opacity: 0.75; margin-top: 0.75rem;">fa550c5d-fdaf-4484-b52b-760071fe524d</div>
                     </div>
                     <div style="text-align: center;">
-                        <div style="font-size: 0.85rem; opacity: 0.85; margin-bottom: 0.35rem;">PayPal</div>
-                        <img src="landing/images/qr_paypal.png" alt="QR code PayPal" style="width: 140px; height: auto; border-radius: 8px;" loading="lazy" decoding="async" />
+                        <div style="font-weight: 600; margin-bottom: 0.75rem;">PayPal</div>
+                        <img src="landing/images/qr_paypal.png" alt="QR code PayPal" style="width: 150px; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);" loading="lazy" decoding="async" />
                     </div>
                 </div>
+            </div>
+
+            <div style="text-align: center; padding: 1.5rem; background: rgba(255, 255, 255, 0.3); border-radius: 12px; border-left: 4px solid #4CAF50;">
+                <p style="margin: 0; font-size: 0.95rem;" data-i18n="donate.note">💚 O Dahora App permanece 100% open-source e gratuito. Doações são opcionais e ajudam a manter o desenvolvimento.</p>
             </div>
         </div>
     </section>
@@ -922,7 +957,10 @@
                 'download.subtitle': 'Última Versão - Mais Produtividade!',
                 'download.btn': '💾 Baixar Dahora App',
                 'download.compile': 'Ou compile do código-fonte:',
-                'download.support': 'Curtiu? Apoie o projeto: <a href="https://github.com/sponsors/rkvasne" target="_blank" rel="noopener noreferrer">GitHub Sponsors</a> • <a href="https://link.mercadopago.com.br/kvasne" target="_blank" rel="noopener noreferrer">Mercado Pago</a> • <a href="https://www.paypal.com/donate/?hosted_button_id=JJFQZK647286S" target="_blank" rel="noopener noreferrer">PayPal</a> • Pix (Brasil): <code>fa550c5d-fdaf-4484-b52b-760071fe524d</code>',
+                'donate.title': '☕ Apoie o Projeto',
+                'donate.subtitle': 'Seu apoio ajuda a manter o desenvolvimento',
+                'donate.qr': '📱 QR Codes (Pix / PayPal)',
+                'donate.note': '💚 O Dahora App permanece 100% open-source e gratuito. Doações são opcionais e ajudam a manter o desenvolvimento.',
                 'download.trust.github': 'Código-fonte',
                 'download.trust.privacy': 'Privacidade',
                 'download.trust.security': 'Segurança',
@@ -1064,7 +1102,10 @@
                 'download.subtitle': 'Latest Version — More Productivity!',
                 'download.btn': '💾 Download Dahora App',
                 'download.compile': 'Or build from source:',
-                'download.support': 'Like it? Support the project: <a href="https://github.com/sponsors/rkvasne" target="_blank" rel="noopener noreferrer">GitHub Sponsors</a> • <a href="https://link.mercadopago.com.br/kvasne" target="_blank" rel="noopener noreferrer">Mercado Pago</a> • <a href="https://www.paypal.com/donate/?hosted_button_id=JJFQZK647286S" target="_blank" rel="noopener noreferrer">PayPal</a> • Pix (Brazil): <code>fa550c5d-fdaf-4484-b52b-760071fe524d</code>',
+                'donate.title': '☕ Support the Project',
+                'donate.subtitle': 'Your support helps keep development going',
+                'donate.qr': '📱 QR Codes (Pix / PayPal)',
+                'donate.note': '💚 Dahora App remains 100% open-source and free. Donations are optional and help maintain development.',
                 'download.trust.github': 'Source code',
                 'download.trust.privacy': 'Privacy',
                 'download.trust.security': 'Security',
