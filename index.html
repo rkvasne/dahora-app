@@ -44,7 +44,6 @@
 
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="#recursos" class="nav-link" data-i18n="nav.features">Recursos</a></li>
-                <li><a href="#novidades" class="nav-link" data-i18n="nav.news">Novidades</a></li>
                 <li><a href="#download" class="nav-link" data-i18n="nav.download">Download</a></li>
                 <li><a href="#faq" class="nav-link" data-i18n="nav.faq">FAQ</a></li>
                 <li><a href="https://github.com/rkvasne/dahora-app" target="_blank" rel="noopener noreferrer"
@@ -124,9 +123,9 @@
                     <div class="feature-icon"><i class="fas fa-keyboard"></i></div>
                     <h3 data-i18n="features.card2.title">🎯 Atalhos Ilimitados</h3>
                     <p data-i18n="features.card2.desc">
-                        • Ctrl+Shift+1, Ctrl+Shift+2...<br>
+                        • Combinações personalizadas<br>
+                        • Descrições para organizar<br>
                         • Prefixo individual por atalho<br>
-                        • Interface CRUD completa<br>
                         • Detecção automática de teclas
                     </p>
                 </div>
@@ -148,9 +147,9 @@
                     <div class="feature-icon"><i class="fas fa-sliders-h"></i></div>
                     <h3 data-i18n="features.card4.title">⚙️ 100% Configurável</h3>
                     <p data-i18n="features.card4.desc">
-                        • 5 abas: Atalhos, Formato, etc<br>
-                        • Formato customizável<br>
-                        • Delimitadores [ ] ajustáveis<br>
+                        • 5 abas de controle total<br>
+                        • Ajuste de logs e cache<br>
+                        • Monitoramento de clipboard<br>
                         • Windows 11 nativo
                     </p>
                 </div>
@@ -176,71 +175,6 @@
                         • Totalmente offline<br>
                         • Dados locais (%APPDATA%)<br>
                         • Logs limpos
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- NEW FEATURES Section -->
-    <section id="novidades" class="section section-dark">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" data-i18n="news.title">🚀 Novidades da v0.2.6</h2>
-                <p class="section-subtitle" data-i18n="news.subtitle">Foco total na sua produtividade e facilidade de uso.</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
-                    <h3 data-i18n="news.card1.title">⚙️ Configurações Avançadas</h3>
-                    <p data-i18n="news.card1.desc">
-                        Ajuste logs, prewarm da UI e cache do menu do tray
-                        diretamente no painel de configurações.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-keyboard"></i></div>
-                    <h3 data-i18n="news.card2.title">🏷️ Descrição em Atalhos</h3>
-                    <p data-i18n="news.card2.desc">
-                        Campo opcional para descrever atalhos personalizados,
-                        facilitando organização e identificação.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-clipboard"></i></div>
-                    <h3 data-i18n="news.card3.title">⏱️ Monitoramento Configurável</h3>
-                    <p data-i18n="news.card3.desc">
-                        Intervalo e limiar de inatividade do clipboard agora
-                        são aplicados conforme as configurações do usuário.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-sliders-h"></i></div>
-                    <h3 data-i18n="news.card4.title">⚙️ 100% Configurável</h3>
-                    <p data-i18n="news.card4.desc">
-                        Painel com 5 abas para controle total.
-                        Configure formatos, delimitadores e teclas.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-bell-slash"></i></div>
-                    <h3 data-i18n="news.card5.title">🔇 Sem Notificações</h3>
-                    <p data-i18n="news.card5.desc">
-                        Colagem instantânea sem popups desnecessários.
-                        Experiência limpa e sem interrupções.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-list"></i></div>
-                    <h3 data-i18n="news.card6.title">📋 Histórico Inteligente</h3>
-                    <p data-i18n="news.card6.desc">
-                        Armazena apenas textos úteis, ignora timestamps.
-                        Busca rápida com Ctrl+Shift+F.
                     </p>
                 </div>
             </div>
@@ -308,18 +242,7 @@
                     </p>
                 </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3 data-i18n="tech.card5.title">Segurança & Privacidade</h3>
-                    <p data-i18n="tech.card5.desc">
-                        • Zero telemetria<br>
-                        • Totalmente offline<br>
-                        • Dados locais (%APPDATA%)<br>
-                        • Atomic writes (anti-corrupção)<br>
-                        • Validação automática<br>
-                        • Open-source auditável
-                    </p>
-                </div>
+
 
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-bolt"></i></div>
@@ -430,32 +353,6 @@
                     <div class="feature-icon"><i class="fas fa-user-shield"></i></div>
                     <h3 data-i18n="exe.card3.title">Privacidade</h3>
                     <p data-i18n="exe.card3.desc">Totalmente offline, zero telemetria. Configurações e histórico ficam em <code>%APPDATA%\\DahoraApp</code>.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="compatibilidade" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" data-i18n="compat.title">🪟 Compatibilidade & Limitações</h2>
-                <p class="section-subtitle" data-i18n="compat.subtitle">O que esperar no dia a dia, sem surpresas.</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fab fa-windows"></i></div>
-                    <h3 data-i18n="compat.card1.title">Windows 10/11</h3>
-                    <p data-i18n="compat.card1.desc">Funciona em Windows 10 e 11 com bandeja do sistema e atalhos globais.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-window-maximize"></i></div>
-                    <h3 data-i18n="compat.card2.title">Funciona onde você digita</h3>
-                    <p data-i18n="compat.card2.desc">A colagem acontece no app ativo, direto no cursor (ex.: editores, navegador, chats).</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-info-circle"></i></div>
-                    <h3 data-i18n="compat.card3.title">Limitações conhecidas</h3>
-                    <p data-i18n="compat.card3.desc">O menu da bandeja do sistema pode precisar ser fechado e aberto para “atualizar” (limitação do <code>pystray</code>). Use <code>Ctrl+Shift+R</code> para recarregar.</p>
                 </div>
             </div>
         </div>
