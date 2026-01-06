@@ -153,7 +153,7 @@ body.dark-mode .donate-qr-title {
 
 .donate-qr-flex {
     display: flex;
-    gap: 2rem;
+    gap: 4rem; /* Aumentado para evitar interferência na leitura */
     justify-content: center;
     flex-wrap: wrap;
     align-items: flex-start;
@@ -176,23 +176,24 @@ body.dark-mode .donate-qr-label {
 }
 
 .donate-qr-img-wrapper {
-    padding: 8px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    margin-bottom: 0.75rem;
-    transition: background 0.3s ease;
+    padding: 0; /* Removido padding que criava borda */
+    background: transparent; /* Removido fundo que criava contraste ruim */
+    border-radius: 0;
+    margin-bottom: 1rem;
     display: inline-block;
 }
 
 body.dark-mode .donate-qr-img-wrapper {
-    background: #fff; /* QR codes need white background to scan reliably */
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background: #fff; /* QR codes precisam de fundo branco APENAS na área do código */
+    padding: 10px; /* Pequena margem branca segura para leitura no dark mode */
+    border-radius: 8px;
+    box-shadow: none; /* Removido sombra */
 }
 
 .donate-qr-img {
-    width: 130px;
+    width: 180px; /* Aumentado de 130px para facilitar leitura */
     height: auto;
-    border-radius: 6px;
+    border-radius: 4px;
     display: block;
 }
 
