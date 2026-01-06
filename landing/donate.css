@@ -1,0 +1,240 @@
+/* ============================================
+   DONATE SECTION - DAHORA APP
+   Data: 06/01/2026
+   ============================================ */
+
+.donate-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 4rem 2rem;
+    transition: background 0.3s ease;
+}
+
+body.dark-mode .donate-section {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+}
+
+.donate-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.donate-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.donate-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .donate-title {
+    color: var(--text-dark);
+}
+
+.donate-subtitle {
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .donate-subtitle {
+    color: var(--text-gray);
+}
+
+.donate-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.donate-card {
+    text-align: center;
+    padding: 1.75rem 1.5rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s, box-shadow 0.2s, background 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+body.dark-mode .donate-card {
+    background: var(--dark-card);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.donate-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .donate-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.donate-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1;
+}
+
+.donate-card-title {
+    margin: 0.75rem 0;
+    font-size: 1rem;
+    color: #333;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .donate-card-title {
+    color: var(--text-dark);
+}
+
+.donate-link {
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+    word-break: break-all;
+}
+
+.donate-link:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+/* Card Borders Colors */
+.donate-card.github { border-top: 3px solid #4CAF50; }
+.donate-card.mercadopago { border-top: 3px solid #FF9500; }
+.donate-card.paypal { border-top: 3px solid #0070BA; }
+
+.donate-link.github { color: #4CAF50; }
+.donate-link.mercadopago { color: #FF9500; }
+.donate-link.paypal { color: #0070BA; }
+
+/* QR Code Box */
+.donate-qr-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    border-left: 4px solid #4CAF50;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark-mode .donate-qr-box {
+    background: var(--dark-card);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid #4CAF50;
+}
+
+.donate-qr-title {
+    text-align: center;
+    margin: 0 0 1.5rem 0;
+    font-size: 1.1rem;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .donate-qr-title {
+    color: var(--text-dark);
+}
+
+.donate-qr-flex {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.donate-qr-item {
+    text-align: center;
+}
+
+.donate-qr-label {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #333;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .donate-qr-label {
+    color: var(--text-gray);
+}
+
+.donate-qr-img-wrapper {
+    padding: 8px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    transition: background 0.3s ease;
+    display: inline-block;
+}
+
+body.dark-mode .donate-qr-img-wrapper {
+    background: #fff; /* QR codes need white background to scan reliably */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.donate-qr-img {
+    width: 130px;
+    height: auto;
+    border-radius: 6px;
+    display: block;
+}
+
+.donate-pix-key {
+    font-size: 0.8rem;
+    color: #666;
+    font-family: monospace;
+    word-break: break-all;
+    transition: color 0.3s ease;
+    margin-top: 0.5rem;
+    max-width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body.dark-mode .donate-pix-key {
+    color: var(--text-gray);
+}
+
+/* Note Box */
+.donate-note-box {
+    text-align: center;
+    padding: 1.5rem;
+    background: #f0f8f0;
+    border-radius: 10px;
+    border-left: 4px solid #4CAF50;
+    transition: background 0.3s ease;
+}
+
+body.dark-mode .donate-note-box {
+    background: rgba(76, 175, 80, 0.1);
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    border-left: 4px solid #4CAF50;
+}
+
+.donate-note-text {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #2d5a2d;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .donate-note-text {
+    color: #81c784;
+}
