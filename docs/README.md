@@ -15,6 +15,9 @@ Diretório central da documentação técnica do projeto.
 - **[../README.md](../README.md)** - Instalação e uso do aplicativo
 - **[../CHANGELOG.md](../CHANGELOG.md)** - Histórico de mudanças
 
+### Apoio (doações opcionais)
+- **[Apoie o projeto](../README.md#-apoie-o-projeto-opcional)** - Links de doação (Sponsors/Mercado Pago/PayPal/Pix) e QR codes
+
 ### Para Desenvolvedores
 - **[ARCHITECTURE.md](ARCHITECTURE.md)** - Arquitetura técnica
 - **[DEVELOPMENT_HISTORY.md](DEVELOPMENT_HISTORY.md)** - Histórico narrativo

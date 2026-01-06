@@ -158,6 +158,7 @@ def build_executable():
         'pyinstaller',
         '--onefile',
         f'--name={exe_name}',
+        '--specpath=build',
         '--icon=icon.ico',
         '--add-data=icon.ico;.',
         '--add-data=icon_paused.ico;.',
@@ -191,6 +192,7 @@ def build_executable():
         cmd += ['--debug', 'all']
 
     try:
+        os.makedirs('build', exist_ok=True)
         subprocess.run(cmd, check=True)
         print("\n>>> Build concluido com sucesso!")
         print(f">>> Executavel: dist/{exe_name}.exe")

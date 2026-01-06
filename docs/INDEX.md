@@ -11,6 +11,7 @@
 ### Para Usuários Finais
 - **[README.md](../README.md)** - 📖 Visão geral, instalação e uso do aplicativo
 - **[CHANGELOG.md](../CHANGELOG.md)** - 📝 Histórico de mudanças por versão
+- **[Apoie o projeto (opcional)](../README.md#-apoie-o-projeto-opcional)** - ☕ Doações (Sponsors/Mercado Pago/PayPal/Pix) + QR
 
 ### Para Desenvolvedores
 - **[WINDOWS_PYTHON_SETUP.md](WINDOWS_PYTHON_SETUP.md)** - ⚠️ **LEIA PRIMEIRO!** Use `py` no Windows
