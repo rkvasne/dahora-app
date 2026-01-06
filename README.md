@@ -205,35 +205,39 @@ Veja [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
-## ☕ Apoie o projeto (opcional)
+---
 
-Se o Dahora App te ajuda no dia a dia e você quiser apoiar o desenvolvimento, você pode fazer uma doação.
+## ☕ Apoie o Projeto (Opcional)
 
-- GitHub Sponsors: https://github.com/sponsors/rkvasne
-- Mercado Pago (link): https://link.mercadopago.com.br/kvasne
-- PayPal: https://www.paypal.com/donate/?hosted_button_id=JJFQZK647286S
-- Pix (Brasil) — chave: `fa550c5d-fdaf-4484-b52b-760071fe524d`
+Se o Dahora App te ajuda no dia a dia e você quiser apoiar o desenvolvimento, você tem várias formas de contribuir financeiramente:
 
-### QR codes (Pix/PayPal)
+### 💳 Métodos de Doação
 
-Os QR codes abaixo são apenas para **Pix** e **PayPal**. Para **Mercado Pago**, use o link acima.
+- **GitHub Sponsors** → https://github.com/sponsors/rkvasne
+- **Mercado Pago** (Brasil) → https://link.mercadopago.com.br/kvasne
+- **PayPal** (Internacional) → https://www.paypal.com/donate/?hosted_button_id=JJFQZK647286S
+- **Pix** (Brasil) → `fa550c5d-fdaf-4484-b52b-760071fe524d`
 
-<table>
-  <tr>
-    <td align="center">
-      <strong>Pix</strong><br />
-      <img src="landing/images/qr_pix.png" alt="QR code Pix" width="180" />
-    </td>
-    <td align="center">
-      <strong>PayPal</strong><br />
-      <img src="landing/images/qr_paypal.png" alt="QR code PayPal" width="180" />
-    </td>
-  </tr>
-</table>
+### 📱 QR Codes (Pix / PayPal)
 
-Se quiser, você também pode apoiar contribuindo com issues/PRs.
+Escaneie para doação rápida via **Pix** ou **PayPal**:
 
-> Nota: o projeto continua open-source e gratuito; doações ajudam a manter o ritmo de melhorias.
+<div align="center">
+
+| Pix | PayPal |
+|:---:|:------:|
+| ![QR Pix](landing/images/qr_pix.png) | ![QR PayPal](landing/images/qr_paypal.png) |
+
+</div>
+
+### 🤝 Outras Formas de Apoio
+
+Não tem condições financeiras? Sem problema! Você também pode ajudar:
+- Contribuindo com **issues, PRs e sugestões** de melhoria
+- Divulgando o projeto com amigos e na comunidade
+- Reportando bugs e sugestões de features
+
+> **Nota:** O Dahora App permanece **100% open-source e gratuito**. Doações são completamente opcionais e ajudam a manter o ritmo de desenvolvimento e novas features.
 
 ---
 
