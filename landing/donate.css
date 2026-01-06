@@ -103,7 +103,7 @@ body.dark-mode .donate-card-title {
 .donate-link {
     text-decoration: none;
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.8rem; /* Reduzido de 0.9rem para evitar quebra de linha */
     transition: opacity 0.2s;
     word-break: break-all;
 }
@@ -153,7 +153,7 @@ body.dark-mode .donate-qr-title {
 
 .donate-qr-flex {
     display: flex;
-    gap: 4rem; /* Aumentado para evitar interferência na leitura */
+    gap: 6rem; /* Aumentado de 4rem para afastar mais */
     justify-content: center;
     flex-wrap: wrap;
     align-items: flex-start;
@@ -176,22 +176,22 @@ body.dark-mode .donate-qr-label {
 }
 
 .donate-qr-img-wrapper {
-    padding: 0; /* Removido padding que criava borda */
-    background: transparent; /* Removido fundo que criava contraste ruim */
+    padding: 0;
+    background: transparent;
     border-radius: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 0.25rem; /* Reduzido de 1rem para aproximar a legenda */
     display: inline-block;
 }
 
 body.dark-mode .donate-qr-img-wrapper {
-    background: #fff; /* QR codes precisam de fundo branco APENAS na área do código */
-    padding: 10px; /* Pequena margem branca segura para leitura no dark mode */
+    background: #fff;
+    padding: 10px;
     border-radius: 8px;
-    box-shadow: none; /* Removido sombra */
+    box-shadow: none;
 }
 
 .donate-qr-img {
-    width: 180px; /* Aumentado de 130px para facilitar leitura */
+    width: 150px; /* Reduzido de 180px */
     height: auto;
     border-radius: 4px;
     display: block;
@@ -203,7 +203,7 @@ body.dark-mode .donate-qr-img-wrapper {
     font-family: monospace;
     word-break: break-all;
     transition: color 0.3s ease;
-    margin-top: 0.5rem;
+    margin-top: 0; /* Removido margem superior para colar na imagem */
     max-width: 200px;
     margin-left: auto;
     margin-right: auto;
