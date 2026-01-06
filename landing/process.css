@@ -18,6 +18,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     text-align: center;
     position: relative;
     padding: 2rem 1.5rem 1.5rem; /* Mais padding no topo */
@@ -28,6 +29,7 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     z-index: 1;
     height: 100%; /* Ocupa toda altura disponível */
+    min-height: 320px; /* Altura mínima para harmonia visual */
 }
 
 .process-step:hover {
@@ -38,9 +40,8 @@
 
 .step-number {
     position: absolute;
-    top: 50%; /* Centralizado verticalmente */
+    top: 3rem; /* Fixado no topo para alinhamento perfeito entre cards */
     left: -16px; /* Metade para fora na esquerda */
-    transform: translateY(-50%);
     width: 32px;
     height: 32px;
     background: var(--bg-white); /* Fundo sólido para cobrir a borda */
