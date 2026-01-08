@@ -443,6 +443,7 @@ body.dark-mode .lang-btn {
     height: 180px;
     border-radius: 20px;
     object-fit: cover;
+    object-position: center top;
     border: 2px solid rgba(255, 255, 255, 0.1);
     box-shadow: 
         0 20px 40px rgba(0, 0, 0, 0.4),

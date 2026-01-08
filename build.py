@@ -154,14 +154,20 @@ def build_executable():
     console_build = ('--console' in sys.argv) or ('--debug' in sys.argv)
     debug_build = ('--debug' in sys.argv)
 
+    repo_root = os.path.abspath(os.path.dirname(__file__))
+    icon_path = os.path.join(repo_root, 'icon.ico')
+    icon_paused_path = os.path.join(repo_root, 'icon_paused.ico')
+    manifest_path = os.path.join(repo_root, 'manifest.xml')
+    main_path = os.path.join(repo_root, 'main.py')
+
     cmd = [
         'pyinstaller',
         '--onefile',
         f'--name={exe_name}',
         '--specpath=build',
-        '--icon=icon.ico',
-        '--add-data=icon.ico;.',
-        '--add-data=icon_paused.ico;.',
+        f'--icon={icon_path}',
+        f'--add-data={icon_path};.',
+        f'--add-data={icon_paused_path};.',
         '--hidden-import=pystray',
         '--hidden-import=pyperclip',
         '--hidden-import=keyboard',
@@ -181,8 +187,8 @@ def build_executable():
         '--collect-all=winotify',
         '--hidden-import=dahora_app',
         '--hidden-import=dahora_app.ui',
-        '--manifest=manifest.xml',
-        'main.py'
+        f'--manifest={manifest_path}',
+        main_path
     ]
     if console_build:
         cmd.append('--console')

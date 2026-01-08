@@ -7,8 +7,8 @@
 **O gerenciador de timestamps definitivo para Windows.**  
 *Cole datas e horas formatadas instantaneamente com atalhos personalizáveis.*
 
-[![Version](https://img.shields.io/badge/version-0.2.6-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
-[![Python](https://img.shields.io/badge/python-3.8+-green.svg?style=for-the-badge)](https://www.python.org/)
+[![Version](https://img.shields.io/badge/version-0.2.7-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
+[![Python](https://img.shields.io/badge/python-3.12+-green.svg?style=for-the-badge)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
 [![Tests](https://img.shields.io/badge/tests-automated-brightgreen.svg?style=for-the-badge)](tests/README.md)
 [![Architecture](https://img.shields.io/badge/architecture-secure-brightblue.svg?style=for-the-badge)](docs/ARCHITECTURE.md)
@@ -23,7 +23,7 @@
 
 Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sistema leve e poderoso que revoluciona como você lida com timestamps. Ele roda silenciosamente no system tray e permite que você cole a data e hora atual formatada em qualquer lugar, com uma única hotkey.
 
-**Novo na v0.2.6:** Configurações avançadas expostas na UI, descrição opcional em atalhos personalizados e ajustes no monitoramento do clipboard.
+**Novo na v0.2.7:** Documentação revisada e landing atualizada (sem mudanças de comportamento do app).
 
 > **Terminologia:** a UI/landing usam PT‑BR 100% (ex.: “área de transferência”, “bandeja do sistema”, “atalhos”).
 > A documentação técnica pode usar termos comuns em inglês (ex.: `clipboard`, `system tray`, `hotkeys`). Veja [docs/README.md](docs/README.md).
@@ -138,17 +138,21 @@ Toda documentação está organizada em `docs/` com índice centralizado:
 - **[CHANGELOG.md](CHANGELOG.md)** - Registro oficial de mudanças
 
 ### 🤖 Configuração para Agentes de IA:
-- **[AGENTS.md](AGENTS.md)** - Instruções técnicas para agentes de IA (inclui setup do workspace)
+- **[AGENTS.md](AGENTS.md)** - Instruções técnicas para agentes de IA
 - **[.github/copilot-instructions.md](.github/copilot-instructions.md)** - Configuração automática do Copilot
+- **[.github/prompts/](.github/prompts/)** - 17 modos de trabalho (Prompt Files)
 
-**Para usar modos especializados no chat:**
-```
-@agents:rules/modos/modo-seguranca.md
-@agents:rules/modos/modo-banco-dados.md
-@agents:rules/modos/modo-arquiteto.md
-```
+**Para usar modos especializados no chat do Copilot:**
 
-Abra sempre com: `code "e:\Dahora\dahora.code-workspace"`
+Digite `/` seguido do modo:
+```
+/depurador      - Debug e correção de bugs
+/seguranca      - Segurança (OWASP)
+/arquiteto      - Design e arquitetura
+/banco-dados    - SQL, migrations
+/qualidade      - Testes e QA
+/git            - Commits, branches
+```
 
 ---
 
@@ -220,67 +224,26 @@ Veja [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
-## 🤖 Desenvolvimento com Agentes de IA (GitHub Copilot, Cursor, etc)
+## 🤖 Desenvolvimento com Agentes de IA
 
-Este projeto pode ser desenvolvido com suporte de agentes de IA usando o projeto [**Agents**](https://github.com/rkvasne/agents) - um sistema universal de regras para IA.
+Este projeto usa **Prompt Files** (`.github/prompts/`) para integração com VS Code Copilot.
 
-### Configuração Rápida
+### Como Usar
 
-**Passo 1:** Configure VS Code (uma vez)
+No chat do Copilot, digite `/` seguido do modo:
 
-```json
-{
-  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
-  "chat.useAgentsMdFile": true
-}
-```
+| Modo | Comando | Descrição |
+|------|---------|-----------|
+| 🐛 Debug | `/depurador` | Bugs e correções |
+| 🏗️ Arquitetura | `/arquiteto` | Design e patterns |
+| 🔒 Segurança | `/seguranca` | OWASP, auth |
+| 🗄️ Banco Dados | `/banco-dados` | SQL, migrations |
+| 🎨 UI/Frontend | `/frontend` | React, CSS |
+| 🔌 API | `/api` | REST, endpoints |
+| ✅ Qualidade | `/qualidade` | Testes, QA |
+| 🔀 Git | `/git` | Commits, branches |
 
-**Passo 2:** Use uma das 2 soluções abaixo:
-
-#### 🎯 Solução 1: Multi-root Workspace (Recomendada)
-
-Se você tem o projeto Agents clonado em `e:\Agents`:
-
-```powershell
-code "e:\Dahora\dahora.code-workspace"
-```
-
-Depois no chat Copilot:
-```
-@Agents/rules/modos/modo-depurador.md
-
-tenho um bug na validação...
-```
-
-#### 🔗 Solução 2: Symlinks (Alternativa)
-
-Se prefere trabalhar em uma pasta única:
-
-```powershell
-code "e:\Dahora\dahora-app"
-```
-
-Depois no chat Copilot:
-```
-@.agents-rules/modos/modo-depurador.md
-
-tenho um bug na validação...
-```
-
-### Modos Disponíveis
-
-| Contexto | Referência |
-|----------|-----------|
-| 🐛 Debug/Bug | `@Agents/rules/modos/modo-depurador.md` |
-| 🏗️ Arquitetura | `@Agents/rules/modos/modo-arquiteto.md` |
-| 🔒 Segurança | `@Agents/rules/modos/modo-seguranca.md` |
-| 🗄️ Banco Dados | `@Agents/rules/modos/modo-banco-dados.md` |
-| 🎨 UI/Frontend | `@Agents/rules/modos/modo-frontend.md` |
-| 🔌 API | `@Agents/rules/modos/modo-api.md` |
-
-**Documentação completa:** Veja [AGENTS_SETUP.md](AGENTS_SETUP.md)
-
----
+**Documentação completa:** [AGENTS.md](AGENTS.md)
 
 ---
 

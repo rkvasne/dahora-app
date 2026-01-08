@@ -322,7 +322,7 @@ scripts\push_release_lfs.ps1           # Push com LFS
 ## 📐 Padrões de Código
 
 ### Stack Tecnológica
-- **Linguagem:** Python 3.13+
+- **Linguagem:** Python 3.12+
 - **UI:** CustomTkinter (interface moderna)
 - **System Tray:** pystray + Pillow
 - **Hotkeys Globais:** keyboard
@@ -489,5 +489,5 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 ---
 
 **Última atualização:** 8 de janeiro de 2026  
-**Versão do App:** 0.2.6  
+**Versão do App:** 0.2.7  
 **Status:** ✅ Projeto configurado com Prompt Files

@@ -11,15 +11,28 @@
 
 ## 📋 ÍNDICE
 
-1. [v0.2.6 - Configurações Avançadas na UI & Monitoramento Configurável](#v026---configurações-avançadas-na-ui--monitoramento-configurável) 🚀 **ATUAL**
-2. [v0.2.5 - Privacidade (DPAPI) & Ajustes de UI/Landing](#v025---privacidade-dpapi--ajustes-de-uilanding)
-3. [v0.2.3 - Documentação Unificada & Release](#v023---documentação-unificada--release)
-4. [v0.2.2 - Produtividade & Dark Mode Web](#v022---produtividade--dark-mode-web)
-5. [v0.2.0 - Revolução: Cola Automaticamente](#v020---revolução-cola-automaticamente)
-6. [Migração CSS (Fases 1-3)](#migração-css-fases-1-3)
-7. [Correção de Ícone](#correção-de-ícone)
-8. [Padronização do Projeto](#padronização-do-projeto)
-9. [Customizações de UI](#customizações-de-ui)
+1. [v0.2.7 - Documentação & Landing](#v027---documentação--landing) 🚀 **ATUAL**
+2. [v0.2.6 - Configurações Avançadas na UI & Monitoramento Configurável](#v026---configurações-avançadas-na-ui--monitoramento-configurável)
+3. [v0.2.5 - Privacidade (DPAPI) & Ajustes de UI/Landing](#v025---privacidade-dpapi--ajustes-de-uilanding)
+4. [v0.2.3 - Documentação Unificada & Release](#v023---documentação-unificada--release)
+5. [v0.2.2 - Produtividade & Dark Mode Web](#v022---produtividade--dark-mode-web)
+6. [v0.2.0 - Revolução: Cola Automaticamente](#v020---revolução-cola-automaticamente)
+7. [Migração CSS (Fases 1-3)](#migração-css-fases-1-3)
+8. [Correção de Ícone](#correção-de-ícone)
+9. [Padronização do Projeto](#padronização-do-projeto)
+10. [Customizações de UI](#customizações-de-ui)
+
+---
+
+## 🚀 V0.2.7 - DOCUMENTAÇÃO & LANDING
+
+**Data:** 08/01/2026  
+**Status:** ✅ COMPLETA
+
+### ✨ Principais Mudanças
+
+- Versão bump (0.2.6 → 0.2.7) propagada em docs, manifesto e landing.
+- Ajustes pontuais na landing: enquadramento da foto do dev e textos de versão/novidades.
 
 ---
 
@@ -519,7 +532,7 @@ dahora-app/
 
 ## 🎯 PRÓXIMOS PASSOS
 
-1. ✅ v0.2.6 (estado atual) estabilizado e documentado
+1. ✅ v0.2.7 (estado atual) estabilizado e documentado
 2. 🔮 Próximas features em [ROADMAP.md](ROADMAP.md)
 
 ---

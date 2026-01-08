@@ -46,7 +46,7 @@ Compress-Archive -Path $exe.FullName -DestinationPath $zip
 Write-Host "ZIP gerado: $zip"
 ```
 
-⚠️ Evite criar ZIP “na raiz do repositório” (ex: `dahora-app-0.2.6.zip` compactando a pasta toda).
+⚠️ Evite criar ZIP “na raiz do repositório” (ex: `dahora-app-0.2.7.zip` compactando a pasta toda).
 Isso costuma incluir arquivos desnecessários (builds antigos, docs antigas, caches etc.). O ZIP de release deve conter apenas o executável (onefile) ou a pasta `dist/<nome>/` (onedir).
 
 Dica: existe um helper que faz essa limpeza e garante o ZIP correto:
@@ -126,17 +126,17 @@ ls dist/*.zip
 
 #### Passo 2: Adicionar ao Git (com -f se no .gitignore)
 ```powershell
-git add -f dist/DahoraApp_v0.2.6.exe
-git add dist/DahoraApp_v0.2.6.zip
+git add -f dist/DahoraApp_v0.2.7.exe
+git add dist/DahoraApp_v0.2.7.zip
 git add .gitattributes
 ```
 
 #### Passo 3: Commit
 ```powershell
-git commit -m "v0.2.6: Binários para LFS
+git commit -m "v0.2.7: Binários para LFS
 
-- DahoraApp_v0.2.6.exe (~50 MB)
-- DahoraApp_v0.2.6.zip (~50 MB)
+- DahoraApp_v0.2.7.exe (~50 MB)
+- DahoraApp_v0.2.7.zip (~50 MB)
 - GitHub LFS ativado"
 ```
 
@@ -159,8 +159,8 @@ git lfs ls-files
 
 **Saída esperada:**
 ```
-f3d7e4a9c2 * dist/DahoraApp_v0.2.6.exe
-a8b2c1d9e5 * dist/DahoraApp_v0.2.6.zip
+<hash> * dist/DahoraApp_v0.2.7.exe
+<hash> * dist/DahoraApp_v0.2.7.zip
 ```
 
 #### ✅ Ver status do LFS
@@ -175,10 +175,10 @@ Se você adicionou o arquivo ANTES de configurar `.gitattributes`, ele foi envia
 **Solução:**
 ```powershell
 # 1. Remover do histórico (cuidado!)
-git rm --cached dist/DahoraApp_v0.2.6.exe
+git rm --cached dist/DahoraApp_v0.2.7.exe
 
 # 2. Adicionar novamente (agora com LFS)
-git add dist/DahoraApp_v0.2.6.exe
+git add dist/DahoraApp_v0.2.7.exe
 
 # 3. Amend commit anterior
 git commit --amend --no-edit

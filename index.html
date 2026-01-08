@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dahora App v0.2.6 - Kvasne.com</title>
+    <title>Dahora App v0.2.7 - Kvasne.com</title>
     <meta name="description"
         content="Aplicativo Windows para colar timestamps formatados com atalhos personalizáveis. Preserva a área de transferência, sem notificações e funciona offline.">
     <meta name="keywords" content="Windows, área de transferência, data hora, busca, configurações, histórico, MVP, pystray">
@@ -64,7 +64,7 @@
     <!-- Hero Section -->
     <section id="inicio" class="hero">
         <div class="hero-container animate-fade-in">
-            <div class="hero-version" data-i18n="hero.version">ATUALIZAÇÃO V.0.2.6</div>
+            <div class="hero-version" data-i18n="hero.version">ATUALIZAÇÃO V.0.2.7</div>
             <img src="assets/dahora_icon.png" alt="Dahora App Icon" class="hero-icon">
             <h1 class="hero-title">Dahora App</h1>
             <p class="hero-subtitle" data-i18n="hero.subtitle">
@@ -193,7 +193,7 @@
                     <div class="feature-icon"><i class="fas fa-box"></i></div>
                     <h3 data-i18n="tech.card1.title">Stack Tecnológico</h3>
                     <p data-i18n="tech.card1.desc">
-                        • Python 3.8+<br>
+                        • Python 3.12+<br>
                         • pystray (bandeja do sistema)<br>
                         • pyperclip (área de transferência)<br>
                         • keyboard (atalhos)<br>
@@ -220,10 +220,10 @@
                     <div class="feature-icon"><i class="fas fa-flask"></i></div>
                     <h3 data-i18n="tech.card3.title">Testes & Qualidade</h3>
                     <p data-i18n="tech.card3.desc">
-                        • 266 testes automatizados<br>
-                        • 100% cobertura de código<br>
-                        • pytest com fixtures<br>
-                        • CI/CD ready<br>
+                        • Testes automatizados (pytest)<br>
+                        • Cobertura via pytest-cov (opcional)<br>
+                        • Suites unitárias e de integração (quando aplicável)<br>
+                        • Workflow de release no GitHub Actions<br>
                         • Type hints<br>
                         • Logs rotativos
                     </p>
@@ -233,8 +233,7 @@
                     <div class="feature-icon"><i class="fas fa-folder-open"></i></div>
                     <h3 data-i18n="tech.card4.title">Estrutura Modular</h3>
                     <p data-i18n="tech.card4.desc">
-                        • 14 módulos Python<br>
-                        • ~2500+ linhas de código<br>
+                        • Estrutura modular<br>
                         • Separação UI/Core<br>
                         • API clara<br>
                         • Reutilizável<br>
@@ -261,11 +260,9 @@
                     <div class="feature-icon"><i class="fas fa-bolt"></i></div>
                     <h3 data-i18n="tech.card6.title">Performance</h3>
                     <p data-i18n="tech.card6.desc">
-                        • Build: ~31MB<br>
-                        • Startup: <1s<br>
-                        • Memória: ~30MB<br>
-                        • CPU idle: <1%<br>
                         • Monitoramento adaptativo<br>
+                        • Intervalos configuráveis<br>
+                        • Executável Windows via PyInstaller<br>
                         • Otimizado para uso contínuo
                     </p>
                 </div>
@@ -722,7 +719,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p style="margin: 0 0 6px 0; font-size: 15px;" data-i18n="footer.copyright-main">© 2026 <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Kvasne</a> • Dahora App v0.2.6</p>
+            <p style="margin: 0 0 6px 0; font-size: 15px;" data-i18n="footer.copyright-main">© 2026 <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Kvasne</a> • Dahora App v0.2.7</p>
             <p style="margin: 0; font-size: 13px;" data-i18n="footer.copyright-dev">Desenvolvido por <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a></p>
         </div>
     </footer>
@@ -773,7 +770,7 @@
                 'nav.download': 'Download',
                 'nav.faq': 'FAQ',
                 'nav.github': 'GitHub',
-                'hero.version': 'ATUALIZAÇÃO V.0.2.6',
+                'hero.version': 'ATUALIZAÇÃO V.0.2.7',
                 'hero.title': 'Dahora App',
                 'hero.subtitle': 'Cole datas e horas sem quebrar seu fluxo<br>Automaticamente na posição do cursor • Preserve sua área de transferência',
                 'hero.badge.windows': 'Windows 10/11',
@@ -795,7 +792,7 @@
                 'features.card5.desc': '• Design Windows 11<br>• Fonte monoespaçada<br>• Botões sem emojis<br>• Padding padrão MS',
                 'features.card6.title': '🔒 Privado & Offline',
                 'features.card6.desc': '• Zero telemetria<br>• Totalmente offline<br>• Dados locais (%APPDATA%)<br>• Logs limpos',
-                'news.title': '🚀 Novidades da v0.2.6',
+                'news.title': '🚀 Novidades da v0.2.7',
                 'news.subtitle': 'Foco total na sua produtividade e facilidade de uso.',
                 'news.card1.title': '⚙️ Configurações Avançadas',
                 'news.card1.desc': 'Ajuste logs, prewarm da UI e cache do menu do tray diretamente no painel de configurações.',
@@ -812,17 +809,17 @@
                 'tech.title': '🛠️ Detalhes Técnicos',
                 'tech.subtitle': 'Arquitetura sólida e profissional',
                 'tech.card1.title': 'Stack Tecnológico',
-                'tech.card1.desc': '• Python 3.8+<br>• pystray (bandeja do sistema)<br>• pyperclip (área de transferência)<br>• keyboard (atalhos)<br>• Pillow (ícones)<br>• winotify (notificações do Windows)<br>• CustomTkinter (UI moderna)',
+                'tech.card1.desc': '• Python 3.12+<br>• pystray (bandeja do sistema)<br>• pyperclip (área de transferência)<br>• keyboard (atalhos)<br>• Pillow (ícones)<br>• winotify (notificações do Windows)<br>• CustomTkinter (UI moderna)',
                 'tech.card2.title': 'Padrões de Projeto',
                 'tech.card2.desc': '• Thread-safe com <code>Lock()</code><br>• Callback pattern<br>• Atomic writes<br>• Generator pattern<br>• Dependency injection<br>• Single responsibility',
                 'tech.card3.title': 'Testes & Qualidade',
-                'tech.card3.desc': '• 266 testes automatizados<br>• 100% cobertura de código<br>• pytest com fixtures<br>• CI/CD ready<br>• Type hints<br>• Logs rotativos',
+                'tech.card3.desc': '• Testes automatizados (pytest)<br>• Cobertura via pytest-cov (opcional)<br>• Suites unitárias e de integração (quando aplicável)<br>• Workflow de release no GitHub Actions<br>• Type hints<br>• Logs rotativos',
                 'tech.card4.title': 'Estrutura Modular',
-                'tech.card4.desc': '• 14 módulos Python<br>• ~2500+ linhas de código<br>• Separação UI/Core<br>• API clara<br>• Reutilizável<br>• Escalável',
+                'tech.card4.desc': '• Estrutura modular<br>• Separação UI/Core<br>• API clara<br>• Reutilizável<br>• Escalável',
                 'tech.card5.title': 'Integração OS',
                 'tech.card5.desc': '• API Win32 nativa<br>• Hook de teclado global<br>• Monitor de clipboard<br>• Bandeja do sistema<br>• Notificações Toast<br>• Instância única',
                 'tech.card6.title': 'Performance',
-                'tech.card6.desc': '• Build: ~31MB<br>• Startup: <1s<br>• Memória: ~30MB<br>• CPU idle: <1%<br>• Monitoramento adaptativo<br>• Otimizado para uso contínuo',
+                'tech.card6.desc': '• Monitoramento adaptativo<br>• Intervalos configuráveis<br>• Executável Windows via PyInstaller<br>• Otimizado para uso contínuo',
                 'how.title': '🧠 Como Funciona',
                 'how.subtitle': 'Do atalho até a colagem, em segundos.',
                 'how.card1.title': 'Você pressiona o atalho',
@@ -909,7 +906,7 @@
                 'footer.desc': 'Cole timestamps instantaneamente.',
                 'footer.links': 'Links Rápidos',
                 'footer.social': 'Conecte-se',
-                'footer.copyright-main': '© 2026 <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Kvasne</a> • Dahora App v0.2.6',
+                'footer.copyright-main': '© 2026 <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Kvasne</a> • Dahora App v0.2.7',
                 'footer.copyright-dev': 'Desenvolvido por <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a>'
             },
             'en': {
@@ -918,7 +915,7 @@
                 'nav.download': 'Download',
                 'nav.faq': 'FAQ',
                 'nav.github': 'GitHub',
-                'hero.version': 'UPDATE V.0.2.6',
+                'hero.version': 'UPDATE V.0.2.7',
                 'hero.title': 'Dahora App',
                 'hero.subtitle': 'Paste dates and times without breaking your flow<br>Automatically at cursor position • Preserve your clipboard',
                 'hero.badge.windows': 'Windows 10/11',
@@ -940,7 +937,7 @@
                 'features.card5.desc': '• Windows 11 Design<br>• Monospace font<br>• No-emoji buttons<br>• Standard MS padding',
                 'features.card6.title': '🔒 Private & Offline',
                 'features.card6.desc': '• Zero telemetry<br>• Fully offline<br>• Local data (%APPDATA%)<br>• Clean logs',
-                'news.title': '🚀 What\'s New in v0.2.6',
+                'news.title': '🚀 What\'s New in v0.2.7',
                 'news.subtitle': 'Focused on productivity and ease of use.',
                 'news.card1.title': '⚙️ Advanced Settings',
                 'news.card1.desc': 'Adjust logs, UI prewarm, and tray menu cache directly in the settings panel.',
@@ -957,17 +954,17 @@
                 'tech.title': '🛠️ Technical Details',
                 'tech.subtitle': 'Solid and professional architecture',
                 'tech.card1.title': 'Tech Stack',
-                'tech.card1.desc': '• Python 3.8+<br>• pystray (system tray)<br>• pyperclip (clipboard)<br>• keyboard (hotkeys)<br>• Pillow (icons)<br>• winotify (toast notifications)<br>• CustomTkinter (modern UI)',
+                'tech.card1.desc': '• Python 3.12+<br>• pystray (system tray)<br>• pyperclip (clipboard)<br>• keyboard (hotkeys)<br>• Pillow (icons)<br>• winotify (toast notifications)<br>• CustomTkinter (modern UI)',
                 'tech.card2.title': 'Design Patterns',
                 'tech.card2.desc': '• Thread-safe with <code>Lock()</code><br>• Callback pattern<br>• Atomic writes<br>• Generator pattern<br>• Dependency injection<br>• Single responsibility',
                 'tech.card3.title': 'Testing & Quality',
-                'tech.card3.desc': '• 266 automated tests<br>• 100% code coverage<br>• pytest with fixtures<br>• CI/CD ready<br>• Type hints<br>• Rotating logs',
+                'tech.card3.desc': '• Automated tests (pytest)<br>• Coverage via pytest-cov (optional)<br>• Unit and integration suites (when applicable)<br>• GitHub Actions release workflow<br>• Type hints<br>• Rotating logs',
                 'tech.card4.title': 'Modular Structure',
-                'tech.card4.desc': '• 14 Python modules<br>• ~2500+ lines of code<br>• UI/Core separation<br>• Clear public API<br>• Reusable<br>• Scalable',
+                'tech.card4.desc': '• Modular structure<br>• UI/Core separation<br>• Clear public API<br>• Reusable<br>• Scalable',
                 'tech.card5.title': 'OS Integration',
                 'tech.card5.desc': '• Native Win32 API<br>• Global keyboard hook<br>• Clipboard monitor<br>• System tray<br>• Toast notifications<br>• Single instance',
                 'tech.card6.title': 'Performance',
-                'tech.card6.desc': '• Build: ~31MB<br>• Startup: <1s<br>• Memory: ~30MB<br>• CPU idle: <1%<br>• Adaptive monitoring<br>• Optimized for continuous use',
+                'tech.card6.desc': '• Adaptive monitoring<br>• Configurable intervals<br>• Windows executable via PyInstaller<br>• Optimized for continuous use',
                 'how.title': '🧠 How It Works',
                 'how.subtitle': 'From hotkey to paste, in seconds.',
                 'how.card1.title': 'You press the hotkey',
@@ -1054,7 +1051,7 @@
                 'footer.desc': 'Paste timestamps instantly.',
                 'footer.links': 'Quick Links',
                 'footer.social': 'Connect',
-                'footer.copyright-main': '© 2026 <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Kvasne</a> • Dahora App v0.2.6',
+                'footer.copyright-main': '© 2026 <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Kvasne</a> • Dahora App v0.2.7',
                 'footer.copyright-dev': 'Developed by <a href="https://kvasne.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Raphael Kvasne</a>'
             }
         };
