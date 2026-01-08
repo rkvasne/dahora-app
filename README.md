@@ -137,6 +137,21 @@ Toda documentação está organizada em `docs/` com índice centralizado:
 - **[ROADMAP.md](docs/ROADMAP.md)** - Próximos passos
 - **[CHANGELOG.md](CHANGELOG.md)** - Registro oficial de mudanças
 
+### 🤖 Configuração para Agentes de IA:
+- **[AGENTS.md](AGENTS.md)** - Instruções técnicas para agentes de IA (inclui setup do workspace)
+- **[.github/copilot-instructions.md](.github/copilot-instructions.md)** - Configuração automática do Copilot
+
+**Para usar modos especializados no chat:**
+```
+@agents:rules/modos/modo-seguranca.md
+@agents:rules/modos/modo-banco-dados.md
+@agents:rules/modos/modo-arquiteto.md
+```
+
+Abra sempre com: `code "e:\Dahora\dahora.code-workspace"`
+
+---
+
 ## 📂 Estrutura do Projeto
 
 ```
@@ -202,6 +217,68 @@ Comece por [docs/INDEX.md](docs/INDEX.md).
 ## 🤝 Contribuindo
 
 Veja [CONTRIBUTING.md](CONTRIBUTING.md).
+
+---
+
+## 🤖 Desenvolvimento com Agentes de IA (GitHub Copilot, Cursor, etc)
+
+Este projeto pode ser desenvolvido com suporte de agentes de IA usando o projeto [**Agents**](https://github.com/rkvasne/agents) - um sistema universal de regras para IA.
+
+### Configuração Rápida
+
+**Passo 1:** Configure VS Code (uma vez)
+
+```json
+{
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+  "chat.useAgentsMdFile": true
+}
+```
+
+**Passo 2:** Use uma das 2 soluções abaixo:
+
+#### 🎯 Solução 1: Multi-root Workspace (Recomendada)
+
+Se você tem o projeto Agents clonado em `e:\Agents`:
+
+```powershell
+code "e:\Dahora\dahora.code-workspace"
+```
+
+Depois no chat Copilot:
+```
+@Agents/rules/modos/modo-depurador.md
+
+tenho um bug na validação...
+```
+
+#### 🔗 Solução 2: Symlinks (Alternativa)
+
+Se prefere trabalhar em uma pasta única:
+
+```powershell
+code "e:\Dahora\dahora-app"
+```
+
+Depois no chat Copilot:
+```
+@.agents-rules/modos/modo-depurador.md
+
+tenho um bug na validação...
+```
+
+### Modos Disponíveis
+
+| Contexto | Referência |
+|----------|-----------|
+| 🐛 Debug/Bug | `@Agents/rules/modos/modo-depurador.md` |
+| 🏗️ Arquitetura | `@Agents/rules/modos/modo-arquiteto.md` |
+| 🔒 Segurança | `@Agents/rules/modos/modo-seguranca.md` |
+| 🗄️ Banco Dados | `@Agents/rules/modos/modo-banco-dados.md` |
+| 🎨 UI/Frontend | `@Agents/rules/modos/modo-frontend.md` |
+| 🔌 API | `@Agents/rules/modos/modo-api.md` |
+
+**Documentação completa:** Veja [AGENTS_SETUP.md](AGENTS_SETUP.md)
 
 ---
 

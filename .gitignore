@@ -62,3 +62,6 @@ htmlcov/
 *.old
 *.orig
 *~
+
+# Symlink para Agents rules (solução local de desenvolvimento)
+.agents-rules

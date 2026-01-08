@@ -7,6 +7,19 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Não lançado]
 
+### Adicionado
+- **Prompt Files para VS Code Copilot** - 17 modos de trabalho em `.github/prompts/`
+  - Uso: digite `/` no chat e selecione o modo (ex: `/depurador`, `/seguranca`)
+  - Modos: admin, api, arquiteto, banco-dados, depurador, depurador-backend, depurador-devops, depurador-mobile, depurador-web, documentacao, frontend, git, multi-tenant, performance, planejador, qualidade, seguranca
+
+### Documentação
+- Consolidado `AGENTS_SETUP.md` no `AGENTS.md` (arquivo removido)
+- Removidos arquivos redundantes: `DIAGNOSTIC_REPORT.md`, `UPDATE_SUMMARY.md`, `VALIDATION_CHECKLIST.md`
+- Adicionada "Regra de Documentação" no `AGENTS.md` (evitar criar docs desnecessários)
+- Atualizado `README.md` para refletir consolidação
+- Corrigido `copilot-instructions.md` (linhas duplicadas removidas)
+- **Atualizado `AGENTS.md` e `copilot-instructions.md`** - Sintaxe correta para modos (`/comando` em vez de `@agents:`)
+
 ## [0.2.6] - 2026-01-05
 
 ### Adicionado
