@@ -1,20 +1,26 @@
 """
 Tela Sobre Moderna usando CustomTkinter
 """
+
 import customtkinter as ctk
 import webbrowser
 from PIL import Image
 import logging
 import time
 
-from dahora_app.ui.modern_styles import ModernTheme, ModernLabel, ModernFrame, ModernButton
+from dahora_app.ui.modern_styles import (
+    ModernTheme,
+    ModernLabel,
+    ModernFrame,
+    ModernButton,
+)
 from dahora_app.ui.icon_manager import IconManager
 from dahora_app.constants import APP_VERSION
 
 
 class ModernAboutDialog:
     """Janela Sobre moderna com CustomTkinter"""
-    
+
     def __init__(self):
         self.window = None
         self.parent = None
@@ -22,7 +28,7 @@ class ModernAboutDialog:
 
     def set_parent(self, parent: ctk.CTk) -> None:
         self.parent = parent
-    
+
     def show(self):
         """Mostra a janela"""
         start = time.perf_counter()
@@ -35,9 +41,11 @@ class ModernAboutDialog:
             self._show_window()
             show_ms = (time.perf_counter() - t_show) * 1000
             total_ms = (time.perf_counter() - start) * 1000
-            logging.info(f"[UI] ModernAboutDialog.show reuse show={show_ms:.1f}ms total={total_ms:.1f}ms")
+            logging.info(
+                f"[UI] ModernAboutDialog.show reuse show={show_ms:.1f}ms total={total_ms:.1f}ms"
+            )
             return
-        
+
         t_create = time.perf_counter()
         self._create_window()
         create_ms = (time.perf_counter() - t_create) * 1000
@@ -47,15 +55,19 @@ class ModernAboutDialog:
         show_ms = (time.perf_counter() - t_show) * 1000
 
         total_ms = (time.perf_counter() - start) * 1000
-        logging.info(f"[UI] ModernAboutDialog.show create={create_ms:.1f}ms show={show_ms:.1f}ms total={total_ms:.1f}ms")
-    
+        logging.info(
+            f"[UI] ModernAboutDialog.show create={create_ms:.1f}ms show={show_ms:.1f}ms total={total_ms:.1f}ms"
+        )
+
     def _create_window(self):
         """Cria a janela"""
         self.theme = ModernTheme.setup()
         self.colors = ModernTheme.get_colors(self.theme)
 
         if self.parent is None:
-            raise RuntimeError("ModernAboutDialog precisa de parent (CTk root) antes de show().")
+            raise RuntimeError(
+                "ModernAboutDialog precisa de parent (CTk root) antes de show()."
+            )
 
         self.window = ctk.CTkToplevel(self.parent)
         # Evita renderização progressiva (mostra apenas no final)
@@ -63,50 +75,61 @@ class ModernAboutDialog:
         self.window.title("Sobre - Dahora App")
         self.window.geometry("420x510")
         self.window.resizable(False, False)
-        self.window.configure(fg_color=self.colors['bg'])
-        
+        self.window.configure(fg_color=self.colors["bg"])
+
         # Dark title bar
         if self.theme == "dark":
             try:
                 import ctypes
                 from ctypes import windll, c_int, byref, sizeof
+
                 self.window.update_idletasks()
                 hwnd = windll.user32.GetParent(self.window.winfo_id())
                 value = c_int(1)
-                windll.dwmapi.DwmSetWindowAttribute(hwnd, 20, byref(value), sizeof(value))
+                windll.dwmapi.DwmSetWindowAttribute(
+                    hwnd, 20, byref(value), sizeof(value)
+                )
             except Exception:
                 pass
 
         try:
             import ctypes
             from ctypes import windll
+
             self.window.update_idletasks()
-            hwnd = windll.user32.GetParent(self.window.winfo_id()) or self.window.winfo_id()
+            hwnd = (
+                windll.user32.GetParent(self.window.winfo_id())
+                or self.window.winfo_id()
+            )
             style = windll.user32.GetWindowLongW(hwnd, -16)
             windll.user32.SetWindowLongW(hwnd, -16, style & ~0x20000)
-            windll.user32.SetWindowPos(hwnd, None, 0, 0, 0, 0, 0x0001 | 0x0002 | 0x0004 | 0x0020)
+            windll.user32.SetWindowPos(
+                hwnd, None, 0, 0, 0, 0, 0x0001 | 0x0002 | 0x0004 | 0x0020
+            )
         except Exception:
             pass
-        
+
         # Container
         main = ctk.CTkFrame(self.window, fg_color="transparent")
         main.pack(fill="both", expand=True, padx=24, pady=20)
-        
+
         # Logo
         try:
             icon_img = IconManager.load_icon()
             icon_img = icon_img.resize((64, 64))
-            self.photo = ctk.CTkImage(light_image=icon_img, dark_image=icon_img, size=(64, 64))
+            self.photo = ctk.CTkImage(
+                light_image=icon_img, dark_image=icon_img, size=(64, 64)
+            )
             ctk.CTkLabel(main, image=self.photo, text="").pack(pady=(0, 12))
         except Exception:
             pass
-        
+
         # Título
         ctk.CTkLabel(
             main,
             text="Dahora App",
             font=("Segoe UI", 20, "bold"),
-            text_color=self.colors['text_bright'],
+            text_color=self.colors["text_bright"],
         ).pack(pady=(0, 4))
 
         ModernLabel(
@@ -114,44 +137,46 @@ class ModernAboutDialog:
             text="Gerenciador Inteligente de Área de Transferência",
             style="muted",
         ).pack(pady=(0, 16))
-        
+
         # Versão badge
-        version_frame = ctk.CTkFrame(main, fg_color=self.colors['accent'], corner_radius=12)
+        version_frame = ctk.CTkFrame(
+            main, fg_color=self.colors["accent"], corner_radius=12
+        )
         version_frame.pack(pady=(0, 20))
         ctk.CTkLabel(
             version_frame,
             text=f"v{APP_VERSION}",
             font=("Segoe UI", 11, "bold"),
-            text_color=self.colors['text_bright'],
+            text_color=self.colors["text_bright"],
         ).pack(padx=16, pady=4)
-        
+
         # Info card
         info_card = ModernFrame(
             main,
-            fg_color=self.colors['surface'],
+            fg_color=self.colors["surface"],
             border_width=1,
-            border_color=self.colors['border'],
+            border_color=self.colors["border"],
             corner_radius=ModernTheme.CORNER_RADIUS,
         )
         info_card.pack(fill="x", pady=(0, 20))
-        
+
         info_inner = ctk.CTkFrame(info_card, fg_color="transparent")
         info_inner.pack(fill="x", padx=16, pady=12)
-        
+
         features = [
             "✅ Colagem Automática",
             "✅ Atalhos Ilimitados",
             "✅ Histórico Inteligente",
-            "✅ Zero Telemetria"
+            "✅ Zero Telemetria",
         ]
-        
+
         for feat in features:
             ModernLabel(info_inner, text=feat).pack(anchor="w", pady=2)
-        
+
         # Botões
         buttons = ctk.CTkFrame(main, fg_color="transparent")
         buttons.pack(pady=(0, 16))
-        
+
         ModernButton(
             buttons,
             text="GitHub",
@@ -165,19 +190,19 @@ class ModernAboutDialog:
             width=100,
             command=lambda: webbrowser.open("https://kvasne.com"),
         ).pack(side="left", padx=4)
-        
+
         # Copyright
         ModernLabel(
             main,
             text="© 2025 Raphael Kvasne. Licença MIT.",
             style="muted",
         ).pack(side="bottom", pady=(0, 10))
-        
+
         # Não exibe aqui; show() chama _show_window() depois.
-        
-        self.window.bind('<Escape>', lambda e: self._on_close())
+
+        self.window.bind("<Escape>", lambda e: self._on_close())
         self.window.protocol("WM_DELETE_WINDOW", self._on_close)
-        
+
         # Não chama mainloop aqui: o loop Tk roda uma vez no app.
 
     def _center_window(self) -> None:
@@ -222,7 +247,7 @@ class ModernAboutDialog:
             self.window.focus_force()
         except Exception:
             pass
-    
+
     def _on_close(self):
         """Fecha"""
         if self.window:

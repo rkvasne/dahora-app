@@ -8,8 +8,8 @@ from dahora_app.handlers.show_settings_handler import ShowSettingsHandler
 from dahora_app.handlers.show_search_handler import ShowSearchHandler
 
 __all__ = [
-    'QuitAppHandler',
-    'CopyDateTimeHandler',
-    'ShowSettingsHandler',
-    'ShowSearchHandler',
+    "QuitAppHandler",
+    "CopyDateTimeHandler",
+    "ShowSettingsHandler",
+    "ShowSearchHandler",
 ]

@@ -1,6 +1,7 @@
 """
 Janela de Busca Moderna usando CustomTkinter
 """
+
 import customtkinter as ctk
 import threading
 import logging
@@ -22,7 +23,7 @@ from dahora_app.ui.icon_manager import IconManager
 
 class ModernSearchDialog:
     """Janela de busca moderna com CustomTkinter"""
-    
+
     def __init__(self, notification_callback: Optional[Callable] = None):
         self.notification_callback = notification_callback
         self.get_history_callback: Optional[Callable] = None
@@ -34,13 +35,13 @@ class ModernSearchDialog:
         self.selected_index = -1
         self.result_buttons: List[ctk.CTkFrame] = []
         self._results_container: Optional[Any] = None
-    
+
     def set_get_history_callback(self, callback: Callable) -> None:
         self.get_history_callback = callback
-    
+
     def set_copy_callback(self, callback: Callable) -> None:
         self.copy_callback = callback
-    
+
     def set_parent(self, parent: ctk.CTk) -> None:
         self.parent = parent
 
@@ -60,7 +61,9 @@ class ModernSearchDialog:
             except Exception:
                 pass
             total_ms = (time.perf_counter() - start) * 1000
-            logging.info(f"[UI] ModernSearchDialog.show reuse show={show_ms:.1f}ms total={total_ms:.1f}ms")
+            logging.info(
+                f"[UI] ModernSearchDialog.show reuse show={show_ms:.1f}ms total={total_ms:.1f}ms"
+            )
             return
 
         try:
@@ -77,19 +80,23 @@ class ModernSearchDialog:
             except Exception:
                 pass
             total_ms = (time.perf_counter() - start) * 1000
-            logging.info(f"[UI] ModernSearchDialog.show create={create_ms:.1f}ms show={show_ms:.1f}ms total={total_ms:.1f}ms")
+            logging.info(
+                f"[UI] ModernSearchDialog.show create={create_ms:.1f}ms show={show_ms:.1f}ms total={total_ms:.1f}ms"
+            )
         except Exception as e:
             logging.error(f"Erro ao abrir busca: {e}")
             if self.notification_callback:
                 self.notification_callback("Dahora App", f"Erro: {e}")
-    
+
     def _create_window(self) -> None:
         """Cria a janela"""
         self.theme = ModernTheme.setup()
         self.colors = ModernTheme.get_colors(self.theme)
-        
+
         if self.parent is None:
-            raise RuntimeError("ModernSearchDialog precisa de parent (CTk root) antes de show().")
+            raise RuntimeError(
+                "ModernSearchDialog precisa de parent (CTk root) antes de show()."
+            )
 
         window = ctk.CTkToplevel(self.parent)
         self.window = window
@@ -98,20 +105,23 @@ class ModernSearchDialog:
         window.title("Dahora App - Buscar no Histórico")
         window.geometry("650x550")
         window.minsize(500, 400)
-        window.configure(fg_color=self.colors['bg'])
-        
+        window.configure(fg_color=self.colors["bg"])
+
         # Dark title bar
         if self.theme == "dark":
             try:
                 import ctypes
                 from ctypes import windll, c_int, byref, sizeof
+
                 window.update_idletasks()
                 hwnd = windll.user32.GetParent(window.winfo_id())
                 value = c_int(1)
-                windll.dwmapi.DwmSetWindowAttribute(hwnd, 20, byref(value), sizeof(value))
+                windll.dwmapi.DwmSetWindowAttribute(
+                    hwnd, 20, byref(value), sizeof(value)
+                )
             except Exception:
                 pass
-        
+
         # Container sem padding horizontal externo (scrollbar no canto)
         outer = ctk.CTkFrame(window, fg_color="transparent")
         outer.pack(fill="both", expand=True, padx=0, pady=0)
@@ -121,12 +131,14 @@ class ModernSearchDialog:
         top.pack(fill="x", padx=16, pady=(16, 0))
 
         # Header
-        ModernLabel(top, text="🔍 Buscar no Histórico", style="title").pack(anchor="w", pady=(0, 12))
-        
+        ModernLabel(top, text="🔍 Buscar no Histórico", style="title").pack(
+            anchor="w", pady=(0, 12)
+        )
+
         # Campo de busca
         search_frame = ctk.CTkFrame(top, fg_color="transparent")
         search_frame.pack(fill="x", pady=(0, 12))
-        
+
         self.search_var = ctk.StringVar()
         self.search_entry = ModernEntry(
             search_frame,
@@ -139,7 +151,7 @@ class ModernSearchDialog:
         self.search_entry.bind("<KeyRelease>", lambda e: self._perform_search())
         self.search_entry.bind("<Return>", lambda e: self._on_copy())
         self.search_entry.focus_set()
-        
+
         ModernButton(
             search_frame,
             text="Buscar",
@@ -148,7 +160,7 @@ class ModernSearchDialog:
             height=36,
             command=self._perform_search,
         ).pack(side="left")
-        
+
         # Contador
         self.count_label = ModernLabel(top, text="", style="muted")
         self.count_label.pack(anchor="w", pady=(0, 8))
@@ -166,7 +178,7 @@ class ModernSearchDialog:
         # Botões (padded)
         buttons = ctk.CTkFrame(outer, fg_color="transparent")
         buttons.pack(fill="x", padx=16, pady=(0, 16))
-        
+
         ModernButton(
             buttons,
             text="Fechar",
@@ -180,11 +192,11 @@ class ModernSearchDialog:
             width=160,
             command=self._on_copy,
         ).pack(side="right", padx=(0, 8))
-        
+
         # Atalhos
-        window.bind('<Escape>', lambda e: self._on_close())
+        window.bind("<Escape>", lambda e: self._on_close())
         window.protocol("WM_DELETE_WINDOW", self._on_close)
-        
+
         # Não exibe aqui; show() chama _show_window() depois.
 
         # Não chama mainloop aqui: o loop Tk roda uma vez no app.
@@ -253,69 +265,78 @@ class ModernSearchDialog:
             window.after(120, _focus_search)
         except Exception:
             _focus_search()
-    
+
     def _perform_search(self) -> None:
         """Executa a busca"""
         query = self.search_var.get().lower().strip()
-        
+
         # Limpa resultados
-        container = self._results_container or getattr(self.results_frame, "_scrollable_frame", self.results_frame)
+        container = self._results_container or getattr(
+            self.results_frame, "_scrollable_frame", self.results_frame
+        )
         for widget in cast(Any, container).winfo_children():
             widget.destroy()
         self.result_buttons.clear()
         self.filtered_results.clear()
         self.selected_index = -1
-        
+
         if not self.get_history_callback:
             return
-        
+
         history = self.get_history_callback()
-        
+
         for item in reversed(history):
             text = item.get("text", "")
             if query and query not in text.lower():
                 continue
-            
+
             self.filtered_results.append(item)
             self._create_result_item(item, len(self.filtered_results) - 1, query=query)
-        
+
         # Atualiza contador
         count = len(self.filtered_results)
         self.count_label.configure(text=f"{count} resultado{'s' if count != 1 else ''}")
-    
+
     def _create_result_item(self, item: Dict, index: int, query: str = "") -> None:
         """Cria um item de resultado"""
         is_selected = index == self.selected_index
-        bg = self.colors['accent'] if is_selected else self.colors['surface']
+        bg = self.colors["accent"] if is_selected else self.colors["surface"]
 
         # Altura maior para permitir prévia em múltiplas linhas
-        container = self._results_container or getattr(self.results_frame, "_scrollable_frame", self.results_frame)
+        container = self._results_container or getattr(
+            self.results_frame, "_scrollable_frame", self.results_frame
+        )
         frame = ctk.CTkFrame(container, fg_color=bg, corner_radius=6, height=92)
         # Recuo interno do conteúdo (mantém scrollbar no canto)
         frame.pack(fill="x", pady=2, padx=12)
         frame.pack_propagate(False)
-        
+
         inner = ctk.CTkFrame(frame, fg_color="transparent")
         inner.pack(fill="both", expand=True, padx=12, pady=8)
-        
+
         text = item.get("text", "")
         timestamp = item.get("timestamp", "")
-        
+
         # Formata timestamp
         try:
             dt = datetime.fromisoformat(timestamp)
             ts_str = dt.strftime("%d/%m/%Y %H:%M")
         except:
             ts_str = ""
-        
-        text_color = self.colors['text_bright'] if is_selected else self.colors['text']
-        muted_color = self.colors['text'] if is_selected else self.colors['text_muted']
-        
+
+        text_color = self.colors["text_bright"] if is_selected else self.colors["text"]
+        muted_color = self.colors["text"] if is_selected else self.colors["text_muted"]
+
         # Timestamp
         if ts_str:
-            ctk.CTkLabel(inner, text=ts_str, font=("Segoe UI", max(10, ModernTheme.FONT_SIZE_BASE - 2)),
-                        text_color=muted_color, anchor="w").pack(anchor="w")
-        
+            ctk.CTkLabel(
+                inner,
+                text=ts_str,
+                font=("Segoe UI", max(10, ModernTheme.FONT_SIZE_BASE - 2)),
+                text_color=muted_color,
+                anchor="w",
+            ).pack(anchor="w")
+
         # Texto (prévia em múltiplas linhas). Se houver termo de busca,
         # tenta mostrar um trecho que contenha a primeira ocorrência.
         preview = self._build_preview(text or "", query or "")
@@ -339,22 +360,22 @@ class ModernSearchDialog:
             self._highlight_query(preview_box, query)
         except Exception:
             pass
-        
+
         # Binds
         def on_click(e, idx=index):
             self._select_item(idx)
-        
+
         def on_double(e, idx=index):
             self._select_item(idx)
             self._on_copy()
-        
+
         for widget in [frame, inner]:
             widget.bind("<Button-1>", on_click)
             widget.bind("<Double-Button-1>", on_double)
             for child in widget.winfo_children():
                 child.bind("<Button-1>", on_click)
                 child.bind("<Double-Button-1>", on_double)
-        
+
         self.result_buttons.append(frame)
 
     def _build_preview(self, full_text: str, query: str) -> str:
@@ -419,7 +440,12 @@ class ModernSearchDialog:
             preview = preview[:180].rstrip() + "…"
 
         # Se havia mais conteúdo além do que mostramos, adiciona reticências (heurística)
-        if raw_lines and len(raw_lines) > max_lines and preview and not preview.endswith("…"):
+        if (
+            raw_lines
+            and len(raw_lines) > max_lines
+            and preview
+            and not preview.endswith("…")
+        ):
             preview = preview + "…"
 
         return preview
@@ -455,38 +481,40 @@ class ModernSearchDialog:
             end = f"{pos}+{len(q)}c"
             text_widget.tag_add(tag, pos, end)
             start = end
-    
+
     def _select_item(self, index: int) -> None:
         """Seleciona um item"""
         self.selected_index = index
         self._refresh_selection()
-    
+
     def _refresh_selection(self) -> None:
         """Atualiza visual da seleção"""
         for i, frame in enumerate(self.result_buttons):
             is_selected = i == self.selected_index
-            bg = self.colors['accent'] if is_selected else self.colors['surface']
+            bg = self.colors["accent"] if is_selected else self.colors["surface"]
             frame.configure(fg_color=bg)
-    
+
     def _on_copy(self) -> None:
         """Copia o item selecionado"""
         if self.selected_index < 0 or self.selected_index >= len(self.filtered_results):
             if self.notification_callback:
-                self.notification_callback("Dahora App", "Selecione um item para copiar!")
+                self.notification_callback(
+                    "Dahora App", "Selecione um item para copiar!"
+                )
             return
-        
+
         item = self.filtered_results[self.selected_index]
         text = item.get("text", "")
-        
+
         if self.copy_callback:
             self.copy_callback(text)
-        
+
         if self.notification_callback:
             preview = text[:50] + "..." if len(text) > 50 else text
             self.notification_callback("Dahora App", f"Copiado!\n{preview}")
-        
+
         self._on_close()
-    
+
     def _on_close(self) -> None:
         """Fecha"""
         if self.window:
