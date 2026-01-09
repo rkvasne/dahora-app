@@ -96,12 +96,25 @@ def build_executable():
         except Exception:
             pass
 
-    # Define o nome do executável com versão (fonte da verdade: constants.APP_VERSION)
     try:
         from dahora_app.constants import APP_VERSION
-        exe_name = f"DahoraApp_v{APP_VERSION}"
+        app_version = APP_VERSION
     except Exception:
-        exe_name = 'DahoraApp_v0.2.3'
+        app_version = None
+
+    if not app_version:
+        try:
+            from pathlib import Path
+            import re
+
+            constants_src = Path(__file__).resolve().parent / "dahora_app" / "constants.py"
+            content = constants_src.read_text(encoding="utf-8", errors="replace")
+            match = re.search(r'^\s*APP_VERSION\s*=\s*["\']([^"\']+)["\']\s*$', content, flags=re.MULTILINE)
+            app_version = match.group(1) if match else None
+        except Exception:
+            app_version = None
+
+    exe_name = f"DahoraApp_v{app_version or '0.0.0'}"
 
     # Verifica dependências
     try:
@@ -109,6 +122,7 @@ def build_executable():
         import pyperclip  # noqa: F401
         import keyboard  # noqa: F401
         import winotify  # noqa: F401
+        import pydantic  # noqa: F401
         from PIL import Image  # noqa: F401
         print(">>> Todas as dependências estão instaladas")
     except ImportError as e:
@@ -185,6 +199,10 @@ def build_executable():
         '--collect-all=pystray',
         '--collect-all=keyboard',
         '--collect-all=winotify',
+        '--collect-all=pydantic',
+        '--collect-all=pydantic_core',
+        '--hidden-import=pydantic',
+        '--hidden-import=pydantic_core',
         '--hidden-import=dahora_app',
         '--hidden-import=dahora_app.ui',
         f'--manifest={manifest_path}',

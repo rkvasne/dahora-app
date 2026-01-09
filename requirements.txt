@@ -5,4 +5,5 @@ keyboard>=0.13.5
 winotify>=0.15
 pywin32>=306
 customtkinter>=5.2.0
+pydantic>=2.0.0
 

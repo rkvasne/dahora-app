@@ -25,6 +25,17 @@ py build.py
 
 O build gera o `.exe` em `dist/`.
 
+### 2.1) Solução de problemas (build/executável)
+
+#### ❌ Erro ao executar: `No module named 'pydantic'`
+
+Isso indica que o executável foi gerado sem embutir o `pydantic`.
+
+Checklist:
+- `pydantic` está listado em `requirements.txt`
+- O ambiente de build tem as deps instaladas: `py -m pip install -r requirements.txt`
+- O `build.py` inclui `pydantic`/`pydantic_core` como dependências/hidden imports do PyInstaller
+
 ## 3) Gerar ZIP para download
 
 ✅ Recomendado: o `build.py` já gera automaticamente um ZIP **somente com o artefato final** em `dist/`.

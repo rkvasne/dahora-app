@@ -7,6 +7,9 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Não lançado]
 
+### Corrigido
+- Build (PyInstaller): executável inclui dependências do Pydantic (`pydantic`/`pydantic_core`).
+
 ## [0.2.7] - 2026-01-08
 
 ### Adicionado
