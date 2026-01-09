@@ -86,7 +86,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Rastreamento de versão em todos os pontos de documentação
 
 ### Métricas
-- **Testes:** 262/262 passando (100%)
+- **Testes:** 266/266 passando (100%)
 - **Código:** 4500+ linhas adicionadas
 - **Documentação:** 3000+ linhas adicionadas (+ consolidação posterior)
 - **Mudanças Quebrantáveis:** ZERO

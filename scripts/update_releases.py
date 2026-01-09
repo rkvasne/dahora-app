@@ -38,7 +38,7 @@ RELEASES = {
 - Link para página de releases do GitHub
 
 ## 📊 Métricas
-- **Testes:** 262/262 passando (100%)
+- **Testes:** 266/266 passando (100%)
 - **Código:** 4500+ linhas adicionadas
 - **Documentação:** 3000+ linhas adicionadas
 - **Compatibilidade:** 100% mantida"""
