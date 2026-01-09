@@ -137,6 +137,10 @@ class HotkeyManager:
         if not hotkey:
             return False, "hotkey vazio"
 
+        if not HotkeyValidator.is_valid(hotkey):
+            _, reason = HotkeyValidator.validate_with_reason(hotkey)
+            return False, reason or "hotkey inválido"
+
         # Evita conflito com custom shortcuts já registrados
         if hotkey in set(self.custom_shortcuts_hotkeys.values()):
             return False, f"conflito com atalho personalizado ({hotkey})"
@@ -187,6 +191,30 @@ class HotkeyManager:
             "search_history": self.hotkey_search_history,
         }
         normalized = {k: (v or "").strip().lower() for k, v in desired.items()}
+
+        defaults = {
+            "copy_datetime": HOTKEY_COPY_DATETIME,
+            "refresh_menu": HOTKEY_REFRESH_MENU,
+            "search_history": "ctrl+shift+f",
+        }
+
+        for action, hk in list(normalized.items()):
+            if not hk:
+                continue
+            if HotkeyValidator.is_valid(hk):
+                continue
+            fallback = (defaults.get(action) or "").strip().lower()
+            if fallback and HotkeyValidator.is_valid(fallback):
+                normalized[action] = fallback
+                if action == "copy_datetime":
+                    self.hotkey_copy_datetime = fallback
+                elif action == "refresh_menu":
+                    self.hotkey_refresh_menu = fallback
+                elif action == "search_history":
+                    self.hotkey_search_history = fallback
+            else:
+                results[action] = "erro: hotkey inválido"
+
         reverse: Dict[str, List[str]] = {}
         for action, hk in normalized.items():
             if not hk:

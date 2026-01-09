@@ -4,6 +4,7 @@ Testes para HotkeyManager com Custom Shortcuts
 import pytest
 from unittest.mock import Mock, patch, MagicMock
 from dahora_app.hotkeys import HotkeyManager
+from dahora_app.constants import HOTKEY_COPY_DATETIME
 
 
 class TestHotkeyValidation:
@@ -80,6 +81,28 @@ class TestHotkeyValidation:
         # Valida o mesmo hotkey excluindo o próprio ID (para update)
         valid, msg = manager.validate_hotkey("ctrl+shift+1", exclude_shortcut_id=1)
         assert valid is True
+
+
+class TestAppConfiguredHotkeys:
+    """Testes para hotkeys configuráveis do app"""
+
+    @patch('dahora_app.hotkeys.keyboard')
+    def test_apply_configured_hotkeys_fallback_invalid_copy_datetime(
+        self, mock_keyboard
+    ):
+        manager = HotkeyManager()
+        manager.hotkey_copy_datetime = "ctrl+shift"
+
+        mock_keyboard.add_hotkey.return_value = object()
+
+        results = manager.apply_configured_hotkeys()
+
+        assert results["copy_datetime"] == "ok"
+        assert manager.hotkey_copy_datetime == HOTKEY_COPY_DATETIME
+
+        called_hotkeys = [c.args[0] for c in mock_keyboard.add_hotkey.call_args_list]
+        assert "ctrl+shift" not in called_hotkeys
+        assert HOTKEY_COPY_DATETIME in called_hotkeys
 
 
 class TestCustomShortcutsRegistration:
