@@ -192,7 +192,8 @@ body.dark-mode .donate-qr-img-wrapper {
 
 .donate-qr-img {
     width: 150px; /* Reduzido de 180px */
-    height: auto;
+    height: 150px;
+    object-fit: contain;
     border-radius: 4px;
     display: block;
 }
