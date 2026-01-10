@@ -7,6 +7,14 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Não lançado]
 
+### Corrigido
+- Landing (mobile): menu sanduíche sem desfoque nas opções.
+- Landing (mobile): “Como Funciona” sem espaçamento excessivo no texto dos passos.
+- Landing (mobile): badges do Hero alinhados em 1 linha (3 itens).
+- Landing: alternância de fundos pós-Download mais evidente e consistente.
+- Landing (mobile): removida faixa escura entre “Sobre o dev” e rodapé.
+- Landing (mobile): removido card extra (glass) na seção Download.
+
 ### Documentação
 - Template da landing com specs por seção em `docs/LANDING_TEMPLATE.md`.
 

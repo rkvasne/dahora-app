@@ -345,14 +345,18 @@ Este arquivo descreve as especificações visuais (fontes, espaçamentos, tamanh
 - `.dev-container`: coluna, `padding: 2rem`, `gap: 2rem`; `.dev-name`: `font-size: 1.8rem`; `.dev-bio`: `0.95rem`
 
 **600px (Hero badges)** ([dark-sections.css](file:///e:/Dahora/dahora-app/landing/dark-sections.css#L134-L144))
-- `.hero-badge-item`: `width: calc(50% - 1rem)` e `font-size: 0.85rem`
+- `.hero-badge-item`: `width: calc(33.333% - 0.5rem)` e `font-size: 0.75rem`
+- Ícone do badge: `42x42px`
 
 **900px (Process flow)** ([process.css](file:///e:/Dahora/dahora-app/landing/process.css#L176-L217))
 - `.process-flow`: vira coluna, `gap: 2rem`
 - `.process-step`: vira layout em linha (row), `max-width: 400px`, `padding: 1.5rem`
 - `.step-arrow`: gira 90°
 
+**520px (Process flow)** ([process.css](file:///e:/Dahora/dahora-app/landing/process.css#L219-L242))
+- `.process-step`: volta para layout em coluna (centralizado) para evitar conteúdo espremido
+
 **Footer 768px e 480px** ([footer.css](file:///e:/Dahora/dahora-app/landing/footer.css#L143-L214))
 - 768px: footer vira 1 coluna; padding reduz; fontes do bottom menores
-- 480px: padding reduz mais; ícones sociais 40px; títulos 14px; links 13px
+- 480px: padding reduz mais; sem margem superior; ícones sociais 40px; títulos 14px; links 13px
 
