@@ -268,7 +268,7 @@ Escaneie para doação rápida via **Pix** ou **PayPal**:
 
 | Pix | PayPal |
 |:---:|:------:|
-| ![QR Pix](landing/images/qr_pix.png) | ![QR PayPal](landing/images/qr_paypal.png) |
+| <img src="landing/images/qr_pix.png" alt="QR Pix" width="150" height="150"> | <img src="landing/images/qr_paypal.png" alt="QR PayPal" width="150" height="150"> |
 
 </div>
 
