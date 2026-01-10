@@ -267,7 +267,7 @@ body.dark-mode .lang-btn {
 .feature-icon {
     width: 56px; /* Ligeiramente menor */
     height: 56px;
-    background: linear-gradient(135deg, #0078D4 0%, #2B88D8 100%);
+    background: linear-gradient(135deg, #005A9E 0%, #0078D4 100%);
     border: none;
     border-radius: 10px; /* Menos arredondado */
     display: flex;
@@ -277,12 +277,12 @@ body.dark-mode .lang-btn {
     margin-bottom: 1.5rem;
     transition: all 0.3s;
     color: white;
-    box-shadow: 0 3px 8px rgba(0, 120, 212, 0.15); /* Mais sutil */
+    box-shadow: 0 4px 12px rgba(0, 120, 212, 0.25);
 }
 
 .feature-card:hover .feature-icon {
-    background: linear-gradient(135deg, #005A9E 0%, #0078D4 100%);
-    box-shadow: 0 4px 12px rgba(0, 120, 212, 0.25);
+    background: linear-gradient(135deg, #0078D4 0%, #2B88D8 100%);
+    box-shadow: 0 3px 8px rgba(0, 120, 212, 0.15); /* Mais sutil */
     transform: none; /* REMOVIDO ZOOM/MOVIMENTO */
 }
 
@@ -490,45 +490,49 @@ body.dark-mode .lang-btn {
     height: 64px;
     margin: 0 auto 1.5rem;
     border-radius: 14px;
-    border: 1px solid rgba(15, 23, 42, 0.18);
+    border: 1px solid rgba(56, 189, 248, 0.75);
     border-bottom-width: 3px;
-    background: linear-gradient(180deg, #ffffff, #f1f5f9);
-    color: var(--text-dark);
+    background: linear-gradient(180deg, rgba(0, 120, 212, 0.98), rgba(0, 90, 158, 0.98));
+    color: #ffffff;
     font-size: 1.9rem;
     font-weight: 800;
     box-shadow:
-        0 10px 22px rgba(0, 0, 0, 0.08),
-        0 6px 0 rgba(15, 23, 42, 0.18);
+        0 10px 22px rgba(0, 0, 0, 0.14),
+        0 6px 0 rgba(56, 189, 248, 0.28),
+        0 0 22px rgba(56, 189, 248, 0.28);
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
     transform: translateY(0);
-    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
 }
 
 .install-card:hover .install-number {
     transform: translateY(4px);
-    background: linear-gradient(180deg, #eef2f7, #e2e8f0);
-    color: var(--primary-color);
-    border-color: rgba(245, 158, 11, 0.5);
+    background: linear-gradient(180deg, rgba(0, 90, 158, 0.98), rgba(0, 120, 212, 0.98));
+    border-color: rgba(56, 189, 248, 0.95);
     box-shadow:
-        0 6px 14px rgba(0, 0, 0, 0.08),
-        0 2px 0 rgba(15, 23, 42, 0.18);
+        0 6px 14px rgba(0, 0, 0, 0.14),
+        0 2px 0 rgba(56, 189, 248, 0.28),
+        0 0 18px rgba(56, 189, 248, 0.38);
 }
 
 body.dark-mode .install-number {
-    border-color: rgba(255, 255, 255, 0.14);
-    background: linear-gradient(180deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
-    color: var(--text-light);
+    border-color: rgba(56, 189, 248, 0.75);
+    background: linear-gradient(180deg, rgba(0, 120, 212, 0.92), rgba(0, 90, 158, 0.92));
+    color: #ffffff;
     box-shadow:
         0 10px 22px rgba(0, 0, 0, 0.35),
-        0 6px 0 rgba(255, 255, 255, 0.08);
+        0 6px 0 rgba(56, 189, 248, 0.22),
+        0 0 22px rgba(56, 189, 248, 0.22);
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
 }
 
 body.dark-mode .install-card:hover .install-number {
-    background: linear-gradient(180deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
-    color: var(--primary-color);
-    border-color: rgba(245, 158, 11, 0.45);
+    background: linear-gradient(180deg, rgba(0, 90, 158, 0.92), rgba(0, 120, 212, 0.92));
+    border-color: rgba(56, 189, 248, 0.95);
     box-shadow:
         0 6px 14px rgba(0, 0, 0, 0.35),
-        0 2px 0 rgba(255, 255, 255, 0.08);
+        0 2px 0 rgba(56, 189, 248, 0.22),
+        0 0 18px rgba(56, 189, 248, 0.3);
 }
 
 .dev-content {
