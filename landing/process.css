@@ -215,3 +215,19 @@ body.dark-mode .process-step:hover {
         margin-bottom: 0.25rem;
     }
 }
+
+@media (max-width: 520px) {
+    .process-step {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        gap: 0.9rem;
+        padding: 1.75rem 1.25rem 1.25rem;
+    }
+
+    .step-icon {
+        width: 56px;
+        height: 56px;
+        font-size: 1.6rem;
+    }
+}
