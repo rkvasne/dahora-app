@@ -4,13 +4,9 @@
    ============================================ */
 
 .donate-section {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    background: var(--bg-white);
     padding: 4rem 2rem;
     transition: background 0.3s ease;
-}
-
-body.dark-mode .donate-section {
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
 }
 
 .donate-container {
