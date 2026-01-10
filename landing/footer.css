@@ -187,7 +187,7 @@
 @media (max-width: 480px) {
     .main-footer {
         padding: 30px 16px 16px;
-        margin-top: 60px;
+        margin-top: 0;
     }
 
     .footer-content {
