@@ -1,7 +1,7 @@
 # 📜 HISTÓRICO DE DESENVOLVIMENTO - DAHORA APP
 
 **Projeto:** Dahora App - System tray para Data/Hora  
-**Última atualização:** 6 de janeiro de 2026
+**Última atualização:** 9 de janeiro de 2026
 
 > Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
@@ -11,16 +11,43 @@
 
 ## 📋 ÍNDICE
 
-1. [v0.2.7 - Documentação & Landing](#v027---documentação--landing) 🚀 **ATUAL**
-2. [v0.2.6 - Configurações Avançadas na UI & Monitoramento Configurável](#v026---configurações-avançadas-na-ui--monitoramento-configurável)
-3. [v0.2.5 - Privacidade (DPAPI) & Ajustes de UI/Landing](#v025---privacidade-dpapi--ajustes-de-uilanding)
-4. [v0.2.3 - Documentação Unificada & Release](#v023---documentação-unificada--release)
-5. [v0.2.2 - Produtividade & Dark Mode Web](#v022---produtividade--dark-mode-web)
-6. [v0.2.0 - Revolução: Cola Automaticamente](#v020---revolução-cola-automaticamente)
-7. [Migração CSS (Fases 1-3)](#migração-css-fases-1-3)
-8. [Correção de Ícone](#correção-de-ícone)
-9. [Padronização do Projeto](#padronização-do-projeto)
-10. [Customizações de UI](#customizações-de-ui)
+1. [v0.2.9 - Release (versão alinhada)](#v029---release-versão-alinhada) 🚀 **ATUAL**
+2. [v0.2.8 - Documentação (revisão)](#v028---documentação-revisão)
+3. [v0.2.7 - Documentação & Landing](#v027---documentação--landing)
+3. [v0.2.6 - Configurações Avançadas na UI & Monitoramento Configurável](#v026---configurações-avançadas-na-ui--monitoramento-configurável)
+4. [v0.2.5 - Privacidade (DPAPI) & Ajustes de UI/Landing](#v025---privacidade-dpapi--ajustes-de-uilanding)
+5. [v0.2.3 - Documentação Unificada & Release](#v023---documentação-unificada--release)
+6. [v0.2.2 - Produtividade & Dark Mode Web](#v022---produtividade--dark-mode-web)
+7. [v0.2.0 - Revolução: Cola Automaticamente](#v020---revolução-cola-automaticamente)
+8. [Migração CSS (Fases 1-3)](#migração-css-fases-1-3)
+9. [Correção de Ícone](#correção-de-ícone)
+10. [Padronização do Projeto](#padronização-do-projeto)
+11. [Customizações de UI](#customizações-de-ui)
+
+---
+
+## 🚀 V0.2.9 - RELEASE (VERSÃO ALINHADA)
+
+**Data:** 10/01/2026  
+**Status:** ✅ COMPLETA
+
+### ✨ Principais Mudanças
+
+- Versão bump (0.2.8 → 0.2.9) alinhada em app, landing e documentação.
+- Release gerado para `v0.2.9` com artefatos em `dist/`.
+
+---
+
+## 🚀 V0.2.8 - DOCUMENTAÇÃO (REVISÃO)
+
+**Data:** 09/01/2026  
+**Status:** ✅ COMPLETA
+
+### ✨ Principais Mudanças
+
+- Versão bump (0.2.7 → 0.2.8) alinhada na documentação.
+- Exemplos em `docs/RELEASE.md` padronizados com `X.Y.Z` para evitar hardcode por versão.
+- Atualização de índices e políticas (docs/INDEX, PRIVACY, SECURITY, PRD, ROADMAP).
 
 ---
 
@@ -296,7 +323,7 @@ Redução: 56% no tamanho do arquivo
 - ✅ Gradiente laranja→vermelho nos botões CTA
 - ✅ Efeito "facho de luz" nos cards
 - ✅ Ícones monocromáticos com hover laranja
-- ✅ Código `python build.py` com contraste
+- ✅ Código `py build.py` com contraste
 - ✅ Todas as animações e transições
 
 ---
@@ -532,7 +559,7 @@ dahora-app/
 
 ## 🎯 PRÓXIMOS PASSOS
 
-1. ✅ v0.2.7 (estado atual) estabilizado e documentado
+1. ✅ v0.2.9 (estado atual) estabilizado e documentado
 2. 🔮 Próximas features em [ROADMAP.md](ROADMAP.md)
 
 ---

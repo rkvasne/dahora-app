@@ -1,5 +1,5 @@
-// VERSÃO: v0.2.1
-console.log('🎨 Landing Page v0.2.1 carregada! Ícones monocromáticos ativos.');
+// VERSÃO: v0.2.9
+console.log('🎨 Landing Page v0.2.9 carregada! Ícones monocromáticos ativos.');
 
 // FAQ Toggle
 function toggleFAQ(button) {

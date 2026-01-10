@@ -7,7 +7,7 @@
 **O gerenciador de timestamps definitivo para Windows.**  
 *Cole datas e horas formatadas instantaneamente com atalhos personalizáveis.*
 
-[![Version](https://img.shields.io/badge/version-0.2.7-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
+[![Version](https://img.shields.io/badge/version-0.2.9-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
 [![Python](https://img.shields.io/badge/python-3.12+-green.svg?style=for-the-badge)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
 [![Tests](https://img.shields.io/badge/tests-automated-brightgreen.svg?style=for-the-badge)](tests/README.md)
@@ -19,11 +19,11 @@
 
 ---
 
-##  Por que Dahora App?
+## Por que Dahora App?
 
 Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sistema leve e poderoso que revoluciona como você lida com timestamps. Ele roda silenciosamente no system tray e permite que você cole a data e hora atual formatada em qualquer lugar, com uma única hotkey.
 
-**Novo na v0.2.7:** Documentação revisada e landing atualizada (sem mudanças de comportamento do app).
+**Novo na v0.2.9:** Release com versão alinhada (docs/app/landing) e novo executável gerado.
 
 > **Terminologia:** a UI/landing usam PT‑BR 100% (ex.: “área de transferência”, “bandeja do sistema”, “atalhos”).
 > A documentação técnica pode usar termos comuns em inglês (ex.: `clipboard`, `system tray`, `hotkeys`). Veja [docs/README.md](docs/README.md).
@@ -193,25 +193,25 @@ dahora-app/
 ## 🔒 Segurança & Qualidade
 
 ### Status de Implementação
-- ✅ **Fase 1:** Endurecimento de segurança (66 testes)
+- ✅ **Fase 1:** Endurecimento de segurança
   - Hotkey validation
   - Pydantic schemas
   - Type hints
   
-- ✅ **Fase 4:** Gerenciador de instância única (21 testes)
+- ✅ **Fase 4:** Gerenciador de instância única
   - Windows mutex
   - Instance protection
   
-- ✅ **Fase 5:** Sincronização de threads (24 testes)
+- ✅ **Fase 5:** Sincronização de threads
   - Race condition fixes
   - Safe shutdown coordination
   
-- ✅ **Fase 6:** Consolidação da lógica de callbacks (84 testes)
-  - Base `CallbackManager` (31 testes)
-  - Handler implementations (35 testes)
-  - Integration tests (18 testes)
+- ✅ **Fase 6:** Consolidação da lógica de callbacks
+  - Base `CallbackManager`
+  - Handler implementations
+  - Integration tests
   
-**Total:** 266/266 testes passando (100%)
+**Testes:** suíte automatizada via pytest (veja [tests/README.md](tests/README.md)).
 
 ### Documentação
 Comece por [docs/INDEX.md](docs/INDEX.md).

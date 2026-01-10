@@ -22,7 +22,7 @@
   - `dahora_app/constants.py`
   - `README.md` (badge e download)
   - `CHANGELOG.md` (entrada `## [X.Y.Z]`)
-  - Arquivos `.spec` do PyInstaller
+  - Arquivo `.spec` gerado em `build/` ao rodar `py build.py`
 
 ### Qualidade Antes de Commit
 - ✅ Executar testes: `py -m pytest`

@@ -2,7 +2,7 @@
 
 > Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
-> **Última atualização:** Janeiro 2026 | **Versão atual:** v0.2.7
+> **Última atualização:** Janeiro 2026 | **Versão atual:** v0.2.9
 
 Roadmap de alto nível para próximas melhorias. Detalhes específicos devem ser documentados em issues/discussions no GitHub.
 

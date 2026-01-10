@@ -7,8 +7,22 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Não lançado]
 
+## [0.2.9] - 2026-01-10
+
+### Alterado
+- Versão alinhada em docs, landing e metadados do app.
+
+### Build
+- Artefatos de release gerados em `dist/` para `v0.2.9`.
+
+## [0.2.8] - 2026-01-09
+
 ### Corrigido
 - Build (PyInstaller): executável inclui dependências do Pydantic (`pydantic`/`pydantic_core`).
+
+### Documentação
+- Revisão geral: versões e referências alinhadas para `0.2.8`.
+- Exemplos em `docs/RELEASE.md` padronizados com `X.Y.Z` (sem hardcode por release).
 
 ## [0.2.7] - 2026-01-08
 
@@ -750,7 +764,7 @@ Esta versão marca a conclusão do **MVP (Minimum Viable Product)** do Dahora Ap
 
 ### Adicionado
 - Workflow `.github/workflows/release.yml` (Windows runner)
-- Automação de build com `python build.py` e upload de assets (.exe e .sha256)
+- Automação de build com `py build.py` e upload de assets (.exe e .sha256)
 - Extração automática de notas do `CHANGELOG.md` para compor o corpo do release
 
 ### Técnica

@@ -1,6 +1,6 @@
 # 📚 Índice de Documentação - Dahora App
 
-> **Ponto central de navegação** para toda documentação do projeto Dahora App v0.2.7
+> **Ponto central de navegação** para toda documentação do projeto Dahora App v0.2.9
 
 > Navegação: [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
@@ -122,7 +122,7 @@ docs/
   - `dahora_app/constants.py`
   - `README.md` (badge e link de download)
   - `CHANGELOG.md` (nova entrada)
-  - Arquivos `.spec` do PyInstaller
+  - Arquivo `.spec` gerado em `build/` ao rodar `py build.py`
 
 ### Links Internos
 - Use caminhos relativos: `docs/FILE.md`, `../README.md`
@@ -136,5 +136,5 @@ docs/
 
 ---
 
-**Última atualização:** Janeiro 2026 | **Versão:** v0.2.7
+**Última atualização:** Janeiro 2026 | **Versão:** v0.2.9
 
