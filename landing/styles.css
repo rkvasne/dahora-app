@@ -687,27 +687,53 @@ body.dark-mode .install-card:hover .install-number {
     flex-wrap: wrap;
 }
 
-/* Removido estilo antigo .dev-link e substituído por .social-btn */
+/* Removido estilo antigo .dev-link e substituído por .social-btn (TECLA PADRONIZADA 48px) */
 .social-btn {
-    width: 48px; /* Ligeiramente menor */
+    width: 48px;
     height: 48px;
-    border-radius: 10px; /* Menos arredondado */
-    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(56, 189, 248, 0.75);
+    border-bottom-width: 3px;
+    background: linear-gradient(180deg, rgba(0, 120, 212, 0.98), rgba(0, 90, 158, 0.98));
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
     text-decoration: none;
     font-size: 1.2rem;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.14),
+        0 5px 0 rgba(56, 189, 248, 0.28),
+        0 0 18px rgba(56, 189, 248, 0.28);
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+    transform: translateY(0);
+    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.1s cubic-bezier(0.4, 0, 0.2, 1), 
+                background 0.12s ease, 
+                color 0.12s ease, 
+                border-color 0.12s ease;
 }
 
 .social-btn:hover {
-    background: var(--dev-primary);
-    color: var(--dev-bg);
-    transform: translateY(-3px); /* Menos movimento */
-    box-shadow: 0 8px 15px rgba(0,0,0,0.15); /* Mais sutil */
+    transform: translateY(2px);
+    background: linear-gradient(180deg, rgba(0, 90, 158, 0.98), rgba(0, 120, 212, 0.98));
+    border-color: rgba(56, 189, 248, 0.95);
+    border-bottom-width: 3px;
+    box-shadow:
+        0 5px 12px rgba(0, 0, 0, 0.14),
+        0 3px 0 rgba(56, 189, 248, 0.28),
+        0 0 15px rgba(56, 189, 248, 0.38);
+    color: white;
+}
+
+.social-btn:active {
+    transform: translateY(5px) !important;
+    border-bottom-width: 0px !important;
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.1),
+        0 0 0 rgba(56, 189, 248, 0.28),
+        0 0 8px rgba(56, 189, 248, 0.2);
+    transition: all 0.05s ease-out;
 }
 
 @media (max-width: 768px) {
