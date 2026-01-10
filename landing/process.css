@@ -60,23 +60,31 @@ body.dark-mode .step-number {
 }
 
 .step-icon {
-    font-size: 2rem;
-    color: var(--primary-color);
+    font-size: 1.6rem;
+    color: white;
     margin: 1rem 0 1rem;
-    height: 60px;
-    width: 60px;
-    background: var(--light-bg);
-    border-radius: 50%;
+    height: 56px;
+    width: 56px;
+    background: linear-gradient(135deg, #005A9E 0%, #0078D4 100%);
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease, border-color 0.12s ease;
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    border-bottom-width: 3px;
+    box-shadow:
+        0 4px 12px rgba(0, 120, 212, 0.25),
+        0 4px 0 rgba(56, 189, 248, 0.22);
 }
 
 .process-step:hover .step-icon {
-    background: var(--primary-color);
-    color: white;
-    transform: scale(1.1);
+    background: linear-gradient(135deg, #0078D4 0%, #2B88D8 100%);
+    border-color: rgba(56, 189, 248, 0.7);
+    transform: translateY(2px);
+    box-shadow:
+        0 3px 8px rgba(0, 120, 212, 0.15),
+        0 2px 0 rgba(56, 189, 248, 0.22);
 }
 
 .process-step h3 {
@@ -116,7 +124,11 @@ body.dark-mode .process-step {
 }
 
 body.dark-mode .step-icon {
-    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, #005A9E 0%, #0078D4 100%);
+    border-color: rgba(56, 189, 248, 0.4);
+    box-shadow:
+        0 4px 12px rgba(0, 120, 212, 0.25),
+        0 4px 0 rgba(56, 189, 248, 0.22);
 }
 
 body.dark-mode .process-step:hover {

@@ -275,15 +275,24 @@ body.dark-mode .lang-btn {
     justify-content: center;
     font-size: 1.4rem;
     margin-bottom: 1.5rem;
-    transition: all 0.3s;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease, border-color 0.12s ease;
     color: white;
     box-shadow: 0 4px 12px rgba(0, 120, 212, 0.25);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    border-bottom-width: 3px;
+    box-shadow:
+        0 4px 12px rgba(0, 120, 212, 0.25),
+        0 4px 0 rgba(56, 189, 248, 0.22);
 }
 
 .feature-card:hover .feature-icon {
     background: linear-gradient(135deg, #0078D4 0%, #2B88D8 100%);
     box-shadow: 0 3px 8px rgba(0, 120, 212, 0.15); /* Mais sutil */
-    transform: none; /* REMOVIDO ZOOM/MOVIMENTO */
+    border-color: rgba(56, 189, 248, 0.7);
+    transform: translateY(2px);
+    box-shadow:
+        0 3px 8px rgba(0, 120, 212, 0.15),
+        0 2px 0 rgba(56, 189, 248, 0.22);
 }
 
 .feature-card h3 {
