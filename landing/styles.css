@@ -506,6 +506,8 @@ body.dark-mode .lang-btn {
 .install-card:hover .install-number {
     transform: translateY(4px);
     background: linear-gradient(180deg, #eef2f7, #e2e8f0);
+    color: var(--primary-color);
+    border-color: rgba(245, 158, 11, 0.5);
     box-shadow:
         0 6px 14px rgba(0, 0, 0, 0.08),
         0 2px 0 rgba(15, 23, 42, 0.18);
@@ -522,6 +524,8 @@ body.dark-mode .install-number {
 
 body.dark-mode .install-card:hover .install-number {
     background: linear-gradient(180deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
+    color: var(--primary-color);
+    border-color: rgba(245, 158, 11, 0.45);
     box-shadow:
         0 6px 14px rgba(0, 0, 0, 0.35),
         0 2px 0 rgba(255, 255, 255, 0.08);
