@@ -13,7 +13,7 @@
 [![Tests](https://img.shields.io/badge/tests-automated-brightgreen.svg?style=for-the-badge)](tests/README.md)
 [![Architecture](https://img.shields.io/badge/architecture-secure-brightblue.svg?style=for-the-badge)](docs/ARCHITECTURE.md)
 
-[Features](#-funcionalidades) • [Instalação](#-instalação) • [Como Usar](#-como-usar) • [Configuração](#-configuração) • [Desenvolvimento](#-desenvolvimento) • [Apoie o Projeto](#-apoie-o-projeto-opcional)
+[Funcionalidades](#-funcionalidades) • [Instalação](#-instalação) • [Como Usar](#-como-usar) • [Configuração](#-configuração) • [Documentação](#-documentação) • [Apoie o Projeto](#-apoie-o-projeto-opcional)
 
 </div>
 
