@@ -2,13 +2,13 @@
 
 Obrigado por considerar contribuir com o Dahora App.
 
-> Navegação: [README do projeto](README.md) • [Documentação (índice)](docs/INDEX.md) • [Testes](tests/README.md)
+> Navegação: [README do projeto](README.md) • [Documentação](docs/README.md) • [Testes](tests/README.md)
 
 ---
 
 ## 1) Comece aqui
 
-- Documentação (índice): [docs/INDEX.md](docs/INDEX.md)
+- Documentação: [docs/README.md](docs/README.md)
 - Configuração Windows/Python: [docs/WINDOWS_PYTHON_SETUP.md](docs/WINDOWS_PYTHON_SETUP.md) (use `py`)
 
 ---

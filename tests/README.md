@@ -2,7 +2,7 @@
 
 Este diretório contém a suíte de testes do Dahora App.
 
-> Navegação: [README do projeto](../README.md) • [Documentação (índice)](../docs/INDEX.md)
+> Navegação: [README do projeto](../README.md) • [Documentação](../docs/README.md)
 
 ## 📊 Status Atual
 

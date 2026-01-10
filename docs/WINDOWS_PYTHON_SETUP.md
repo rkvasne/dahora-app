@@ -1,6 +1,6 @@
 # ⚠️ IMPORTANTE: Python no Windows
 
-> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
+> Navegação: [Documentação](README.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
 ## Para Agentes de IA / Contribuidores
 

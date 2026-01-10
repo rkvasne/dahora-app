@@ -3,7 +3,7 @@
 **Projeto:** Dahora App - System tray para Data/Hora  
 **Última atualização:** 10 de janeiro de 2026
 
-> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
+> Navegação: [Documentação](README.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
 > Nota: o **histórico narrativo** fica aqui; o registro oficial de mudanças por versão fica no [CHANGELOG.md](../CHANGELOG.md).
 

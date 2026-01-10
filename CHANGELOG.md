@@ -101,7 +101,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   - 84 novos testes (todos passando)
 
 - **Documentação Consolidada e Unificada:**
-  - Novo [docs/INDEX.md](docs/INDEX.md) como ponto central único de navegação
+  - Novo [docs/README.md](docs/README.md) como ponto central único de navegação
   - Unificado GITHUB_CLI_GUIDE.md (inclui autenticação completa)
   - Removido arquivos redundantes: STATUS.md, GITHUB_TOKEN_SETUP.md, GUIDES/RELEASE_PROCESS.md
   - Simplificado docs/README.md para redirecionar ao INDEX.md

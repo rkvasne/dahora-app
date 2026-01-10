@@ -1,6 +1,6 @@
 # 🗺️ Roadmap — Dahora App
 
-> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
+> Navegação: [Documentação](README.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
 > **Última atualização:** Janeiro 2026 | **Versão atual:** v0.2.10
 

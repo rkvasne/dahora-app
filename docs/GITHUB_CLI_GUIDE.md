@@ -1,6 +1,6 @@
 # GitHub CLI - Guia Completo
 
-> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
+> Navegação: [Documentação](README.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
 ## 📚 Índice
 1. [O que é GitHub CLI?](#o-que-é-github-cli)

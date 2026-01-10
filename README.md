@@ -26,7 +26,7 @@ Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sist
 **Novo na v0.2.10:** Release patch para alinhar o manifest do Windows e regenerar os artefatos.
 
 > **Terminologia:** a UI/landing usam PT‑BR 100% (ex.: “área de transferência”, “bandeja do sistema”, “atalhos”).
-> A documentação técnica pode usar termos comuns em inglês (ex.: `clipboard`, `system tray`, `hotkeys`). Veja [docs/README.md](docs/README.md).
+> A documentação técnica pode usar termos comuns em inglês (ex.: `clipboard`, `system tray`, `hotkeys`). Veja [Glossário por superfície (terminologia)](docs/README.md#glossário-por-superfície-terminologia).
 
 ## ✨ Funcionalidades
 
@@ -124,9 +124,9 @@ Os dados são salvos localmente em `%APPDATA%\DahoraApp`.
 
 ## 📚 Documentação
 
-Toda documentação está organizada em `docs/` com índice centralizado:
+Toda documentação está organizada em `docs/` com entrada centralizada:
 
-### 👉 **[docs/INDEX.md](docs/INDEX.md)** - Índice Central (comece aqui!)
+### 👉 **[docs/README.md](docs/README.md)** - Documentação (comece aqui!)
 
 ### Destaques:
 - **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** - Arquitetura técnica detalhada
@@ -216,7 +216,7 @@ dahora-app/
 **Testes:** suíte automatizada via pytest (veja [tests/README.md](tests/README.md)).
 
 ### Documentação
-Comece por [docs/INDEX.md](docs/INDEX.md).
+Comece por [docs/README.md](docs/README.md).
 
 ---
 

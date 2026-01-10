@@ -1,6 +1,6 @@
 # Arquitetura da Dahora App
 
-> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
+> Navegação: [Documentação](README.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
 Documentação detalhada sobre a estrutura, componentes e padrões de design utilizados no projeto.
 

@@ -107,6 +107,8 @@ Este arquivo descreve as especificações visuais (fontes, espaçamentos, tamanh
 
 **Markup** ([index.html](file:///e:/Dahora/dahora-app/index.html#L64-L98))
 - `section#inicio.hero` → `.hero-container` → `.hero-version`, `.hero-icon`, `.hero-title`, `.hero-subtitle`, `.hero-badges`, `.hero-buttons`
+- `.hero-version`: texto de versão em formato “ATUALIZAÇÃO V.0.2.10”
+- `.hero-subtitle`: texto em 2 linhas com `<br>` e separador `•` (ex.: “Automaticamente na posição do cursor • Preserve sua área de transferência”)
 
 **Background e espaçamento** ([dark-sections.css](file:///e:/Dahora/dahora-app/landing/dark-sections.css#L9-L19))
 - `.hero`: background em 3 camadas (2 radial + 1 linear), `color: white`
@@ -200,6 +202,13 @@ Este arquivo descreve as especificações visuais (fontes, espaçamentos, tamanh
 
 **Markup** ([index.html](file:///e:/Dahora/dahora-app/index.html#L440-L461))
 - `section#download.download` → `.download-box` → `h2`, `p`, `.btn-download-large`, `.download-trust-links`, `.download-footer`
+- O botão de download aponta para `.../releases/latest/download/DahoraApp_latest.zip` (arquivo “latest”, sem versão no nome)
+
+## Executável & Segurança (Seção #seguranca-executavel)
+
+**Markup** ([index.html](file:///e:/Dahora/dahora-app/index.html#L341-L365))
+- `section#seguranca-executavel.section` → `.features-grid` com 3 `.feature-card`
+- O card “Como verificar” inclui link para `.../releases` (GitHub Releases) e instrução de build `py build.py`
 
 **Background e padding da seção** ([dark-sections.css](file:///e:/Dahora/dahora-app/landing/dark-sections.css#L211-L220))
 - `.download`: `padding: 6rem 2rem`, background em 3 camadas (radial + radial + linear), `color: white`

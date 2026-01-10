@@ -1,6 +1,6 @@
 # 📌 PRD — Dahora App (v0.2.10)
 
-> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
+> Navegação: [Documentação](README.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
 **Documento:** Product Requirements Document (PRD)  
 **Produto:** Dahora App — utilitário Windows para timestamps e clipboard  

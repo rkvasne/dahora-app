@@ -1,6 +1,6 @@
 # 💰 ANÁLISE DE PRECIFICAÇÃO E VALOR DE MERCADO - DAHORA APP
 
-> Navegação: [Índice](INDEX.md) • [README do projeto](../README.md)
+> Navegação: [Documentação](README.md) • [README do projeto](../README.md)
 
 > **ℹ️ NOTA INFORMATIVA:**  
 > Este documento é um **estudo de viabilidade e análise de mercado** realizado durante o desenvolvimento do projeto.  

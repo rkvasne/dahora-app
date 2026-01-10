@@ -2,7 +2,7 @@
 
 Esta pasta contém scripts auxiliares para desenvolvimento e testes.
 
-> Navegação: [README do projeto](../README.md) • [Documentação (índice)](../docs/INDEX.md)
+> Navegação: [README do projeto](../README.md) • [Documentação](../docs/README.md)
 
 ---
 
