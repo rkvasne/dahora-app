@@ -225,6 +225,15 @@ body.dark-mode .process-step:hover {
         padding: 1.75rem 1.25rem 1.25rem;
     }
 
+    .process-step h3 {
+        margin: 0;
+        min-height: 0;
+    }
+
+    .process-step p {
+        margin: 0;
+    }
+
     .step-icon {
         width: 56px;
         height: 56px;
