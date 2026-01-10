@@ -131,6 +131,7 @@ Toda documentação está organizada em `docs/` com índice centralizado:
 ### Destaques:
 - **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** - Arquitetura técnica detalhada
 - **[DEVELOPMENT_HISTORY.md](docs/DEVELOPMENT_HISTORY.md)** - Histórico narrativo de desenvolvimento
+- **[LANDING_TEMPLATE.md](docs/LANDING_TEMPLATE.md)** - Template da landing (specs por seção)
 - **[RELEASE.md](docs/RELEASE.md)** - Processo de build, release e Git LFS
 - **[GITHUB_CLI_GUIDE.md](docs/GITHUB_CLI_GUIDE.md)** - GitHub CLI e autenticação
 - **[HACKS.md](docs/HACKS.md)** - Soluções criativas documentadas
@@ -184,6 +185,7 @@ dahora-app/
     ├── DEVELOPMENT_HISTORY.md   # Histórico narrativo
     ├── GITHUB_CLI_GUIDE.md      # GitHub CLI (autenticação, releases, workflows)
     ├── HACKS.md                 # Workarounds e decisões não-ideais
+    ├── LANDING_TEMPLATE.md      # Template da landing (specs por seção)
     ├── PRICING.md               # Estudo histórico de precificação
     ├── RELEASE.md               # Build/Release/ZIP/LFS
     ├── ROADMAP.md               # Próximos passos

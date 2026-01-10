@@ -7,6 +7,12 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Não lançado]
 
+### Documentação
+- Template da landing com specs por seção em `docs/LANDING_TEMPLATE.md`.
+
+### Melhorado
+- Landing: tooltips em botões sem texto (tema, idioma e ícones do rodapé).
+
 ## [0.2.10] - 2026-01-10
 
 ### Corrigido

@@ -26,6 +26,9 @@
 
 ## 📖 Documentação Técnica
 
+### Frontend (Landing)
+- **[LANDING_TEMPLATE.md](LANDING_TEMPLATE.md)** - Specs visuais por seção (template reutilizável)
+
 ### Arquitetura e Design
 - **[ARCHITECTURE.md](ARCHITECTURE.md)** - Estrutura, componentes e padrões
 - **[HACKS.md](HACKS.md)** - Workarounds e soluções não-ideais documentadas
@@ -69,6 +72,7 @@ docs/
 ├── README.md                   ← Visão geral do diretório
 ├── ARCHITECTURE.md             # Arquitetura técnica
 ├── DEVELOPMENT_HISTORY.md      # Histórico narrativo
+├── LANDING_TEMPLATE.md         # Template da landing (specs por seção)
 ├── HACKS.md                    # Workarounds documentados
 ├── PRD.md                      # Requisitos do produto (formal)
 ├── PRICING.md                  # Análise de mercado

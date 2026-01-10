@@ -6,6 +6,9 @@
 
 ## 📋 Convenções do Projeto
 
+### Frontend (landing)
+- Template com specs por seção: **[LANDING_TEMPLATE.md](LANDING_TEMPLATE.md)**.
+
 ### Glossário por superfície (terminologia)
 
 **Regra geral:** dentro de uma mesma superfície, evite misturar termos PT‑BR e termos técnicos em inglês.
