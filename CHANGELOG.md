@@ -7,6 +7,14 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Não lançado]
 
+## [0.2.10] - 2026-01-10
+
+### Corrigido
+- Manifest do Windows alinhado com a versão do app.
+
+### Build
+- Artefatos de release gerados em `dist/` para `v0.2.10`.
+
 ## [0.2.9] - 2026-01-10
 
 ### Alterado

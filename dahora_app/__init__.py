@@ -3,7 +3,7 @@ Dahora App - Sistema de Bandeja do Windows
 Cola timestamps formatados diretamente com atalhos personalizáveis
 """
 
-__version__ = "0.2.9"
+__version__ = "0.2.10"
 __author__ = "Dahora App Team"
 
 # Imports principais

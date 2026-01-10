@@ -489,5 +489,5 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 ---
 
 **Última atualização:** 10 de janeiro de 2026  
-**Versão do App:** 0.2.9  
+**Versão do App:** 0.2.10  
 **Status:** ✅ Projeto configurado com Prompt Files

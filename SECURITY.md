@@ -1,6 +1,6 @@
 # 🔐 Política de Segurança — Dahora App
 
-**Versão:** v0.2.9  
+**Versão:** v0.2.10  
 **Data:** 10/01/2026
 
 ---
