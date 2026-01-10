@@ -151,6 +151,12 @@
         text-align: center;
     }
 
+    .footer-links h4,
+    .footer-social h4 {
+        justify-content: center;
+        text-align: center;
+    }
+
     .footer-brand .brand,
     .social-icons {
         justify-content: center;
