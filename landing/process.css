@@ -38,9 +38,6 @@
 }
 
 .step-number {
-    position: absolute;
-    top: 3rem; /* Fixado no topo para alinhamento perfeito entre cards */
-    left: -16px; /* Metade para fora na esquerda */
     width: 32px;
     height: 32px;
     background: var(--bg-white); /* Fundo sólido para cobrir a borda */
@@ -53,7 +50,7 @@
     font-size: 0.9rem;
     box-shadow: var(--shadow-sm);
     border: 2px solid var(--primary-light);
-    z-index: 2;
+    flex: 0 0 auto;
 }
 
 body.dark-mode .step-number {
@@ -90,6 +87,7 @@ body.dark-mode .step-number {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.6rem;
 }
 
 .process-step p {
@@ -144,12 +142,9 @@ body.dark-mode .process-step:hover {
     }
 
     .step-number {
-        position: static;
-        transform: none;
         width: 28px;
         height: 28px;
         font-size: 0.8rem;
-        margin-right: -0.5rem; /* Ajuste visual */
     }
     
     .step-icon {
