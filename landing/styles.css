@@ -297,39 +297,78 @@ body.dark-mode .lang-btn {
 .feature-card:hover {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); /* Mais sutil */
     border-color: rgba(0, 120, 212, 0.2); /* Menos intenso */
-    transform: translateY(-2px); /* Movimento sutil */
+    /* REMOVIDO: transform: translateY(-2px); */
 }
 
-/* ===== FEATURE ICONS (MAIS ELEGANTES) ===== */
+/* ===== FEATURE ICONS (TECLA PADRONIZADA COM .install-number) ===== */
 .feature-icon {
-    width: 56px; /* Ligeiramente menor */
+    width: 56px;
     height: 56px;
-    background: linear-gradient(135deg, #005A9E 0%, #0078D4 100%);
-    border: none;
-    border-radius: 10px; /* Menos arredondado */
+    margin-bottom: 1.5rem;
+    border-radius: 14px;
+    border: 1px solid rgba(56, 189, 248, 0.75);
+    border-bottom-width: 3px;
+    background: linear-gradient(180deg, rgba(0, 120, 212, 0.98), rgba(0, 90, 158, 0.98));
+    color: #ffffff;
+    font-size: 1.6rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
-    margin-bottom: 1.5rem;
-    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease, border-color 0.12s ease;
-    color: white;
-    box-shadow: 0 4px 12px rgba(0, 120, 212, 0.25);
-    border: 1px solid rgba(56, 189, 248, 0.4);
-    border-bottom-width: 3px;
     box-shadow:
-        0 4px 12px rgba(0, 120, 212, 0.25),
-        0 4px 0 rgba(56, 189, 248, 0.22);
+        0 10px 22px rgba(0, 0, 0, 0.14),
+        0 6px 0 rgba(56, 189, 248, 0.28),
+        0 0 22px rgba(56, 189, 248, 0.28);
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+    transform: translateY(0);
+    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.1s cubic-bezier(0.4, 0, 0.2, 1), 
+                background 0.12s ease, 
+                color 0.12s ease, 
+                border-color 0.12s ease;
 }
 
+/* Estado HOVER na TECLA (não no card) */
 .feature-card:hover .feature-icon {
-    background: linear-gradient(135deg, #0078D4 0%, #2B88D8 100%);
-    box-shadow: 0 3px 8px rgba(0, 120, 212, 0.15); /* Mais sutil */
-    border-color: rgba(56, 189, 248, 0.7);
     transform: translateY(2px);
+    background: linear-gradient(180deg, rgba(0, 90, 158, 0.98), rgba(0, 120, 212, 0.98));
+    border-color: rgba(56, 189, 248, 0.95);
+    border-bottom-width: 3px;
     box-shadow:
-        0 3px 8px rgba(0, 120, 212, 0.15),
-        0 2px 0 rgba(56, 189, 248, 0.22);
+        0 6px 14px rgba(0, 0, 0, 0.14),
+        0 4px 0 rgba(56, 189, 248, 0.28),
+        0 0 18px rgba(56, 189, 248, 0.38);
+}
+
+/* Estado ACTIVE (Clicado/Pressionado) */
+.feature-card:active .feature-icon,
+.feature-card:hover .feature-icon:active {
+    transform: translateY(6px) !important;
+    border-bottom-width: 0px !important;
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.1),
+        0 0 0 rgba(56, 189, 248, 0.28),
+        0 0 10px rgba(56, 189, 248, 0.2);
+    transition: all 0.05s ease-out;
+}
+
+/* Dark Mode para Feature Icon */
+body.dark-mode .feature-icon {
+    border-color: rgba(56, 189, 248, 0.75);
+    background: linear-gradient(180deg, rgba(0, 120, 212, 0.92), rgba(0, 90, 158, 0.92));
+    color: #ffffff;
+    box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.35),
+        0 6px 0 rgba(56, 189, 248, 0.22),
+        0 0 22px rgba(56, 189, 248, 0.22);
+}
+
+body.dark-mode .feature-card:hover .feature-icon {
+    background: linear-gradient(180deg, rgba(0, 90, 158, 0.92), rgba(0, 120, 212, 0.92));
+    border-color: rgba(56, 189, 248, 0.95);
+    box-shadow:
+        0 6px 14px rgba(0, 0, 0, 0.35),
+        0 2px 0 rgba(56, 189, 248, 0.22),
+        0 0 18px rgba(56, 189, 248, 0.3);
 }
 
 .feature-card h3 {
