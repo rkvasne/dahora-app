@@ -17,6 +17,8 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Documentação
 - Template da landing com specs por seção em `docs/LANDING_TEMPLATE.md`.
+- Índice de documentação consolidado em `docs/README.md` (remoção de `docs/INDEX.md`).
+- Roadmap agora aponta para links diretos de Issues/Discussions.
 
 ### Melhorado
 - Landing: tooltips em botões sem texto (tema, idioma e ícones do rodapé).

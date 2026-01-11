@@ -4,7 +4,7 @@
 
 > **Última atualização:** Janeiro 2026 | **Versão atual:** v0.2.10
 
-Roadmap de alto nível para próximas melhorias. Detalhes específicos devem ser documentados em issues/discussions no GitHub.
+Roadmap de alto nível para próximas melhorias. Detalhes específicos devem ser documentados em [Issues](https://github.com/rkvasne/dahora-app/issues) e/ou [Discussions](https://github.com/rkvasne/dahora-app/discussions) no GitHub.
 
 --- 🎯 Foco atual
 
