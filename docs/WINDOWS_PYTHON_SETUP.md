@@ -145,7 +145,7 @@ Se encontrar `python` em:
 
 ---
 
-**Última atualização:** 6 de janeiro de 2026
+**Última atualização:** 12 de janeiro de 2026
 
 **Atenção especial a:** Agentes de IA, contribuidores no Windows, automação de testes
 

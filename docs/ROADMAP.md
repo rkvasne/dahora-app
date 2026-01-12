@@ -40,7 +40,7 @@ Roadmap de alto nível para próximas melhorias. Detalhes específicos devem ser
 
 - **Testes:** 267 passando
 - **Cobertura:** Handlers, schemas, validadores
-- **Hacks resolvidos:** 8 de 14 (57%)
+- **Hacks resolvidos:** 14 de 14 (100%)
 
 ---
 
