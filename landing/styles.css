@@ -308,8 +308,8 @@ body.dark-mode .lang-btn {
 
 @media (min-width: 992px) {
     .features-grid.audience-grid {
-        grid-template-columns: repeat(2, minmax(320px, 1fr));
-        max-width: 900px;
+        grid-template-columns: repeat(3, minmax(320px, 1fr));
+        max-width: 1200px;
         margin-left: auto;
         margin-right: auto;
     }
