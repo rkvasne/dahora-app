@@ -38,31 +38,26 @@
                 <span>Dahora App</span>
             </a>
             
-            <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu" title="Menu">
-                <i class="fas fa-bars"></i>
-            </button>
+            <div class="nav-controls">
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#recursos" class="nav-link" data-i18n="nav.features">Recursos</a></li>
+                    <li><a href="#como-funciona" class="nav-link" data-i18n="nav.how">Como funciona</a></li>
+                    <li><a href="#faq" class="nav-link" data-i18n="nav.faq">FAQ</a></li>
+                    <li><a href="#download" class="nav-link nav-cta" data-i18n="nav.download">Download</a></li>
+                </ul>
 
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="#recursos" class="nav-link" data-i18n="nav.features">Recursos</a></li>
-                <li><a href="#como-funciona" class="nav-link" data-i18n="nav.how">Como funciona</a></li>
-                <li><a href="#guia-rapido" class="nav-link" data-i18n="nav.quick">Guia rápido</a></li>
-                <li><a href="#seguranca-executavel" class="nav-link" data-i18n="nav.security">Segurança</a></li>
-                <li><a href="#download" class="nav-link nav-cta" data-i18n="nav.download">Download</a></li>
-                <li class="nav-item-secondary"><a href="#donate" class="nav-link" data-i18n="nav.donate">Apoiar</a></li>
-                <li class="nav-item-secondary"><a href="#faq" class="nav-link" data-i18n="nav.faq">FAQ</a></li>
-                <li class="nav-item-secondary"><a href="#about" class="nav-link" data-i18n="nav.about">Sobre</a></li>
-                <li><a href="https://github.com/rkvasne/dahora-app" target="_blank" rel="noopener noreferrer"
-                        class="nav-link" data-i18n="nav.github">GitHub</a></li>
-                <li>
+                <div class="nav-actions">
                     <button id="theme-toggle" class="nav-link theme-btn"
                         aria-label="Alternar Tema" title="Alternar tema">
                         <i class="fas fa-moon"></i>
                     </button>
-                </li>
-                <li>
                     <button id="lang-toggle" class="lang-btn" aria-label="Trocar idioma" title="Trocar idioma">EN</button>
-                </li>
-            </ul>
+                </div>
+
+                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu" title="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
         </nav>
     </header>
 
@@ -341,11 +336,6 @@
                     <div class="feature-icon"><i class="fas fa-code"></i></div>
                     <h3 data-i18n="audience.card2.title">Desenvolvedores</h3>
                     <p data-i18n="audience.card2.desc">Padronize logs, commits e notas rápidas com um atalho.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-clipboard-list"></i></div>
-                    <h3 data-i18n="audience.card3.title">Operações e QA</h3>
-                    <p data-i18n="audience.card3.desc">Marque evidências e passos de testes com data/hora consistente.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-briefcase"></i></div>
@@ -732,7 +722,7 @@
                     <li><a href="#recursos" data-i18n="nav.features">Recursos</a></li>
                     <li><a href="#download" data-i18n="nav.download">Download</a></li>
                     <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
-                    <li><a href="https://github.com/rkvasne/dahora-app/issues" target="_blank" rel="noopener noreferrer" data-i18n="footer.support">Suporte</a></li>
+                    <li><a href="#seguranca-executavel" data-i18n="nav.security">Segurança</a></li>
                 </ul>
             </div>
             <div class="footer-social">

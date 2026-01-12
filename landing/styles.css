@@ -92,12 +92,29 @@ h6 {
     align-items: center;
 }
 
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.nav-actions .lang-btn {
+    margin-left: 0;
+}
+
 .nav-brand {
     display: flex;
     align-items: center;
     gap: 0.75rem;
     font-size: 1.25rem;
     font-weight: 700;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
     color: var(--primary-color);
     text-decoration: none;
 }

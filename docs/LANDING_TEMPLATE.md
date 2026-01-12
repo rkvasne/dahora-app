@@ -76,7 +76,8 @@ Este arquivo descreve as especificações visuais (fontes, espaçamentos, tamanh
 **Nav** ([styles.css](file:///e:/Dahora/dahora-app/landing/styles.css#L86-L116))
 - `.nav`: `max-width: 1200px`, `margin: 0 auto`, `padding: 1rem 1.5rem`, `display:flex`, `justify-content: space-between`
 - `.nav-menu`: `display:flex`, `gap: 1.5rem`, `list-style:none`, `align-items:center`
-- Desktop: itens secundários do menu podem ficar ocultos para reduzir poluição visual (`.nav-item-secondary`).
+- `.nav-controls`: container para `ul.nav-menu`, ações (tema/idioma) e botão mobile.
+- `.nav-actions`: container para `theme-btn` e `lang-btn` (fora do menu principal).
 
 **Links** ([styles.css](file:///e:/Dahora/dahora-app/landing/styles.css#L118-L154))
 - `.nav-link`: `font-weight: 500`, `padding: 0.5rem 1rem`, `border-radius: 2rem`, `display: inline-flex`, `align-items:center`
@@ -87,7 +88,7 @@ Este arquivo descreve as especificações visuais (fontes, espaçamentos, tamanh
 - Hover: `background: var(--light-bg)`, `border-color: var(--primary-color)`
 
 **Botão idioma** ([styles.css](file:///e:/Dahora/dahora-app/landing/styles.css#L199-L222))
-- `.lang-btn`: `padding: 0.5rem 1rem`, `border-radius: 2rem`, `font-size: 0.9rem`, `font-weight: 600`, `margin-left: 1rem`
+- `.lang-btn`: `padding: 0.5rem 1rem`, `border-radius: 2rem`, `font-size: 0.9rem`, `font-weight: 600` (no header, o `margin-left` pode ser zerado quando dentro de `.nav-actions`).
 - Dark mode: `border-color rgba(255,255,255,0.2)` e `color: var(--text-light)`
 
 ## Botões (CTA)
@@ -142,7 +143,7 @@ Este arquivo descreve as especificações visuais (fontes, espaçamentos, tamanh
 
 **Grid de cards** ([styles.css](file:///e:/Dahora/dahora-app/landing/styles.css#L261-L266))
 - `.features-grid`: `display:grid`, `grid-template-columns: repeat(auto-fit, minmax(320px, 1fr))`, `gap: 1.5rem`
-- Variação “Para quem é” (desktop): `2×2` centralizado via `.features-grid.audience-grid`.
+- Variação “Para quem é” (desktop): `2 colunas` com largura máxima e centralização via `.features-grid.audience-grid`.   
 
 **Card** ([styles.css](file:///e:/Dahora/dahora-app/landing/styles.css#L268-L301))
 - `.feature-card`: `padding: 2.5rem`, `border-radius: 1rem`, `border: 1px solid var(--border-color)`, `height: 100%`
@@ -310,6 +311,7 @@ Este arquivo descreve as especificações visuais (fontes, espaçamentos, tamanh
 
 **Markup** ([index.html](file:///e:/Dahora/dahora-app/index.html#L666-L721))
 - `footer.main-footer` → `.footer-content` com colunas: `.footer-brand`, `.footer-links`, `.footer-social` → `.footer-bottom`
+- “Links Rápidos”: Recursos, Download, FAQ, Segurança.
 
 **Estilos base** ([footer.css](file:///e:/Dahora/dahora-app/landing/footer.css#L2-L16))
 - `.main-footer`: `padding: 60px 40px 20px`, background gradiente `#1e293b → #0f172a`
