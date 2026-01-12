@@ -1,10 +1,10 @@
 # 📚 Índice de Documentação - Dahora App
 
-> **Ponto central de navegação** para toda documentação do projeto Dahora App v0.2.11
+> **Ponto central de navegação** para toda documentação do projeto Dahora App v0.2.12
 
 > Navegação: [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
-> **Última atualização:** 12 de janeiro de 2026
+> **Última atualização:** 13 de janeiro de 2026
 
 ---
 
@@ -48,6 +48,8 @@
 ### Arquitetura e Design
 - **[ARCHITECTURE.md](ARCHITECTURE.md)** - Estrutura, componentes e padrões
 - **[HACKS.md](HACKS.md)** - Workarounds e soluções não-ideais documentadas
+- **[CLIPBOARD_OPTIMIZATION_RESEARCH.md](CLIPBOARD_OPTIMIZATION_RESEARCH.md)** - Pesquisa sobre otimização de clipboard com Windows API Events
+- **[SECURITY_AUDIT_LOGS.md](SECURITY_AUDIT_LOGS.md)** - Auditoria de segurança dos logs do aplicativo
 
 ### Planejamento e Negócio
 - **[ROADMAP.md](ROADMAP.md)** - Próximos passos e melhorias planejadas
@@ -168,4 +170,4 @@ raiz/
 
 ---
 
-**Última atualização:** 12 de janeiro de 2026 | **Versão:** v0.2.11
+**Última atualização:** 13 de janeiro de 2026 | **Versão:** v0.2.12

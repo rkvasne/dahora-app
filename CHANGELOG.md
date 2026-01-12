@@ -5,6 +5,48 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [0.2.12] - 2026-01-13
+
+### 📚 Documentação
+- **Consolidação de Documentação:** `docs/README.md` atualizado para incluir novos documentos (`CLIPBOARD_OPTIMIZATION_RESEARCH.md` e `SECURITY_AUDIT_LOGS.md`)
+- Arquivo obsoleto `docs/Untitled` removido
+- Links e referências internas atualizados e verificados
+
+### 🧹 Limpeza
+- Remoção de arquivo temporário obsoleto da documentação
+
+## [Unreleased]
+
+### ✨ Melhorado
+- **Type Hints Mais Específicos:** Atualizados Protocols (`MenuItemCallback`, `SearchCallback`) para usar `Icon` e `MenuItem` do pystray em vez de `Any`
+- **Cache de Validação de Hotkeys:** Adicionada função `validate_hotkey_cached()` com `@lru_cache` para melhorar performance em validações repetidas
+
+### 🏗️ Arquitetura
+- Removidos métodos `*_legacy()` (`_on_copy_datetime_hotkey_legacy`, `_show_search_dialog_legacy`) - código simplificado (~43 linhas removidas)
+- Wrappers simplificados para usar handlers diretamente com logging de erro quando handlers não são encontrados
+- **Context Manager Pattern:** Implementados `__enter__()` e `__exit__()` em `DahoraApp` para melhor testabilidade
+- **Padronização de Error Handling:** Adicionado logging específico em `initialize()`, `run()` e `shutdown()` para melhor observabilidade de erros não críticos
+
+### 🔒 Segurança
+- **Auditoria de Logs:** Realizada auditoria completa de segurança dos logs - nenhum dado sensível exposto, histórico criptografado, logs seguros para produção
+- Documentação de auditoria em `docs/SECURITY_AUDIT_LOGS.md`
+
+### 📚 Documentação
+- `ARCHITECTURE.md` atualizado - removidas todas as referências a `_validate_settings_manual()` e fallback manual
+- Diagramas de fluxo atualizados para refletir validação única com Pydantic
+- **Diagramas Visuais Adicionados:** 5 diagramas Mermaid em `ARCHITECTURE.md`:
+  - Diagrama de Arquitetura de Componentes (seção 1)
+  - Diagrama de Fluxo de Inicialização (seção 2)
+  - Diagrama de Validação de Hotkey (seção 3.1)
+  - Diagrama de Sequência de Execução de Hotkey (seção 3.1)
+  - Diagrama de Monitoramento de Clipboard (seção 3.5)
+- **Pesquisa de Otimização de Clipboard Monitor:** Documento `docs/CLIPBOARD_OPTIMIZATION_RESEARCH.md` criado com pesquisa sobre Windows API Events (AddClipboardFormatListener)
+- **Consolidação de Documentação:** `docs/README.md` atualizado para incluir novos documentos (`CLIPBOARD_OPTIMIZATION_RESEARCH.md` e `SECURITY_AUDIT_LOGS.md`)
+- Arquivo obsoleto `docs/Untitled` removido
+- Documentação 100% alinhada com implementação atual
+
 ## [0.2.11] - 2026-01-12
 
 ### 🏗️ Arquitetura

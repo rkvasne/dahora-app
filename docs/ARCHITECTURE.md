@@ -8,6 +8,74 @@ Documentação detalhada sobre a estrutura, componentes e padrões de design uti
 
 Dahora App é um aplicativo de gerenciamento de timestamps com clipboard e hotkeys globais. O projeto segue uma arquitetura modular com separação clara de responsabilidades entre componentes.
 
+### Diagrama de Arquitetura de Componentes
+
+```mermaid
+graph TB
+    subgraph "Camada de Entrada"
+        A[System Tray Icon]
+        B[Global Hotkeys]
+        C[Clipboard Monitor]
+    end
+    
+    subgraph "Camada de Orquestração"
+        D[DahoraApp]
+        E[CallbackRegistry]
+    end
+    
+    subgraph "Camada de Handlers"
+        F[CopyDateTimeHandler]
+        G[ShowSearchHandler]
+        H[ShowSettingsHandler]
+        I[QuitAppHandler]
+    end
+    
+    subgraph "Camada de Serviços"
+        J[HotkeyManager]
+        K[ClipboardManager]
+        L[SettingsManager]
+        M[NotificationManager]
+        N[DateTimeFormatter]
+    end
+    
+    subgraph "Camada de Dados"
+        O[Settings JSON]
+        P[Histórico Criptografado]
+        Q[Usage Counter]
+    end
+    
+    subgraph "Camada de UI"
+        R[Modern Settings Dialog]
+        S[Modern Search Dialog]
+        T[Modern About Dialog]
+        U[Menu Builder]
+    end
+    
+    A --> D
+    B --> J
+    C --> K
+    J --> E
+    K --> D
+    D --> E
+    E --> F
+    E --> G
+    E --> H
+    E --> I
+    F --> M
+    F --> N
+    G --> S
+    H --> R
+    D --> J
+    D --> K
+    D --> L
+    D --> M
+    L --> O
+    K --> P
+    D --> Q
+    D --> U
+    U --> A
+```
+
 ### Estrutura de Diretórios
 
 ```
@@ -50,6 +118,28 @@ tests/                             # Suíte de testes
 
 ### Inicialização da Aplicação
 
+```mermaid
+graph TD
+    A[main.py - DahoraApp.__init__] --> B[Criar Managers]
+    B --> C[SettingsManager]
+    B --> D[ClipboardManager]
+    B --> E[HotkeyManager]
+    B --> F[CallbackRegistry]
+    A --> G[DahoraApp.initialize]
+    G --> H[Carregar Settings]
+    G --> I[Carregar Histórico]
+    G --> J[Registrar Handlers]
+    G --> K[Setup Callbacks]
+    G --> L[Setup Custom Shortcuts]
+    A --> M[DahoraApp.run]
+    M --> N[Iniciar Thread de Hotkeys]
+    M --> O[Iniciar Thread de Clipboard Monitor]
+    M --> P[Setup System Tray Icon]
+    M --> Q[Iniciar UI Root]
+    M --> R[Mainloop]
+```
+
+**Fluxo Textual:**
 ```
 main.py
   ├─> carregar settings
@@ -81,6 +171,22 @@ main.py
 - `set_custom_shortcut_callback(shortcut_id, callback)` - Define callback
 
 **Fluxo de Validação:**
+```mermaid
+graph TD
+    A[User Input Hotkey] --> B[HotkeyManager.validate_hotkey]
+    B --> C[HotkeyValidator.is_valid]
+    C --> D{Formato Válido?}
+    D -->|Não| E[Rejeitar - Erro de Formato]
+    D -->|Sim| F[Check Reserved Hotkeys]
+    F --> G{Reservado?}
+    G -->|Sim| H[Rejeitar - Hotkey Reservado]
+    G -->|Não| I[Check Conflicts]
+    I --> J{Conflito?}
+    J -->|Sim| K[Rejeitar - Conflito]
+    J -->|Não| L[Registrar Hotkey]
+```
+
+**Fluxo Textual:**
 ```
 User hotkey input
   ├─> HotkeyManager.validate_hotkey()
@@ -88,6 +194,25 @@ User hotkey input
   │   ├─> Check reserved hotkeys
   │   └─> Check conflicts with other shortcuts
   └─> Register or reject
+```
+
+**Fluxo de Execução de Hotkey:**
+```mermaid
+sequenceDiagram
+    participant User
+    participant Keyboard
+    participant HotkeyManager
+    participant CallbackRegistry
+    participant Handler
+    participant DahoraApp
+
+    User->>Keyboard: Pressiona Hotkey
+    Keyboard->>HotkeyManager: Evento de Hotkey
+    HotkeyManager->>HotkeyManager: Identifica Hotkey
+    HotkeyManager->>CallbackRegistry: execute_safe(handler_name)
+    CallbackRegistry->>Handler: handler.handle()
+    Handler->>DahoraApp: Executa ação específica
+    Handler-->>User: Ação completada
 ```
 
 ### 3.2 HotkeyValidator (`hotkey_validator.py`) - NOVO
@@ -120,8 +245,8 @@ User hotkey input
 
 **Características:**
 - Carregamento de arquivo JSON
-- Validação com Pydantic `SettingsSchema`
-- Fallback para validação manual se Pydantic falhar
+- Validação com Pydantic `SettingsSchema` (única fonte de verdade)
+- Se Pydantic falhar, retorna configurações padrão (sem fallback manual)
 - Atomicidade em escrita (via `atomic_write_json`)
 - Thread-safe
 
@@ -131,7 +256,7 @@ load()
   ├─> read settings.json
   ├─> validate_settings() (Pydantic)
   │   ├─> SettingsSchema validation
-  │   └─> Fallback to _validate_settings_manual()
+  │   └─> Se falhar: retorna defaults (sem fallback manual)
   └─> apply configuration
 ```
 
@@ -204,11 +329,37 @@ notifications: NotificationSchema
 **Responsabilidade:** Monitorar clipboard e gerenciar histórico.
 
 **Características:**
-- Monitora mudanças em clipboard
+- Monitora mudanças em clipboard (polling adaptativo)
 - Armazena histórico criptografado no Windows (DPAPI)
 - Ignora timestamps gerados pelo próprio app
 - Suporta formatação customizável de timestamps
 - Detecta inatividade para aplicar prefix
+- **Otimização Futura:** Windows API Events (AddClipboardFormatListener) para reduzir CPU em idle
+
+**Monitoramento Atual (Polling Adaptativo):**
+- Polling baseado em intervalo configurável (`clipboard_monitor_interval`)
+- Adapta intervalo baseado em atividade (reduz quando idle)
+- Thread-safe com locks para histórico
+
+**Fluxo de Monitoramento:**
+```mermaid
+graph TD
+    A[monitor_clipboard_smart inicia] --> B[Inicializa último conteúdo]
+    B --> C{Clipboard mudou?}
+    C -->|Não| D[Aguardar intervalo]
+    C -->|Sim| E{É conteúdo próprio?}
+    E -->|Sim| F[Ignorar]
+    E -->|Não| G[Adicionar ao histórico]
+    G --> H[Atualizar último conteúdo]
+    H --> I[Callback opcional]
+    F --> D
+    I --> J{Atividade recente?}
+    J -->|Sim| K[Intervalo curto]
+    J -->|Não| L[Intervalo longo]
+    K --> D
+    L --> D
+    D --> C
+```
 
 ### 3.6 Interface Gráfica (`ui/`)
 
@@ -334,7 +485,7 @@ SettingsManager.load()
   │  ├─ Bracket validation
   │  ├─ Custom shortcuts validation
   │  └─ Prefix sanitization
-  ├─ Fallback to manual validation if needed
+  ├─ Se falhar: retorna configurações padrão
   └─ Apply settings to UI components
 ```
 
@@ -422,9 +573,9 @@ Combinação de HotkeyValidator + verificações de conflito:
 
 ### Tratamento de Erros
 
-- Fallback de validação (Pydantic → Manual)
+- Validação única com Pydantic (sem fallback manual)
 - Logging detalhado de erros
-- Recuperação graceful com defaults
+- Recuperação graceful com defaults se validação falhar
 
 ## 7. Padrões de Design
 
@@ -449,13 +600,13 @@ except ValidationError as e:
     handle_error(e)
 ```
 
-### Fallback Pattern (Validação)
+### Validação Única (Pydantic)
 ```python
 try:
     validated = SettingsSchema(**data)
 except ValidationError:
-    # Fallback to manual validation
-    validated = _validate_settings_manual(data)
+    # Retorna configurações padrão (sem fallback manual)
+    return get_default_settings()
 ```
 
 ## 8. Tratamento de Erros
@@ -473,8 +624,9 @@ except ValidationError as e:
         field = error['loc'][0]
         msg = error['msg']
         logging.error(f"Campo '{field}': {msg}")
-    # Fallback
-    return _validate_settings_manual(settings_dict)
+    # Retorna configurações padrão (sem fallback manual)
+    logging.warning("Validação Pydantic falhou, usando defaults")
+    return get_default_settings()
 ```
 
 ### Contexto: Validação de Hotkey
@@ -555,7 +707,8 @@ py -m pip install pydantic>=2.0
 
 ### Mantida 100%
 
-- Validação Pydantic com fallback para manual
+- Validação única com Pydantic (sem fallback manual)
+- Se validação falhar, retorna configurações padrão
 - Novos módulos não modificam código existente
 - HotkeyValidator integrado sem quebrar validação existente
 - Schemas usam os mesmos campos que settings.py
@@ -621,6 +774,14 @@ Validado e aplicado
 **Status:** Completa e em produção
 
 ### Changelog da Documentação
+
+**v1.2 (13/01/2026):**
+- Adicionados diagramas visuais em Mermaid:
+  - Diagrama de arquitetura de componentes (seção 1)
+  - Diagrama de fluxo de inicialização (seção 2)
+  - Diagrama de validação de hotkey (seção 3.1)
+  - Diagrama de sequência de execução de hotkey (seção 3.1)
+  - Diagrama de monitoramento de clipboard (seção 3.5)
 
 **v1.1 (12/01/2026):**
 - Adicionada seção 3.7: Handlers e CallbackRegistry

@@ -166,8 +166,8 @@ class DahoraApp:
                 float(self.settings_manager.clipboard_monitor_interval),
                 float(self.settings_manager.clipboard_idle_threshold),
             )
-        except Exception:
-            pass
+        except Exception as e:
+            logging.warning(f"Falha ao configurar parâmetros do clipboard manager: {e}", exc_info=False)
 
         try:
             if file_handler is not None:
@@ -557,42 +557,12 @@ class DahoraApp:
     def _on_copy_datetime_hotkey_wrapper(self) -> None:
         """
         Wrapper para usar handler de copy_datetime.
-        Mantém compatibilidade com hotkey_manager enquanto migra para handlers.
         """
         handler = self.callback_registry.get("copy_datetime")
-        if handler:
-            handler.handle()
-        else:
-            # Fallback para implementação antiga se handler não estiver disponível
-            self._on_copy_datetime_hotkey_legacy()
-    
-    def _on_copy_datetime_hotkey_legacy(self) -> None:
-        """Implementação legada - será removida após migração completa"""
-        try:
-            dt_string = self._format_datetime_for_default_shortcut()
-            self.clipboard_manager.mark_own_content(dt_string)
-
-            clipboard_backup = None
-            try:
-                clipboard_backup = pyperclip.paste()
-            except Exception:
-                pass
-
-            pyperclip.copy(dt_string)
-            time.sleep(0.05)
-            keyboard.send('ctrl+v')
-            time.sleep(0.05)
-
-            if clipboard_backup is not None:
-                try:
-                    pyperclip.copy(clipboard_backup)
-                except Exception:
-                    pass
-
-            count = self.counter.increment()
-            logging.info(f"Hotkey copiar/colar data/hora acionado: resultado={dt_string}, total={count}ª vez")
-        except Exception as e:
-            logging.error(f"Erro no hotkey_copy_datetime: {e}")
+        if not handler:
+            logging.error("copy_datetime handler not found in registry")
+            return
+        handler.handle()
     
     def _copy_datetime_menu(self, icon, item):
         """Wrapper para copiar data/hora do menu"""
@@ -611,18 +581,12 @@ class DahoraApp:
     def _show_search_dialog_wrapper(self, icon=None, item=None):
         """
         Wrapper para usar handler de show_search.
-        Mantém compatibilidade com callbacks enquanto migra para handlers.
         """
         handler = self.callback_registry.get("show_search")
-        if handler:
-            handler.handle(icon=icon, item=item)
-        else:
-            # Fallback para implementação antiga
-            self._show_search_dialog_legacy()
-    
-    def _show_search_dialog_legacy(self):
-        """Implementação legada - será removida após migração completa"""
-        self._run_on_ui_thread(lambda: self.modern_search_dialog.show())
+        if not handler:
+            logging.error("show_search handler not found in registry")
+            return
+        handler.handle(icon=icon, item=item)
     
     def _quit_app_wrapper(self, icon=None, item=None):
         """
@@ -918,7 +882,8 @@ class DahoraApp:
 
         try:
             logging.info("Encerrando Dahora App...")
-        except Exception:
+        except Exception as e:
+            # Logging pode falhar em shutdown, não logar aqui
             pass
 
         # Para o tray o quanto antes
@@ -926,11 +891,11 @@ class DahoraApp:
             if icon:
                 try:
                     icon.visible = False
-                except Exception:
-                    pass
+                except Exception as e:
+                    logging.debug(f"Falha ao ocultar ícone: {e}", exc_info=False)
                 icon.stop()
-        except Exception:
-            pass
+        except Exception as e:
+            logging.warning(f"Falha ao parar ícone do tray no shutdown: {e}", exc_info=False)
 
         # Encerra o loop Tk no main thread
         try:
@@ -1052,8 +1017,8 @@ class DahoraApp:
             # Pré-aquece UI em background (depois que o app já subiu)
             try:
                 self._ui_root.after(int(self.settings_manager.ui_prewarm_delay_ms), self._prewarm_ui)
-            except Exception:
-                pass
+            except Exception as e:
+                logging.warning(f"Falha ao agendar pré-aquecimento da UI: {e}", exc_info=False)
             
             # Mensagem de boas-vindas
             total_history = self.clipboard_manager.get_history_size()
@@ -1114,6 +1079,36 @@ class DahoraApp:
                 logging.error(f"Erro ao limpar recursos: {e}")
             finally:
                 logging.info("Dahora App encerrado completamente")
+    
+    def shutdown(self):
+        """
+        Encerra a aplicação e limpa recursos.
+        Usado pelo context manager pattern.
+        """
+        try:
+            logging.info("Limpando recursos...")
+            cleanup_single_instance()
+            self.hotkey_manager.cleanup()
+            try:
+                if self.icon:
+                    self.icon.stop()
+            except Exception:
+                pass
+            logging.info("Recursos liberados com sucesso")
+        except Exception as e:
+            logging.error(f"Erro ao limpar recursos: {e}")
+        finally:
+            logging.info("Dahora App encerrado completamente")
+    
+    def __enter__(self):
+        """Context manager entry point"""
+        self.initialize()
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Context manager exit point"""
+        self.shutdown()
+        return False  # Não suprime exceções
 
 
 def main():

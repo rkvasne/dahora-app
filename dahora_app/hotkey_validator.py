@@ -5,6 +5,7 @@ Módulo seguro para validar combinações de teclas globais
 
 import re
 import logging
+from functools import lru_cache
 from typing import Tuple, List, Optional
 
 
@@ -326,3 +327,22 @@ class HotkeyValidator:
 def validate_hotkey(hotkey: str, allow_reserved: bool = False) -> bool:
     """Função rápida para validar um hotkey"""
     return HotkeyValidator.is_valid(hotkey, allow_reserved)
+
+
+# Cache para validação de hotkeys (hotkeys raramente mudam)
+@lru_cache(maxsize=100)
+def validate_hotkey_cached(hotkey: str, allow_reserved: bool = False) -> Tuple[bool, Optional[str]]:
+    """
+    Versão com cache do método validate_with_reason.
+    
+    Cacheia resultados de validação para melhorar performance em validações repetidas.
+    Hotkeys raramente mudam durante a execução, então o cache é seguro e eficiente.
+    
+    Args:
+        hotkey: Hotkey a validar
+        allow_reserved: Se True, permite hotkeys reservados
+        
+    Returns:
+        Tupla (is_valid, reason_if_invalid)
+    """
+    return HotkeyValidator.validate_with_reason(hotkey, allow_reserved)

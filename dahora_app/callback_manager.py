@@ -4,7 +4,17 @@ Callback Manager - Centraliza lógica de eventos e manipuladores
 
 import logging
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Dict, List, Optional, Tuple, Protocol, runtime_checkable
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    List,
+    Optional,
+    Tuple,
+    Protocol,
+    runtime_checkable,
+    TYPE_CHECKING,
+)
 from functools import wraps
 
 # Type checking imports
@@ -13,6 +23,14 @@ try:
     HAS_PYSTRAY = True
 except ImportError:
     HAS_PYSTRAY = False
+
+# Type hints mais específicos (apenas para type checking)
+if TYPE_CHECKING:
+    from pystray import Icon, MenuItem
+else:
+    # Stubs para runtime (quando pystray não está disponível)
+    Icon = Any
+    MenuItem = Any
 
 
 logger = logging.getLogger(__name__)
@@ -37,13 +55,15 @@ class RefreshMenuCallback(Protocol):
 @runtime_checkable
 class MenuItemCallback(Protocol):
     """Protocol para callback de item de menu (pystray)"""
-    def __call__(self, icon: Any, item: Any) -> None: ...
+    def __call__(self, icon: "Icon", item: "MenuItem") -> None: ...
 
 
 @runtime_checkable
 class SearchCallback(Protocol):
     """Protocol para callback de busca"""
-    def __call__(self, icon: Optional[Any] = None, item: Optional[Any] = None) -> None: ...
+    def __call__(
+        self, icon: Optional["Icon"] = None, item: Optional["MenuItem"] = None
+    ) -> None: ...
 
 
 @runtime_checkable
