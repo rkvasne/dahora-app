@@ -257,10 +257,13 @@ dahora-app/
 │   ├── test_handlers.py
 │   └── ... (13 arquivos de teste)
 │
+├── ANALISE_PROJETO.md         # Relatório de análise (12/01/2026)
+│
 ├── docs/                      # Documentação
-│   ├── ARCHITECTURE.md        # Arquitetura detalhada
+│   ├── ARCHITECTURE.md        # Arquitetura detalhada (atualizado 12/01/2026)
+│   ├── HACKS.md               # Workarounds (8 de 14 resolvidos)
 │   ├── RELEASE.md             # Processo de release
-│   ├── ROADMAP.md             # Plano futuro
+│   ├── ROADMAP.md             # Plano futuro (atualizado 12/01/2026)
 │   └── WINDOWS_PYTHON_SETUP.md # Setup Python no Windows
 │
 ├── scripts/                   # Scripts utilitários
@@ -343,6 +346,11 @@ scripts\push_release_lfs.ps1           # Push com LFS
 - **Camada UI:** `dahora_app/ui/` - Diálogos e menus
 - **Camada Lógica:** `dahora_app/` - Managers e validators
 - **Camada Handlers:** `dahora_app/handlers/` - Ações específicas
+  - `CopyDateTimeHandler` - Copia timestamp + Ctrl+V automático
+  - `ShowSearchHandler` - Diálogo de busca
+  - `ShowSettingsHandler` - Diálogo de configurações
+  - `QuitAppHandler` - Shutdown seguro
+- **CallbackRegistry:** Orquestrador central de handlers com 8 Protocols
 - **Validação:** `schemas.py` (Pydantic) + `hotkey_validator.py`
 
 ### Tratamento de Erros
@@ -361,9 +369,11 @@ scripts\push_release_lfs.ps1           # Push com LFS
 
 **Framework:** pytest + pytest-cov + pytest-mock
 
-**Suite atual:** 133+ testes
+**Suite atual:** 267 testes (100% passando)
 - `test_schemas.py` - 29 testes (validação Pydantic)
 - `test_hotkey_validator.py` - 37 testes (validação de hotkeys)
+- `test_single_instance.py` - 21 testes (Windows mutex)
+- `test_thread_sync.py` - 24 testes (sincronização)
 - `test_handlers.py` - Testes de handlers
 - `test_integration_handlers.py` - Testes de integração
 
@@ -488,6 +498,7 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 
 ---
 
-**Última atualização:** 10 de janeiro de 2026  
-**Versão do App:** 0.2.10  
-**Status:** ✅ Projeto configurado com Prompt Files
+**Última atualização:** 12 de janeiro de 2026  
+**Versão do App:** 0.2.11  
+**Status:** ✅ Projeto configurado com Prompt Files  
+**Testes:** 267 passando | **Hacks tratados:** 14 de 14 (100%)

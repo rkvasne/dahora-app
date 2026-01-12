@@ -23,16 +23,16 @@ def test_validate_settings_basic(sample_settings):
     assert result["prefix"] == "TEST"
 
 
-def test_validate_settings_truncates_long_prefix():
-    """Testa que prefixo longo é truncado para 100 caracteres"""
+def test_validate_settings_rejects_long_prefix():
+    """Testa que prefixo longo é rejeitado e usa default (Pydantic strict)"""
     settings_manager = SettingsManager()
     validate_settings = settings_manager.validate_settings
     
-    long_prefix = "A" * 150  # 150 caracteres
+    long_prefix = "A" * 150  # 150 caracteres (máximo é 100)
     result = validate_settings({"prefix": long_prefix})
     
-    assert len(result["prefix"]) == 100, f"Prefixo deve ser truncado para 100 chars, recebeu {len(result['prefix'])}"
-    assert result["prefix"] == "A" * 100
+    # Pydantic rejeita e usa default (string vazia)
+    assert result["prefix"] == "", f"Prefixo inválido deve retornar default vazio, recebeu '{result['prefix']}'"
 
 
 def test_validate_settings_removes_control_chars():

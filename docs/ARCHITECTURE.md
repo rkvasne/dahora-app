@@ -217,8 +217,108 @@ notifications: NotificationSchema
 - `modern_settings_dialog.py` - Diálogo de configurações (Pydantic-aware)
 - `modern_shortcut_editor.py` - Editor de custom shortcuts (com HotkeyValidator)
 - `modern_search_dialog.py` - Busca no histórico
+- `modern_about_dialog.py` - Diálogo "Sobre" com informações do app
 - `icon_manager.py` - Gerenciamento de ícones SVG
-- `modern_styles.py` - Temas escuro/claro
+- `modern_styles.py` - Temas escuro/claro (CustomTkinter)
+
+**UI Moderna (CustomTkinter):**
+- Todas as janelas usam CustomTkinter para visual moderno
+- Tema escuro/claro automático baseado no sistema
+- Componentes responsivos e consistentes
+
+### 3.7 Handlers e CallbackRegistry (`callback_manager.py`, `handlers/`)
+
+**Responsabilidade:** Orquestrar callbacks e ações do aplicativo de forma desacoplada.
+
+**Componentes:**
+
+#### Protocols para Type Hints (adicionados em 12/01/2026)
+
+8 Protocols definidos para type checking de callbacks:
+
+| Protocol | Uso |
+|----------|-----|
+| `CopyDatetimeCallback` | Callback de copiar data/hora |
+| `RefreshMenuCallback` | Callback de refresh do menu |
+| `MenuItemCallback` | Callback de item de menu (pystray) |
+| `SearchCallback` | Callback de busca |
+| `SettingsSavedCallback` | Callback quando settings são salvos |
+| `CopyFromHistoryCallback` | Callback de copiar do histórico |
+| `NotificationCallback` | Callback de notificação |
+| `GetHistoryCallback` | Callback de obter histórico |
+
+Todos os Protocols são `@runtime_checkable` para validação em tempo de execução.
+
+#### CallbackHandler (Abstract Base Class)
+```python
+class CallbackHandler(ABC):
+    @abstractmethod
+    def handle(self, *args, **kwargs) -> bool: ...
+    @abstractmethod
+    def get_name(self) -> str: ...
+```
+
+#### CallbackRegistry
+Registry central para gerenciar handlers:
+- `register(name, handler)` - Registra um handler
+- `get(name)` - Obtém handler por nome
+- `execute(name, *args)` - Executa handler
+- `execute_safe(name, *args)` - Executa com thread-safety (usa ThreadSyncManager)
+- `set_sync_manager(sync_manager)` - Injeta ThreadSyncManager
+
+#### Handlers Implementados
+
+| Handler | Responsabilidade |
+|---------|-----------------|
+| `CopyDateTimeHandler` | Copiar e colar timestamp formatado (com Ctrl+V automático) |
+| `ShowSearchHandler` | Exibir diálogo de busca |
+| `ShowSettingsHandler` | Exibir diálogo de configurações |
+| `QuitAppHandler` | Encerrar aplicação de forma segura |
+
+**Fluxo de Uso:**
+```
+Hotkey/Menu action
+  ├─> DahoraApp._on_xxx_wrapper()
+  │   ├─> callback_registry.get("handler_name")
+  │   └─> handler.handle()
+  └─> Handler executa ação específica
+```
+
+**Características:**
+- Handlers recebem referência ao `DahoraApp` via `set_app()`
+- Fallback para implementação legada se handler não disponível
+- Thread-safety via `ThreadSyncManager`
+- Type hints via Protocols para melhor validação estática
+
+### 3.8 Otimizações de Performance
+
+**UI Prewarm (`_prewarm_ui`):**
+- Pré-constrói janelas CustomTkinter em idle (ocultas)
+- Reduz latência na primeira abertura de ~500ms para ~50ms
+- Configurável via `ui_prewarm_delay_ms`
+
+**Cache de Menu do Tray:**
+- Evita reconstrução do menu em cliques rápidos
+- Configurável via `tray_menu_cache_window_ms`
+- Melhora responsividade do system tray
+
+**UI Root Thread-Safety:**
+- Lock (`threading.Lock`) protege inicialização do `_ui_root`
+- Previne race conditions quando múltiplas threads acessam UI
+- Implementado em `_ensure_ui_root()`
+
+```python
+def _ensure_ui_root(self):
+    with self._ui_lock:  # Thread-safe
+        if self._ui_root is None:
+            self._ui_root = ctk.CTk()
+            self._ui_root.withdraw()
+```
+
+**Preservação de Clipboard:**
+- Timestamp é copiado, colado via Ctrl+V, e clipboard original restaurado
+- Operação transparente para o usuário
+- Implementado em `CopyDateTimeHandler`
 
 ## 4. Fluxo de Dados
 
@@ -392,7 +492,14 @@ if not valid:
 
 ## 9. Testes
 
-### Suite de Testes Total: 133 testes
+### Suite de Testes Total: 267+ testes
+
+#### Handlers (35 testes) - `test_handlers.py`
+- QuitAppHandler (9 testes)
+- CopyDateTimeHandler (8 testes)
+- ShowSettingsHandler (8 testes)
+- ShowSearchHandler (8 testes)
+- Integração de Handlers (2 testes)
 
 #### HotkeyValidator (37 testes) - `test_hotkey_validator.py`
 - Normalização (10 testes)
@@ -408,11 +515,14 @@ if not valid:
 - NotificationSchema (2 testes)
 - AppConfigSchema (3 testes)
 
-#### Outros Testes (67 testes)
+#### Outros Testes (166 testes)
 - Custom shortcuts (22 testes)
 - Datetime formatter (12 testes)
 - Hotkey manager (21 testes)
 - Settings (10 testes)
+- Thread sync (28 testes)
+- Single instance (23 testes)
+- Outros componentes (50+ testes)
 
 ### Executar Testes
 
@@ -506,6 +616,18 @@ Validado e aplicado
 
 ---
 
-**Última Atualização:** 6 de janeiro de 2026
-**Versão da Documentação:** 1.0
+**Última Atualização:** 12 de janeiro de 2026
+**Versão da Documentação:** 1.1
 **Status:** Completa e em produção
+
+### Changelog da Documentação
+
+**v1.1 (12/01/2026):**
+- Adicionada seção 3.7: Handlers e CallbackRegistry
+- Adicionada seção 3.8: Otimizações de Performance
+- Atualizado total de testes (267+)
+- Documentados handlers: CopyDateTimeHandler, ShowSearchHandler, ShowSettingsHandler, QuitAppHandler
+- Documentadas otimizações: UI Prewarm, Cache de Menu, Thread-Safety
+
+**v1.0 (06/01/2026):**
+- Versão inicial da documentação de arquitetura

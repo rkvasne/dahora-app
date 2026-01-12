@@ -4,11 +4,70 @@ Callback Manager - Centraliza lógica de eventos e manipuladores
 
 import logging
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple, Protocol, runtime_checkable
 from functools import wraps
+
+# Type checking imports
+try:
+    import pystray
+    HAS_PYSTRAY = True
+except ImportError:
+    HAS_PYSTRAY = False
 
 
 logger = logging.getLogger(__name__)
+
+
+# ============================================================================
+# Protocols para Type Hints de Callbacks
+# ============================================================================
+
+@runtime_checkable
+class CopyDatetimeCallback(Protocol):
+    """Protocol para callback de copiar data/hora"""
+    def __call__(self) -> None: ...
+
+
+@runtime_checkable
+class RefreshMenuCallback(Protocol):
+    """Protocol para callback de refresh do menu"""
+    def __call__(self) -> None: ...
+
+
+@runtime_checkable
+class MenuItemCallback(Protocol):
+    """Protocol para callback de item de menu (pystray)"""
+    def __call__(self, icon: Any, item: Any) -> None: ...
+
+
+@runtime_checkable
+class SearchCallback(Protocol):
+    """Protocol para callback de busca"""
+    def __call__(self, icon: Optional[Any] = None, item: Optional[Any] = None) -> None: ...
+
+
+@runtime_checkable
+class SettingsSavedCallback(Protocol):
+    """Protocol para callback quando settings são salvos"""
+    def __call__(self, settings: Dict[str, Any]) -> None: ...
+
+
+@runtime_checkable
+class CopyFromHistoryCallback(Protocol):
+    """Protocol para callback de copiar do histórico"""
+    def __call__(self, text: str) -> None: ...
+
+
+@runtime_checkable
+class NotificationCallback(Protocol):
+    """Protocol para callback de notificação"""
+    def __call__(self, title: str, message: str, duration: int = 2) -> None: ...
+
+
+@runtime_checkable
+class GetHistoryCallback(Protocol):
+    """Protocol para callback de obter histórico"""
+    def __call__(self) -> List[str]: ...
 
 
 class CallbackHandler(ABC):
@@ -43,6 +102,15 @@ class CallbackRegistry:
     def __init__(self):
         self._handlers: Dict[str, CallbackHandler] = {}
         self._sync_manager = None  # Será injetado se disponível
+    
+    def set_sync_manager(self, sync_manager: Any) -> None:
+        """
+        Define o sync manager para operações thread-safe
+        
+        Args:
+            sync_manager: Instância de ThreadSyncManager ou similar
+        """
+        self._sync_manager = sync_manager
 
     def register(self, name: str, handler: CallbackHandler) -> None:
         """

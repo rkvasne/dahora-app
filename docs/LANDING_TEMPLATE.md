@@ -109,7 +109,7 @@ Este arquivo descreve as especificações visuais (fontes, espaçamentos, tamanh
 
 **Markup** ([index.html](file:///e:/Dahora/dahora-app/index.html#L64-L98))
 - `section#inicio.hero` → `.hero-container` → `.hero-version`, `.hero-icon`, `.hero-title`, `.hero-subtitle`, `.hero-badges`, `.hero-buttons`
-- `.hero-version`: texto de versão em formato “ATUALIZAÇÃO V.0.2.10”
+- `.hero-version`: texto de versão em formato “ATUALIZAÇÃO V.0.2.11”
 - `.hero-subtitle`: texto em 2 linhas com `<br>` e separador `•` (ex.: “Automaticamente na posição do cursor • Preserve sua área de transferência”)
 
 **Background e espaçamento** ([dark-sections.css](file:///e:/Dahora/dahora-app/landing/dark-sections.css#L9-L19))

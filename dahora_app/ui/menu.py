@@ -11,6 +11,12 @@ from dahora_app.utils import (
     sanitize_text_for_display,
     format_hotkey_display,
 )
+from dahora_app.callback_manager import (
+    MenuItemCallback,
+    SearchCallback,
+    CopyFromHistoryCallback,
+    GetHistoryCallback,
+)
 
 
 class MenuBuilder:
@@ -18,19 +24,20 @@ class MenuBuilder:
 
     def __init__(self):
         """Inicializa o construtor de menus"""
-        self.copy_datetime_callback: Optional[Callable] = None
-        self.show_search_callback: Optional[Callable] = None
-        self.show_custom_shortcuts_callback: Optional[Callable] = (
+        # Callbacks com tipos definidos via Protocols
+        self.copy_datetime_callback: Optional[MenuItemCallback] = None
+        self.show_search_callback: Optional[SearchCallback] = None
+        self.show_custom_shortcuts_callback: Optional[MenuItemCallback] = (
             None  # Configurações unificadas
         )
-        self.refresh_menu_callback: Optional[Callable] = None
-        self.get_recent_items_callback: Optional[Callable] = None
-        self.copy_from_history_callback: Optional[Callable] = None
-        self.clear_history_callback: Optional[Callable] = None
-        self.show_about_callback: Optional[Callable] = None
-        self.quit_callback: Optional[Callable] = None
-        self.toggle_pause_callback: Optional[Callable] = None
-        self.is_paused_callback: Optional[Callable] = None
+        self.refresh_menu_callback: Optional[MenuItemCallback] = None
+        self.get_recent_items_callback: Optional[GetHistoryCallback] = None
+        self.copy_from_history_callback: Optional[CopyFromHistoryCallback] = None
+        self.clear_history_callback: Optional[MenuItemCallback] = None
+        self.show_about_callback: Optional[MenuItemCallback] = None
+        self.quit_callback: Optional[MenuItemCallback] = None
+        self.toggle_pause_callback: Optional[MenuItemCallback] = None
+        self.is_paused_callback: Optional[Callable[[], bool]] = None
         self.hotkey_copy_datetime: str = "ctrl+shift+q"  # Padrão (ação principal)
         self.hotkey_search_history: str = "ctrl+shift+f"  # Padrão
         self.hotkey_refresh_menu: str = "ctrl+shift+r"  # Padrão
@@ -43,39 +50,39 @@ class MenuBuilder:
         """Formata hotkey para exibição (inclui símbolos como !/@/#)."""
         return format_hotkey_display(hotkey)
 
-    def set_copy_datetime_callback(self, callback: Callable) -> None:
+    def set_copy_datetime_callback(self, callback: MenuItemCallback) -> None:
         """Define callback para copiar data/hora"""
         self.copy_datetime_callback = callback
 
-    def set_show_search_callback(self, callback: Callable) -> None:
+    def set_show_search_callback(self, callback: SearchCallback) -> None:
         """Define callback para mostrar busca"""
         self.show_search_callback = callback
 
-    def set_show_custom_shortcuts_callback(self, callback: Callable) -> None:
+    def set_show_custom_shortcuts_callback(self, callback: MenuItemCallback) -> None:
         """Define callback para mostrar configurações unificadas"""
         self.show_custom_shortcuts_callback = callback
 
-    def set_refresh_menu_callback(self, callback: Callable) -> None:
+    def set_refresh_menu_callback(self, callback: MenuItemCallback) -> None:
         """Define callback para refresh do menu"""
         self.refresh_menu_callback = callback
 
-    def set_get_recent_items_callback(self, callback: Callable) -> None:
+    def set_get_recent_items_callback(self, callback: GetHistoryCallback) -> None:
         """Define callback para obter itens recentes"""
         self.get_recent_items_callback = callback
 
-    def set_copy_from_history_callback(self, callback: Callable) -> None:
+    def set_copy_from_history_callback(self, callback: CopyFromHistoryCallback) -> None:
         """Define callback para copiar do histórico"""
         self.copy_from_history_callback = callback
 
-    def set_clear_history_callback(self, callback: Callable) -> None:
+    def set_clear_history_callback(self, callback: MenuItemCallback) -> None:
         """Define callback para limpar histórico"""
         self.clear_history_callback = callback
 
-    def set_show_about_callback(self, callback: Callable) -> None:
+    def set_show_about_callback(self, callback: MenuItemCallback) -> None:
         """Define callback para mostrar sobre"""
         self.show_about_callback = callback
 
-    def set_quit_callback(self, callback: Callable) -> None:
+    def set_quit_callback(self, callback: MenuItemCallback) -> None:
         """Define callback para sair"""
         self.quit_callback = callback
 

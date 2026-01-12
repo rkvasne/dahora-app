@@ -12,7 +12,8 @@ import pyperclip
 import pystray
 import keyboard
 import time
-from typing import Optional, Any, cast
+from typing import Optional, Any, cast, Protocol, Callable
+from threading import Lock
 
 # HACK: Forçar Dark Mode em menus nativos do Windows (Bandeja/Pystray)
 # Isso usa APIs não documentadas do Windows para garantir que o menu de contexto
@@ -72,6 +73,13 @@ from dahora_app import (
 )
 from dahora_app.single_instance import initialize_single_instance, cleanup_single_instance
 from dahora_app.thread_sync import initialize_sync, get_sync_manager
+from dahora_app.callback_manager import CallbackRegistry
+from dahora_app.handlers import (
+    CopyDateTimeHandler,
+    ShowSearchHandler,
+    ShowSettingsHandler,
+    QuitAppHandler,
+)
 from dahora_app.constants import (
     APP_TITLE,
     APP_VERSION,
@@ -130,8 +138,15 @@ class DahoraApp:
 
         # Root UI (Tk) único: evita criar CTk() e mainloop() em callbacks do tray.
         self._ui_root = None
+        self._ui_lock = Lock()  # Thread-safety para UI root
         self._tray_thread: Optional[threading.Thread] = None
         self._sync_manager = initialize_sync()  # Gerenciar sincronização de threads
+        
+        # Callback Registry para gerenciar handlers
+        self.callback_registry = CallbackRegistry()
+        if self._sync_manager:
+            self.callback_registry.set_sync_manager(self._sync_manager)
+        
         self.about_dialog = AboutDialog()
         self.menu_builder = MenuBuilder()
         self.icon = None
@@ -168,6 +183,9 @@ class DahoraApp:
             self.settings_manager.bracket_close
         )
         
+        # Registra handlers no callback registry
+        self._register_handlers()
+        
         # Configura callbacks
         self._setup_callbacks()
         
@@ -183,6 +201,91 @@ class DahoraApp:
         self.clipboard_manager.initialize_last_content()
         
         logging.info("Dahora App inicializado com sucesso")
+    
+    def _register_handlers(self):
+        """Registra todos os handlers no callback registry"""
+        # Copy DateTime Handler
+        copy_handler = CopyDateTimeHandler(app=self)
+        copy_handler.set_prefix(self.settings_manager.get_prefix())
+        self.callback_registry.register("copy_datetime", copy_handler)
+        
+        # Show Search Handler
+        search_handler = ShowSearchHandler(app=self)
+        search_handler.set_use_modern_ui(True)
+        self.callback_registry.register("show_search", search_handler)
+        
+        # Show Settings Handler
+        settings_handler = ShowSettingsHandler(app=self)
+        settings_handler.set_use_modern_ui(True)
+        self.callback_registry.register("show_settings", settings_handler)
+        
+        # Quit App Handler
+        quit_handler = QuitAppHandler(app=self)
+        self.callback_registry.register("quit_app", quit_handler)
+        
+        logging.info("Handlers registrados no callback registry")
+    
+    def _sync_all_components(self):
+        """
+        Sincroniza todos os componentes após mudanças de configuração.
+        Único ponto de entrada para aplicar mudanças em hotkeys, UI, etc.
+        """
+        try:
+            current_settings = self.settings_manager.get_all()
+            
+            # Atualiza configurações do clipboard manager
+            try:
+                self.clipboard_manager.set_max_history_items(int(current_settings.get("max_history_items", 100)))
+                self.clipboard_manager.set_monitoring_config(
+                    float(current_settings.get("clipboard_monitor_interval", 3.0)),
+                    float(current_settings.get("clipboard_idle_threshold", 30.0)),
+                )
+            except Exception as e:
+                logging.warning(f"Erro ao atualizar clipboard manager: {e}")
+            
+            # Atualiza configurações de log
+            try:
+                if file_handler is not None:
+                    file_handler.maxBytes = int(current_settings.get("log_max_bytes", self.settings_manager.log_max_bytes))
+                    file_handler.backupCount = int(current_settings.get("log_backup_count", self.settings_manager.log_backup_count))
+            except Exception as e:
+                logging.warning(f"Erro ao atualizar log handler: {e}")
+            
+            # Sincroniza datetime formatter
+            self.datetime_formatter.set_prefix(current_settings.get("prefix", ""))
+            self.datetime_formatter.set_brackets(
+                current_settings.get("bracket_open", "["),
+                current_settings.get("bracket_close", "]")
+            )
+            
+            # Atualiza handler de copy_datetime com novo prefixo
+            copy_handler = self.callback_registry.get("copy_datetime")
+            if copy_handler and isinstance(copy_handler, CopyDateTimeHandler):
+                copy_handler.set_prefix(current_settings.get("prefix", ""))
+            
+            # Atualiza atalhos no menu builder
+            self.menu_builder.hotkey_copy_datetime = current_settings.get("hotkey_copy_datetime", "ctrl+shift+q")
+            self.menu_builder.hotkey_search_history = current_settings.get("hotkey_search_history", "ctrl+shift+f")
+            self.menu_builder.hotkey_refresh_menu = current_settings.get("hotkey_refresh_menu", "ctrl+shift+r")
+            try:
+                self.menu_builder.tray_menu_cache_window_ms = int(current_settings.get("tray_menu_cache_window_ms", 200))
+            except Exception:
+                pass
+            
+            # Aplica hotkeys configurados
+            copy_hk = current_settings.get("hotkey_copy_datetime", "ctrl+shift+q")
+            search_hk = current_settings.get("hotkey_search_history", "ctrl+shift+f")
+            refresh_hk = current_settings.get("hotkey_refresh_menu", "ctrl+shift+r")
+            
+            self.hotkey_manager.set_configured_hotkeys(copy_hk, search_hk, refresh_hk)
+            hotkey_results = self.hotkey_manager.apply_configured_hotkeys()
+            
+            # Retorna resultados para notificação
+            return hotkey_results
+            
+        except Exception as e:
+            logging.error(f"Erro ao sincronizar componentes: {e}")
+            return {}
     
     def _setup_callbacks(self):
         """Configura todos os callbacks entre componentes"""
@@ -226,11 +329,10 @@ class DahoraApp:
         self.modern_settings_dialog.on_get_settings_callback = self.settings_manager.get_all
         self.modern_settings_dialog.notification_callback = self.notification_manager.show_toast
         
-        # Hotkeys
-        # Ctrl+Shift+Q: cola (paste) no cursor, preservando o clipboard
-        self.hotkey_manager.set_copy_datetime_callback(self._on_copy_datetime_hotkey)
+        # Hotkeys - Usando handlers via callbacks wrappers
+        self.hotkey_manager.set_copy_datetime_callback(self._on_copy_datetime_hotkey_wrapper)
         self.hotkey_manager.set_refresh_menu_callback(self._on_refresh_menu)
-        self.hotkey_manager.set_search_callback(self._show_search_dialog)
+        self.hotkey_manager.set_search_callback(self._show_search_dialog_wrapper)
         self.hotkey_manager.set_ctrl_c_callback(self._on_ctrl_c)
 
         # Hotkeys configuráveis (usados pelo HotkeyManager.setup_all)
@@ -240,9 +342,9 @@ class DahoraApp:
             self.settings_manager.hotkey_refresh_menu,
         )
         
-        # Menu builder callbacks
+        # Menu builder callbacks - Usando handlers onde possível
         self.menu_builder.set_copy_datetime_callback(self._copy_datetime_menu)
-        self.menu_builder.set_show_search_callback(self._show_search_dialog)
+        self.menu_builder.set_show_search_callback(self._show_search_dialog_wrapper)
         self.menu_builder.set_show_custom_shortcuts_callback(self._show_custom_shortcuts_dialog)  # Configurações unificadas
         self.menu_builder.set_refresh_menu_callback(self._refresh_menu_action)
         # Atualiza atalhos no menu
@@ -259,7 +361,7 @@ class DahoraApp:
         self.menu_builder.set_show_about_callback(self._show_about)
         self.menu_builder.set_toggle_pause_callback(self._toggle_pause)
         self.menu_builder.set_is_paused_callback(lambda: self.clipboard_manager.paused)
-        self.menu_builder.set_quit_callback(self._quit_app)
+        self.menu_builder.set_quit_callback(self._quit_app_wrapper)
     
     def _on_prefix_saved(self, prefix: str):
         """Callback quando prefixo é salvo"""
@@ -268,53 +370,15 @@ class DahoraApp:
         self.prefix_dialog.set_prefix(prefix)
     
     def _on_settings_saved(self, settings: dict):
-        """Callback quando configurações são salvas"""
-        # Snapshot antes da atualização (para fallback de campos que uma UI não envia)
-        previous_settings = self.settings_manager.get_all()
-
+        """
+        Callback quando configurações são salvas.
+        Único ponto de entrada - delega sincronização para _sync_all_components()
+        """
         # Atualiza o settings_manager
         self.settings_manager.update_all(settings)
-        current_settings = self.settings_manager.get_all()
-
-        try:
-            self.clipboard_manager.set_max_history_items(int(current_settings.get("max_history_items", 100)))
-            self.clipboard_manager.set_monitoring_config(
-                float(current_settings.get("clipboard_monitor_interval", 3.0)),
-                float(current_settings.get("clipboard_idle_threshold", 30.0)),
-            )
-        except Exception:
-            pass
-
-        try:
-            if file_handler is not None:
-                file_handler.maxBytes = int(current_settings.get("log_max_bytes", self.settings_manager.log_max_bytes))
-                file_handler.backupCount = int(current_settings.get("log_backup_count", self.settings_manager.log_backup_count))
-        except Exception:
-            pass
         
-        # Sincroniza componentes que dependem das configurações
-        self.datetime_formatter.set_prefix(settings.get("prefix", ""))
-        self.datetime_formatter.set_brackets(
-            settings.get("bracket_open", "["),
-            settings.get("bracket_close", "]")
-        )
-        
-        # Atualiza atalhos no menu builder
-        self.menu_builder.hotkey_copy_datetime = current_settings.get("hotkey_copy_datetime", "ctrl+shift+q")
-        self.menu_builder.hotkey_search_history = current_settings.get("hotkey_search_history", "ctrl+shift+f")
-        self.menu_builder.hotkey_refresh_menu = current_settings.get("hotkey_refresh_menu", "ctrl+shift+r")
-        try:
-            self.menu_builder.tray_menu_cache_window_ms = int(current_settings.get("tray_menu_cache_window_ms", 200))
-        except Exception:
-            pass
-
-        # Aplica hotkeys imediatamente (sem precisar reiniciar)
-        copy_hk = current_settings.get("hotkey_copy_datetime") or previous_settings.get("hotkey_copy_datetime")
-        search_hk = current_settings.get("hotkey_search_history") or previous_settings.get("hotkey_search_history")
-        refresh_hk = current_settings.get("hotkey_refresh_menu") or previous_settings.get("hotkey_refresh_menu")
-
-        self.hotkey_manager.set_configured_hotkeys(copy_hk, search_hk, refresh_hk)
-        hotkey_results = self.hotkey_manager.apply_configured_hotkeys()
+        # Sincroniza todos os componentes usando método centralizado
+        hotkey_results = self._sync_all_components()
 
         # Toast resumido (mostra erro apenas se algum falhou)
         errors = [v for v in hotkey_results.values() if isinstance(v, str) and v.startswith("erro")]
@@ -490,8 +554,20 @@ class DahoraApp:
                 self.notification_manager.show_toast("Dahora App",
                     f"Copiado com sucesso via {source}!\n{dt_string}\nTotal: {count}ª vez", duration=dur)
 
-    def _on_copy_datetime_hotkey(self) -> None:
-        """Ctrl+Shift+Q: cola data/hora onde o cursor está, preservando clipboard."""
+    def _on_copy_datetime_hotkey_wrapper(self) -> None:
+        """
+        Wrapper para usar handler de copy_datetime.
+        Mantém compatibilidade com hotkey_manager enquanto migra para handlers.
+        """
+        handler = self.callback_registry.get("copy_datetime")
+        if handler:
+            handler.handle()
+        else:
+            # Fallback para implementação antiga se handler não estiver disponível
+            self._on_copy_datetime_hotkey_legacy()
+    
+    def _on_copy_datetime_hotkey_legacy(self) -> None:
+        """Implementação legada - será removida após migração completa"""
         try:
             dt_string = self._format_datetime_for_default_shortcut()
             self.clipboard_manager.mark_own_content(dt_string)
@@ -532,9 +608,33 @@ class DahoraApp:
         self.settings_dialog.set_current_settings(self.settings_manager.get_all())
         self.settings_dialog.show()
     
-    def _show_search_dialog(self):
-        """Mostra diálogo de busca no histórico (UI Moderna)"""
+    def _show_search_dialog_wrapper(self, icon=None, item=None):
+        """
+        Wrapper para usar handler de show_search.
+        Mantém compatibilidade com callbacks enquanto migra para handlers.
+        """
+        handler = self.callback_registry.get("show_search")
+        if handler:
+            handler.handle(icon=icon, item=item)
+        else:
+            # Fallback para implementação antiga
+            self._show_search_dialog_legacy()
+    
+    def _show_search_dialog_legacy(self):
+        """Implementação legada - será removida após migração completa"""
         self._run_on_ui_thread(lambda: self.modern_search_dialog.show())
+    
+    def _quit_app_wrapper(self, icon=None, item=None):
+        """
+        Wrapper para usar handler de quit.
+        Mantém compatibilidade com menu_builder enquanto migra para handlers.
+        """
+        handler = self.callback_registry.get("quit_app")
+        if handler:
+            handler.handle(icon=icon, item=item)
+        else:
+            # Fallback para implementação antiga se handler não estiver disponível
+            self._quit_app(icon, item)
     
     def _on_add_custom_shortcut_wrapper(self, hotkey: str, prefix: str, description: str = "", enabled: bool = True):
         """Wrapper para adicionar custom shortcut E REGISTRAR IMEDIATAMENTE"""
@@ -658,35 +758,39 @@ class DahoraApp:
         self._run_on_ui_thread(lambda: self.modern_about_dialog.show())
 
     def _ensure_ui_root(self):
-        """Garante um único CTk root rodando no main thread."""
-        if self._ui_root is not None:
-            return
+        """
+        Garante um único CTk root rodando no main thread.
+        Thread-safe usando Lock para prevenir race conditions.
+        """
+        with self._ui_lock:
+            if self._ui_root is not None:
+                return
 
-        import customtkinter as ctk
-        from dahora_app.ui.modern_styles import ModernTheme
+            import customtkinter as ctk
+            from dahora_app.ui.modern_styles import ModernTheme
 
-        ModernTheme.setup()
-        self._ui_root = ctk.CTk()
-        self._ui_root.withdraw()
-        self._ui_root.title("Dahora App")
-        try:
-            self._ui_root.iconbitmap('icon.ico')
-        except Exception:
-            pass
+            ModernTheme.setup()
+            self._ui_root = ctk.CTk()
+            self._ui_root.withdraw()
+            self._ui_root.title("Dahora App")
+            try:
+                self._ui_root.iconbitmap('icon.ico')
+            except Exception:
+                pass
 
-        # Injeta o parent para os diálogos (toplevels)
-        try:
-            self.modern_settings_dialog.set_parent(self._ui_root)
-        except Exception:
-            pass
-        try:
-            self.modern_search_dialog.set_parent(self._ui_root)
-        except Exception:
-            pass
-        try:
-            self.modern_about_dialog.set_parent(self._ui_root)
-        except Exception:
-            pass
+            # Injeta o parent para os diálogos (toplevels)
+            try:
+                self.modern_settings_dialog.set_parent(self._ui_root)
+            except Exception:
+                pass
+            try:
+                self.modern_search_dialog.set_parent(self._ui_root)
+            except Exception:
+                pass
+            try:
+                self.modern_about_dialog.set_parent(self._ui_root)
+            except Exception:
+                pass
 
     def _prewarm_ui(self) -> None:
         """Constrói as janelas em idle (ocultas) para abertura instantânea depois."""

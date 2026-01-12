@@ -1,8 +1,23 @@
 # 📚 Índice de Documentação - Dahora App
 
-> **Ponto central de navegação** para toda documentação do projeto Dahora App v0.2.10
+> **Ponto central de navegação** para toda documentação do projeto Dahora App v0.2.11
 
 > Navegação: [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
+
+> **Última atualização:** 12 de janeiro de 2026
+
+---
+
+## 🎉 Novidades (Janeiro 2026)
+
+- ✅ **Migração para Handlers** - CallbackRegistry + 4 handlers
+- ✅ **8 Protocols** para type hints em `callback_manager.py`
+- ✅ **Thread-Safety** em UI root com Lock
+- ✅ **Validação única com Pydantic** - removida duplicação
+- ✅ **267 testes** passando
+- ✅ **100% dos hacks tratados** (14 de 14)
+- ✅ **UI refinada** - Spinbox com setas proporcionais
+- 📊 Relatório completo: **[ANALISE_PROJETO.md](../ANALISE_PROJETO.md)**
 
 ---
 
@@ -16,6 +31,7 @@
 ### Para Desenvolvedores
 - **[WINDOWS_PYTHON_SETUP.md](WINDOWS_PYTHON_SETUP.md)** - ⚠️ **LEIA PRIMEIRO!** Use `py` no Windows
 - **[ARCHITECTURE.md](ARCHITECTURE.md)** - 🏗️ Arquitetura técnica e componentes
+- **[ANALISE_PROJETO.md](../ANALISE_PROJETO.md)** - 📊 Relatório de análise e melhorias (12/01/2026)
 - **[DEVELOPMENT_HISTORY.md](DEVELOPMENT_HISTORY.md)** - 📜 Histórico narrativo do desenvolvimento
 
 ### Para Manutenedores
@@ -69,16 +85,19 @@
 ```
 docs/
 ├── README.md                   ← Você está aqui!
-├── ARCHITECTURE.md             # Arquitetura técnica
+├── ARCHITECTURE.md             # Arquitetura técnica (atualizado 12/01/2026)
 ├── DEVELOPMENT_HISTORY.md      # Histórico narrativo
 ├── LANDING_TEMPLATE.md         # Template da landing (specs por seção)
-├── HACKS.md                    # Workarounds documentados
+├── HACKS.md                    # Workarounds documentados (atualizado 12/01/2026)
 ├── PRD.md                      # Requisitos do produto (formal)
 ├── PRICING.md                  # Análise de mercado
 ├── RELEASE.md                  # Processo de build e release
-├── ROADMAP.md                  # Próximos passos
+├── ROADMAP.md                  # Próximos passos (atualizado 12/01/2026)
 ├── GITHUB_CLI_GUIDE.md         # GitHub CLI completo
 └── WINDOWS_PYTHON_SETUP.md     # Configuração do Python no Windows
+
+raiz/
+└── ANALISE_PROJETO.md          # Relatório de análise completo (NOVO)
 ```
 
 ---
@@ -149,4 +168,4 @@ docs/
 
 ---
 
-**Última atualização:** Janeiro 2026 | **Versão:** v0.2.10
+**Última atualização:** 12 de janeiro de 2026 | **Versão:** v0.2.11

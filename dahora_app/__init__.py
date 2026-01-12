@@ -3,7 +3,7 @@ Dahora App - Sistema de Bandeja do Windows
 Cola timestamps formatados diretamente com atalhos personalizáveis
 """
 
-__version__ = "0.2.10"
+__version__ = "0.2.11"
 __author__ = "Dahora App Team"
 
 # Imports principais
@@ -26,6 +26,15 @@ from dahora_app.callback_manager import (
     CallbackRegistry,
     get_callback_registry,
     initialize_callbacks,
+    # Protocols para type hints
+    CopyDatetimeCallback,
+    RefreshMenuCallback,
+    MenuItemCallback,
+    SearchCallback,
+    SettingsSavedCallback,
+    CopyFromHistoryCallback,
+    NotificationCallback,
+    GetHistoryCallback,
 )
 from dahora_app.handlers import (
     QuitAppHandler,
@@ -67,10 +76,21 @@ __all__ = [
     "CallbackRegistry",
     "get_callback_registry",
     "initialize_callbacks",
+    # Protocols para type hints
+    "CopyDatetimeCallback",
+    "RefreshMenuCallback",
+    "MenuItemCallback",
+    "SearchCallback",
+    "SettingsSavedCallback",
+    "CopyFromHistoryCallback",
+    "NotificationCallback",
+    "GetHistoryCallback",
+    # Handlers
     "QuitAppHandler",
     "CopyDateTimeHandler",
     "ShowSettingsHandler",
     "ShowSearchHandler",
+    # UI Components
     "PrefixDialog",
     "IconManager",
     "MenuBuilder",

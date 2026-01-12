@@ -67,7 +67,10 @@ class SettingsManager:
 
     def validate_settings(self, settings_dict: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Valida e sanitiza configurações carregadas usando Pydantic schemas
+        Valida e sanitiza configurações carregadas usando Pydantic schemas.
+
+        Usa apenas Pydantic para validação (sem fallback manual).
+        Se falhar, retorna configurações padrão.
 
         Args:
             settings_dict: Dicionário com configurações brutas
@@ -76,7 +79,7 @@ class SettingsManager:
             Dicionário com configurações validadas
         """
         try:
-            # Tenta validação com Pydantic primeiro (mais rigorosa)
+            # Validação com Pydantic (única fonte de verdade)
             schema = SettingsSchema(
                 prefix=settings_dict.get("prefix", ""),
                 hotkey_copy_datetime=settings_dict.get(
@@ -133,208 +136,12 @@ class SettingsManager:
             }
 
         except ValidationError as e:
-            # Se validação Pydantic falha, faz fallback para validação manual (compat)
-            logging.warning(f"Validação Pydantic falhou, usando validação manual: {e}")
-            return self._validate_settings_manual(settings_dict)
+            # Validação Pydantic falhou - usa defaults em vez de fallback manual
+            logging.warning(f"Validação Pydantic falhou, usando defaults: {e}")
+            return self._get_default_settings()
 
         except Exception as e:
             logging.error(f"Erro ao validar settings: {e}")
-            return self._get_default_settings()
-
-    def _validate_settings_manual(
-        self, settings_dict: Dict[str, Any]
-    ) -> Dict[str, Any]:
-        """
-        Validação manual compatível (fallback para Pydantic)
-
-        Args:
-            settings_dict: Dicionário com configurações brutas
-
-        Returns:
-            Dicionário com configurações validadas
-        """
-        try:
-
-            def _parse_int(value: Any) -> Optional[int]:
-                try:
-                    if value is None:
-                        return None
-                    s = str(value).strip()
-                    if s == "":
-                        return None
-                    return int(s)
-                except Exception:
-                    return None
-
-            # Valida prefix
-            prefix = str(settings_dict.get("prefix", ""))
-            if len(prefix) > 100:
-                logging.warning("Prefixo muito longo, truncando para 100 chars")
-                prefix = prefix[:100]
-            prefix = re.sub(r"[\x00-\x1f\x7f-\x9f]", "", prefix)
-
-            # Valida hotkeys
-            hotkey_copy = str(settings_dict.get("hotkey_copy_datetime", "ctrl+shift+q"))
-            hotkey_search = str(
-                settings_dict.get("hotkey_search_history", "ctrl+shift+f")
-            )
-            hotkey_refresh = str(
-                settings_dict.get("hotkey_refresh_menu", "ctrl+shift+r")
-            )
-
-            # Valida max_history_items
-            max_history = int(settings_dict.get("max_history_items", 100))
-            if max_history < 10:
-                max_history = 10
-            if max_history > 1000:
-                max_history = 1000
-
-            # Valida intervalos
-            monitor_interval = float(settings_dict.get("clipboard_monitor_interval", 3))
-            if monitor_interval < 0.5:
-                monitor_interval = 0.5
-            if monitor_interval > 60:
-                monitor_interval = 60
-
-            idle_threshold = float(settings_dict.get("clipboard_idle_threshold", 30))
-            if idle_threshold < 5:
-                idle_threshold = 5
-            if idle_threshold > 300:
-                idle_threshold = 300
-
-            # Valida formato de data/hora
-            datetime_format = str(
-                settings_dict.get("datetime_format", "%d.%m.%Y-%H:%M")
-            )
-
-            # Valida notificações
-            notification_duration = int(settings_dict.get("notification_duration", 2))
-            if notification_duration < 1:
-                notification_duration = 1
-            if notification_duration > 10:
-                notification_duration = 10
-
-            notification_enabled = bool(settings_dict.get("notification_enabled", True))
-
-            log_max_bytes = _parse_int(
-                settings_dict.get("log_max_bytes", 1 * 1024 * 1024)
-            ) or (1 * 1024 * 1024)
-            if log_max_bytes < (128 * 1024):
-                log_max_bytes = 128 * 1024
-            if log_max_bytes > (20 * 1024 * 1024):
-                log_max_bytes = 20 * 1024 * 1024
-
-            log_backup_count = _parse_int(settings_dict.get("log_backup_count", 1))
-            if log_backup_count is None:
-                log_backup_count = 1
-            if log_backup_count < 0:
-                log_backup_count = 0
-            if log_backup_count > 10:
-                log_backup_count = 10
-
-            ui_prewarm_delay_ms = _parse_int(
-                settings_dict.get("ui_prewarm_delay_ms", 700)
-            )
-            if ui_prewarm_delay_ms is None:
-                ui_prewarm_delay_ms = 700
-            if ui_prewarm_delay_ms < 0:
-                ui_prewarm_delay_ms = 0
-            if ui_prewarm_delay_ms > 10000:
-                ui_prewarm_delay_ms = 10000
-
-            tray_menu_cache_window_ms = _parse_int(
-                settings_dict.get("tray_menu_cache_window_ms", 200)
-            )
-            if tray_menu_cache_window_ms is None:
-                tray_menu_cache_window_ms = 200
-            if tray_menu_cache_window_ms < 0:
-                tray_menu_cache_window_ms = 0
-            if tray_menu_cache_window_ms > 2000:
-                tray_menu_cache_window_ms = 2000
-
-            # Valida brackets configuráveis
-            bracket_open_raw = str(settings_dict.get("bracket_open", "[")).strip()
-            bracket_close_raw = str(settings_dict.get("bracket_close", "]")).strip()
-            bracket_open = (
-                "["
-                if len(bracket_open_raw) != 1 or bracket_open_raw in "\n\r\t"
-                else bracket_open_raw
-            )
-            bracket_close = (
-                "]"
-                if len(bracket_close_raw) != 1 or bracket_close_raw in "\n\r\t"
-                else bracket_close_raw
-            )
-            if bracket_open == bracket_close:
-                if bracket_open != "]":
-                    bracket_close = "]"
-                else:
-                    bracket_close = "["
-
-            # Valida custom_shortcuts (NOVO)
-            custom_shortcuts = self._validate_custom_shortcuts(
-                settings_dict.get("custom_shortcuts", [])
-            )
-
-            # Atalho padrão (pode não existir em versões antigas)
-            default_shortcut_id_raw = settings_dict.get("default_shortcut_id", None)
-            default_shortcut_id: Optional[int] = None
-            try:
-                if (
-                    default_shortcut_id_raw is not None
-                    and str(default_shortcut_id_raw).strip() != ""
-                ):
-                    default_shortcut_id = int(default_shortcut_id_raw)
-            except Exception:
-                default_shortcut_id = None
-
-            # Se não definido, tenta escolher um padrão coerente
-            if default_shortcut_id is None and custom_shortcuts:
-                enabled = [s for s in custom_shortcuts if s.get("enabled", True)]
-                pick: Optional[Dict[str, Any]] = (
-                    enabled[0] if enabled else custom_shortcuts[0]
-                )
-                default_shortcut_id = _parse_int(pick.get("id")) if pick else None
-
-            # Se definido mas não existe, re-seleciona
-            if default_shortcut_id is not None:
-                ids = {
-                    i
-                    for s in custom_shortcuts
-                    for i in [_parse_int(s.get("id"))]
-                    if i is not None
-                }
-                if default_shortcut_id not in ids:
-                    enabled = [s for s in custom_shortcuts if s.get("enabled", True)]
-                    pick = (
-                        enabled[0]
-                        if enabled
-                        else (custom_shortcuts[0] if custom_shortcuts else None)
-                    )
-                    default_shortcut_id = _parse_int(pick.get("id")) if pick else None
-
-            return {
-                "prefix": prefix,
-                "hotkey_copy_datetime": hotkey_copy,
-                "hotkey_search_history": hotkey_search,
-                "hotkey_refresh_menu": hotkey_refresh,
-                "max_history_items": max_history,
-                "clipboard_monitor_interval": monitor_interval,
-                "clipboard_idle_threshold": idle_threshold,
-                "datetime_format": datetime_format,
-                "notification_duration": notification_duration,
-                "notification_enabled": notification_enabled,
-                "log_max_bytes": log_max_bytes,
-                "log_backup_count": log_backup_count,
-                "ui_prewarm_delay_ms": ui_prewarm_delay_ms,
-                "tray_menu_cache_window_ms": tray_menu_cache_window_ms,
-                "bracket_open": bracket_open,
-                "bracket_close": bracket_close,
-                "custom_shortcuts": custom_shortcuts,
-                "default_shortcut_id": default_shortcut_id,
-            }
-        except Exception as e:
-            logging.error(f"Erro em validação manual: {e}")
             return self._get_default_settings()
 
     def _get_default_settings(self) -> Dict[str, Any]:

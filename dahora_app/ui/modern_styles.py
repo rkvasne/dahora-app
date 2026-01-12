@@ -313,12 +313,13 @@ class ModernSpinbox(ctk.CTkFrame):
         self.btn_up = ctk.CTkButton(
             btn_frame,
             text="▲",
-            width=24,
-            height=17,
-            corner_radius=4,
+            width=20,
+            height=14,
+            corner_radius=3,
             fg_color=colors["bg_tertiary"],
             hover_color=colors["surface"],
-            text_color=colors["text"],
+            text_color=colors["text_muted"],
+            font=("Segoe UI", 8),
             command=self._increment,
         )
         self.btn_up.pack()
@@ -326,12 +327,13 @@ class ModernSpinbox(ctk.CTkFrame):
         self.btn_down = ctk.CTkButton(
             btn_frame,
             text="▼",
-            width=24,
-            height=17,
-            corner_radius=4,
+            width=20,
+            height=14,
+            corner_radius=3,
             fg_color=colors["bg_tertiary"],
             hover_color=colors["surface"],
-            text_color=colors["text"],
+            text_color=colors["text_muted"],
+            font=("Segoe UI", 8),
             command=self._decrement,
         )
         self.btn_down.pack()

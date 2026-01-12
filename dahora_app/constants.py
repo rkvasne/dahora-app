@@ -6,7 +6,7 @@ import os
 
 # Informações do aplicativo
 APP_NAME = "DahoraApp"
-APP_VERSION = "0.2.10"
+APP_VERSION = "0.2.11"
 APP_TITLE = "Dahora App - Sistema de Timestamp"
 
 

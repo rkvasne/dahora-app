@@ -11,7 +11,7 @@
 
 ## 📋 ÍNDICE
 
-1. [v0.2.10 - Patch (manifest + rebuild)](#v0210---patch-manifest--rebuild) 🚀 **ATUAL**
+1. [v0.2.11 - Patch (manifest + rebuild)](#v0210---patch-manifest--rebuild) 🚀 **ATUAL**
 2. [v0.2.8 - Documentação (revisão)](#v028---documentação-revisão)
 3. [v0.2.7 - Documentação & Landing](#v027---documentação--landing)
 3. [v0.2.6 - Configurações Avançadas na UI & Monitoramento Configurável](#v026---configurações-avançadas-na-ui--monitoramento-configurável)
@@ -26,7 +26,7 @@
 
 ---
 
-## 🚀 V0.2.10 - PATCH (MANIFEST + REBUILD)
+## 🚀 V0.2.11 - PATCH (MANIFEST + REBUILD)
 
 **Data:** 10/01/2026  
 **Status:** ✅ COMPLETA
@@ -34,7 +34,7 @@
 ### ✨ Principais Mudanças
 
 - Manifest do Windows alinhado com a versão do app.
-- Release gerado para `v0.2.10` com artefatos em `dist/`.
+- Release gerado para `v0.2.11` com artefatos em `dist/`.
 
 ---
 
@@ -571,7 +571,7 @@ dahora-app/
 
 ## 🎯 PRÓXIMOS PASSOS
 
-1. ✅ v0.2.10 (estado atual) estabilizado e documentado
+1. ✅ v0.2.11 (estado atual) estabilizado e documentado
 2. 🔮 Próximas features em [ROADMAP.md](ROADMAP.md)
 
 ---

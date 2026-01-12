@@ -12,6 +12,11 @@ from dahora_app.constants import (
     HOTKEY_CTRL_C,
 )
 from dahora_app.hotkey_validator import HotkeyValidator
+from dahora_app.callback_manager import (
+    CopyDatetimeCallback,
+    RefreshMenuCallback,
+    SearchCallback,
+)
 
 
 class HotkeyManager:
@@ -21,10 +26,11 @@ class HotkeyManager:
         """Inicializa o gerenciador de hotkeys"""
         self._lock = threading.RLock()
         self.registered_hotkeys: List[str] = []
-        self.copy_datetime_callback: Optional[Callable] = None
-        self.refresh_menu_callback: Optional[Callable] = None
-        self.search_callback: Optional[Callable] = None
-        self.ctrl_c_callback: Optional[Callable] = None
+        # Callbacks com tipos definidos via Protocols
+        self.copy_datetime_callback: Optional[CopyDatetimeCallback] = None
+        self.refresh_menu_callback: Optional[RefreshMenuCallback] = None
+        self.search_callback: Optional[SearchCallback] = None
+        self.ctrl_c_callback: Optional[CopyDatetimeCallback] = None  # Mesmo signature
 
         # Handles para hotkeys do próprio app (remove preciso, sem afetar custom shortcuts)
         self._app_hotkey_handles: Dict[str, Any] = {}

@@ -1,8 +1,10 @@
 """
-CopyDateTimeHandler - Handler para copiar data/hora formatada
+CopyDateTimeHandler - Handler para copiar data/hora formatada e colar automaticamente
 """
 
 import logging
+import time
+import threading
 from datetime import datetime
 from typing import TYPE_CHECKING, Optional
 
@@ -125,41 +127,38 @@ class CopyDateTimeHandler(CallbackHandler):
             if self.prefix:
                 timestamp = f"{self.prefix}{get_separator()}{timestamp}"
 
-            # Guardar clipboard atual
+            # Guardar clipboard atual para preservação
             old_clipboard = get_clipboard_text()
 
-            # Copiar timestamp
+            # Marcar conteúdo como próprio (evita ir para histórico)
             mark_own_content = getattr(clipboard_manager, "mark_own_content", None)
             if callable(mark_own_content):
                 mark_own_content(timestamp, ttl_seconds=2.0)
 
+            # Copiar timestamp para clipboard
             copy_to_clipboard(timestamp)
-            logger.info(f"Timestamp copied: {timestamp[:30]}...")
-
-            # Restaurar clipboard após delay (preservação inteligente)
-            # Isso é feito em background
-            restore_supported = False
+            
+            # Aguarda clipboard estar pronto e envia Ctrl+V para colar automaticamente
+            time.sleep(0.05)
             try:
-                from dahora_app.clipboard_manager import (
-                    ClipboardManager as RealClipboardManager,
-                )
+                import keyboard
+                keyboard.send('ctrl+v')
+                logger.info(f"Timestamp pasted: {timestamp[:30]}...")
+            except Exception as e:
+                logger.warning(f"Could not auto-paste (keyboard.send failed): {e}")
+                logger.info(f"Timestamp copied: {timestamp[:30]}...")
+            
+            time.sleep(0.05)  # Aguarda colagem completar
 
-                restore_supported = isinstance(clipboard_manager, RealClipboardManager)
-            except Exception:
-                restore_supported = False
-
-            if restore_supported and old_clipboard and old_clipboard != timestamp:
-                import threading
-
+            # Restaurar clipboard original após pequeno delay (preservação inteligente)
+            if old_clipboard and old_clipboard != timestamp:
                 def restore_clipboard():
-                    import time
-
-                    time.sleep(1)  # Aguarda 1s antes de restaurar
+                    time.sleep(0.1)  # Pequeno delay para garantir colagem
                     try:
                         if callable(mark_own_content):
                             mark_own_content(old_clipboard, ttl_seconds=2.0)
                         copy_to_clipboard(old_clipboard)
-                        logger.debug("Clipboard restored")
+                        logger.debug("Clipboard restored to original content")
                     except Exception as e:
                         logger.debug(f"Could not restore clipboard: {e}")
 

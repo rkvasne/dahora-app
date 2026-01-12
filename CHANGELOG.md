@@ -5,27 +5,50 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Não lançado]
+## [0.2.11] - 2026-01-12
 
-### Corrigido
-- Landing (mobile): menu sanduíche sem desfoque nas opções.
-- Landing (mobile): “Como Funciona” sem espaçamento excessivo no texto dos passos.
-- Landing (mobile): badges do Hero alinhados em 1 linha (3 itens).
-- Landing: alternância de fundos pós-Download mais evidente e consistente.
-- Landing (mobile): removida faixa escura entre “Sobre o dev” e rodapé.
-- Landing (mobile): removido card extra (glass) na seção Download.
-- Landing (desktop): seção “Para quem é” ajustada para grid em 2 colunas (3 cards).
+### 🏗️ Arquitetura
+- **CallbackRegistry** centralizado com 4 handlers implementados:
+  - `CopyDateTimeHandler` - com Ctrl+V automático
+  - `ShowSearchHandler` - diálogo de busca moderno
+  - `ShowSettingsHandler` - diálogo de configurações
+  - `QuitAppHandler` - shutdown seguro via wrapper
+- **8 Protocols** para type hints em `callback_manager.py`
+- **`_sync_all_components()`** - consolidação de lógica de atualização
+- **UI root thread-safety** - Lock implementado em `_ensure_ui_root()`
+- **Validação única com Pydantic** - removida `_validate_settings_manual()` (~190 linhas)
 
-### Documentação
-- Template da landing com specs por seção em `docs/LANDING_TEMPLATE.md`.
-- Índice de documentação consolidado em `docs/README.md` (remoção de `docs/INDEX.md`).
-- Roadmap agora aponta para links diretos de Issues/Discussions.
-- Template da landing atualizado (header, hero e “Para quem é”).
+### 📚 Documentação
+- Novo arquivo `ANALISE_PROJETO.md` com relatório completo de análise
+- `ARCHITECTURE.md` - Seções 3.7 (Handlers) e 3.8 (Otimizações)
+- `HACKS.md` - 100% dos hacks tratados (14 de 14)
+- `ROADMAP.md` - Seção "Concluído" com métricas
+- Consolidação e unificação de toda documentação
+- Removida pasta vazia `docs/GUIDES/`
 
-### Melhorado
-- Landing: tooltips em botões sem texto (tema, idioma e ícones do rodapé).
-- Landing (desktop): header com menu reduzido e consistente entre desktop/mobile.
-- Landing: “Links Rápidos” do rodapé alinhados com seções principais (Recursos/Download/FAQ/Segurança).
+### 📊 Métricas
+- **267 testes** passando (era 133+)
+- **8 Protocols** implementados
+- **4 Handlers** integrados
+- **100% dos hacks** tratados (14 de 14)
+
+### 🎨 UI
+- **Spinbox refinado** - Setas com tamanho proporcional (20x14 → era 24x17)
+- Fonte menor e cor mais sutil nas setas do spinbox
+
+### 🐛 Corrigido
+- Landing (mobile): menu sanduíche sem desfoque nas opções
+- Landing (mobile): "Como Funciona" sem espaçamento excessivo
+- Landing (mobile): badges do Hero alinhados em 1 linha
+- Landing: alternância de fundos pós-Download mais evidente
+- Landing (mobile): removida faixa escura entre "Sobre o dev" e rodapé
+- Landing (mobile): removido card extra (glass) na seção Download
+- Landing (desktop): seção "Para quem é" ajustada para grid em 2 colunas
+
+### ✨ Melhorado
+- Landing: tooltips em botões sem texto
+- Landing (desktop): header com menu reduzido e consistente
+- Landing: "Links Rápidos" do rodapé alinhados com seções principais
 
 ## [0.2.10] - 2026-01-10
 

@@ -7,7 +7,7 @@
 **O gerenciador de timestamps definitivo para Windows.**  
 *Cole datas e horas formatadas instantaneamente com atalhos personalizáveis.*
 
-[![Version](https://img.shields.io/badge/version-0.2.10-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
+[![Version](https://img.shields.io/badge/version-0.2.11-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
 [![Python](https://img.shields.io/badge/python-3.12+-green.svg?style=for-the-badge)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
 [![Tests](https://img.shields.io/badge/tests-automated-brightgreen.svg?style=for-the-badge)](tests/README.md)
@@ -23,7 +23,7 @@
 
 Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sistema leve e poderoso que revoluciona como você lida com timestamps. Ele roda silenciosamente no system tray e permite que você cole a data e hora atual formatada em qualquer lugar, com uma única hotkey.
 
-**Novo na v0.2.10:** Release patch para alinhar o manifest do Windows e regenerar os artefatos.
+**Novidades (Janeiro 2026):** Migração completa para handlers, 8 Protocols para type hints, UI thread-safe, 267 testes passando. Veja [ANALISE_PROJETO.md](ANALISE_PROJETO.md) para detalhes.
 
 > **Terminologia:** a UI/landing usam PT‑BR 100% (ex.: “área de transferência”, “bandeja do sistema”, “atalhos”).
 > A documentação técnica pode usar termos comuns em inglês (ex.: `clipboard`, `system tray`, `hotkeys`). Veja [Glossário por superfície (terminologia)](docs/README.md#glossário-por-superfície-terminologia).
@@ -134,7 +134,8 @@ Toda documentação está organizada em `docs/` com entrada centralizada:
 - **[LANDING_TEMPLATE.md](docs/LANDING_TEMPLATE.md)** - Template da landing (specs por seção)
 - **[RELEASE.md](docs/RELEASE.md)** - Processo de build, release e Git LFS
 - **[GITHUB_CLI_GUIDE.md](docs/GITHUB_CLI_GUIDE.md)** - GitHub CLI e autenticação
-- **[HACKS.md](docs/HACKS.md)** - Soluções criativas documentadas
+- **[HACKS.md](docs/HACKS.md)** - Soluções criativas documentadas (14 de 14 tratados - 100%)
+- **[ANALISE_PROJETO.md](ANALISE_PROJETO.md)** - Relatório de análise completo (Janeiro 2026)
 - **[ROADMAP.md](docs/ROADMAP.md)** - Próximos passos
 - **[CHANGELOG.md](CHANGELOG.md)** - Registro oficial de mudanças
 
@@ -201,19 +202,20 @@ dahora-app/
   - Type hints
   
 - ✅ **Fase 4:** Gerenciador de instância única
-  - Windows mutex
+  - Windows mutex (21 testes)
   - Instance protection
   
 - ✅ **Fase 5:** Sincronização de threads
   - Race condition fixes
   - Safe shutdown coordination
+  - UI root thread-safety (Lock)
   
 - ✅ **Fase 6:** Consolidação da lógica de callbacks
-  - Base `CallbackManager`
-  - Handler implementations
-  - Integration tests
+  - `CallbackRegistry` com 4 handlers
+  - 8 Protocols para type hints
+  - `_sync_all_components()` centralizado
   
-**Testes:** suíte automatizada via pytest (veja [tests/README.md](tests/README.md)).
+**Testes:** 267 testes automatizados via pytest (veja [tests/README.md](tests/README.md)).
 
 ### Documentação
 Comece por [docs/README.md](docs/README.md).

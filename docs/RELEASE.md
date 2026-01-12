@@ -2,7 +2,19 @@
 
 > Navegação: [Documentação](README.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
+> **Última atualização:** 12 de janeiro de 2026 | **Versão atual:** v0.2.11
+
 Este guia descreve o fluxo recomendado para gerar um executável, empacotar em ZIP e versionar os artefatos (incluindo Git LFS), mantendo o repositório consistente.
+
+## 📋 Checklist Pré-Release
+
+Antes de criar uma nova release:
+
+- [ ] Todos os testes passando: `py -m pytest` (267 testes)
+- [ ] Sem erros de lint: `py -m flake8 dahora_app/`
+- [ ] Versão atualizada em `dahora_app/constants.py`
+- [ ] `CHANGELOG.md` atualizado com nova seção
+- [ ] Documentação revisada (ROADMAP.md, ARCHITECTURE.md)
 
 ## 1) Atualizar versão
 
