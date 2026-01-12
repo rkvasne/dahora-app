@@ -74,8 +74,9 @@ Este arquivo descreve as especificações visuais (fontes, espaçamentos, tamanh
 - `box-shadow: var(--shadow-sm)` e `border-bottom: 1px solid var(--border-color)`
 
 **Nav** ([styles.css](file:///e:/Dahora/dahora-app/landing/styles.css#L86-L116))
-- `.nav`: `max-width: 1200px`, `margin: 0 auto`, `padding: 1rem 2rem`, `display:flex`, `justify-content: space-between`
+- `.nav`: `max-width: 1200px`, `margin: 0 auto`, `padding: 1rem 1.5rem`, `display:flex`, `justify-content: space-between`
 - `.nav-menu`: `display:flex`, `gap: 1.5rem`, `list-style:none`, `align-items:center`
+- Desktop: itens secundários do menu podem ficar ocultos para reduzir poluição visual (`.nav-item-secondary`).
 
 **Links** ([styles.css](file:///e:/Dahora/dahora-app/landing/styles.css#L118-L154))
 - `.nav-link`: `font-weight: 500`, `padding: 0.5rem 1rem`, `border-radius: 2rem`, `display: inline-flex`, `align-items:center`
@@ -123,7 +124,7 @@ Este arquivo descreve as especificações visuais (fontes, espaçamentos, tamanh
 
 **Título e subtítulo** ([dark-sections.css](file:///e:/Dahora/dahora-app/landing/dark-sections.css#L47-L72))
 - `.hero-title`: `font-size: 3.5rem`, `font-weight: 800`, `line-height: 1.1`, gradiente no texto
-- `.hero-subtitle`: `font-size: 1.2rem`, `line-height: 1.6`, `max-width: 600px`, `margin-bottom: 2.5rem`
+- `.hero-subtitle`: `font-size: 1.2rem`, `line-height: 1.6`, `max-width: 500px`, `margin-bottom: 2.5rem`
 
 **Badge de versão (pílula)** ([dark-sections.css](file:///e:/Dahora/dahora-app/landing/dark-sections.css#L74-L88))
 - `.hero-version`: `padding: 0.5rem 1.25rem`, `border-radius: 100px`, `font-size: 0.875rem`, `font-weight: 600`
@@ -135,12 +136,13 @@ Este arquivo descreve as especificações visuais (fontes, espaçamentos, tamanh
 - Ícone do badge: `48x48px`, `border-radius: 12px`, borda `rgba(56,189,248,0.2)`
 
 **Botões** ([dark-sections.css](file:///e:/Dahora/dahora-app/landing/dark-sections.css#L146-L151))
-- `.hero-buttons`: `display:flex`, `gap: 1rem`, centralizado, `flex-wrap: wrap`
+- `.hero-buttons`: `display:flex`, `gap: 1.5rem`, centralizado, `flex-wrap: wrap`
 
 ## Seções com Cards (Recursos / Detalhes Técnicos / Guia Rápido / Segurança Executável)
 
 **Grid de cards** ([styles.css](file:///e:/Dahora/dahora-app/landing/styles.css#L261-L266))
 - `.features-grid`: `display:grid`, `grid-template-columns: repeat(auto-fit, minmax(320px, 1fr))`, `gap: 1.5rem`
+- Variação “Para quem é” (desktop): `2×2` centralizado via `.features-grid.audience-grid`.
 
 **Card** ([styles.css](file:///e:/Dahora/dahora-app/landing/styles.css#L268-L301))
 - `.feature-card`: `padding: 2.5rem`, `border-radius: 1rem`, `border: 1px solid var(--border-color)`, `height: 100%`

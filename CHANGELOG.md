@@ -14,14 +14,17 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Landing: alternância de fundos pós-Download mais evidente e consistente.
 - Landing (mobile): removida faixa escura entre “Sobre o dev” e rodapé.
 - Landing (mobile): removido card extra (glass) na seção Download.
+- Landing (desktop): seção “Para quem é” ajustada para grid 2×2 (4 cards).
 
 ### Documentação
 - Template da landing com specs por seção em `docs/LANDING_TEMPLATE.md`.
 - Índice de documentação consolidado em `docs/README.md` (remoção de `docs/INDEX.md`).
 - Roadmap agora aponta para links diretos de Issues/Discussions.
+- Template da landing atualizado (header, hero e “Para quem é”).
 
 ### Melhorado
 - Landing: tooltips em botões sem texto (tema, idioma e ícones do rodapé).
+- Landing (desktop): header com menu menos poluído (itens secundários ocultos).
 
 ## [0.2.10] - 2026-01-10
 
