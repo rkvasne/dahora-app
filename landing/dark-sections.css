@@ -64,7 +64,7 @@
     color: rgba(255, 255, 255, 0.8);
     margin-bottom: 2.5rem;
     position: relative;
-    max-width: 600px;
+    max-width: 500px;
     margin-left: auto;
     margin-right: auto;
     line-height: 1.6;
@@ -91,7 +91,8 @@
     display: flex;
     justify-content: center;
     gap: 2.5rem;
-    margin-bottom: 3rem;
+    margin-top: 2.25rem;
+    margin-bottom: 2rem;
     flex-wrap: wrap;
     padding: 0 1rem;
 }
@@ -152,9 +153,40 @@
 
 .hero-buttons {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     justify-content: center;
     flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+}
+
+.hero-trust-links {
+    margin-top: 1.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0 1rem;
+}
+
+.hero-trust-links a {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s, opacity 0.2s;
+}
+
+.hero-trust-links a:hover {
+    color: rgba(255, 255, 255, 0.95);
+    border-color: rgba(255, 255, 255, 0.45);
+}
+
+.hero-trust-sep {
+    opacity: 0.5;
+    user-select: none;
 }
 
 /* ===== STATS SECTION ===== */

@@ -16,6 +16,10 @@
 
 @media (max-width: 768px) {
     /* ===== NAVIGATION ===== */
+    .nav {
+        padding: 1rem 1rem;
+    }
+
     .mobile-menu-btn {
         display: block;
         color: var(--text-dark);

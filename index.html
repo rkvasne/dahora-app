@@ -44,8 +44,13 @@
 
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="#recursos" class="nav-link" data-i18n="nav.features">Recursos</a></li>
-                <li><a href="#download" class="nav-link" data-i18n="nav.download">Download</a></li>
+                <li><a href="#como-funciona" class="nav-link" data-i18n="nav.how">Como funciona</a></li>
+                <li><a href="#guia-rapido" class="nav-link" data-i18n="nav.quick">Guia rápido</a></li>
+                <li><a href="#seguranca-executavel" class="nav-link" data-i18n="nav.security">Segurança</a></li>
+                <li><a href="#download" class="nav-link nav-cta" data-i18n="nav.download">Download</a></li>
+                <li><a href="#donate" class="nav-link" data-i18n="nav.donate">Apoiar</a></li>
                 <li><a href="#faq" class="nav-link" data-i18n="nav.faq">FAQ</a></li>
+                <li><a href="#about" class="nav-link" data-i18n="nav.about">Sobre</a></li>
                 <li><a href="https://github.com/rkvasne/dahora-app" target="_blank" rel="noopener noreferrer"
                         class="nav-link" data-i18n="nav.github">GitHub</a></li>
                 <li>
@@ -67,10 +72,16 @@
             <div class="hero-version" data-i18n="hero.version">ATUALIZAÇÃO V.0.2.10</div>
             <img src="assets/dahora_icon.png" alt="Dahora App Icon" class="hero-icon">
             <h1 class="hero-title">Dahora App</h1>
-            <p class="hero-subtitle" data-i18n="hero.subtitle">
-                Cole datas e horas sem quebrar seu fluxo<br>
-                Automaticamente na posição do cursor • Preserve sua área de transferência
-            </p>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">Cole datas e horas no cursor, sem interromper.</p>
+            <div class="hero-buttons">
+                <a href="#download" class="btn btn-primary" data-i18n="hero.btn.download">
+                    💾 Download Grátis
+                </a>
+                <a href="https://github.com/rkvasne/dahora-app" target="_blank" rel="noopener noreferrer"
+                    class="btn btn-secondary" data-i18n="hero.btn.github">
+                    🔗 GitHub
+                </a>
+            </div>
             <div class="hero-badges">
                 <div class="hero-badge-item">
                     <i class="fab fa-windows"></i>
@@ -85,14 +96,16 @@
                     <span data-i18n="hero.badge.opensource">Código aberto</span>
                 </div>
             </div>
-            <div class="hero-buttons">
-                <a href="#download" class="btn btn-primary" data-i18n="hero.btn.download">
-                    💾 Download Grátis
-                </a>
-                <a href="https://github.com/rkvasne/dahora-app" target="_blank" rel="noopener noreferrer"
-                    class="btn btn-secondary" data-i18n="hero.btn.github">
-                    🔗 GitHub
-                </a>
+            <div class="hero-trust-links" aria-label="Links oficiais">
+                <a href="https://github.com/rkvasne/dahora-app/releases" target="_blank" rel="noopener noreferrer" data-i18n="trust.releases">Releases oficiais</a>
+                <span class="hero-trust-sep" aria-hidden="true">•</span>
+                <a href="https://github.com/rkvasne/dahora-app" target="_blank" rel="noopener noreferrer" data-i18n="download.trust.github">Código-fonte</a>
+                <span class="hero-trust-sep" aria-hidden="true">•</span>
+                <a href="https://github.com/rkvasne/dahora-app/blob/main/PRIVACY.md" target="_blank" rel="noopener noreferrer" data-i18n="download.trust.privacy">Privacidade</a>
+                <span class="hero-trust-sep" aria-hidden="true">•</span>
+                <a href="https://github.com/rkvasne/dahora-app/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer" data-i18n="download.trust.security">Segurança</a>
+                <span class="hero-trust-sep" aria-hidden="true">•</span>
+                <a href="https://github.com/rkvasne/dahora-app/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" data-i18n="download.trust.license">Licença MIT</a>
             </div>
         </div>
     </section>
@@ -307,6 +320,42 @@
                     <div class="step-icon"><i class="fas fa-clipboard-check"></i></div>
                     <h3><span>4.</span><span data-i18n="how.card4.title">Preserva a área de transferência</span></h3>
                     <p data-i18n="how.card4.desc">Restaura seu conteúdo original.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="audience.title">👥 Para quem é</h2>
+                <p class="section-subtitle" data-i18n="audience.subtitle">Para quem precisa colar data/hora com padrão e velocidade.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                    <h3 data-i18n="audience.card1.title">Suporte e atendimento</h3>
+                    <p data-i18n="audience.card1.desc">Registre interações com timestamp em segundos, sem perder o foco.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-code"></i></div>
+                    <h3 data-i18n="audience.card2.title">Desenvolvedores</h3>
+                    <p data-i18n="audience.card2.desc">Padronize logs, commits e notas rápidas com um atalho.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-clipboard-list"></i></div>
+                    <h3 data-i18n="audience.card3.title">Operações e QA</h3>
+                    <p data-i18n="audience.card3.desc">Marque evidências e passos de testes com data/hora consistente.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-briefcase"></i></div>
+                    <h3 data-i18n="audience.card4.title">Times administrativos</h3>
+                    <p data-i18n="audience.card4.desc">Preencha relatórios, protocolos e planilhas mais rápido.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-user-check"></i></div>
+                    <h3 data-i18n="audience.card5.title">Quem usa padrões</h3>
+                    <p data-i18n="audience.card5.desc">Se você precisa de consistência, o Dahora automatiza o resto.</p>
                 </div>
             </div>
         </div>
@@ -632,6 +681,15 @@
                     para mais detalhes sobre desenvolvimento.
                 </div>
             </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    <span data-i18n="faq.q10">Como pedir ajuda / suporte?</span>
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer" data-i18n="faq.a10">
+                    Para suporte, abra uma <a href="https://github.com/rkvasne/dahora-app/issues" target="_blank" rel="noopener noreferrer">issue no GitHub</a> (bugs) ou use o <a href="https://github.com/rkvasne/dahora-app/discussions" target="_blank" rel="noopener noreferrer">Discussions</a> (dúvidas e ideias).
+                </div>
+            </div>
         </div>
     </section>
 
@@ -679,6 +737,7 @@
                     <li><a href="#recursos" data-i18n="nav.features">Recursos</a></li>
                     <li><a href="#download" data-i18n="nav.download">Download</a></li>
                     <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+                    <li><a href="https://github.com/rkvasne/dahora-app/issues" target="_blank" rel="noopener noreferrer" data-i18n="footer.support">Suporte</a></li>
                 </ul>
             </div>
             <div class="footer-social">
@@ -762,10 +821,16 @@
         const translations = {
             'pt-BR': {
                 'nav.features': 'Recursos',
+                'nav.how': 'Como funciona',
+                'nav.quick': 'Guia rápido',
+                'nav.security': 'Segurança',
                 'nav.news': 'Novidades',
                 'nav.download': 'Download',
+                'nav.donate': 'Apoiar',
                 'nav.faq': 'FAQ',
+                'nav.about': 'Sobre',
                 'nav.github': 'GitHub',
+                'trust.releases': 'Releases oficiais',
                 'hero.version': 'ATUALIZAÇÃO V.0.2.10',
                 'hero.title': 'Dahora App',
                 'hero.subtitle': 'Cole datas e horas sem quebrar seu fluxo<br>Automaticamente na posição do cursor • Preserve sua área de transferência',
@@ -788,6 +853,18 @@
                 'features.card5.desc': '• Design Windows 11<br>• Fonte monoespaçada<br>• Botões sem emojis<br>• Padding padrão MS',
                 'features.card6.title': '🔒 Privado & Offline',
                 'features.card6.desc': '• Zero telemetria<br>• Totalmente offline<br>• Dados locais (%APPDATA%)<br>• Logs limpos',
+                'audience.title': '👥 Para quem é',
+                'audience.subtitle': 'Para quem precisa colar data/hora com padrão e velocidade.',
+                'audience.card1.title': 'Suporte e atendimento',
+                'audience.card1.desc': 'Registre interações com timestamp em segundos, sem perder o foco.',
+                'audience.card2.title': 'Desenvolvedores',
+                'audience.card2.desc': 'Padronize logs, commits e notas rápidas com um atalho.',
+                'audience.card3.title': 'Operações e QA',
+                'audience.card3.desc': 'Marque evidências e passos de testes com data/hora consistente.',
+                'audience.card4.title': 'Times administrativos',
+                'audience.card4.desc': 'Preencha relatórios, protocolos e planilhas mais rápido.',
+                'audience.card5.title': 'Quem usa padrões',
+                'audience.card5.desc': 'Se você precisa de consistência, o Dahora automatiza o resto.',
                 'news.title': '🚀 Novidades da v0.2.10',
                 'news.subtitle': 'Ajustes de release, consistência e confiabilidade do executável.',
                 'news.card1.title': '📦 Build mais confiável',
@@ -907,10 +984,16 @@
             },
             'en': {
                 'nav.features': 'Features',
+                'nav.how': 'How it works',
+                'nav.quick': 'Quick guide',
+                'nav.security': 'Security',
                 'nav.news': 'What\'s New',
                 'nav.download': 'Download',
+                'nav.donate': 'Support',
                 'nav.faq': 'FAQ',
+                'nav.about': 'About',
                 'nav.github': 'GitHub',
+                'trust.releases': 'Official releases',
                 'hero.version': 'UPDATE V.0.2.10',
                 'hero.title': 'Dahora App',
                 'hero.subtitle': 'Paste dates and times without breaking your flow<br>Automatically at cursor position • Preserve your clipboard',
@@ -933,6 +1016,18 @@
                 'features.card5.desc': '• Windows 11 Design<br>• Monospace font<br>• No-emoji buttons<br>• Standard MS padding',
                 'features.card6.title': '🔒 Private & Offline',
                 'features.card6.desc': '• Zero telemetry<br>• Fully offline<br>• Local data (%APPDATA%)<br>• Clean logs',
+                'audience.title': '👥 Who it’s for',
+                'audience.subtitle': 'For anyone who needs fast, consistent date/time pasting.',
+                'audience.card1.title': 'Support & customer service',
+                'audience.card1.desc': 'Log interactions with timestamps in seconds, without losing focus.',
+                'audience.card2.title': 'Developers',
+                'audience.card2.desc': 'Standardize logs, commits, and quick notes with one shortcut.',
+                'audience.card3.title': 'Operations & QA',
+                'audience.card3.desc': 'Timestamp evidence and test steps with consistent date/time.',
+                'audience.card4.title': 'Admin teams',
+                'audience.card4.desc': 'Fill reports, tickets, and spreadsheets faster.',
+                'audience.card5.title': 'Anyone who needs standards',
+                'audience.card5.desc': 'If you need consistency, Dahora automates the rest.',
                 'news.title': '🚀 What\'s New in v0.2.10',
                 'news.subtitle': 'Release polish, consistency, and executable reliability.',
                 'news.card1.title': '📦 More reliable build',
