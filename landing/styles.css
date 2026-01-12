@@ -115,6 +115,16 @@ h6 {
     align-items: center; /* Garante alinhamento vertical */
 }
 
+@media (min-width: 992px) {
+    .nav-menu {
+        gap: 1.25rem;
+    }
+
+    .nav-item-secondary {
+        display: none;
+    }
+}
+
 .nav-link {
     color: var(--text-dark);
     text-decoration: none;
@@ -277,6 +287,24 @@ body.dark-mode .lang-btn {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Ligeiramente menor */
     gap: 1.5rem; /* Mais compacto */
+}
+
+@media (min-width: 992px) {
+    .features-grid.audience-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    .features-grid.audience-grid .feature-card {
+        grid-column: span 2;
+    }
+
+    .features-grid.audience-grid .feature-card:nth-last-child(2) {
+        grid-column: 2 / span 2;
+    }
+
+    .features-grid.audience-grid .feature-card:last-child {
+        grid-column: 4 / span 2;
+    }
 }
 
 .feature-card {
