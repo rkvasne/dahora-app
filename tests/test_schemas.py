@@ -103,13 +103,40 @@ class TestSettingsSchema:
         with pytest.raises(ValidationError):
             SettingsSchema(bracket_open="[[")
     
-    def test_custom_shortcuts_limit(self):
-        shortcuts = [
-            CustomShortcutSchema(id=i+1, hotkey=f"ctrl+shift+{chr(97+i)}", prefix=f"p{i}")
-            for i in range(15)
+    def test_custom_shortcuts_unlimited(self):
+        modifier_patterns = [
+            "ctrl+shift",
+            "ctrl+alt",
+            "alt+shift",
+            "ctrl+alt+shift",
+            "ctrl+win",
         ]
-        with pytest.raises(ValidationError):
-            SettingsSchema(custom_shortcuts=shortcuts)
+        keys = (
+            list("abcdefghijklmnopqrstuvwxyz")
+            + list("0123456789")
+            + [f"f{i}" for i in range(1, 13)]
+        )
+
+        hotkeys = [
+            "ctrl+shift+a",
+            "ctrl+shift+b",
+            "ctrl+shift+c",
+            "ctrl+shift+d",
+            "ctrl+shift+e",
+            "ctrl+shift+g",
+            "ctrl+alt+a",
+            "ctrl+alt+b",
+            "alt+shift+a",
+            "alt+shift+b",
+        ]
+
+        shortcuts = [
+            CustomShortcutSchema(id=i + 1, hotkey=hotkey, prefix=f"p{i + 1}")
+            for i, hotkey in enumerate(hotkeys)
+        ]
+
+        settings = SettingsSchema(custom_shortcuts=shortcuts)
+        assert len(settings.custom_shortcuts) == 10
     
     def test_hotkey_duplicates_detected(self):
         settings_dict = {

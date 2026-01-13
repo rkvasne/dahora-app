@@ -3,6 +3,7 @@ Gerenciamento de clipboard e histórico
 """
 
 import json
+import hashlib
 import logging
 import os
 import time
@@ -126,11 +127,22 @@ class ClipboardManager:
             payload = {
                 "dpapi": 1,
                 "blob": b64encode_bytes(blob),
-                "fallback": self.clipboard_history,
             }
             atomic_write_json(HISTORY_FILE, payload)
-        except Exception:
-            atomic_write_json(HISTORY_FILE, self.clipboard_history)
+            self._history_write_disabled = False
+            self._history_write_disabled_reason = ""
+        except Exception as e:
+            if force and not self.clipboard_history and os.path.exists(HISTORY_FILE):
+                try:
+                    os.remove(HISTORY_FILE)
+                    self._history_write_disabled = False
+                    self._history_write_disabled_reason = ""
+                    return
+                except Exception:
+                    pass
+
+            self._history_write_disabled = True
+            self._history_write_disabled_reason = str(e)
 
     def toggle_pause(self) -> bool:
         """Alterna estado de pausa do monitoramento"""
@@ -159,13 +171,9 @@ class ClipboardManager:
                             )
                             loaded = json.loads(decrypted.decode("utf-8"))
                         except Exception as e:
-                            fallback = raw.get("fallback")
-                            if isinstance(fallback, list):
-                                loaded = fallback
-                            else:
-                                loaded = []
-                                history_write_disabled = False
-                                history_write_disabled_reason = str(e)
+                            loaded = []
+                            history_write_disabled = False
+                            history_write_disabled_reason = str(e)
                     else:
                         loaded = raw
                         needs_migration = isinstance(raw, list)
@@ -241,8 +249,14 @@ class ClipboardManager:
                 ]
 
             self._write_history_locked()
+            text_len = len(text) if text else 0
+            text_hash = (
+                hashlib.sha256(text.encode("utf-8", errors="replace")).hexdigest()[:12]
+                if text_len
+                else "vazio"
+            )
             logging.info(
-                f"Histórico atualizado: total={len(self.clipboard_history)}; último='{text[:50]}...'"
+                f"Histórico atualizado: total={len(self.clipboard_history)}; last_len={text_len}, last_sha256={text_hash}"
             )
 
     def clear_history(self) -> int:
@@ -311,8 +325,18 @@ class ClipboardManager:
         """Inicializa o último conteúdo da clipboard"""
         try:
             self.last_clipboard_content = pyperclip.paste()
+            content_len = (
+                len(self.last_clipboard_content) if self.last_clipboard_content else 0
+            )
+            content_hash = (
+                hashlib.sha256(
+                    self.last_clipboard_content.encode("utf-8", errors="replace")
+                ).hexdigest()[:12]
+                if content_len
+                else "vazio"
+            )
             logging.info(
-                f"Clipboard inicializado: '{self.last_clipboard_content[:30] if self.last_clipboard_content else 'vazio'}'"
+                f"Clipboard inicializado: len={content_len}, sha256={content_hash}"
             )
         except Exception as e:
             logging.warning(f"Erro ao inicializar clipboard: {e}")
@@ -355,8 +379,26 @@ class ClipboardManager:
                 # Verifica mudança
                 if current_content and current_content.strip():
                     if current_content != self.last_clipboard_content:
+                        old_len = (
+                            len(self.last_clipboard_content)
+                            if self.last_clipboard_content
+                            else 0
+                        )
+                        new_len = len(current_content)
+                        old_hash = (
+                            hashlib.sha256(
+                                self.last_clipboard_content.encode(
+                                    "utf-8", errors="replace"
+                                )
+                            ).hexdigest()[:12]
+                            if old_len
+                            else "vazio"
+                        )
+                        new_hash = hashlib.sha256(
+                            current_content.encode("utf-8", errors="replace")
+                        ).hexdigest()[:12]
                         logging.info(
-                            f"Clipboard mudou de '{self.last_clipboard_content[:30] if self.last_clipboard_content else 'vazio'}' para '{current_content[:30]}...'"
+                            f"Clipboard mudou: old_len={old_len}, old_sha256={old_hash}, new_len={new_len}, new_sha256={new_hash}"
                         )
                         if not self._is_own_content(current_content):
                             self.add_to_history(current_content)
@@ -367,7 +409,9 @@ class ClipboardManager:
                         if on_change_callback:
                             on_change_callback()
 
-                        logging.info(f"Clipboard atualizado: {current_content[:50]}...")
+                        logging.info(
+                            f"Clipboard atualizado: len={new_len}, sha256={new_hash}"
+                        )
 
                 # Polling adaptativo
                 time_idle = current_time - last_activity_time

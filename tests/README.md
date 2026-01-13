@@ -139,10 +139,6 @@ Meta: **>90% de cobertura**
 - [ ] Testes de rotação de logs
 - [ ] Testes de privacidade (primeira execução)
 
-## 🚀 CI/CD
-
-Os testes são executados automaticamente no GitHub Actions em cada push e pull request.
-
 ## 📝 Convenções
 
 - **Nomenclatura:** `test_<funcionalidade>_<cenario>.py`

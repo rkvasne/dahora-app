@@ -6,6 +6,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import logging
 from dahora_app.utils import format_hotkey_display
+from dahora_app.constants import RESERVED_HOTKEYS_BASE
 from typing import Callable, Optional, List, Dict, Any
 from datetime import datetime
 from dahora_app.ui.styles import Windows11Style
@@ -572,9 +573,12 @@ class CustomShortcutsDialog:
         ttk.Label(content, text="🚫 Atalhos Reservados", style="Heading.TLabel").pack(
             anchor="w", pady=(0, 12)
         )
+        reserved_display = " • ".join(
+            format_hotkey_display(h) for h in RESERVED_HOTKEYS_BASE
+        )
         ttk.Label(
             content,
-            text="Ctrl+C • Ctrl+V • Ctrl+X • Ctrl+A • Ctrl+Z",
+            text=reserved_display,
             font=("Consolas", 10),
             style="Muted.TLabel",
         ).pack(anchor="w", pady=(0, 16))

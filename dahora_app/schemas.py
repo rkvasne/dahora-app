@@ -121,7 +121,7 @@ class SettingsSchema(BaseModel):
 
     # Custom shortcuts
     custom_shortcuts: List[CustomShortcutSchema] = Field(
-        default_factory=list, max_length=10
+        default_factory=list
     )
     default_shortcut_id: Optional[int] = Field(
         default=None, ge=1, description="ID do atalho padrão"

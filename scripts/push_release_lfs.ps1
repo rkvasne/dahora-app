@@ -3,7 +3,7 @@
   Faz stage/commit/push dos artefatos de release em dist/ via Git LFS.
 
 .DESCRIPTION
-  Executa o checklist do docs/RELEASE.md:
+  Executa o checklist do docs/release.md:
   - git lfs install
   - prepara ZIP/limpa raiz (chama prepare_release_artifacts.ps1)
   - git add (somente arquivos necessários)
@@ -55,7 +55,7 @@ if (-not $Message -or $Message.Trim().Length -eq 0) {
 }
 
 Write-Host "== git add =="
-& git add .gitattributes .gitignore build.py README.md docs/RELEASE.md scripts/README.md scripts/prepare_release_artifacts.ps1 scripts/prepare_release_artifacts.bat scripts/push_release_lfs.ps1
+& git add .gitattributes .gitignore build.py README.md docs/release.md scripts/README.md scripts/prepare_release_artifacts.ps1 scripts/prepare_release_artifacts.bat scripts/push_release_lfs.ps1
 & git add $exe.FullName $zip
 
 Write-Host "== git status =="

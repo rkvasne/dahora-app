@@ -2,13 +2,13 @@
 
 > Navegação: [Documentação](README.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
-> **Última atualização:** 12 de janeiro de 2026 | **Versão atual:** v0.2.11
+> **Última atualização:** 13 de janeiro de 2026 | **Versão atual:** v0.2.13
 
 Roadmap de alto nível para próximas melhorias. Detalhes específicos devem ser documentados em [Issues](https://github.com/rkvasne/dahora-app/issues) e/ou [Discussions](https://github.com/rkvasne/dahora-app/discussions) no GitHub.
 
 ---
 
-## ✅ Concluído (v0.2.11 - Janeiro 2026)
+## ✅ Concluído (até v0.2.13 - Janeiro 2026)
 
 ### Arquitetura e Qualidade
 
@@ -32,8 +32,8 @@ Roadmap de alto nível para próximas melhorias. Detalhes específicos devem ser
 
 ### Documentação
 
-- ✅ `ARCHITECTURE.md` - Seções 3.7 (Handlers) e 3.8 (Otimizações) adicionadas
-- ✅ `HACKS.md` - Tabela de status atualizada
+- ✅ `architecture.md` - Seções 3.7 (Handlers) e 3.8 (Otimizações) adicionadas
+- ✅ `hacks.md` - Tabela de status atualizada
 - ✅ `ANALISE_PROJETO.md` - Relatório completo de melhorias
 
 ### Métricas
@@ -68,7 +68,7 @@ Roadmap de alto nível para próximas melhorias. Detalhes específicos devem ser
 | Otimização Clipboard | Windows API events (vs polling) | Alto |
 | Cache de Hotkeys | `lru_cache` para validação | Baixo |
 | Context Manager | `__enter__`/`__exit__` em DahoraApp | Baixo |
-| Diagramas | Arquitetura visual em ARCHITECTURE.md | Médio |
+| Diagramas | Arquitetura visual em architecture.md | Médio |
 | Timestamps UTC | Avaliação de impacto | Baixo |
 
 ---

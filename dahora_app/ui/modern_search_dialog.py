@@ -510,8 +510,7 @@ class ModernSearchDialog:
             self.copy_callback(text)
 
         if self.notification_callback:
-            preview = text[:50] + "..." if len(text) > 50 else text
-            self.notification_callback("Dahora App", f"Copiado!\n{preview}")
+            self.notification_callback("Dahora App", "Copiado para a área de transferência.")
 
         self._on_close()
 

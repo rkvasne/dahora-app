@@ -1,7 +1,7 @@
 # 📜 HISTÓRICO DE DESENVOLVIMENTO - DAHORA APP
 
 **Projeto:** Dahora App - System tray para Data/Hora  
-**Última atualização:** 10 de janeiro de 2026
+**Última atualização:** 13 de janeiro de 2026
 
 > Navegação: [Documentação](README.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
@@ -11,18 +11,44 @@
 
 ## 📋 ÍNDICE
 
-1. [v0.2.11 - Patch (manifest + rebuild)](#v0210---patch-manifest--rebuild) 🚀 **ATUAL**
-2. [v0.2.8 - Documentação (revisão)](#v028---documentação-revisão)
-3. [v0.2.7 - Documentação & Landing](#v027---documentação--landing)
-3. [v0.2.6 - Configurações Avançadas na UI & Monitoramento Configurável](#v026---configurações-avançadas-na-ui--monitoramento-configurável)
-4. [v0.2.5 - Privacidade (DPAPI) & Ajustes de UI/Landing](#v025---privacidade-dpapi--ajustes-de-uilanding)
-5. [v0.2.3 - Documentação Unificada & Release](#v023---documentação-unificada--release)
-6. [v0.2.2 - Produtividade & Dark Mode Web](#v022---produtividade--dark-mode-web)
-7. [v0.2.0 - Revolução: Cola Automaticamente](#v020---revolução-cola-automaticamente)
-8. [Migração CSS (Fases 1-3)](#migração-css-fases-1-3)
-9. [Correção de Ícone](#correção-de-ícone)
-10. [Padronização do Projeto](#padronização-do-projeto)
-11. [Customizações de UI](#customizações-de-ui)
+1. [v0.2.13 - Patch (versão alinhada + rebuild)](#v0213---patch-versão-alinhada--rebuild) 🚀 **ATUAL**
+2. [v0.2.12 - Documentação & Atalhos Ilimitados](#v0212---documentação--atalhos-ilimitados)
+3. [v0.2.11 - Patch (manifest + rebuild)](#v0211---patch-manifest--rebuild)
+4. [v0.2.8 - Documentação (revisão)](#v028---documentação-revisão)
+5. [v0.2.7 - Documentação & Landing](#v027---documentação--landing)
+6. [v0.2.6 - Configurações Avançadas na UI & Monitoramento Configurável](#v026---configurações-avançadas-na-ui--monitoramento-configurável)
+7. [v0.2.5 - Privacidade (DPAPI) & Ajustes de UI/Landing](#v025---privacidade-dpapi--ajustes-de-uilanding)
+8. [v0.2.3 - Documentação Unificada & Release](#v023---documentação-unificada--release)
+9. [v0.2.2 - Produtividade & Dark Mode Web](#v022---produtividade--dark-mode-web)
+10. [v0.2.0 - Revolução: Cola Automaticamente](#v020---revolução-cola-automaticamente)
+10. [Migração CSS (Fases 1-3)](#migração-css-fases-1-3)
+11. [Correção de Ícone](#correção-de-ícone)
+12. [Padronização do Projeto](#padronização-do-projeto)
+13. [Customizações de UI](#customizações-de-ui)
+
+---
+
+## 🚀 V0.2.13 - PATCH (VERSÃO ALINHADA + REBUILD)
+
+**Data:** 13/01/2026  
+**Status:** ✅ COMPLETA
+
+### ✨ Principais Mudanças
+
+- Versão bump (0.2.12 → 0.2.13) alinhada em app, landing e documentação.
+- Release gerado para `v0.2.13` com artefatos em `dist/`.
+
+---
+
+## 🚀 V0.2.12 - DOCUMENTAÇÃO & ATALHOS ILIMITADOS
+
+**Data:** 13/01/2026  
+**Status:** ✅ COMPLETA
+
+### ✨ Principais Mudanças
+
+- Documentação alinhada para `v0.2.12` como versão atual.
+- Atalhos personalizados sem limite fixo (landing e documentação alinhadas).
 
 ---
 
@@ -58,7 +84,7 @@
 ### ✨ Principais Mudanças
 
 - Versão bump (0.2.7 → 0.2.8) alinhada na documentação.
-- Exemplos em `docs/RELEASE.md` padronizados com `X.Y.Z` para evitar hardcode por versão.
+- Exemplos em `docs/release.md` padronizados com `X.Y.Z` para evitar hardcode por versão.
 - Atualização de índices e políticas (docs/INDEX, PRIVACY, SECURITY, PRD, ROADMAP).
 
 ---
@@ -109,8 +135,8 @@
 ### ✨ Principais Mudanças
 
 - Documentação consolidada e padronizada em `docs/`.
-- Guia de release atualizado (build, ZIP e Git LFS): [docs/RELEASE.md](RELEASE.md).
-- Roadmap simplificado em alto nível: [docs/ROADMAP.md](ROADMAP.md).
+- Guia de release atualizado (build, ZIP e Git LFS): [docs/release.md](release.md).
+- Roadmap simplificado em alto nível: [docs/roadmap.md](roadmap.md).
 - Remoção de documentos redundantes/obsoletos que não refletiam mais o estado atual.
 
 ---
@@ -433,8 +459,8 @@ DEPOIS: Ícone azul (logo "D" moderno)
 
 | Antes (PT-BR) | Depois (EN) |
 |---------------|-------------|
-| `ANALISE_PRECIFICACAO.md` | `PRICING.md` |
-| `CHECKLIST_MELHORIAS.md` | `ROADMAP.md` |
+| `ANALISE_PRECIFICACAO.md` | `pricing.md` |
+| `CHECKLIST_MELHORIAS.md` | `roadmap.md` |
 | `CORRECAO_ICONE.md` | `ICON_FIX.md` |
 | `CUSTOMIZACOES_ATUAIS.md` | `CUSTOMIZATIONS.md` |
 | `FASE2_COMPLETA.md` | `PHASE2_COMPLETE.md` |
@@ -571,8 +597,8 @@ dahora-app/
 
 ## 🎯 PRÓXIMOS PASSOS
 
-1. ✅ v0.2.11 (estado atual) estabilizado e documentado
-2. 🔮 Próximas features em [ROADMAP.md](ROADMAP.md)
+1. ✅ v0.2.13 (estado atual) estabilizado e documentado
+2. 🔮 Próximas features em [roadmap.md](roadmap.md)
 
 ---
 

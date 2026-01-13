@@ -1,12 +1,12 @@
-# 📌 PRD — Dahora App (v0.2.11)
+# 📌 PRD — Dahora App (v0.2.13)
 
 > Navegação: [Documentação](README.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
 **Documento:** Product Requirements Document (PRD)  
 **Produto:** Dahora App — utilitário Windows para timestamps e clipboard  
-**Versão do produto (referência):** v0.2.11  
+**Versão do produto (referência):** v0.2.13  
 **Status:** Final  
-**Data:** 05/01/2026
+**Data:** 13/01/2026
 
 ---
 
@@ -119,7 +119,7 @@ Automatizar a inserção de timestamps com hotkeys globais, mantendo o clipboard
 
 ### RNF-03 — Confiabilidade e Resiliência
 - Escritas atômicas onde aplicável.
-- Tratamento de erros de leitura/migração (ex.: DPAPI) com fallback e preservação de dados sempre que possível.
+- Tratamento de erros de leitura/migração (ex.: DPAPI) com fallback sem persistir conteúdo sensível em claro.
 
 ### RNF-04 — Compatibilidade
 - Compatível com Windows 10/11.

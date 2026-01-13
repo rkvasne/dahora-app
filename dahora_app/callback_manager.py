@@ -87,7 +87,7 @@ class NotificationCallback(Protocol):
 @runtime_checkable
 class GetHistoryCallback(Protocol):
     """Protocol para callback de obter histórico"""
-    def __call__(self) -> List[str]: ...
+    def __call__(self, limit: int = 10) -> List[Dict[str, str]]: ...
 
 
 class CallbackHandler(ABC):

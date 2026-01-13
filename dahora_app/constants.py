@@ -6,7 +6,7 @@ import os
 
 # Informações do aplicativo
 APP_NAME = "DahoraApp"
-APP_VERSION = "0.2.12"
+APP_VERSION = "0.2.13"
 APP_TITLE = "Dahora App - Sistema de Timestamp"
 
 
@@ -41,6 +41,16 @@ HOTKEY_REFRESH_MENU = "ctrl+shift+r"
 HOTKEY_CTRL_C = "ctrl+c"
 DEFAULT_HOTKEY_COPY_DATETIME = "ctrl+shift+q"
 DEFAULT_HOTKEY_REFRESH_MENU = "ctrl+shift+r"
+RESERVED_HOTKEYS_BASE = [
+    "ctrl+c",
+    "ctrl+v",
+    "ctrl+x",
+    "ctrl+a",
+    "ctrl+z",
+    "ctrl+shift+q",
+    "ctrl+shift+r",
+    "ctrl+shift+f",
+]
 
 # Configurações de log
 LOG_MAX_BYTES = 1 * 1024 * 1024  # 1MB

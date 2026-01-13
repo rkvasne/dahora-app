@@ -7,17 +7,26 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [0.2.13] - 2026-01-13
+
+### 🔖 Versionamento
+- Bump de versão do app: `0.2.12` → `0.2.13`
+
+### 📚 Documentação
+- Versão alinhada em docs e políticas do repositório (README/PRIVACY/SECURITY).
+
+### 📦 Build
+- Artefatos de release gerados em `dist/` para `v0.2.13`.
+
 ## [0.2.12] - 2026-01-13
 
 ### 📚 Documentação
-- **Consolidação de Documentação:** `docs/README.md` atualizado para incluir novos documentos (`CLIPBOARD_OPTIMIZATION_RESEARCH.md` e `SECURITY_AUDIT_LOGS.md`)
+- **Consolidação de Documentação:** `docs/README.md` atualizado para incluir novos documentos (`clipboard-optimization-research.md` e `security-audit-logs.md`)
 - Arquivo obsoleto `docs/Untitled` removido
 - Links e referências internas atualizados e verificados
 
 ### 🧹 Limpeza
 - Remoção de arquivo temporário obsoleto da documentação
-
-## [Unreleased]
 
 ### ✨ Melhorado
 - **Type Hints Mais Específicos:** Atualizados Protocols (`MenuItemCallback`, `SearchCallback`) para usar `Icon` e `MenuItem` do pystray em vez de `Any`
@@ -31,20 +40,18 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### 🔒 Segurança
 - **Auditoria de Logs:** Realizada auditoria completa de segurança dos logs - nenhum dado sensível exposto, histórico criptografado, logs seguros para produção
-- Documentação de auditoria em `docs/SECURITY_AUDIT_LOGS.md`
+- Documentação de auditoria em `docs/security-audit-logs.md`
 
 ### 📚 Documentação
-- `ARCHITECTURE.md` atualizado - removidas todas as referências a `_validate_settings_manual()` e fallback manual
+- `architecture.md` atualizado - removidas todas as referências a `_validate_settings_manual()` e fallback manual
 - Diagramas de fluxo atualizados para refletir validação única com Pydantic
-- **Diagramas Visuais Adicionados:** 5 diagramas Mermaid em `ARCHITECTURE.md`:
+- **Diagramas Visuais Adicionados:** 5 diagramas Mermaid em `architecture.md`:
   - Diagrama de Arquitetura de Componentes (seção 1)
   - Diagrama de Fluxo de Inicialização (seção 2)
   - Diagrama de Validação de Hotkey (seção 3.1)
   - Diagrama de Sequência de Execução de Hotkey (seção 3.1)
   - Diagrama de Monitoramento de Clipboard (seção 3.5)
-- **Pesquisa de Otimização de Clipboard Monitor:** Documento `docs/CLIPBOARD_OPTIMIZATION_RESEARCH.md` criado com pesquisa sobre Windows API Events (AddClipboardFormatListener)
-- **Consolidação de Documentação:** `docs/README.md` atualizado para incluir novos documentos (`CLIPBOARD_OPTIMIZATION_RESEARCH.md` e `SECURITY_AUDIT_LOGS.md`)
-- Arquivo obsoleto `docs/Untitled` removido
+- **Pesquisa de Otimização de Clipboard Monitor:** Documento `docs/clipboard-optimization-research.md` criado com pesquisa sobre Windows API Events (AddClipboardFormatListener)
 - Documentação 100% alinhada com implementação atual
 
 ## [0.2.11] - 2026-01-12
@@ -62,9 +69,9 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### 📚 Documentação
 - Novo arquivo `ANALISE_PROJETO.md` com relatório completo de análise
-- `ARCHITECTURE.md` - Seções 3.7 (Handlers) e 3.8 (Otimizações)
-- `HACKS.md` - 100% dos hacks tratados (14 de 14)
-- `ROADMAP.md` - Seção "Concluído" com métricas
+- `architecture.md` - Seções 3.7 (Handlers) e 3.8 (Otimizações)
+- `hacks.md` - 100% dos hacks tratados (14 de 14)
+- `roadmap.md` - Seção "Concluído" com métricas
 - Consolidação e unificação de toda documentação
 - Removida pasta vazia `docs/GUIDES/`
 
@@ -115,7 +122,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Documentação
 - Revisão geral: versões e referências alinhadas para `0.2.8`.
-- Exemplos em `docs/RELEASE.md` padronizados com `X.Y.Z` (sem hardcode por release).
+- Exemplos em `docs/release.md` padronizados com `X.Y.Z` (sem hardcode por release).
 
 ## [0.2.7] - 2026-01-08
 
@@ -173,7 +180,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - **Documentação Consolidada e Unificada:**
   - Novo [docs/README.md](docs/README.md) como ponto central único de navegação
-  - Unificado GITHUB_CLI_GUIDE.md (inclui autenticação completa)
+  - Unificado github-cli-guide.md (inclui autenticação completa)
   - Removido arquivos redundantes: STATUS.md, GITHUB_TOKEN_SETUP.md, GUIDES/RELEASE_PROCESS.md
   - Simplificado docs/README.md para redirecionar ao INDEX.md
   - Padronizada estrutura e formatação de todos os documentos
@@ -560,7 +567,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Alterado
 - **📁 Documentação Reorganizada e Limpa**:
   - Criada pasta `docs/` para centralizar documentação técnica
-  - Criado `docs/DEVELOPMENT_HISTORY.md` consolidando histórico completo
+  - Criado `docs/development-history.md` consolidando histórico completo
   - Criado `docs/README.md` como índice da documentação
   - **Deletados 9 documentos redundantes** (conteúdo consolidado)
   - Estrutura final: 4 documentos essenciais (README, DEVELOPMENT_HISTORY, IMPROVEMENTS, PRICING)
@@ -592,7 +599,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Documentação
 - **📚 Documentos Consolidados**:
-  - `DEVELOPMENT_HISTORY.md` unifica Fases 1-3, correções e padronizações
+  - `development-history.md` unifica Fases 1-3, correções e padronizações
   - `ORGANIZATION_SUMMARY.md` documenta reorganização
   - `STANDARDIZATION.md` estabelece padrões do projeto
   - README.md atualizado com seção de documentação

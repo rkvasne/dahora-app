@@ -10,6 +10,7 @@ from dahora_app.constants import (
     HOTKEY_COPY_DATETIME,
     HOTKEY_REFRESH_MENU,
     HOTKEY_CTRL_C,
+    RESERVED_HOTKEYS_BASE,
 )
 from dahora_app.hotkey_validator import HotkeyValidator
 from dahora_app.callback_manager import (
@@ -47,18 +48,7 @@ class HotkeyManager:
             {}
         )  # shortcut_id -> callback
         self.custom_shortcuts_hotkeys: Dict[int, str] = {}  # shortcut_id -> hotkey
-        # Hotkeys reservados (clipboard + atalhos do app)
-        # Testes esperam bloquear também Ctrl+Shift+Q/R/F.
-        self._reserved_base = [
-            "ctrl+c",
-            "ctrl+v",
-            "ctrl+x",
-            "ctrl+a",
-            "ctrl+z",
-            "ctrl+shift+q",
-            "ctrl+shift+r",
-            "ctrl+shift+f",
-        ]
+        self._reserved_base = list(RESERVED_HOTKEYS_BASE)
         self.reserved_hotkeys = list(self._reserved_base)
 
     def set_configured_hotkeys(

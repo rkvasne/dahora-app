@@ -2,6 +2,7 @@
 Janela de Busca no Histórico do Dahora App
 """
 
+import hashlib
 import logging
 import threading
 from typing import Optional, Callable, List, Dict, Any
@@ -241,10 +242,19 @@ class SearchDialog:
 
                     if self.notification_callback:
                         self.notification_callback(
-                            "Dahora App", f"Copiado!\n{text[:50]}..."
+                            "Dahora App", "Copiado para a área de transferência."
                         )
 
-                    logging.info(f"Item copiado da busca: {text[:50]}...")
+                    text_len = len(text) if text else 0
+                    text_hash = (
+                        hashlib.sha256(text.encode("utf-8", errors="replace"))
+                        .hexdigest()[:12]
+                        if text_len
+                        else "vazio"
+                    )
+                    logging.info(
+                        f"Item copiado da busca: len={text_len}, sha256={text_hash}"
+                    )
                     root.destroy()
 
             def on_double_click(event):

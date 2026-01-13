@@ -1,8 +1,8 @@
 # 🔒 Auditoria de Segurança - Logs
 
 **Data da Auditoria:** 13 de janeiro de 2026  
-**Versão Auditada:** v0.2.11  
-**Auditor:** Cursor AI (Composer)
+**Versão Auditada:** v0.2.12  
+**Auditor:** GPT-5.2
 
 ---
 
@@ -11,6 +11,8 @@
 Esta auditoria verifica que os logs do aplicativo Dahora App não expõem informações pessoais identificáveis (PII) ou dados sensíveis, garantindo privacidade e conformidade com boas práticas de segurança.
 
 **Status:** ✅ **APROVADO** - Nenhum problema crítico encontrado
+
+**Política de logging:** logs nunca registram conteúdo do usuário (ex.: texto do clipboard), apenas metadados necessários para diagnóstico.
 
 ---
 
@@ -42,27 +44,25 @@ A auditoria foi realizada através de:
 
 ---
 
-### 2.2 Logs de Histórico de Clipboard ⚠️
+### 2.2 Logs de Histórico de Clipboard ✅
 
 **Análise:**
-- Apenas metadados são logados (tamanho do histórico, contagem)
+- Metadados são logados (tamanho do histórico, contagem)
 - Histórico é criptografado usando DPAPI (Windows)
-- **Nota:** Alguns logs mostram primeiros 50 caracteres do clipboard para debugging (logs locais apenas)
 - Logs mostram contadores: `count`, `total_history`, `history_size`
 
 **Exemplos Verificados:**
 - `logging.info(f"Counter: {count}, Histórico: {total_history}")` - OK (apenas números)
 - `print(f">>> App iniciado! Counter: {count}, Histórico: {total_history}, Prefixo: {prefix}")` - OK (não expõe conteúdo)
-- `logging.info(f"Ctrl+C detectado: {current_content[:50]}...")` - ⚠️ Primeiros 50 chars (log local, não crítico)
-- `logging.info(f"Clipboard atualizado: {current_content[:50]}...")` - ⚠️ Primeiros 50 chars (log local, não crítico)
-- `logging.info(f"Item copiado da busca: {text[:50]}...")` - ⚠️ Primeiros 50 chars (log local, não crítico)
+- `logging.info("Ctrl+C detectado: len=..., sha256=...")` - OK (metadados)
+- `logging.info("Clipboard atualizado: len=..., sha256=...")` - OK (metadados)
+- `logging.info("Item copiado da busca: len=..., sha256=...")` - OK (metadados)
 
 **Risco:**
-- Baixo: Logs são locais (arquivo), não enviados remotamente
-- Limitação: Apenas primeiros 50 caracteres são logados
-- Contexto: Útil para debugging de problemas
+- Logs são locais (arquivo), não enviados remotamente por padrão
+- Ainda assim, hashes e tamanhos podem ajudar a correlacionar eventos (sem expor conteúdo)
 
-**Conclusão:** ⚠️ **ACEITÁVEL** - Logs locais com limitação de 50 caracteres, não crítico mas pode ser melhorado no futuro removendo conteúdo ou reduzindo para menos caracteres
+**Conclusão:** ✅ **APROVADO** - Sem conteúdo do clipboard em logs (apenas metadados)
 
 ---
 
@@ -100,7 +100,7 @@ A auditoria foi realizada através de:
 
 **Análise:**
 - Histórico de clipboard é criptografado usando DPAPI (Windows CryptProtectData)
-- Dados são armazenados criptografados em arquivo
+- Dados são armazenados criptografados em arquivo (sem persistência de conteúdo em claro)
 - Criptografia é transparente ao usuário
 - Logs não expõem dados descriptografados
 
@@ -133,7 +133,7 @@ A auditoria foi realizada através de:
 ### 3.1 Boas Práticas Já Implementadas ✅
 
 1. ✅ Histórico de clipboard é criptografado
-2. ✅ Conteúdo de clipboard nunca é logado
+2. ✅ Não há logs com prévias do clipboard (apenas metadados)
 3. ✅ Apenas metadados (contadores, tamanhos) são logados
 4. ✅ Logs de erro são locais (arquivo, não remoto)
 5. ✅ Nenhuma informação de autenticação é logada
@@ -142,7 +142,7 @@ A auditoria foi realizada através de:
 
 1. **Rotação de Logs:** ✅ Já implementado (RotatingFileHandler)
 2. **Níveis de Log:** Já implementado (INFO, WARNING, ERROR)
-3. **Logs de Debug com Conteúdo:** Considerar remover ou reduzir ainda mais (para <20 chars) os primeiros caracteres do clipboard em logs de debug (atualmente 50 chars, logs locais apenas)
+3. **Correlação via hash:** Avaliar se é necessário reduzir/remover hashes em alguns eventos
 
 ---
 
@@ -150,31 +150,31 @@ A auditoria foi realizada através de:
 
 ### ✅ Resultado da Auditoria
 
-**Status Geral:** ✅ **APROVADO COM OBSERVAÇÕES**
+**Status Geral:** ✅ **APROVADO**
 
 - ✅ Histórico de clipboard é criptografado (DPAPI)
 - ✅ Logs seguem boas práticas de segurança (locais, rotacionados)
 - ✅ Apenas informações de diagnóstico são logadas
 - ✅ Nenhuma PII crítica é exposta
-- ⚠️ **Observação:** Alguns logs mostram primeiros 50 caracteres do clipboard (logs locais, não crítico)
 
 ### 📊 Resumo
 
 - **Total de Padrões Verificados:** 5 categorias principais
 - **Problemas Críticos Encontrados:** 0
-- **Observações:** 1 (logs de debug com primeiros 50 chars do clipboard - aceitável para logs locais)
+- **Observações:** 0
 - **Recomendações Críticas:** 0
-- **Recomendações de Melhoria Futura:** Considerar reduzir ou remover conteúdo de clipboard dos logs de debug
-- **Status:** ✅ **SEGURO PARA PRODUÇÃO** (com observação não crítica)
+- **Recomendações de Melhoria Futura:** Avaliar se hashes são necessários em todos os eventos
+- **Status:** ✅ **APROVADO**
 
 ---
 
 ## 5. Referências
 
 - `main.py` - Ponto de entrada, logs de inicialização
+- `dahora_app/app.py` - Orquestração do app e callbacks
 - `dahora_app/clipboard_manager.py` - Criptografia de histórico
 - `dahora_app/settings.py` - Configurações (não sensíveis)
-- `docs/ARCHITECTURE.md` - Arquitetura de segurança
+- `docs/architecture.md` - Arquitetura de segurança
 
 ---
 

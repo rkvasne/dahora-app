@@ -1,6 +1,6 @@
 # 📚 Índice de Documentação - Dahora App
 
-> **Ponto central de navegação** para toda documentação do projeto Dahora App v0.2.12
+> **Ponto central de navegação** para toda documentação do projeto Dahora App v0.2.13
 
 > Navegação: [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
@@ -29,34 +29,34 @@
 - **[Apoie o projeto (opcional)](../README.md#-apoie-o-projeto-opcional)** - ☕ Doações (Sponsors/Mercado Pago/PayPal/Pix) + QR
 
 ### Para Desenvolvedores
-- **[WINDOWS_PYTHON_SETUP.md](WINDOWS_PYTHON_SETUP.md)** - ⚠️ **LEIA PRIMEIRO!** Use `py` no Windows
-- **[ARCHITECTURE.md](ARCHITECTURE.md)** - 🏗️ Arquitetura técnica e componentes
-- **[ANALISE_PROJETO.md](../ANALISE_PROJETO.md)** - 📊 Relatório de análise e melhorias (12/01/2026)
-- **[DEVELOPMENT_HISTORY.md](DEVELOPMENT_HISTORY.md)** - 📜 Histórico narrativo do desenvolvimento
+- **[windows-python-setup.md](windows-python-setup.md)** - ⚠️ **LEIA PRIMEIRO!** Use `py` no Windows
+- **[architecture.md](architecture.md)** - 🏗️ Arquitetura técnica e componentes
+- **[ANALISE_PROJETO.md](../ANALISE_PROJETO.md)** - 📊 Relatório de análise e melhorias (13/01/2026)
+- **[development-history.md](development-history.md)** - 📜 Histórico narrativo do desenvolvimento
 
 ### Para Manutenedores
-- **[RELEASE.md](RELEASE.md)** - 🚀 Processo completo de build e release
-- **[GITHUB_CLI_GUIDE.md](GITHUB_CLI_GUIDE.md)** - 🔧 Guia do GitHub CLI e autenticação
+- **[release.md](release.md)** - 🚀 Processo completo de build e release
+- **[github-cli-guide.md](github-cli-guide.md)** - 🔧 Guia do GitHub CLI e autenticação
 
 ---
 
 ## 📖 Documentação Técnica
 
 ### Frontend (Landing)
-- **[LANDING_TEMPLATE.md](LANDING_TEMPLATE.md)** - Specs visuais por seção (template reutilizável)
+- **[landing-template.md](landing-template.md)** - Specs visuais por seção (template reutilizável)
 
 ### Arquitetura e Design
-- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Estrutura, componentes e padrões
-- **[HACKS.md](HACKS.md)** - Workarounds e soluções não-ideais documentadas
-- **[CLIPBOARD_OPTIMIZATION_RESEARCH.md](CLIPBOARD_OPTIMIZATION_RESEARCH.md)** - Pesquisa sobre otimização de clipboard com Windows API Events
-- **[SECURITY_AUDIT_LOGS.md](SECURITY_AUDIT_LOGS.md)** - Auditoria de segurança dos logs do aplicativo
+- **[architecture.md](architecture.md)** - Estrutura, componentes e padrões
+- **[hacks.md](hacks.md)** - Workarounds e soluções não-ideais documentadas
+- **[clipboard-optimization-research.md](clipboard-optimization-research.md)** - Pesquisa sobre otimização de clipboard com Windows API Events
+- **[security-audit-logs.md](security-audit-logs.md)** - Auditoria de segurança dos logs do aplicativo
 
 ### Planejamento e Negócio
-- **[ROADMAP.md](ROADMAP.md)** - Próximos passos e melhorias planejadas
-- **[PRICING.md](PRICING.md)** - Análise de mercado e precificação
+- **[roadmap.md](roadmap.md)** - Próximos passos e melhorias planejadas
+- **[pricing.md](pricing.md)** - Análise de mercado e precificação
 
 ### Produto
-- **[PRD.md](PRD.md)** - Requisitos do produto (formal)
+- **[prd.md](prd.md)** - Requisitos do produto (formal)
 
 ### Políticas do Repositório
 - **[PRIVACY.md](../PRIVACY.md)** - Política de privacidade (offline/sem telemetria)
@@ -70,11 +70,11 @@
 ## 🔧 Ferramentas de Desenvolvimento
 
 ### GitHub e Versionamento
-- **[GITHUB_CLI_GUIDE.md](GITHUB_CLI_GUIDE.md)** - Guia completo: instalação, autenticação, comandos
-- **[RELEASE.md](RELEASE.md)** - Build, empacotamento ZIP e Git LFS
+- **[github-cli-guide.md](github-cli-guide.md)** - Guia completo: instalação, autenticação, comandos
+- **[release.md](release.md)** - Build, empacotamento ZIP e Git LFS
 
 ### Python no Windows
-- **[WINDOWS_PYTHON_SETUP.md](WINDOWS_PYTHON_SETUP.md)** - ⚠️ Crítico: diferença entre `python` e `py`
+- **[windows-python-setup.md](windows-python-setup.md)** - ⚠️ Crítico: diferença entre `python` e `py`
 
 ### Pastas auxiliares
 - **[scripts/README.md](../scripts/README.md)** - Scripts utilitários (build/debug/release)
@@ -87,16 +87,16 @@
 ```
 docs/
 ├── README.md                   ← Você está aqui!
-├── ARCHITECTURE.md             # Arquitetura técnica (atualizado 12/01/2026)
-├── DEVELOPMENT_HISTORY.md      # Histórico narrativo
-├── LANDING_TEMPLATE.md         # Template da landing (specs por seção)
-├── HACKS.md                    # Workarounds documentados (atualizado 12/01/2026)
-├── PRD.md                      # Requisitos do produto (formal)
-├── PRICING.md                  # Análise de mercado
-├── RELEASE.md                  # Processo de build e release
-├── ROADMAP.md                  # Próximos passos (atualizado 12/01/2026)
-├── GITHUB_CLI_GUIDE.md         # GitHub CLI completo
-└── WINDOWS_PYTHON_SETUP.md     # Configuração do Python no Windows
+├── architecture.md             # Arquitetura técnica (atualizado 12/01/2026)
+├── development-history.md      # Histórico narrativo
+├── landing-template.md         # Template da landing (specs por seção)
+├── hacks.md                    # Workarounds documentados (atualizado 12/01/2026)
+├── prd.md                      # Requisitos do produto (formal)
+├── pricing.md                  # Análise de mercado
+├── release.md                  # Processo de build e release
+├── roadmap.md                  # Próximos passos (atualizado 12/01/2026)
+├── github-cli-guide.md         # GitHub CLI completo
+└── windows-python-setup.md     # Configuração do Python no Windows
 
 raiz/
 └── ANALISE_PROJETO.md          # Relatório de análise completo (NOVO)
@@ -124,14 +124,14 @@ raiz/
 3. Consulte [CHANGELOG.md](../CHANGELOG.md) - Novidades
 
 ### 👨‍💻 Desenvolvedor
-1. Leia [WINDOWS_PYTHON_SETUP.md](WINDOWS_PYTHON_SETUP.md) - **IMPORTANTE**
-2. Explore [ARCHITECTURE.md](ARCHITECTURE.md) - Estrutura técnica
-3. Veja [DEVELOPMENT_HISTORY.md](DEVELOPMENT_HISTORY.md) - Contexto
-4. Consulte [HACKS.md](HACKS.md) - Soluções conhecidas
+1. Leia [windows-python-setup.md](windows-python-setup.md) - **IMPORTANTE**
+2. Explore [architecture.md](architecture.md) - Estrutura técnica
+3. Veja [development-history.md](development-history.md) - Contexto
+4. Consulte [hacks.md](hacks.md) - Soluções conhecidas
 
 ### 🚀 Manutenedor/Release
-1. Configure [GITHUB_CLI_GUIDE.md](GITHUB_CLI_GUIDE.md) - Autenticação
-2. Siga [RELEASE.md](RELEASE.md) - Processo completo
+1. Configure [github-cli-guide.md](github-cli-guide.md) - Autenticação
+2. Siga [release.md](release.md) - Processo completo
 3. Atualize [CHANGELOG.md](../CHANGELOG.md) - Sempre!
 
 ---
@@ -159,7 +159,7 @@ raiz/
   - Arquivo `.spec` gerado em `build/` ao rodar `py build.py`
 
 ### Links Internos
-- Use caminhos relativos: `docs/FILE.md`, `../README.md`
+- Use caminhos relativos: `docs/file.md`, `../README.md`
 - Verifique links antes de commit
 
 ### Qualidade Antes de Commit
@@ -170,4 +170,4 @@ raiz/
 
 ---
 
-**Última atualização:** 13 de janeiro de 2026 | **Versão:** v0.2.12
+**Última atualização:** 13 de janeiro de 2026 | **Versão:** v0.2.13

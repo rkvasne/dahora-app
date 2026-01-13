@@ -84,17 +84,27 @@ class TestCustomShortcuts:
             assert success is False
             assert "reservado" in msg.lower()
     
-    def test_add_max_shortcuts_limit(self, settings_manager):
-        """Testa limite máximo de shortcuts"""
-        # Adiciona até o limite (10)
-        for i in range(10):
-            success, _, _ = settings_manager.add_custom_shortcut(f"ctrl+shift+{i}", f"PREFIX{i}")
+    def test_add_many_shortcuts_unlimited(self, settings_manager):
+        """Testa adicionar muitos shortcuts (sem limite)"""
+        hotkeys = [
+            "ctrl+shift+a",
+            "ctrl+shift+b",
+            "ctrl+shift+c",
+            "ctrl+shift+d",
+            "ctrl+shift+e",
+            "ctrl+shift+g",
+            "ctrl+alt+a",
+            "ctrl+alt+b",
+            "alt+shift+a",
+            "alt+shift+b",
+        ]
+
+        for i, hotkey in enumerate(hotkeys):
+            success, _, _ = settings_manager.add_custom_shortcut(hotkey, f"PREFIX{i}")
             assert success is True
-        
-        # Tenta adicionar mais um (deve falhar)
-        success, msg, _ = settings_manager.add_custom_shortcut("ctrl+shift+x", "EXTRA")
-        assert success is False
-        assert "limite" in msg.lower()
+
+        shortcuts = settings_manager.get_custom_shortcuts()
+        assert len(shortcuts) == 10
     
     def test_remove_custom_shortcut(self, settings_manager):
         """Testa remover custom shortcut"""

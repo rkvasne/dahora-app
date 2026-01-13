@@ -2,7 +2,7 @@
 
 > Navegação: [Documentação](README.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
-Este documento detalha os **workarounds, hacks e soluções não-ideais** encontradas em `main.py` que precisam ser revisitadas e possivelmente melhoradas.
+Este documento detalha os **workarounds, hacks e soluções não-ideais** encontrados principalmente no startup/entrypoint (`main.py`) e na aplicação principal (`dahora_app/app.py`) que precisam ser revisitados e possivelmente melhorados.
 
 ## 1. Dark Mode Forçado em Menus do Windows
 
@@ -197,7 +197,7 @@ mutex_handle = None
 ## 4. Thread de Tray Sem Sincronização Explícita
 
 ### Localização
-**main.py, linhas 144, 1002+ (startup)**
+**dahora_app/app.py (startup)**
 
 ### Problema
 Pystray roda em thread separada, mas há pouca sincronização com a thread principal.
@@ -270,7 +270,7 @@ class DahoraApp:
 ## 5. UI Root Singleton Sem Sincronização
 
 ### Localização
-**main.py, vários métodos de UI**
+**dahora_app/app.py, métodos de UI**
 
 ### Problema
 ```python

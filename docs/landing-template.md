@@ -109,7 +109,7 @@ Este arquivo descreve as especificações visuais (fontes, espaçamentos, tamanh
 
 **Markup** ([index.html](../index.html#L64-L106))
 - `section#inicio.hero` → `.hero-container` → `.hero-version`, `.hero-icon`, `.hero-title`, `.hero-subtitle`, `.hero-buttons`, `.hero-badges`, `.hero-trust-links`
-- `.hero-version`: texto de versão em formato "ATUALIZAÇÃO V.0.2.11"
+- `.hero-version`: texto de versão em formato "ATUALIZAÇÃO V.0.2.13"
 - `.hero-subtitle`: texto simples "Cole datas e horas no cursor, sem interromper."
 - `.hero-trust-links`: links de confiança (Releases oficiais, Código-fonte, Privacidade, Segurança, Licença MIT) separados por `•`
 
@@ -284,9 +284,9 @@ Este arquivo descreve as especificações visuais (fontes, espaçamentos, tamanh
 
 **Traduções** ([index.html](../index.html#L806-L1128))
 - Objeto `translations` com `pt-BR` e `en`
-- Nota: algumas traduções ainda referenciam v0.2.10 (deve ser atualizado para v0.2.11)
+- Nota: algumas traduções ainda referenciam v0.2.10 (deve ser atualizado para v0.2.13)
 
 ---
 
-**Última atualização:** 12 de janeiro de 2026 | **Versão:** v0.2.11
+**Última atualização:** 13 de janeiro de 2026 | **Versão:** v0.2.13
 

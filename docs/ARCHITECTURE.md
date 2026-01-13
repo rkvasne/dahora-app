@@ -120,7 +120,7 @@ tests/                             # Suíte de testes
 
 ```mermaid
 graph TD
-    A[main.py - DahoraApp.__init__] --> B[Criar Managers]
+    A[dahora_app/app.py - DahoraApp.__init__] --> B[Criar Managers]
     B --> C[SettingsManager]
     B --> D[ClipboardManager]
     B --> E[HotkeyManager]
@@ -142,6 +142,9 @@ graph TD
 **Fluxo Textual:**
 ```
 main.py
+  └─> cria DahoraApp e chama run()
+
+dahora_app/app.py
   ├─> carregar settings
   ├─> inicializar HotkeyManager
   ├─> configurar HotkeyValidator (centralizado)
@@ -159,7 +162,7 @@ main.py
 
 **Características:**
 - Registra hotkeys via biblioteca `keyboard`
-- Mantém lista de hotkeys reservados (sistema)
+- Mantém lista de hotkeys reservados (clipboard + hotkeys do app) para evitar conflitos com atalhos personalizados
 - Valida hotkeys usando `HotkeyValidator`
 - Suporta callbacks por hotkey
 - Thread-safe com RLock
@@ -222,7 +225,7 @@ sequenceDiagram
 **Características:**
 - Validação de formato (deve ter modificador + tecla)
 - Bloqueio de teclas perigosas (Escape, Pause)
-- Reserva apenas Ctrl+C para o sistema
+- Bloqueio de Ctrl+C por padrão (hotkey reservado)
 - Suporte para símbolos (ex.: `exclam` → `!`, `at` → `@`, etc.)
 - Normalização de hotkeys
 - Mensagens de erro detalhadas
@@ -292,7 +295,7 @@ clipboard_idle_threshold: int # 5-300s, padrão: 30
 datetime_format: str       # deve ter componente de data/hora
 bracket_open: str          # 1 char, != bracket_close
 bracket_close: str         # 1 char, != bracket_open
-custom_shortcuts: List[CustomShortcutSchema] # max 10
+custom_shortcuts: List[CustomShortcutSchema]
 default_shortcut_id: Optional[int] # existe em custom_shortcuts
 notification_duration: int # 1-10s, padrão: 2
 notification_enabled: bool # padrão: True
@@ -306,7 +309,7 @@ Validações:
 - Brackets diferentes (open != close)
 - Datetime format válido (tem %d, %m, %Y, %H, %M, ou %S)
 - Prefix control chars removidos
-- Custom shortcuts: max 10
+- Custom shortcuts: IDs únicos e hotkeys não duplicadas
 - Default shortcut ID existe
 - Hotkeys duplicados detectados
 - IDs únicos
@@ -550,7 +553,7 @@ Validação especializada apenas para hotkeys:
 
 Combinação de HotkeyValidator + verificações de conflito:
 - HotkeyValidator checks (formato)
-- Reserved hotkeys checks (sistema)
+- Reserved hotkeys checks (clipboard + hotkeys do app)
 - Conflict detection (outros shortcuts)
 
 **Quando usar:** Antes de registrar hotkey no sistema
@@ -560,7 +563,7 @@ Combinação de HotkeyValidator + verificações de conflito:
 ### Validações de Hotkey
 
 - **Bloqueios Hard:** Escape, Pause (podem danificar sistema)
-- **Sistema Preservado:** Ctrl+C (único hotkey reservado do app para evitar lockup)
+- **Reservados (atalhos personalizados):** Ctrl+C/V/X/A/Z e hotkeys do app (ex.: Ctrl+Shift+Q/F/R por padrão)
 - **Formato Obrigatório:** Modifier + key (evita conflitos com texto)
 - **Símbolos Suportados:** Conversão automática (exclam→!, etc)
 
@@ -568,7 +571,7 @@ Combinação de HotkeyValidator + verificações de conflito:
 
 - **Sanitização de Prefixo:** Remove caracteres de controle
 - **Brackets Validados:** Não podem ser whitespace, devem ser diferentes
-- **Limites Enforçados:** Max 1000 histórico, max 10 custom shortcuts
+- **Limites Enforçados:** Max 1000 histórico, custom shortcuts sem limite fixo
 - **Campos Extras:** Rejeitados pela Pydantic (extra='forbid')
 
 ### Tratamento de Erros
@@ -769,8 +772,8 @@ Validado e aplicado
 
 ---
 
-**Última Atualização:** 12 de janeiro de 2026
-**Versão da Documentação:** 1.1
+**Última Atualização:** 13 de janeiro de 2026
+**Versão da Documentação:** 1.2
 **Status:** Completa e em produção
 
 ### Changelog da Documentação

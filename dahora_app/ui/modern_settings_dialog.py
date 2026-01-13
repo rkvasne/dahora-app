@@ -23,6 +23,7 @@ from dahora_app.ui.modern_styles import (
 )
 
 from dahora_app.utils import format_hotkey_display
+from dahora_app.constants import RESERVED_HOTKEYS_BASE
 
 
 class ModernSettingsDialog:
@@ -1262,9 +1263,12 @@ class ModernSettingsDialog:
             reserved_title_row,
             "Essas combinações não podem ser usadas em atalhos personalizados para evitar conflitos com o sistema/app.",
         )
+        reserved_display = " • ".join(
+            format_hotkey_display(h) for h in RESERVED_HOTKEYS_BASE
+        )
         ModernLabel(
             inner,
-            text="Ctrl+C • Ctrl+V • Ctrl+X • Ctrl+A • Ctrl+Z • Ctrl+Shift+Q • Ctrl+Shift+R • Ctrl+Shift+F",
+            text=reserved_display,
             style="muted",
             justify="left",
             wraplength=560,

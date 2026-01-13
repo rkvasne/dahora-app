@@ -1,8 +1,8 @@
 # 🔒 Política de Privacidade — Dahora App
 
 **Resumo:** O Dahora App opera **totalmente offline** e **não coleta telemetria**.  
-**Versão:** v0.2.11  
-**Data:** 10/01/2026
+**Versão:** v0.2.13  
+**Data:** 13/01/2026
 
 ---
 
@@ -32,7 +32,7 @@ Exemplos de dados locais que podem existir:
 
 Quando aplicável, o Dahora App utiliza mecanismos do Windows para proteger dados locais sensíveis (ex.: DPAPI para histórico/itens protegidos). Isso significa que:
 - A proteção é vinculada ao ambiente/usuário do Windows.
-- Se a proteção falhar ao migrar dados antigos, o app deve usar fallback seguro (conforme comportamento atual do projeto).
+- Se a proteção falhar, o app evita persistir o histórico em disco.
 
 ---
 

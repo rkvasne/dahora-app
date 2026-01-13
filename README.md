@@ -7,11 +7,11 @@
 **O gerenciador de timestamps definitivo para Windows.**  
 *Cole datas e horas formatadas instantaneamente com atalhos personalizáveis.*
 
-[![Version](https://img.shields.io/badge/version-0.2.12-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
+[![Version](https://img.shields.io/badge/version-0.2.13-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
 [![Python](https://img.shields.io/badge/python-3.12+-green.svg?style=for-the-badge)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
 [![Tests](https://img.shields.io/badge/tests-automated-brightgreen.svg?style=for-the-badge)](tests/README.md)
-[![Architecture](https://img.shields.io/badge/architecture-secure-brightblue.svg?style=for-the-badge)](docs/ARCHITECTURE.md)
+[![Architecture](https://img.shields.io/badge/architecture-secure-brightblue.svg?style=for-the-badge)](docs/architecture.md)
 
 [Funcionalidades](#-funcionalidades) • [Instalação](#-instalação) • [Como Usar](#-como-usar) • [Configuração](#-configuração) • [Documentação](#-documentação) • [Apoie o Projeto](#-apoie-o-projeto-opcional)
 
@@ -100,6 +100,7 @@ Clique com o botão direito no ícone do relógio na barra de tarefas:
 2. Clique em **Adicionar**.
 3. Defina um **Prefixo** (ex: `log`).
 4. Clique em **Detectar** e pressione as teclas desejadas (ex: `Ctrl+L`).
+   - Nota: algumas combinações são reservadas e serão bloqueadas nos atalhos personalizados (ex.: `Ctrl+C/V/X/A/Z` e as hotkeys do app como `Ctrl+Shift+Q/F/R` por padrão).
 5. Pronto! Agora `Ctrl+L` cola `[log-DATA-HORA]`.
 
 ---
@@ -129,14 +130,14 @@ Toda documentação está organizada em `docs/` com entrada centralizada:
 ### 👉 **[docs/README.md](docs/README.md)** - Documentação (comece aqui!)
 
 ### Destaques:
-- **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** - Arquitetura técnica detalhada
-- **[DEVELOPMENT_HISTORY.md](docs/DEVELOPMENT_HISTORY.md)** - Histórico narrativo de desenvolvimento
-- **[LANDING_TEMPLATE.md](docs/LANDING_TEMPLATE.md)** - Template da landing (specs por seção)
-- **[RELEASE.md](docs/RELEASE.md)** - Processo de build, release e Git LFS
-- **[GITHUB_CLI_GUIDE.md](docs/GITHUB_CLI_GUIDE.md)** - GitHub CLI e autenticação
-- **[HACKS.md](docs/HACKS.md)** - Soluções criativas documentadas (14 de 14 tratados - 100%)
+- **[architecture.md](docs/architecture.md)** - Arquitetura técnica detalhada
+- **[development-history.md](docs/development-history.md)** - Histórico narrativo de desenvolvimento
+- **[landing-template.md](docs/landing-template.md)** - Template da landing (specs por seção)
+- **[release.md](docs/release.md)** - Processo de build, release e Git LFS
+- **[github-cli-guide.md](docs/github-cli-guide.md)** - GitHub CLI e autenticação
+- **[hacks.md](docs/hacks.md)** - Soluções criativas documentadas (14 de 14 tratados - 100%)
 - **[ANALISE_PROJETO.md](ANALISE_PROJETO.md)** - Relatório de análise completo (Janeiro 2026)
-- **[ROADMAP.md](docs/ROADMAP.md)** - Próximos passos
+- **[roadmap.md](docs/roadmap.md)** - Próximos passos
 - **[CHANGELOG.md](CHANGELOG.md)** - Registro oficial de mudanças
 
 ### 🤖 Configuração para Agentes de IA:
@@ -181,16 +182,16 @@ dahora-app/
 │   └── constants.py             # Constantes (APP_VERSION)
 │
 └── docs/                        # Documentação Centralizada
-    ├── INDEX.md                 # Índice centralizado (comece aqui!)
-    ├── ARCHITECTURE.md          # Arquitetura técnica
-    ├── DEVELOPMENT_HISTORY.md   # Histórico narrativo
-    ├── GITHUB_CLI_GUIDE.md      # GitHub CLI (autenticação, releases, workflows)
-    ├── HACKS.md                 # Workarounds e decisões não-ideais
-    ├── LANDING_TEMPLATE.md      # Template da landing (specs por seção)
-    ├── PRICING.md               # Estudo histórico de precificação
-    ├── RELEASE.md               # Build/Release/ZIP/LFS
-    ├── ROADMAP.md               # Próximos passos
-    └── WINDOWS_PYTHON_SETUP.md  # Configuração do Python no Windows (use `py`)
+    ├── README.md                # Índice centralizado (comece aqui!)
+    ├── architecture.md          # Arquitetura técnica
+    ├── development-history.md   # Histórico narrativo
+    ├── github-cli-guide.md      # GitHub CLI (autenticação, releases, workflows)
+    ├── hacks.md                 # Workarounds e decisões não-ideais
+    ├── landing-template.md      # Template da landing (specs por seção)
+    ├── pricing.md               # Estudo histórico de precificação
+    ├── release.md               # Build/Release/ZIP/LFS
+    ├── roadmap.md               # Próximos passos
+    └── windows-python-setup.md  # Configuração do Python no Windows (use `py`)
 ```
 
 ## 🔒 Segurança & Qualidade

@@ -260,11 +260,11 @@ dahora-app/
 ├── ANALISE_PROJETO.md         # Relatório de análise (12/01/2026)
 │
 ├── docs/                      # Documentação
-│   ├── ARCHITECTURE.md        # Arquitetura detalhada (atualizado 12/01/2026)
-│   ├── HACKS.md               # Workarounds (8 de 14 resolvidos)
-│   ├── RELEASE.md             # Processo de release
-│   ├── ROADMAP.md             # Plano futuro (atualizado 12/01/2026)
-│   └── WINDOWS_PYTHON_SETUP.md # Setup Python no Windows
+│   ├── architecture.md        # Arquitetura detalhada (atualizado 12/01/2026)
+│   ├── hacks.md               # Workarounds (8 de 14 resolvidos)
+│   ├── release.md             # Processo de release
+│   ├── roadmap.md             # Plano futuro (atualizado 12/01/2026)
+│   └── windows-python-setup.md # Setup Python no Windows
 │
 ├── scripts/                   # Scripts utilitários
 │   ├── prepare_release_artifacts.ps1
@@ -287,7 +287,7 @@ dahora-app/
 
 ## 🛠️ Comandos do Projeto
 
-⚠️ **IMPORTANTE:** Use `py` ao invés de `python` neste projeto (ver [WINDOWS_PYTHON_SETUP.md](docs/WINDOWS_PYTHON_SETUP.md))
+⚠️ **IMPORTANTE:** Use `py` ao invés de `python` neste projeto (ver [windows-python-setup.md](docs/windows-python-setup.md))
 
 ```powershell
 # Instalar dependências
@@ -464,11 +464,11 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 ## 📚 Documentação Adicional
 
 ### Docs do Projeto (em `docs/`)
-- [ARCHITECTURE.md](docs/ARCHITECTURE.md) - Arquitetura detalhada
-- [RELEASE.md](docs/RELEASE.md) - Processo de release e Git LFS
-- [ROADMAP.md](docs/ROADMAP.md) - Plano de desenvolvimento
-- [WINDOWS_PYTHON_SETUP.md](docs/WINDOWS_PYTHON_SETUP.md) - Configuração Python
-- [DEVELOPMENT_HISTORY.md](docs/DEVELOPMENT_HISTORY.md) - Histórico de mudanças
+- [architecture.md](docs/architecture.md) - Arquitetura detalhada
+- [release.md](docs/release.md) - Processo de release e Git LFS
+- [roadmap.md](docs/roadmap.md) - Plano de desenvolvimento
+- [windows-python-setup.md](docs/windows-python-setup.md) - Configuração Python
+- [development-history.md](docs/development-history.md) - Histórico de mudanças
 
 ### Modos de Trabalho (digite `/` no chat)
 
@@ -498,7 +498,7 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 
 ---
 
-**Última atualização:** 12 de janeiro de 2026  
-**Versão do App:** 0.2.11  
+**Última atualização:** 13 de janeiro de 2026  
+**Versão do App:** 0.2.13  
 **Status:** ✅ Projeto configurado com Prompt Files  
 **Testes:** 267 passando | **Hacks tratados:** 14 de 14 (100%)

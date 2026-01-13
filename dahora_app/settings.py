@@ -10,7 +10,7 @@ import shutil
 from datetime import datetime
 from threading import RLock
 from typing import Dict, Any, List, Optional, Tuple
-from dahora_app.constants import SETTINGS_FILE
+from dahora_app.constants import SETTINGS_FILE, RESERVED_HOTKEYS_BASE
 from dahora_app.utils import atomic_write_json
 from dahora_app.schemas import SettingsSchema
 from pydantic import ValidationError
@@ -58,7 +58,6 @@ class SettingsManager:
 
         # Múltiplos atalhos personalizados (NOVO)
         self.custom_shortcuts: List[Dict[str, Any]] = []
-        self.max_custom_shortcuts = 10
         self.next_shortcut_id = 1
 
         # Atalho padrão (entre os custom_shortcuts) usado como "principal" do app
@@ -536,14 +535,6 @@ class SettingsManager:
         """Adiciona novo custom shortcut"""
         try:
             with self.settings_lock:
-                # Verifica limite
-                if len(self.custom_shortcuts) >= self.max_custom_shortcuts:
-                    return (
-                        False,
-                        f"Limite de {self.max_custom_shortcuts} atalhos atingido",
-                        None,
-                    )
-
                 # Normaliza
                 hotkey = hotkey.strip().lower()
                 prefix = prefix.strip()
@@ -552,17 +543,7 @@ class SettingsManager:
                     return False, "Hotkey e prefixo são obrigatórios", None
 
                 # Verifica hotkeys reservados
-                reserved = [
-                    "ctrl+c",
-                    "ctrl+v",
-                    "ctrl+x",
-                    "ctrl+a",
-                    "ctrl+z",
-                    "ctrl+shift+q",
-                    "ctrl+shift+r",
-                    "ctrl+shift+f",
-                ]
-                if hotkey in reserved:
+                if hotkey in RESERVED_HOTKEYS_BASE:
                     return False, f"Hotkey '{hotkey}' é reservado pelo sistema", None
 
                 # Verifica duplicatas
@@ -649,17 +630,7 @@ class SettingsManager:
                     hotkey = hotkey.strip().lower()
 
                     # Verifica hotkeys reservados (apenas clipboard básicos)
-                    reserved = [
-                        "ctrl+c",
-                        "ctrl+v",
-                        "ctrl+x",
-                        "ctrl+a",
-                        "ctrl+z",
-                        "ctrl+shift+q",
-                        "ctrl+shift+r",
-                        "ctrl+shift+f",
-                    ]
-                    if hotkey in reserved:
+                    if hotkey in RESERVED_HOTKEYS_BASE:
                         return False, f"Hotkey '{hotkey}' é reservado pelo sistema"
 
                     # Verifica duplicatas (exceto o próprio)

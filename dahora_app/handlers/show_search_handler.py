@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Optional
 from dahora_app.callback_manager import CallbackHandler
 
 if TYPE_CHECKING:
-    from main import DahoraApp
+    from dahora_app.app import DahoraApp
 
 
 logger = logging.getLogger(__name__)

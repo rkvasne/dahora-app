@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dahora App v0.2.11 - Kvasne.com</title>
+    <title>Dahora App v0.2.13 - Kvasne.com</title>
     <meta name="description"
         content="Aplicativo Windows para colar timestamps formatados com atalhos personalizáveis. Preserva a área de transferência, sem notificações e funciona offline.">
     <meta name="keywords" content="Windows, área de transferência, data hora, busca, configurações, histórico, MVP, pystray">
@@ -64,7 +64,7 @@
     <!-- Hero Section -->
     <section id="inicio" class="hero">
         <div class="hero-container animate-fade-in">
-            <div class="hero-version" data-i18n="hero.version">ATUALIZAÇÃO V.0.2.11</div>
+            <div class="hero-version" data-i18n="hero.version">ATUALIZAÇÃO V.0.2.13</div>
             <img src="assets/dahora_icon.png" alt="Dahora App Icon" class="hero-icon">
             <h1 class="hero-title">Dahora App</h1>
             <p class="hero-subtitle" data-i18n="hero.subtitle">Cole datas e horas no cursor, sem interromper.</p>
@@ -598,9 +598,9 @@
                     <span class="faq-icon">▼</span>
                 </button>
                 <div class="faq-answer" data-i18n="faq.a4">
-                    O app monitora automaticamente tudo que você copia (Ctrl+C) na área de transferência e salva em um histórico de até 1000
-                    itens (configurável). Você pode acessar os últimos 5 itens direto no menu da bandeja do sistema, ou usar
-                    Ctrl+Shift+F para buscar em todo o histórico com busca instantânea.
+                    O app monitora automaticamente tudo que você copia (Ctrl+C) na área de transferência e salva em um histórico local
+                    de até 1000 itens (configurável; padrão: 100). O arquivo do histórico é criptografado no Windows (DPAPI). Você pode acessar
+                    os últimos 5 itens direto no menu da bandeja do sistema, ou usar Ctrl+Shift+F para buscar em todo o histórico com busca instantânea.
                 </div>
             </div>
 
@@ -612,7 +612,7 @@
                 <div class="faq-answer" data-i18n="faq.a5">
                     Sim! Na janela de Configurações (clique direito no ícone → Configurações), você pode personalizar
                     todos os atalhos globais na aba "Atalhos". Nota: é necessário reiniciar o app após alterar atalhos,
-                    pois atalhos globais precisam ser re-registrados no Windows.
+                    pois atalhos globais precisam ser re-registrados no Windows. Algumas combinações são reservadas e serão bloqueadas nos atalhos personalizados (ex.: Ctrl+C/V/X/A/Z e as hotkeys do app como Ctrl+Shift+Q/F/R por padrão).
                 </div>
             </div>
 
@@ -816,7 +816,7 @@
                 'nav.about': 'Sobre',
                 'nav.github': 'GitHub',
                 'trust.releases': 'Releases oficiais',
-                'hero.version': 'ATUALIZAÇÃO V.0.2.10',
+                'hero.version': 'ATUALIZAÇÃO V.0.2.13',
                 'hero.title': 'Dahora App',
                 'hero.subtitle': 'Cole datas e horas sem quebrar seu fluxo<br>Automaticamente na posição do cursor • Preserve sua área de transferência',
                 'hero.badge.windows': 'Windows 10/11',
@@ -848,7 +848,7 @@
                 'audience.card3.desc': 'Marque evidências e passos de testes com data/hora consistente.',
                 'audience.card4.title': 'Times administrativos',
                 'audience.card4.desc': 'Preencha relatórios, protocolos e planilhas mais rápido.',
-                'news.title': '🚀 Novidades da v0.2.10',
+                'news.title': '🚀 Novidades da v0.2.13',
                 'news.subtitle': 'Ajustes de release, consistência e confiabilidade do executável.',
                 'news.card1.title': '📦 Build mais confiável',
                 'news.card1.desc': 'Empacotamento do executável com dependências do Pydantic incluídas (PyInstaller).',
@@ -945,9 +945,9 @@
                 'faq.q3': 'Meus dados ficam salvos onde?',
                 'faq.a3': 'Todos os dados são armazenados localmente no seu computador em <code>%APPDATA%\\DahoraApp</code>. Isso inclui configurações (settings.json), histórico da área de transferência (clipboard_history.json) e logs. Nada é enviado para a internet. Zero telemetria, 100% privado.',
                 'faq.q4': 'Como funciona o histórico da área de transferência?',
-                'faq.a4': 'O app monitora automaticamente tudo que você copia (Ctrl+C) na área de transferência e salva em um histórico de até 1000 itens (configurável). Você pode acessar os últimos 5 itens direto no menu da bandeja do sistema, ou usar Ctrl+Shift+F para buscar em todo o histórico com busca instantânea.',
+                'faq.a4': 'O app monitora automaticamente tudo que você copia (Ctrl+C) na área de transferência e salva em um histórico local de até 1000 itens (configurável; padrão: 100). O arquivo do histórico é criptografado no Windows (DPAPI). Você pode acessar os últimos 5 itens direto no menu da bandeja do sistema, ou usar Ctrl+Shift+F para buscar em todo o histórico com busca instantânea.',
                 'faq.q5': 'Posso personalizar os atalhos?',
-                'faq.a5': 'Sim! Na janela de Configurações (clique direito no ícone → Configurações), você pode personalizar todos os atalhos globais na aba "Atalhos". Nota: é necessário reiniciar o app após alterar atalhos, pois atalhos globais precisam ser re-registrados no Windows.',
+                'faq.a5': 'Sim! Na janela de Configurações (clique direito no ícone → Configurações), você pode personalizar todos os atalhos globais na aba "Atalhos". Nota: é necessário reiniciar o app após alterar atalhos, pois atalhos globais precisam ser re-registrados no Windows. Algumas combinações são reservadas e serão bloqueadas nos atalhos personalizados (ex.: Ctrl+C/V/X/A/Z e as hotkeys do app como Ctrl+Shift+Q/F/R por padrão).',
                 'faq.q6': 'O menu da bandeja do sistema não atualiza automaticamente?',
                 'faq.a6': 'É uma limitação técnica da biblioteca <code>pystray</code>. O menu só atualiza quando você fecha e abre novamente. Soluções: (1) Pressione Ctrl+Shift+R para recarregar manualmente, (2) Feche e abra o menu novamente, ou (3) Use a busca (Ctrl+Shift+F) que sempre mostra dados atualizados em tempo real.',
                 'faq.q7': 'É seguro? Tem vírus?',
@@ -977,7 +977,7 @@
                 'nav.about': 'About',
                 'nav.github': 'GitHub',
                 'trust.releases': 'Official releases',
-                'hero.version': 'UPDATE V.0.2.10',
+                'hero.version': 'UPDATE V.0.2.13',
                 'hero.title': 'Dahora App',
                 'hero.subtitle': 'Paste dates and times without breaking your flow<br>Automatically at cursor position • Preserve your clipboard',
                 'hero.badge.windows': 'Windows 10/11',
@@ -1009,7 +1009,7 @@
                 'audience.card3.desc': 'Timestamp evidence and test steps with consistent date/time.',
                 'audience.card4.title': 'Admin teams',
                 'audience.card4.desc': 'Fill reports, tickets, and spreadsheets faster.',
-                'news.title': '🚀 What\'s New in v0.2.10',
+                'news.title': '🚀 What\'s New in v0.2.13',
                 'news.subtitle': 'Release polish, consistency, and executable reliability.',
                 'news.card1.title': '📦 More reliable build',
                 'news.card1.desc': 'Executable packaging includes Pydantic dependencies (PyInstaller).',
@@ -1106,9 +1106,9 @@
                 'faq.q3': 'Where is my data saved?',
                 'faq.a3': 'All data is stored locally on your computer in <code>%APPDATA%\\DahoraApp</code>. This includes settings (settings.json), clipboard history (clipboard_history.json) and logs. Nothing is sent to the internet. Zero telemetry, 100% private.',
                 'faq.q4': 'How does clipboard history work?',
-                'faq.a4': 'The app automatically monitors everything you copy (Ctrl+C) and saves it to a history of up to 1000 items (configurable). You can access the last 5 items directly in the tray menu, or use Ctrl+Shift+F to search the entire history with instant search.',
+                'faq.a4': 'The app automatically monitors everything you copy (Ctrl+C) and stores it in a local history of up to 1000 items (configurable; default: 100). The history file is encrypted on Windows (DPAPI). You can access the last 5 items directly in the tray menu, or use Ctrl+Shift+F to search the entire history with instant search.',
                 'faq.q5': 'Can I customize shortcuts?',
-                'faq.a5': 'Yes! In the Settings window (right click on icon → Settings), you can customize all global shortcuts in the "Shortcuts" tab. Note: app restart is required after changing shortcuts, as global hotkeys need to be re-registered in Windows.',
+                'faq.a5': 'Yes! In the Settings window (right click on icon → Settings), you can customize all global shortcuts in the "Shortcuts" tab. Note: app restart is required after changing shortcuts, as global hotkeys need to be re-registered in Windows. Some combinations are reserved and will be blocked for custom shortcuts (e.g., Ctrl+C/V/X/A/Z and the app hotkeys like Ctrl+Shift+Q/F/R by default).',
                 'faq.q6': 'The tray menu doesn\'t update automatically?',
                 'faq.a6': 'It is a technical limitation of the <code>pystray</code> library. The menu only updates when you close and open it again. Solutions: (1) Press Ctrl+Shift+R to reload manually, (2) Close and open the menu again, or (3) Use search (Ctrl+Shift+F) which always shows real-time updated data.',
                 'faq.q7': 'Is it safe? Any virus?',

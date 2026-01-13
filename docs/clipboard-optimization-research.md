@@ -1,7 +1,7 @@
 # 🔍 Pesquisa: Otimização de Clipboard Monitor com Windows API Events
 
 **Data da Pesquisa:** 13 de janeiro de 2026  
-**Versão:** v0.2.11  
+**Versão:** v0.2.12  
 **Status:** ✅ **PESQUISA CONCLUÍDA** - Implementação futura recomendada
 
 ---
@@ -207,7 +207,7 @@ O polling atual funciona bem:
    - Testes de thread-safety
 
 4. **Documentação:**
-   - Atualizar `ARCHITECTURE.md`
+   - Atualizar `architecture.md`
    - Documentar comportamento híbrido
    - Guia de troubleshooting
 

@@ -8,7 +8,7 @@ Esta pasta contém scripts auxiliares para desenvolvimento e testes.
 
 ## 📋 SCRIPTS DISPONÍVEIS
 
-Este diretório contém scripts de apoio. O fluxo oficial de build/release está em [docs/RELEASE.md](../docs/RELEASE.md).
+Este diretório contém scripts de apoio. O fluxo oficial de build/release está em [docs/release.md](../docs/release.md).
 
 ### 📦 Build / Release
 
@@ -141,7 +141,7 @@ powershell -ExecutionPolicy Bypass -File scripts\prepare_release_artifacts.ps1
 ```
 Isso evita ter que atualizar o script a cada incremento de versão.
 
-Para detalhes do processo de release (ZIP/LFS), veja [docs/RELEASE.md](../docs/RELEASE.md).
+Para detalhes do processo de release (ZIP/LFS), veja [docs/release.md](../docs/release.md).
 
 ---
 

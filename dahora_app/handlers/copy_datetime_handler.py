@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING, Optional
 from dahora_app.callback_manager import CallbackHandler
 
 if TYPE_CHECKING:
-    from main import DahoraApp
+    from dahora_app.app import DahoraApp
     from dahora_app.datetime_formatter import DateTimeFormatter
     from dahora_app.clipboard_manager import ClipboardManager
 

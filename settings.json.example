@@ -10,17 +10,17 @@
     },
     {
       "id": 2,
-      "hotkey": "ctrl+shift+r",
-      "prefix": "",
+      "hotkey": "ctrl+shift+2",
+      "prefix": "reuniao",
       "enabled": true,
-      "description": "Refresh do menu (sugestão)"
+      "description": "Notas de reunião"
     },
     {
       "id": 3,
-      "hotkey": "ctrl+shift+f",
-      "prefix": "",
+      "hotkey": "ctrl+shift+3",
+      "prefix": "ticket",
       "enabled": true,
-      "description": "Buscar no histórico (sugestão)"
+      "description": "Tickets e suporte"
     }
   ],
   "datetime_format": "%d.%m.%Y-%H:%M",
