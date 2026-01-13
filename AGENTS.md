@@ -264,7 +264,7 @@ dahora-app/
 │   ├── hacks.md               # Workarounds (8 de 14 resolvidos)
 │   ├── release.md             # Processo de release
 │   ├── roadmap.md             # Plano futuro (atualizado 12/01/2026)
-│   └── windows-python-setup.md # Setup Python no Windows
+│   └── python-windows.md       # Setup Python no Windows
 │
 ├── scripts/                   # Scripts utilitários
 │   ├── prepare_release_artifacts.ps1
@@ -287,7 +287,7 @@ dahora-app/
 
 ## 🛠️ Comandos do Projeto
 
-⚠️ **IMPORTANTE:** Use `py` ao invés de `python` neste projeto (ver [windows-python-setup.md](docs/windows-python-setup.md))
+⚠️ **IMPORTANTE:** Use `py` ao invés de `python` neste projeto (ver [python-windows.md](docs/python-windows.md))
 
 ```powershell
 # Instalar dependências
@@ -467,7 +467,7 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 - [architecture.md](docs/architecture.md) - Arquitetura detalhada
 - [release.md](docs/release.md) - Processo de release e Git LFS
 - [roadmap.md](docs/roadmap.md) - Plano de desenvolvimento
-- [windows-python-setup.md](docs/windows-python-setup.md) - Configuração Python
+- [python-windows.md](docs/python-windows.md) - Configuração Python
 - [development-history.md](docs/development-history.md) - Histórico de mudanças
 
 ### Modos de Trabalho (digite `/` no chat)

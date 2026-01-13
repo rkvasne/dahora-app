@@ -21,7 +21,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [0.2.12] - 2026-01-13
 
 ### 📚 Documentação
-- **Consolidação de Documentação:** `docs/README.md` atualizado para incluir novos documentos (`clipboard-optimization-research.md` e `security-audit-logs.md`)
+- **Consolidação de Documentação:** `docs/README.md` atualizado para incluir novos documentos (`clipboard-monitor.md` e `logs-security.md`)
 - Arquivo obsoleto `docs/Untitled` removido
 - Links e referências internas atualizados e verificados
 
@@ -40,7 +40,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### 🔒 Segurança
 - **Auditoria de Logs:** Realizada auditoria completa de segurança dos logs - nenhum dado sensível exposto, histórico criptografado, logs seguros para produção
-- Documentação de auditoria em `docs/security-audit-logs.md`
+- Documentação de auditoria em `docs/logs-security.md`
 
 ### 📚 Documentação
 - `architecture.md` atualizado - removidas todas as referências a `_validate_settings_manual()` e fallback manual
@@ -51,7 +51,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   - Diagrama de Validação de Hotkey (seção 3.1)
   - Diagrama de Sequência de Execução de Hotkey (seção 3.1)
   - Diagrama de Monitoramento de Clipboard (seção 3.5)
-- **Pesquisa de Otimização de Clipboard Monitor:** Documento `docs/clipboard-optimization-research.md` criado com pesquisa sobre Windows API Events (AddClipboardFormatListener)
+- **Pesquisa de Otimização de Clipboard Monitor:** Documento `docs/clipboard-monitor.md` criado com pesquisa sobre Windows API Events (AddClipboardFormatListener)
 - Documentação 100% alinhada com implementação atual
 
 ## [0.2.11] - 2026-01-12

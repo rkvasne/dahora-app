@@ -127,7 +127,7 @@ Impacto: variável • Esforço: alto
 
 - [x] Ajustar persistência do histórico (remover fallback em claro)
 - [x] Remover conteúdo do clipboard de logs e toasts que exibem prévias sensíveis
-- [x] Atualizar `ANALISE_PROJETO.md` (este documento) e alinhar `docs/security-audit-logs.md` com o estado real
+- [x] Atualizar `ANALISE_PROJETO.md` (este documento) e alinhar `docs/logs-security.md` com o estado real
 
 ---
 
@@ -164,7 +164,7 @@ Impacto: variável • Esforço: alto
 - `README.md` - Visão geral do projeto
 - `docs/release.md` - Processo de release e Git LFS
 - `docs/prd.md` - Requisitos do produto (referência)
-- `docs/security-audit-logs.md` - Auditoria de logs
+- `docs/logs-security.md` - Auditoria de logs
 
 ---
 

@@ -191,7 +191,7 @@ dahora-app/
     ├── pricing.md               # Estudo histórico de precificação
     ├── release.md               # Build/Release/ZIP/LFS
     ├── roadmap.md               # Próximos passos
-    └── windows-python-setup.md  # Configuração do Python no Windows (use `py`)
+    └── python-windows.md  # Configuração do Python no Windows (use `py`)
 ```
 
 ## 🔒 Segurança & Qualidade

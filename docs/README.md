@@ -29,7 +29,7 @@
 - **[Apoie o projeto (opcional)](../README.md#-apoie-o-projeto-opcional)** - ☕ Doações (Sponsors/Mercado Pago/PayPal/Pix) + QR
 
 ### Para Desenvolvedores
-- **[windows-python-setup.md](windows-python-setup.md)** - ⚠️ **LEIA PRIMEIRO!** Use `py` no Windows
+- **[python-windows.md](python-windows.md)** - ⚠️ **LEIA PRIMEIRO!** Use `py` no Windows
 - **[architecture.md](architecture.md)** - 🏗️ Arquitetura técnica e componentes
 - **[ANALISE_PROJETO.md](../ANALISE_PROJETO.md)** - 📊 Relatório de análise e melhorias (13/01/2026)
 - **[development-history.md](development-history.md)** - 📜 Histórico narrativo do desenvolvimento
@@ -48,8 +48,8 @@
 ### Arquitetura e Design
 - **[architecture.md](architecture.md)** - Estrutura, componentes e padrões
 - **[hacks.md](hacks.md)** - Workarounds e soluções não-ideais documentadas
-- **[clipboard-optimization-research.md](clipboard-optimization-research.md)** - Pesquisa sobre otimização de clipboard com Windows API Events
-- **[security-audit-logs.md](security-audit-logs.md)** - Auditoria de segurança dos logs do aplicativo
+- **[clipboard-monitor.md](clipboard-monitor.md)** - Pesquisa sobre otimização de clipboard com Windows API Events
+- **[logs-security.md](logs-security.md)** - Auditoria de segurança dos logs do aplicativo
 
 ### Planejamento e Negócio
 - **[roadmap.md](roadmap.md)** - Próximos passos e melhorias planejadas
@@ -74,7 +74,7 @@
 - **[release.md](release.md)** - Build, empacotamento ZIP e Git LFS
 
 ### Python no Windows
-- **[windows-python-setup.md](windows-python-setup.md)** - ⚠️ Crítico: diferença entre `python` e `py`
+- **[python-windows.md](python-windows.md)** - ⚠️ Crítico: diferença entre `python` e `py`
 
 ### Pastas auxiliares
 - **[scripts/README.md](../scripts/README.md)** - Scripts utilitários (build/debug/release)
@@ -96,7 +96,9 @@ docs/
 ├── release.md                  # Processo de build e release
 ├── roadmap.md                  # Próximos passos (atualizado 12/01/2026)
 ├── github-cli-guide.md         # GitHub CLI completo
-└── windows-python-setup.md     # Configuração do Python no Windows
+├── clipboard-monitor.md        # Pesquisa: clipboard monitor (Windows API Events)
+├── logs-security.md            # Auditoria de segurança de logs
+└── python-windows.md           # Configuração do Python no Windows
 
 raiz/
 └── ANALISE_PROJETO.md          # Relatório de análise completo (NOVO)
@@ -124,7 +126,7 @@ raiz/
 3. Consulte [CHANGELOG.md](../CHANGELOG.md) - Novidades
 
 ### 👨‍💻 Desenvolvedor
-1. Leia [windows-python-setup.md](windows-python-setup.md) - **IMPORTANTE**
+1. Leia [python-windows.md](python-windows.md) - **IMPORTANTE**
 2. Explore [architecture.md](architecture.md) - Estrutura técnica
 3. Veja [development-history.md](development-history.md) - Contexto
 4. Consulte [hacks.md](hacks.md) - Soluções conhecidas

@@ -9,7 +9,7 @@ Obrigado por considerar contribuir com o Dahora App.
 ## 1) Comece aqui
 
 - Documentação: [docs/README.md](docs/README.md)
-- Configuração Windows/Python: [docs/windows-python-setup.md](docs/windows-python-setup.md) (use `py`)
+- Configuração Windows/Python: [docs/python-windows.md](docs/python-windows.md) (use `py`)
 
 ---
 
