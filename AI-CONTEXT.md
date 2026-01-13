@@ -3,7 +3,7 @@
 > Este arquivo fornece instruções para agentes de IA que trabalham neste projeto.
 > Compatível com: VS Code + Copilot, Cursor, Windsurf, Trae, Gemini CLI, e outros.
 >
-> **Propósito:** README.md é para humanos. AGENTS.md é para agentes de IA — contém contexto técnico detalhado que seria verboso demais num README: comandos de build, testes, convenções de código, estrutura do projeto.
+> Propósito: README.md é para humanos. AI-CONTEXT.md (contexto técnico) é para agentes de IA — contém contexto técnico detalhado que seria verboso demais num README: comandos de build, testes, convenções de código, estrutura do projeto.
 
 ---
 
@@ -22,7 +22,7 @@
 5. Regras globais da IDE
 
 **Localizações reconhecidas automaticamente (baseado no código do VS Code):**
-- `AGENTS.md` - Raiz do projeto
+- `AI-CONTEXT.md` - Raiz do projeto
 - `.github/copilot-instructions.md` - GitHub Copilot (opcional, crie se precisar)
 - `packages/*/AGENTS.md` - Monorepos (se habilitado)
 

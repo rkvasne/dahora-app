@@ -141,7 +141,7 @@ Toda documentação está organizada em `docs/` com entrada centralizada:
 - **[windows-setup.md](docs/windows-setup.md)** - Guia de configuração Python no Windows (use `py`)
 
 ### 🤖 IA Context
-- **[ai-context.md](docs/ai-context.md)** - Instruções técnicas para agentes de IA
+- **[AI-CONTEXT.md](AI-CONTEXT.md)** - Instruções técnicas para agentes de IA
 
 **Para usar modos especializados no chat do Copilot:**
 
