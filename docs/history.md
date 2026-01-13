@@ -135,7 +135,7 @@
 ### ✨ Principais Mudanças
 
 - Documentação consolidada e padronizada em `docs/`.
-- Guia de release atualizado (build, ZIP e Git LFS): [docs/release.md](release.md).
+- Guia de release atualizado (build, ZIP e Git LFS): [docs/release-process.md](release-process.md).
 - Roadmap simplificado em alto nível: [docs/roadmap.md](roadmap.md).
 - Remoção de documentos redundantes/obsoletos que não refletiam mais o estado atual.
 

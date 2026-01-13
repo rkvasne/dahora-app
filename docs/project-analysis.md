@@ -162,9 +162,9 @@ Impacto: variável • Esforço: alto
 - `docs/roadmap.md` - Próximos passos
 - `CHANGELOG.md` - Histórico de mudanças
 - `README.md` - Visão geral do projeto
-- `docs/release.md` - Processo de release e Git LFS
+- `docs/release-process.md` - Processo de release e Git LFS
 - `docs/prd.md` - Requisitos do produto (referência)
-- `docs/logs-security.md` - Auditoria de logs
+- `docs/security-logging.md` - Auditoria de logs
 
 ---
 

@@ -257,19 +257,19 @@ dahora-app/
 │   ├── test_handlers.py
 │   └── ... (13 arquivos de teste)
 │
-├── ANALISE_PROJETO.md         # Relatório de análise (12/01/2026)
+├── docs/project-analysis.md   # Relatório de análise (12/01/2026)
 │
 ├── docs/                      # Documentação
 │   ├── architecture.md        # Arquitetura detalhada (atualizado 12/01/2026)
-│   ├── hacks.md               # Workarounds (8 de 14 resolvidos)
-│   ├── release.md             # Processo de release
+│   ├── implementation-details.md # Workarounds (14 de 14 resolvidos)
+│   ├── release-process.md     # Processo de release
 │   ├── roadmap.md             # Plano futuro (atualizado 12/01/2026)
-│   └── python-windows.md       # Setup Python no Windows
+│   └── windows-setup.md       # Setup Python no Windows
 │
 ├── scripts/                   # Scripts utilitários
 │   ├── prepare_release_artifacts.ps1
 │   ├── push_release_lfs.ps1
-│   └── limpar_cache_icones.ps1
+│   └── clean_icons.ps1
 │
 ├── landing/                   # Landing page (HTML/CSS)
 │   ├── styles.css
@@ -464,7 +464,7 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 - [release.md](docs/release.md) - Processo de release e Git LFS
 - [roadmap.md](docs/roadmap.md) - Plano de desenvolvimento
 - [python-windows.md](docs/python-windows.md) - Configuração Python
-- [development-history.md](docs/development-history.md) - Histórico de mudanças
+- [history.md](docs/history.md) - Histórico de mudanças
 
 ### Modos de Trabalho (digite `/` no chat)
 

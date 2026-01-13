@@ -8,7 +8,7 @@ Esta pasta contém scripts auxiliares para desenvolvimento e testes.
 
 ## 📋 SCRIPTS DISPONÍVEIS
 
-Este diretório contém scripts de apoio. O fluxo oficial de build/release está em [docs/release.md](../docs/release.md).
+Este diretório contém scripts de apoio. O fluxo oficial de build/release está em [docs/release-process.md](../docs/release-process.md).
 
 ### 📦 Build / Release
 
@@ -31,7 +31,7 @@ powershell -ExecutionPolicy Bypass -File scripts\prepare_release_artifacts.ps1
 #### **push_release_lfs.bat / push_release_lfs.ps1**
 Ajuda a publicar artefatos grandes via Git LFS.
 
-#### **standardize-releases.ps1**
+#### **standardize_releases.ps1**
 Padroniza nomes/artefatos de releases.
 
 #### **update_releases.py**
@@ -45,7 +45,7 @@ Conversão/manipulação de ícones (uso em build/branding).
 #### **generate_icons_all.py**
 Geração em lote de ícones (variações/tamanhos).
 
-#### **limpar_cache_icones.ps1**
+#### **clean_icons.ps1**
 Limpa cache relacionado a ícones (Windows/build).
 
 ### 🔎 Debug / Diagnóstico
@@ -85,7 +85,7 @@ scripts/
 ├── convert_icon.py
 ├── debug_dahora.py
 ├── generate_icons_all.py
-├── limpar_cache_icones.ps1
+├── clean_icons.ps1
 ├── manual_shortcut_editor.py
 ├── manual_shortcuts.py
 ├── manual_ui_modernization.py
@@ -94,7 +94,7 @@ scripts/
 ├── push_release_lfs.bat
 ├── push_release_lfs.ps1
 ├── rebuild_clean.bat
-├── standardize-releases.ps1
+├── standardize_releases.ps1
 ├── test_menu.py
 ├── test_minimal.py
 └── update_releases.py
@@ -141,7 +141,7 @@ powershell -ExecutionPolicy Bypass -File scripts\prepare_release_artifacts.ps1
 ```
 Isso evita ter que atualizar o script a cada incremento de versão.
 
-Para detalhes do processo de release (ZIP/LFS), veja [docs/release.md](../docs/release.md).
+Para detalhes do processo de release (ZIP/LFS), veja [docs/release-process.md](../docs/release-process.md).
 
 ---
 

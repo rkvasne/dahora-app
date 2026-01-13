@@ -33,8 +33,8 @@ Roadmap de alto nível para próximas melhorias. Detalhes específicos devem ser
 ### Documentação
 
 - ✅ `architecture.md` - Seções 3.7 (Handlers) e 3.8 (Otimizações) adicionadas
-- ✅ `hacks.md` - Tabela de status atualizada
-- ✅ `ANALISE_PROJETO.md` - Relatório completo de melhorias
+- ✅ `implementation-details.md` - Tabela de status atualizada
+- ✅ `project-analysis.md` - Relatório completo de melhorias
 
 ### Métricas
 
@@ -96,4 +96,4 @@ Roadmap de alto nível para próximas melhorias. Detalhes específicos devem ser
 
 Este arquivo substitui o antigo checklist longo de melhorias, que era útil no início do projeto, mas ficou difícil de manter sincronizado com o estado real do código.
 
-**Relatório detalhado:** Consulte `ANALISE_PROJETO.md` na raiz do projeto para análise completa das implementações de Janeiro 2026.
+**Relatório detalhado:** Consulte `docs/project-analysis.md` na pasta `docs/` para análise completa das implementações de Janeiro 2026.

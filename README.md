@@ -23,7 +23,7 @@
 
 Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sistema leve e poderoso que revoluciona como você lida com timestamps. Ele roda silenciosamente no system tray e permite que você cole a data e hora atual formatada em qualquer lugar, com uma única hotkey.
 
-**Novidades (Janeiro 2026):** Migração completa para handlers, 8 Protocols para type hints e UI thread-safe. Veja [ANALISE_PROJETO.md](ANALISE_PROJETO.md) para detalhes.
+**Novidades (Janeiro 2026):** Migração completa para handlers, 8 Protocols para type hints e UI thread-safe. Veja [project-analysis.md](docs/project-analysis.md) para detalhes.
 
 > **Terminologia:** a UI/landing usam PT‑BR 100% (ex.: “área de transferência”, “bandeja do sistema”, “atalhos”).
 > A documentação técnica pode usar termos comuns em inglês (ex.: `clipboard`, `system tray`, `hotkeys`). Veja [Glossário por superfície (terminologia)](docs/README.md#glossário-por-superfície-terminologia).
@@ -130,20 +130,18 @@ Toda documentação está organizada em `docs/` com entrada centralizada:
 ### 👉 **[docs/README.md](docs/README.md)** - Documentação (comece aqui!)
 
 ### Destaques:
-- **[architecture.md](docs/architecture.md)** - Arquitetura técnica detalhada
-- **[development-history.md](docs/development-history.md)** - Histórico narrativo de desenvolvimento
-- **[landing-template.md](docs/landing-template.md)** - Template da landing (specs por seção)
-- **[release.md](docs/release.md)** - Processo de build, release e Git LFS
-- **[github-cli-guide.md](docs/github-cli-guide.md)** - GitHub CLI e autenticação
-- **[hacks.md](docs/hacks.md)** - Soluções criativas documentadas (14 de 14 tratados - 100%)
-- **[ANALISE_PROJETO.md](ANALISE_PROJETO.md)** - Relatório de análise completo (Janeiro 2026)
-- **[roadmap.md](docs/roadmap.md)** - Próximos passos
-- **[CHANGELOG.md](CHANGELOG.md)** - Registro oficial de mudanças
+- **[history.md](docs/history.md)** - Histórico narrativo de desenvolvimento
+- **[architecture.md](docs/architecture.md)** - Arquitetura técnica e componentes
+- **[release-process.md](docs/release-process.md)** - Processo de build, release e Git LFS
+- **[pricing.md](docs/pricing.md)** - Estudo histórico de precificação
+- **[implementation-details.md](docs/implementation-details.md)** - Soluções criativas documentadas (14 de 14 tratados - 100%)
+- **[project-analysis.md](docs/project-analysis.md)** - Relatório de análise completo (Janeiro 2026)
+- **[roadmap.md](docs/roadmap.md)** - Próximos passos e backlog
+- **[github-guide.md](docs/github-guide.md)** - Guia completo de GitHub CLI
+- **[windows-setup.md](docs/windows-setup.md)** - Guia de configuração Python no Windows (use `py`)
 
-### 🤖 Configuração para Agentes de IA:
-- **[AGENTS.md](AGENTS.md)** - Instruções técnicas para agentes de IA
-- **[.github/copilot-instructions.md](.github/copilot-instructions.md)** - Configuração automática do Copilot
-- **[.github/prompts/](.github/prompts/)** - 17 modos de trabalho (Prompt Files)
+### 🤖 IA Context
+- **[ai-context.md](docs/ai-context.md)** - Instruções técnicas para agentes de IA
 
 **Para usar modos especializados no chat do Copilot:**
 
@@ -184,14 +182,14 @@ dahora-app/
 └── docs/                        # Documentação Centralizada
     ├── README.md                # Índice centralizado (comece aqui!)
     ├── architecture.md          # Arquitetura técnica
-    ├── development-history.md   # Histórico narrativo
-    ├── github-cli-guide.md      # GitHub CLI (autenticação, releases, workflows)
-    ├── hacks.md                 # Workarounds e decisões não-ideais
-    ├── landing-template.md      # Template da landing (specs por seção)
+    ├── history.md               # Histórico narrativo
+    ├── github-guide.md          # GitHub CLI (autenticação, releases, workflows)
+    ├── implementation-details.md # Workarounds e decisões não-ideais
+    ├── landing-page.md          # Template da landing (specs por seção)
     ├── pricing.md               # Estudo histórico de precificação
-    ├── release.md               # Build/Release/ZIP/LFS
+    ├── release-process.md       # Build/Release/ZIP/LFS
     ├── roadmap.md               # Próximos passos
-    └── python-windows.md  # Configuração do Python no Windows (use `py`)
+    └── windows-setup.md         # Configuração do Python no Windows (use `py`)
 ```
 
 ## 🔒 Segurança & Qualidade
@@ -248,7 +246,7 @@ No chat do Copilot, digite `/` seguido do modo:
 | ✅ Qualidade | `/qualidade` | Testes, QA |
 | 🔀 Git | `/git` | Commits, branches |
 
-**Documentação completa:** [AGENTS.md](AGENTS.md)
+**Documentação completa:** [ai-context.md](docs/ai-context.md)
 
 ---
 

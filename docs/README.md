@@ -17,7 +17,7 @@
 - ✅ **Suíte de testes automatizada** (pytest) — rode `py -m pytest tests/` para validar
 - ✅ **100% dos hacks tratados** (14 de 14)
 - ✅ **UI refinada** - Spinbox com setas proporcionais
-- 📊 Relatório completo: **[ANALISE_PROJETO.md](../ANALISE_PROJETO.md)**
+- 📊 Relatório completo: **[project-analysis.md](project-analysis.md)**
 
 ---
 
@@ -29,27 +29,27 @@
 - **[Apoie o projeto (opcional)](../README.md#-apoie-o-projeto-opcional)** - ☕ Doações (Sponsors/Mercado Pago/PayPal/Pix) + QR
 
 ### Para Desenvolvedores
-- **[python-windows.md](python-windows.md)** - ⚠️ **LEIA PRIMEIRO!** Use `py` no Windows
+- **[windows-setup.md](windows-setup.md)** - ⚠️ **LEIA PRIMEIRO!** Use `py` no Windows
 - **[architecture.md](architecture.md)** - 🏗️ Arquitetura técnica e componentes
-- **[ANALISE_PROJETO.md](../ANALISE_PROJETO.md)** - 📊 Relatório de análise e melhorias (13/01/2026)
-- **[development-history.md](development-history.md)** - 📜 Histórico narrativo do desenvolvimento
+- **[project-analysis.md](project-analysis.md)** - 📊 Relatório de análise e melhorias (13/01/2026)
+- **[history.md](history.md)** - 📜 Histórico narrativo do desenvolvimento
 
 ### Para Manutenedores
-- **[release.md](release.md)** - 🚀 Processo completo de build e release
-- **[github-cli-guide.md](github-cli-guide.md)** - 🔧 Guia do GitHub CLI e autenticação
+- **[release-process.md](release-process.md)** - 🚀 Processo completo de build e release
+- **[github-guide.md](github-guide.md)** - 🔧 Guia do GitHub CLI e autenticação
 
 ---
 
 ## 📖 Documentação Técnica
 
 ### Frontend (Landing)
-- **[landing-template.md](landing-template.md)** - Specs visuais por seção (template reutilizável)
+- **[landing-page.md](landing-page.md)** - Specs visuais por seção (template reutilizável)
 
 ### Arquitetura e Design
 - **[architecture.md](architecture.md)** - Estrutura, componentes e padrões
-- **[hacks.md](hacks.md)** - Workarounds e soluções não-ideais documentadas
+- **[implementation-details.md](implementation-details.md)** - Workarounds e detalhes de implementação
 - **[clipboard-monitor.md](clipboard-monitor.md)** - Pesquisa sobre otimização de clipboard com Windows API Events
-- **[logs-security.md](logs-security.md)** - Auditoria de segurança dos logs do aplicativo
+- **[security-logging.md](security-logging.md)** - Auditoria de segurança dos logs do aplicativo
 
 ### Planejamento e Negócio
 - **[roadmap.md](roadmap.md)** - Próximos passos e melhorias planejadas
@@ -70,11 +70,11 @@
 ## 🔧 Ferramentas de Desenvolvimento
 
 ### GitHub e Versionamento
-- **[github-cli-guide.md](github-cli-guide.md)** - Guia completo: instalação, autenticação, comandos
-- **[release.md](release.md)** - Build, empacotamento ZIP e Git LFS
+- **[github-guide.md](github-guide.md)** - Guia completo: instalação, autenticação, comandos
+- **[release-process.md](release-process.md)** - Build, empacotamento ZIP e Git LFS
 
 ### Python no Windows
-- **[python-windows.md](python-windows.md)** - ⚠️ Crítico: diferença entre `python` e `py`
+- **[windows-setup.md](windows-setup.md)** - ⚠️ Crítico: diferença entre `python` e `py`
 
 ### Pastas auxiliares
 - **[scripts/README.md](../scripts/README.md)** - Scripts utilitários (build/debug/release)
@@ -88,20 +88,20 @@
 docs/
 ├── README.md                   ← Você está aqui!
 ├── architecture.md             # Arquitetura técnica (atualizado 12/01/2026)
-├── development-history.md      # Histórico narrativo
+├── history.md                  # Histórico narrativo
 ├── landing-template.md         # Template da landing (specs por seção)
-├── hacks.md                    # Workarounds documentados (atualizado 12/01/2026)
+├── implementation-details.md   # Workarounds documentados (atualizado 12/01/2026)
 ├── prd.md                      # Requisitos do produto (formal)
 ├── pricing.md                  # Análise de mercado
-├── release.md                  # Processo de build e release
+├── release-process.md          # Processo de build e release
 ├── roadmap.md                  # Próximos passos (atualizado 12/01/2026)
-├── github-cli-guide.md         # GitHub CLI completo
+├── github-guide.md             # GitHub CLI completo
 ├── clipboard-monitor.md        # Pesquisa: clipboard monitor (Windows API Events)
 ├── logs-security.md            # Auditoria de segurança de logs
 └── python-windows.md           # Configuração do Python no Windows
 
 raiz/
-└── ANALISE_PROJETO.md          # Relatório de análise completo (NOVO)
+└── project-analysis.md         # Relatório de análise completo (NOVO)
 ```
 
 ---
