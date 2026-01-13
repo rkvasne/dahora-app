@@ -63,7 +63,7 @@
 - **[SECURITY.md](../SECURITY.md)** - Como reportar vulnerabilidades
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** - Como contribuir
 - **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** - Código de conduta
-- **[LICENSE](../LICENSE)** - Licença (MIT)
+- **[LICENSE.md](../LICENSE.md)** - Licença (MIT)
 
 ---
 

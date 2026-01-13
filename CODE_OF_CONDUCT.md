@@ -1,4 +1,8 @@
-# Código de Conduta
+# 💜 Código de Conduta — Dahora App
+
+> Navegação: [README do projeto](README.md) • [Documentação](docs/README.md)
+
+---
 
 Este projeto adota o **Contributor Covenant** como código de conduta.
 

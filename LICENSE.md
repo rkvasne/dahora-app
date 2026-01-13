@@ -1,3 +1,9 @@
+# ⚖️ Licença MIT — Dahora App
+
+> Navegação: [README do projeto](README.md) • [Documentação](docs/README.md)
+
+---
+
 MIT License
 
 Copyright (c) 2026 Raphael Kvasne
