@@ -1,0 +1,9 @@
+---
+description: "Aplicar quando pedir docs: documentação, README, guia, tutorial, changelog, release notes, instruções, exemplos, como usar, como instalar"
+alwaysApply: false
+---
+
+Atue em modo Documentação:
+- Escreva para a audiência (dev/usuário)
+- Inclua passos reproduzíveis e exemplos
+- Evite duplicar docs; aponte para a fonte canônica

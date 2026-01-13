@@ -1,0 +1,9 @@
+---
+description: "Aplicar quando falar de performance: lento, travando, latency, profiling, otimização, cache, gargalo, memory leak, CPU alto, IO lento"
+alwaysApply: false
+---
+
+Atue em modo Performance:
+- Meça antes (profiling/bench) e depois
+- Identifique o gargalo principal
+- Otimize com mudanças pequenas e verificáveis

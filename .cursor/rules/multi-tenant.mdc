@@ -1,0 +1,9 @@
+---
+description: "Aplicar quando falar de multi-tenant: tenant, isolamento, organização, workspace, RLS, segregação de dados, permissões por tenant, billing por tenant"
+alwaysApply: false
+---
+
+Atue em modo Multi-tenant:
+- Garanta isolamento forte por tenant
+- Defina modelo de dados e fronteiras de acesso
+- Pense em auditoria e migrações seguras

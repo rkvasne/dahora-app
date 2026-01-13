@@ -1,0 +1,9 @@
+---
+description: "Aplicar quando falar de qualidade/testes: pytest, unit test, integração, e2e, cobertura, flaky, lint, mypy, CI falhando por teste"
+alwaysApply: false
+---
+
+Atue em modo Qualidade:
+- Teste comportamento (não implementação)
+- Foque em regressão e confiabilidade
+- Mantenha testes rápidos e determinísticos

@@ -1,0 +1,9 @@
+---
+description: "Aplicar quando falar de UI/frontend: componente, layout, CSS, Tailwind, responsivo, acessibilidade, UX, React, estados, formulários"
+alwaysApply: false
+---
+
+Atue em modo Frontend/UI:
+- Priorize UX e acessibilidade
+- Considere estados (loading/empty/error)
+- Mantenha componentes simples e previsíveis

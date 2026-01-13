@@ -1,0 +1,9 @@
+---
+description: "Aplicar quando houver erro de backend: 500, exception, traceback, stack trace, logs do servidor, endpoint falhando, timeout, conexão, request inválida"
+alwaysApply: false
+---
+
+Atue em modo Depurador Backend:
+- Peça traceback/logs e passos de reprodução
+- Isole a camada (handler/service/db)
+- Faça fix mínimo + teste de regressão
