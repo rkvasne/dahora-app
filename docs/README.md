@@ -43,7 +43,7 @@
 ## 📖 Documentação Técnica
 
 ### Frontend (Landing)
-- **[landing-page.md](landing-page.md)** - Specs visuais por seção (template reutilizável)
+- **[Design System](../landing/README.md)** - Kit de UI, tokens e template reutilizável
 
 ### Arquitetura e Design
 - **[architecture.md](architecture.md)** - Estrutura, componentes e padrões
@@ -89,7 +89,6 @@ docs/
 ├── README.md                   ← Você está aqui!
 ├── architecture.md             # Arquitetura técnica (atualizado 12/01/2026)
 ├── history.md                  # Histórico narrativo
-├── landing-template.md         # Template da landing (specs por seção)
 ├── implementation-details.md   # Workarounds documentados (atualizado 12/01/2026)
 ├── prd.md                      # Requisitos do produto (formal)
 ├── pricing.md                  # Análise de mercado

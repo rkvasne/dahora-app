@@ -185,7 +185,6 @@ dahora-app/
     ├── history.md               # Histórico narrativo
     ├── github-guide.md          # GitHub CLI (autenticação, releases, workflows)
     ├── implementation-details.md # Workarounds e decisões não-ideais
-    ├── landing-page.md          # Template da landing (specs por seção)
     ├── pricing.md               # Estudo histórico de precificação
     ├── release-process.md       # Build/Release/ZIP/LFS
     ├── roadmap.md               # Próximos passos

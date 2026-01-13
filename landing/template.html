@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- TÍTULO DA PÁGINA -->
+    <title>Título da Sua Landing Page</title>
+    
+    <!-- METADADOS DE SEO -->
+    <meta name="description" content="Descrição curta e atrativa do seu produto ou serviço.">
+    <meta name="keywords" content="palavra-chave1, palavra-chave2, saas, landing page">
+    
+    <!-- FAVICONS (Ajuste os caminhos conforme necessário) -->
+    <!-- <link rel="icon" type="image/x-icon" href="../icon.ico"> -->
+    
+    <!-- GOOGLE FONTS (Poppins + Inter) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap">
+    
+    <!-- FONT AWESOME (Ícones) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- ESTILOS (O sistema de design do Dahora App) -->
+    <!-- Nota: Se este arquivo estiver na raiz, ajuste para 'landing/styles.css', etc. -->
+    <link rel="stylesheet" href="variables.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dark-sections.css">
+    <link rel="stylesheet" href="responsive.css">
+    
+    <!-- Estilos Opcionais (Descomente se for usar) -->
+    <!-- <link rel="stylesheet" href="donate.css"> -->
+    <!-- <link rel="stylesheet" href="faq.css"> -->
+    <!-- <link rel="stylesheet" href="process.css"> -->
+    <!-- <link rel="stylesheet" href="footer.css"> -->
+</head>
+
+<body>
+    <!-- HEADER / NAVEGAÇÃO -->
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="nav-brand">
+                <!-- <img src="logo.png" alt="Logo"> -->
+                <span>Seu Produto</span>
+            </a>
+            
+            <div class="nav-controls">
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#recursos" class="nav-link">Recursos</a></li>
+                    <li><a href="#como-funciona" class="nav-link">Como funciona</a></li>
+                    <li><a href="#cta" class="nav-link nav-cta">Começar Agora</a></li>
+                </ul>
+
+                <div class="nav-actions">
+                    <button id="theme-toggle" class="nav-link theme-btn" aria-label="Alternar Tema">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+
+                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION (Apresentação Principal) -->
+    <section id="inicio" class="hero">
+        <div class="hero-container animate-fade-in">
+            <div class="hero-version">NOVIDADE v1.0</div>
+            <!-- <img src="logo.png" alt="Logo" class="hero-icon"> -->
+            <h1 class="hero-title">A Manchete Principal Vai Aqui</h1>
+            <p class="hero-subtitle">Uma descrição secundária persuasiva que explica o valor do produto em poucas palavras.</p>
+            
+            <div class="hero-buttons">
+                <a href="#cta" class="btn btn-primary">
+                    🚀 Começar Grátis
+                </a>
+                <a href="#" class="btn btn-secondary">
+                    📚 Saber Mais
+                </a>
+            </div>
+            
+            <div class="hero-badges">
+                <div class="hero-badge-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Fácil de usar</span>
+                </div>
+                <div class="hero-badge-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Seguro</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: RECURSOS (Grid de Cards) -->
+    <section id="recursos" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">⚡ Recursos Incríveis</h2>
+                <p class="section-subtitle">Tudo o que você precisa para alcançar seus objetivos.</p>
+            </div>
+            
+            <div class="features-grid">
+                <!-- Card 1 -->
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-star"></i></div>
+                    <h3>Benefício Principal</h3>
+                    <p>Explique como esse recurso resolve um problema específico do usuário de forma clara.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>Alta Performance</h3>
+                    <p>Seu produto é rápido, eficiente e otimizado para os melhores resultados.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Totalmente Responsivo</h3>
+                    <p>Funciona perfeitamente em qualquer dispositivo, do celular ao desktop.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: CALL TO ACTION (Fundo Escuro/Destaque) -->
+    <section id="cta" class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Pronto para começar?</h2>
+                <p class="section-subtitle">Junte-se a milhares de usuários satisfeitos hoje mesmo.</p>
+                <div style="margin-top: 2rem;">
+                    <a href="#" class="btn btn-primary">👉 Criar Conta Grátis</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Seu Produto</h3>
+                    <p>© 2024 Sua Empresa. Todos os direitos reservados.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Termos</a>
+                    <a href="#">Privacidade</a>
+                    <a href="#">Contato</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPT (Funcionalidades como Dark Mode e Menu Mobile) -->
+    <script src="script.js"></script>
+</body>
+</html>
