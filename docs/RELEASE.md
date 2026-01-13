@@ -10,7 +10,7 @@ Este guia descreve o fluxo recomendado para gerar um executável, empacotar em Z
 
 Antes de criar uma nova release:
 
-- [ ] Todos os testes passando: `py -m pytest` (267 testes)
+- [ ] Rodar testes: `py -m pytest`
 - [ ] Sem erros de lint: `py -m flake8 dahora_app/`
 - [ ] Versão atualizada em `dahora_app/constants.py`
 - [ ] `CHANGELOG.md` atualizado com nova seção

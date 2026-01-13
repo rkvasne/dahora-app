@@ -8,7 +8,7 @@ Este diretório contém a suíte de testes do Dahora App.
 
 ```
 ✅ Suíte de testes ativa
-✅ Todos os testes passando
+ℹ️ Rode `py -m pytest tests/` para verificar o status no seu ambiente
 ```
 
 ## 🧪 Executar Testes
@@ -135,7 +135,6 @@ Meta: **>90% de cobertura**
 - [ ] Testes de notificações do Windows (toasts)
 - [ ] Testes de menu do system tray
 - [ ] Testes de hotkeys (se possível)
-- [ ] Testes de single instance (mutex)
 - [ ] Testes de rotação de logs
 - [ ] Testes de privacidade (primeira execução)
 

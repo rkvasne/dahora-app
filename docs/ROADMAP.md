@@ -38,7 +38,7 @@ Roadmap de alto nível para próximas melhorias. Detalhes específicos devem ser
 
 ### Métricas
 
-- **Testes:** 267 passando
+- **Testes:** suíte automatizada (veja `tests/` e rode `py -m pytest tests/`)
 - **Cobertura:** Handlers, schemas, validadores
 - **Hacks resolvidos:** 14 de 14 (100%)
 
@@ -57,14 +57,14 @@ Roadmap de alto nível para próximas melhorias. Detalhes específicos devem ser
 ### Prioridade Média
 
 | Item | Descrição | Esforço |
-|------|-----------|---------|
-| Validação Duplicada | Remover fallback manual gradualmente | 2 dias |
-| Métodos `*_legacy()` | Remover após validação extensiva | 1 dia |
+|------|-----------|--------|
+| Padronização de documentação | Revisar e manter docs sincronizados por release | 1–2 dias |
+| UX do editor de atalhos | Melhorar mensagens de conflito/validação | 1–2 dias |
 
 ### Prioridade Baixa (Backlog)
 
 | Item | Descrição | Esforço |
-|------|-----------|---------|
+|------|-----------|--------|
 | Otimização Clipboard | Windows API events (vs polling) | Alto |
 | Cache de Hotkeys | `lru_cache` para validação | Baixo |
 | Context Manager | `__enter__`/`__exit__` em DahoraApp | Baixo |

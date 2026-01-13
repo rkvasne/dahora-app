@@ -23,7 +23,7 @@
 
 Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sistema leve e poderoso que revoluciona como você lida com timestamps. Ele roda silenciosamente no system tray e permite que você cole a data e hora atual formatada em qualquer lugar, com uma única hotkey.
 
-**Novidades (Janeiro 2026):** Migração completa para handlers, 8 Protocols para type hints, UI thread-safe, 267 testes passando. Veja [ANALISE_PROJETO.md](ANALISE_PROJETO.md) para detalhes.
+**Novidades (Janeiro 2026):** Migração completa para handlers, 8 Protocols para type hints e UI thread-safe. Veja [ANALISE_PROJETO.md](ANALISE_PROJETO.md) para detalhes.
 
 > **Terminologia:** a UI/landing usam PT‑BR 100% (ex.: “área de transferência”, “bandeja do sistema”, “atalhos”).
 > A documentação técnica pode usar termos comuns em inglês (ex.: `clipboard`, `system tray`, `hotkeys`). Veja [Glossário por superfície (terminologia)](docs/README.md#glossário-por-superfície-terminologia).
@@ -46,7 +46,7 @@ Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sist
 - **Privacidade:** Totalmente offline (sem telemetria), dados locais e histórico criptografado no Windows (DPAPI).
 
 ### ⚙️ Controle Total
-- **Painel Completo:** 5 abas para controle total do aplicativo.
+- **Painel Completo:** 6 seções para controle total do aplicativo (inclui “Sobre”).
 - **Configuração Flexível:** Configure formatos, delimitadores e teclas.
 - **Execução Invisível:** Colagem instantânea sem popups desnecessários.
 

@@ -14,7 +14,7 @@
 - ✅ **8 Protocols** para type hints em `callback_manager.py`
 - ✅ **Thread-Safety** em UI root com Lock
 - ✅ **Validação única com Pydantic** - removida duplicação
-- ✅ **267 testes** passando
+- ✅ **Suíte de testes automatizada** (pytest) — rode `py -m pytest tests/` para validar
 - ✅ **100% dos hacks tratados** (14 de 14)
 - ✅ **UI refinada** - Spinbox com setas proporcionais
 - 📊 Relatório completo: **[ANALISE_PROJETO.md](../ANALISE_PROJETO.md)**

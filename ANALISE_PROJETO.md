@@ -1,7 +1,7 @@
 # 📊 Relatório de Análise Abrangente - Dahora App
 
 **Data da Análise:** 13 de janeiro de 2026  
-**Versão Analisada:** v0.2.12  
+**Versão Analisada:** v0.2.13  
 **Analista:** GPT-5.2
 
 ---

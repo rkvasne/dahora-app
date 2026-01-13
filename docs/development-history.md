@@ -254,9 +254,9 @@ CTRL+SHIFT+1 → COLA timestamp DIRETAMENTE onde o cursor está! ✨
 - **9 arquivos novos**
 
 ### 🎯 Impacto
-
-- ⚡ **Workflow 3x mais rápido** - Um atalho faz tudo
-- 🧹 **Logs 120x menos verbosos** - Performance otimizada
+ 
+- ⚡ **Workflow mais rápido** - Um atalho faz tudo
+- 🧹 **Logs menos verbosos** - Performance otimizada
 - 🔇 **Zero notificações irritantes** - Experiência limpa
 - 🔄 **Clipboard preservado** - Não perde o que copiou
 

@@ -448,7 +448,8 @@ Hotkey/Menu action
 
 **UI Prewarm (`_prewarm_ui`):**
 - Pré-constrói janelas CustomTkinter em idle (ocultas)
-- Reduz latência na primeira abertura de ~500ms para ~50ms
+- Pode reduzir a latência percebida na primeira abertura (depende do ambiente)
+- Registra tempos no log (ex.: `[UI] Prewarm ... fim em XXms`)
 - Configurável via `ui_prewarm_delay_ms`
 
 **Cache de Menu do Tray:**

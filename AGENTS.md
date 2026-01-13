@@ -369,13 +369,9 @@ scripts\push_release_lfs.ps1           # Push com LFS
 
 **Framework:** pytest + pytest-cov + pytest-mock
 
-**Suite atual:** 267 testes (100% passando)
-- `test_schemas.py` - 29 testes (validação Pydantic)
-- `test_hotkey_validator.py` - 37 testes (validação de hotkeys)
-- `test_single_instance.py` - 21 testes (Windows mutex)
-- `test_thread_sync.py` - 24 testes (sincronização)
-- `test_handlers.py` - Testes de handlers
-- `test_integration_handlers.py` - Testes de integração
+**Suíte de testes:** `tests/` (pytest)
+- Rode `py -m pytest tests/` para verificar o status no seu ambiente
+- Arquivos principais: `test_schemas.py`, `test_hotkey_validator.py`, `test_single_instance.py`, `test_thread_sync.py`, `test_handlers.py`, `test_integration_handlers.py`
 
 **Comandos:**
 ```powershell
@@ -501,4 +497,4 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 **Última atualização:** 13 de janeiro de 2026  
 **Versão do App:** 0.2.13  
 **Status:** ✅ Projeto configurado com Prompt Files  
-**Testes:** 267 passando | **Hacks tratados:** 14 de 14 (100%)
+**Testes:** suíte automatizada (pytest) | **Hacks tratados:** 14 de 14 (100%)
