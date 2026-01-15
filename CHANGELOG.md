@@ -13,6 +13,8 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Ícone consistente aplicado em todas as janelas do app (Windows).
 - Configurações: evita resetar atalhos em falhas de validação.
 - Histórico: evita sobrescrever/limpar dados quando DPAPI falha; backups adicionados.
+- Landing: alinhamento e responsividade do rodapé (CSS Grid 3 colunas, menu mobile, layout consistente com template).
+- Docs: atualizado `landing/README.md` e `template.html` para refletir correções de design system.
 
 ## [0.2.13] - 2026-01-13
 

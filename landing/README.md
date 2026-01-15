@@ -7,6 +7,7 @@ Este diretório contém o **Design System** da landing page do Dahora App, pront
 - **`template.html`**: ✨ **Comece por aqui!** Um arquivo base limpo com toda a estrutura necessária.
 - **`variables.css`**: 🎨 **Personalize aqui.** Define cores, fontes e espaçamentos globais.
 - **`styles.css`**: O CSS base (reset, tipografia, botões, containers).
+- **`footer.css`**: Estilos específicos para o rodapé (layout de grid, alinhamento).
 - **`responsive.css`**: Regras para adaptar o layout a celulares e tablets.
 - **`script.js`**: Funcionalidades essenciais (Dark Mode, Menu Mobile, Efeitos de Mouse).
 
@@ -44,7 +45,8 @@ O sistema já inclui classes CSS prontas para uso:
 ### 4. Funcionalidades Automáticas (`script.js`)
 Ao incluir o `script.js`, sua página ganha automaticamente:
 - 🌙 **Dark Mode**: Alternância de tema com persistência (localStorage).
-- 📱 **Menu Mobile**: Hambúrguer menu funcional.
+- 📱 **Menu Mobile**: Hambúrguer menu funcional (requer estrutura HTML correta do header).
+- ❓ **FAQ Toggle**: Lógica para acordeão de perguntas frequentes.
 - ✨ **Spotlight Effect**: Efeito de iluminação suave ao passar o mouse nos cards.
 
 ---
