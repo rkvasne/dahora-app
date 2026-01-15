@@ -1,16 +1,17 @@
 /* Footer Styling */
 .main-footer {
     border-top: 1px solid rgba(255, 255, 255, 0.03);
-    padding: 60px 40px 20px;
+    padding: 60px 0 20px;
     background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
     margin-top: 0;
 }
 
 .footer-content {
-    max-width: 1200px;
+    max-width: var(--content-max-width);
     margin: 0 auto;
+    padding: 0 var(--page-gutter);
     display: grid;
-    grid-template-columns: 40% 30% 30%;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 40px;
     margin-bottom: 40px;
     align-items: flex-start;

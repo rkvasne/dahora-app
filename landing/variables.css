@@ -50,6 +50,18 @@
     
     /* ===== FOOTER ===== */
     --footer-bg: #0f172a; /* Slate 900 - Sempre escuro */
+
+    /* ===== LAYOUT SYSTEM (INELEGIS PORT) ===== */
+    --content-max-width: 1312px;
+    --nav-max-width: 1312px;
+    --page-gutter: 1.5rem;
+    --header-height: 70px;
+}
+
+@media (max-width: 768px) {
+    :root {
+        --page-gutter: 1rem;
+    }
 }
 
 body.dark-mode {

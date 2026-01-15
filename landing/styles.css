@@ -84,9 +84,10 @@ h6 {
 }
 
 .nav {
-    max-width: 1200px;
+    max-width: var(--nav-max-width);
     margin: 0 auto;
-    padding: 1rem 1.5rem;
+    padding: 0 var(--page-gutter);
+    height: var(--header-height);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -264,7 +265,7 @@ body.dark-mode .lang-btn {
 
 /* ===== SECTIONS ===== */
 .section {
-    padding: 6rem 2rem; /* Espaçamento mais equilibrado */
+    padding: 6rem 0; /* Inelegis spacing */
     background-color: var(--bg-white);
 }
 
@@ -273,29 +274,29 @@ body.dark-mode .lang-btn {
 }
 
 .container {
-    max-width: 1280px; /* Largura ligeiramente maior */
+    max-width: var(--content-max-width);
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 var(--page-gutter);
 }
 
 .section-header {
     text-align: center;
-    margin-bottom: 3.5rem; /* Mais equilibrado */
+    margin-bottom: 3rem; /* Inelegis spacing */
 }
 
 .section-title {
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 3rem); /* Inelegis scale */
+    font-weight: 800;
     margin-bottom: 1rem;
     color: var(--text-dark);
 }
 
 .section-subtitle {
-    font-size: 1.2rem;
+    font-size: 1.25rem; /* Inelegis scale */
     color: var(--text-gray);
     max-width: 700px;
     margin: 0 auto;
-    font-weight: 400; /* Mais leve e elegante */
+    font-weight: 400;
     line-height: 1.6;
 }
 
@@ -439,16 +440,15 @@ body.dark-mode .feature-card:hover .feature-icon {
 .footer {
     background: var(--footer-bg);
     color: white;
-    padding: 4rem 2rem 2rem;
+    padding: 60px 0 20px; /* Inelegis vertical spacing */
     margin-top: auto;
 }
 
 .footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
+    /* Container wrapper handles max-width and gutter */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 3rem;
+    gap: 40px; /* Inelegis gap */
     margin-bottom: 3rem;
 }
 

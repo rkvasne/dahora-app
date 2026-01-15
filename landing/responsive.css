@@ -5,9 +5,7 @@
    ============================================ */
 
 @media (max-width: 992px) {
-    .hero-title {
-        font-size: 3rem; /* Ajustado */
-    }
+    /* Hero title ajustado via clamp() no CSS principal */
     
     .install-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -17,7 +15,7 @@
 @media (max-width: 768px) {
     /* ===== NAVIGATION ===== */
     .nav {
-        padding: 1rem 1rem;
+        padding: 0 var(--page-gutter); /* Usa gutter do sistema */
     }
 
     .nav-controls {
@@ -93,7 +91,7 @@
 
     /* ===== HERO ===== */
     .hero {
-        padding: 6rem 2rem 4rem; /* Mais equilibrado */
+        padding: 6rem var(--page-gutter) 4rem;
     }
 
     .hero-title {
@@ -101,10 +99,13 @@
         line-height: 1.2;
     }
 
+    .hero-container {
+        padding: 0;
+    }
+
     .hero-subtitle {
         font-size: 1.1rem;
-        padding: 0 1rem;
-        line-height: 1.5; /* Mais compacto */
+        margin-bottom: 2rem;
     }
 
     .hero-badges {
@@ -126,7 +127,7 @@
 
     /* ===== SECTIONS ===== */
     .section {
-        padding: 3.5rem 1.5rem; /* Mais equilibrado */
+        padding: 3.5rem 0;
     }
 
     .section-title {
@@ -148,7 +149,7 @@
 
     /* ===== DOWNLOAD ===== */
     .download {
-        padding: 3.5rem 1.5rem;
+        padding: 4rem var(--page-gutter);
     }
 
     .download-box {
