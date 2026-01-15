@@ -437,64 +437,7 @@ body.dark-mode .feature-card:hover .feature-icon {
 }
 
 /* ===== FOOTER ===== */
-.footer {
-    background: var(--footer-bg);
-    color: white;
-    padding: 60px 0 20px; /* Inelegis vertical spacing */
-    margin-top: auto;
-}
-
-.footer-content {
-    /* Container wrapper handles max-width and gutter */
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 40px; /* Inelegis gap */
-    margin-bottom: 3rem;
-}
-
-.footer-brand span {
-    font-size: 1.5rem;
-    font-weight: 700;
-    display: block;
-    margin-bottom: 1rem;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.footer-links h4 {
-    margin-bottom: 1.5rem;
-    font-size: 1.1rem;
-}
-
-.footer-links ul {
-    list-style: none;
-}
-
-.footer-links li {
-    margin-bottom: 0.75rem;
-}
-
-.footer-links a {
-    color: rgba(255, 255, 255, 0.7);
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.footer-links a:hover {
-    color: white;
-}
-
-.footer-bottom {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    text-align: center;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.9rem;
-}
+/* Footer styling is now handled by footer.css */
 
 /* ===== UTILITIES ===== */
 .badge {
