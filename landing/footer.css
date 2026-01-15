@@ -19,11 +19,11 @@
 }
 
 .footer-links {
-    text-align: center;
+    text-align: left;
 }
 
 .footer-links h4 {
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .footer-social {
