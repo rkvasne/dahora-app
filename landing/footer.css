@@ -11,16 +11,26 @@
     max-width: var(--content-max-width);
     margin: 0 auto;
     padding: 0 var(--page-gutter);
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    /* SWITCHING TO FLEX FOR PIXEL-PERFECT ALIGNMENT WITH HEADER */
+    display: flex;
+    align-items: flex-start;
     gap: 40px;
     margin-bottom: 40px;
-    align-items: flex-start;
 }
 
+/* Coluna 1: Esquerda (Ocupa espaço disponível) */
+.footer-brand {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start; /* Garante alinhamento à esquerda */
+}
+
+/* Coluna 2: Centro (Largura do conteúdo) */
 .footer-links {
+    flex: 0 0 auto; /* Não cresce, não encolhe */
     text-align: left;
-    justify-self: center;
     width: max-content;
 }
 
@@ -28,33 +38,27 @@
     justify-content: flex-start;
 }
 
+/* Coluna 3: Direita (Ocupa espaço disponível) */
 .footer-social {
+    flex: 1;
     display: flex;
-    justify-content: flex-end;
-    justify-self: end;
-    width: 100%;
+    flex-direction: column; /* Wrapper behaviour */
+    align-items: flex-end; /* Alinha tudo à direita */
     text-align: right;
 }
 
 .footer-social-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end; /* Wrapper interno também à direita */
 }
 
 .footer-social h4 {
-    justify-content: flex-start;
+    justify-content: flex-end;
 }
 
 .footer-social .social-icons {
     justify-content: flex-end;
-}
-
-.footer-brand {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    justify-self: start;
 }
 
 .footer-brand p {
@@ -181,19 +185,22 @@
     }
 
     .footer-content {
-        grid-template-columns: 1fr;
+        flex-direction: column; /* Stack vertically */
+        align-items: center;
         gap: 30px;
         text-align: center;
     }
 
     .footer-links, .footer-social, .footer-brand {
-        justify-self: center;
-        text-align: center;
+        flex: auto; /* Reset flex */
         width: 100%;
+        align-items: center;
+        text-align: center;
     }
 
     .footer-social {
         justify-content: center;
+        align-items: center;
     }
 
     .footer-social-wrapper {
