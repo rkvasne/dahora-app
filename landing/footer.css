@@ -20,6 +20,7 @@
 
 .footer-links {
     text-align: left;
+    justify-self: center;
 }
 
 .footer-links h4 {
@@ -177,6 +178,11 @@
     .footer-content {
         grid-template-columns: 1fr;
         gap: 30px;
+        text-align: center;
+    }
+
+    .footer-links {
+        justify-self: auto;
         text-align: center;
     }
 
