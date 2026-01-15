@@ -199,7 +199,7 @@ class DahoraApp:
                 "hotkey_search_history", "ctrl+shift+f"
             )
             self.menu_builder.hotkey_refresh_menu = current_settings.get(
-                "hotkey_refresh_menu", "ctrl+shift+r"
+                "hotkey_refresh_menu", ""
             )
             try:
                 self.menu_builder.tray_menu_cache_window_ms = int(
@@ -210,7 +210,7 @@ class DahoraApp:
 
             copy_hk = current_settings.get("hotkey_copy_datetime", "ctrl+shift+q")
             search_hk = current_settings.get("hotkey_search_history", "ctrl+shift+f")
-            refresh_hk = current_settings.get("hotkey_refresh_menu", "ctrl+shift+r")
+            refresh_hk = current_settings.get("hotkey_refresh_menu", "")
 
             self.hotkey_manager.set_configured_hotkeys(copy_hk, search_hk, refresh_hk)
             hotkey_results = self.hotkey_manager.apply_configured_hotkeys()
@@ -711,7 +711,7 @@ class DahoraApp:
             self._ui_root.withdraw()
             self._ui_root.title("Dahora App")
             try:
-                self._ui_root.iconbitmap("icon.ico")
+                self._ui_root.iconbitmap(IconManager.resolve_icon_path())
             except Exception:
                 pass
 

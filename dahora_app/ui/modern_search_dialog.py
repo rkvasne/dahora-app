@@ -35,6 +35,8 @@ class ModernSearchDialog:
         self.selected_index = -1
         self.result_buttons: List[ctk.CTkFrame] = []
         self._results_container: Optional[Any] = None
+        self._search_after_id: Optional[str] = None
+        self.max_results_render: int = 200
 
     def set_get_history_callback(self, callback: Callable) -> None:
         self.get_history_callback = callback
@@ -57,7 +59,7 @@ class ModernSearchDialog:
             self._show_window()
             show_ms = (time.perf_counter() - t_show) * 1000
             try:
-                self.window.after(0, self._perform_search)
+                self.window.after(0, self._schedule_search)
             except Exception:
                 pass
             total_ms = (time.perf_counter() - start) * 1000
@@ -76,7 +78,7 @@ class ModernSearchDialog:
             show_ms = (time.perf_counter() - t_show) * 1000
             try:
                 if self.window is not None:
-                    self.window.after(0, self._perform_search)
+                    self.window.after(0, self._schedule_search)
             except Exception:
                 pass
             total_ms = (time.perf_counter() - start) * 1000
@@ -103,6 +105,10 @@ class ModernSearchDialog:
         # Evita renderização progressiva (mostra apenas no final)
         window.withdraw()
         window.title("Dahora App - Buscar no Histórico")
+        try:
+            window.iconbitmap(IconManager.resolve_icon_path())
+        except Exception:
+            pass
         window.geometry("650x550")
         window.minsize(500, 400)
         window.configure(fg_color=self.colors["bg"])
@@ -148,7 +154,7 @@ class ModernSearchDialog:
             height=36,
         )
         self.search_entry.pack(side="left", fill="x", expand=True, padx=(0, 8))
-        self.search_entry.bind("<KeyRelease>", lambda e: self._perform_search())
+        self.search_entry.bind("<KeyRelease>", lambda e: self._schedule_search())
         self.search_entry.bind("<Return>", lambda e: self._on_copy())
         self.search_entry.focus_set()
 
@@ -266,6 +272,21 @@ class ModernSearchDialog:
         except Exception:
             _focus_search()
 
+    def _schedule_search(self) -> None:
+        window = self.window
+        if window is None:
+            return
+        if self._search_after_id is not None:
+            try:
+                window.after_cancel(self._search_after_id)
+            except Exception:
+                pass
+            self._search_after_id = None
+        try:
+            self._search_after_id = window.after(150, self._perform_search)
+        except Exception:
+            self._perform_search()
+
     def _perform_search(self) -> None:
         """Executa a busca"""
         query = self.search_var.get().lower().strip()
@@ -284,18 +305,31 @@ class ModernSearchDialog:
             return
 
         history = self.get_history_callback()
+        total_matches = 0
+        rendered = 0
 
         for item in reversed(history):
             text = item.get("text", "")
             if query and query not in text.lower():
                 continue
 
-            self.filtered_results.append(item)
-            self._create_result_item(item, len(self.filtered_results) - 1, query=query)
+            total_matches += 1
+            if rendered < self.max_results_render:
+                self.filtered_results.append(item)
+                self._create_result_item(
+                    item, len(self.filtered_results) - 1, query=query
+                )
+                rendered += 1
 
         # Atualiza contador
-        count = len(self.filtered_results)
-        self.count_label.configure(text=f"{count} resultado{'s' if count != 1 else ''}")
+        if total_matches == rendered:
+            self.count_label.configure(
+                text=f"{total_matches} resultado{'s' if total_matches != 1 else ''}"
+            )
+        else:
+            self.count_label.configure(
+                text=f"{total_matches} resultados (mostrando {rendered})"
+            )
 
     def _create_result_item(self, item: Dict, index: int, query: str = "") -> None:
         """Cria um item de resultado"""

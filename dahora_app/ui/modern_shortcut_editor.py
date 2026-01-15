@@ -18,6 +18,7 @@ from dahora_app.ui.modern_styles import (
     ModernScrollableFrame,
 )
 
+from dahora_app.ui.icon_manager import IconManager
 from dahora_app.utils import format_hotkey_display
 
 
@@ -80,7 +81,12 @@ class ModernShortcutEditor:
 
         # Cria janela
         self.window = ctk.CTkToplevel(self.parent)
+        self.window.withdraw()
         self.window.title(title)
+        try:
+            self.window.iconbitmap(IconManager.resolve_icon_path())
+        except Exception:
+            pass
         # Ajusta para telas menores
         screen_w = self.parent.winfo_screenwidth()
         screen_h = self.parent.winfo_screenheight()
@@ -99,7 +105,7 @@ class ModernShortcutEditor:
             import ctypes
             from ctypes import windll, c_int, byref, sizeof
 
-            self.window.update()
+            self.window.update_idletasks()
             hwnd = windll.user32.GetParent(self.window.winfo_id())
             value = c_int(1)
             windll.dwmapi.DwmSetWindowAttribute(hwnd, 20, byref(value), sizeof(value))
@@ -211,11 +217,20 @@ class ModernShortcutEditor:
         buttons = ctk.CTkFrame(main, fg_color="transparent")
         buttons.pack(fill="x", pady=(10, 16), padx=16)
 
-        ModernButton(buttons, text="Cancelar", command=self._on_cancel).pack(
-            side="right", padx=(8, 0)
-        )
         ModernButton(
-            buttons, text="Salvar", style="primary", command=self._on_save
+            buttons,
+            text="Cancelar",
+            command=self._on_cancel,
+            width=112,
+            height=ModernTheme.CONTROL_HEIGHT,
+        ).pack(side="right", padx=(8, 0))
+        ModernButton(
+            buttons,
+            text="Salvar",
+            style="primary",
+            command=self._on_save,
+            width=112,
+            height=ModernTheme.CONTROL_HEIGHT,
         ).pack(side="right")
 
         # Inicializa
@@ -240,6 +255,15 @@ class ModernShortcutEditor:
         self.window.bind("<Escape>", lambda e: self._on_cancel())
         self.window.bind("<Return>", lambda e: self._on_save())
         self.window.protocol("WM_DELETE_WINDOW", self._on_cancel)
+        try:
+            self.window.deiconify()
+        except Exception:
+            pass
+        self.window.lift()
+        try:
+            self.window.focus_force()
+        except Exception:
+            pass
 
     def _validate_hotkey(self) -> None:
         """Valida o hotkey em tempo real"""
@@ -375,6 +399,46 @@ class ModernShortcutEditor:
             # F-keys
             if k_low.startswith("f") and k_low[1:].isdigit():
                 return k_low
+
+            symbols = {
+                "exclam": "!",
+                "at": "@",
+                "numbersign": "#",
+                "number_sign": "#",
+                "hash": "#",
+                "dollar": "$",
+                "percent": "%",
+                "asciicircum": "^",
+                "caret": "^",
+                "ampersand": "&",
+                "asterisk": "*",
+                "parenleft": "(",
+                "parenright": ")",
+                "minus": "-",
+                "underscore": "_",
+                "equal": "=",
+                "comma": ",",
+                "period": ".",
+                "dot": ".",
+                "slash": "/",
+                "backslash": "\\",
+                "question": "?",
+                "quotedbl": '"',
+                "apostrophe": "'",
+                "grave": "`",
+                "tilde": "~",
+                "bracketleft": "[",
+                "bracketright": "]",
+                "braceleft": "{",
+                "braceright": "}",
+                "semicolon": ";",
+                "colon": ":",
+                "less": "<",
+                "greater": ">",
+                "bar": "|",
+            }
+            if k_low in symbols:
+                return symbols[k_low]
 
             # Letras/números (keysym pode vir como '1', 'a', etc.)
             if len(k) == 1:

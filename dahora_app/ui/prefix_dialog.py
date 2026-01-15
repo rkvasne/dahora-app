@@ -6,6 +6,7 @@ import logging
 import threading
 from datetime import datetime
 from typing import Optional, Callable
+from dahora_app.ui.icon_manager import IconManager
 
 # Import opcional de tkinter
 try:
@@ -69,6 +70,10 @@ class PrefixDialog:
             root.title("Dahora App - Definir Prefixo")
             root.resizable(False, False)
             root.focus_force()
+            try:
+                root.iconbitmap(IconManager.resolve_icon_path())
+            except Exception as e:
+                logging.warning(f"Não foi possível definir ícone da janela: {e}")
 
             # Tema moderno
             try:

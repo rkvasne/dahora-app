@@ -14,16 +14,25 @@ if sys.platform == 'win32':
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from dahora_app.ui.menu import MenuBuilder
+from typing import Dict, List
 
 # Cria menu builder
 menu_builder = MenuBuilder()
 
+def _show_search(icon=None, item=None) -> None:
+    print("Show search")
+
+
+def _get_recent_items(limit: int = 10) -> List[Dict[str, str]]:
+    return []
+
+
 # Define callbacks dummy
 menu_builder.set_copy_datetime_callback(lambda icon, item: print("Copy datetime"))
-menu_builder.set_show_search_callback(lambda: print("Show search"))
-menu_builder.set_show_custom_shortcuts_callback(lambda: print("Show settings"))
+menu_builder.set_show_search_callback(_show_search)
+menu_builder.set_show_custom_shortcuts_callback(lambda icon, item: print("Show settings"))
 menu_builder.set_refresh_menu_callback(lambda icon, item: print("Refresh"))
-menu_builder.set_get_recent_items_callback(lambda limit: [])
+menu_builder.set_get_recent_items_callback(_get_recent_items)
 menu_builder.set_copy_from_history_callback(lambda text: print(f"Copy: {text}"))
 menu_builder.set_clear_history_callback(lambda icon, item: print("Clear"))
 menu_builder.set_show_about_callback(lambda icon, item: print("About"))

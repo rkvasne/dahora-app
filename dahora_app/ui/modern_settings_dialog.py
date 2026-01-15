@@ -22,6 +22,7 @@ from dahora_app.ui.modern_styles import (
     ModernScrollableFrame,
 )
 
+from dahora_app.ui.icon_manager import IconManager
 from dahora_app.utils import format_hotkey_display
 from dahora_app.constants import RESERVED_HOTKEYS_BASE
 
@@ -175,6 +176,10 @@ class ModernSettingsDialog:
         # Monta tudo com a janela oculta e só exibe no final.
         self.window.withdraw()
         self.window.title("Dahora App - Configurações")
+        try:
+            self.window.iconbitmap(IconManager.resolve_icon_path())
+        except Exception:
+            pass
         # Ajusta tamanho inicial para caber em telas menores (ex: notebook)
         screen_w = self.window.winfo_screenwidth()
         screen_h = self.window.winfo_screenheight()
@@ -510,7 +515,7 @@ class ModernSettingsDialog:
                 )
             if self.var_hotkey_refresh is not None:
                 self.var_hotkey_refresh.set(
-                    self.current_settings.get("hotkey_refresh_menu", "ctrl+shift+r")
+                    self.current_settings.get("hotkey_refresh_menu", "")
                 )
             if self.var_log_max_bytes is not None:
                 raw = self.current_settings.get("log_max_bytes", 1 * 1024 * 1024)
@@ -539,7 +544,10 @@ class ModernSettingsDialog:
                 )
             except Exception:
                 self.default_shortcut_id = None
-            self._refresh_list()
+            if self.window:
+                self.window.after_idle(self._refresh_list)
+            else:
+                self._refresh_list()
         except Exception:
             # Melhor esforço: não queremos quebrar a abertura por causa de um widget opcional.
             pass
@@ -618,8 +626,6 @@ class ModernSettingsDialog:
             inner, text="0 atalhos configurados", style="muted"
         )
         self.count_label.pack(anchor="w", pady=(0, 10))
-
-        self._refresh_list()
 
         # Botões
         buttons = ctk.CTkFrame(inner, fg_color="transparent")
@@ -1229,7 +1235,7 @@ class ModernSettingsDialog:
             inner, icon="🔄", title="Recarregar Menu", style="default"
         ).pack(anchor="w", pady=(0, 6))
         self.var_hotkey_refresh = ctk.StringVar(
-            value=self.current_settings.get("hotkey_refresh_menu", "ctrl+shift+r")
+            value=self.current_settings.get("hotkey_refresh_menu", "")
         )
         hotkey_refresh_entry = ModernEntry(
             inner, textvariable=self.var_hotkey_refresh, width=300
@@ -1237,7 +1243,7 @@ class ModernSettingsDialog:
         hotkey_refresh_entry.pack(anchor="w", pady=(0, 16))
         self._attach_tooltip(
             hotkey_refresh_entry,
-            "Atalho global para recarregar os itens do menu da bandeja.\nExemplo: ctrl+shift+r.",
+            "Atalho global para recarregar os itens do menu da bandeja.\nExemplo: ctrl+shift+m.",
         )
 
         # Orientações
@@ -1467,15 +1473,25 @@ class ModernSettingsDialog:
         ).pack(anchor="w", pady=(0, 12))
         ModernLabel(
             inner,
-            text=(
-                "Nenhum atalho é fixo! Você tem controle total sobre:\n"
-                "• Todas as combinações de teclas\n"
-                "• Todos os prefixos e formatos"
-            ),
+            text="Nenhum atalho é fixo! Você tem controle total sobre:",
             style="muted",
             justify="left",
             wraplength=560,
-        ).pack(anchor="w", pady=(0, 24))
+        ).pack(anchor="w", pady=(0, 10))
+
+        freedom_frame = ctk.CTkFrame(inner, fg_color="transparent")
+        freedom_frame.pack(fill="x", pady=(0, 24))
+        for item in [
+            "• Todas as combinações de teclas",
+            "• Todos os prefixos e formatos",
+        ]:
+            ModernLabel(
+                freedom_frame,
+                text=item,
+                style="muted",
+                justify="left",
+                wraplength=560,
+            ).pack(anchor="w", pady=(0, 6))
 
         # Recursos
         self._create_icon_title_row(
@@ -1509,7 +1525,8 @@ class ModernSettingsDialog:
         # edição é bloqueada pelos binds de teclado.
         self.shortcuts_listbox.configure(state="normal")
         self.shortcuts_listbox.delete("1.0", "end")
-
+        lines: List[str] = []
+        default_id = self.default_shortcut_id
         for shortcut in self.shortcuts_data:
             status = "✅" if shortcut.get("enabled", True) else "⏸️"
             hotkey = format_hotkey_display(shortcut.get("hotkey", ""))
@@ -1520,9 +1537,9 @@ class ModernSettingsDialog:
             try:
                 raw_shortcut_id = shortcut.get("id")
                 is_default = (
-                    self.default_shortcut_id is not None
+                    default_id is not None
                     and raw_shortcut_id is not None
-                    and int(str(raw_shortcut_id)) == int(str(self.default_shortcut_id))
+                    and int(str(raw_shortcut_id)) == int(str(default_id))
                 )
             except Exception:
                 is_default = False
@@ -1533,8 +1550,10 @@ class ModernSettingsDialog:
             if desc:
                 line += f" - {desc}"
             line += "\n"
+            lines.append(line)
 
-            self.shortcuts_listbox.insert("end", line)
+        if lines:
+            self.shortcuts_listbox.insert("end", "".join(lines))
 
         # Reaplica highlight da seleção (se ainda for válida)
         if self.selected_shortcut_index >= len(self.shortcuts_data):
@@ -1676,7 +1695,7 @@ class ModernSettingsDialog:
                     "hotkey_refresh_menu": (
                         self.var_hotkey_refresh.get().strip()
                         if self.var_hotkey_refresh
-                        else "ctrl+shift+r"
+                        else ""
                     ),
                     "log_max_bytes": (
                         (int(self.var_log_max_bytes.get()) * 1024 * 1024)

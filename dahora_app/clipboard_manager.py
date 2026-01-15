@@ -6,6 +6,8 @@ import json
 import hashlib
 import logging
 import os
+import shutil
+import threading
 import time
 from datetime import datetime
 from threading import Lock
@@ -33,6 +35,7 @@ class ClipboardManager:
         """Inicializa o gerenciador de clipboard"""
         self.history_lock = Lock()
         self.clipboard_history: List[Dict[str, str]] = []
+        self._history_hash_counts: Dict[str, int] = {}
         self.last_clipboard_content = ""
         self.paused = False
         self._own_content_expiry: Dict[str, float] = {}
@@ -40,9 +43,51 @@ class ClipboardManager:
         self._dpapi_entropy = b"DahoraApp-clipboard-history-v1"
         self._history_write_disabled = False
         self._history_write_disabled_reason = ""
+        self._history_write_disabled_until: float = 0.0
+        self._save_timer: Optional[threading.Timer] = None
+        self._save_debounce_s: float = 0.75
         self.max_history_items = int(MAX_HISTORY_ITEMS)
         self.clipboard_monitor_interval_s = float(CLIPBOARD_MONITOR_INTERVAL)
         self.clipboard_idle_threshold_s = float(CLIPBOARD_IDLE_THRESHOLD)
+
+    def _calc_text_hash(self, text: str) -> str:
+        return hashlib.sha256(text.encode("utf-8", errors="replace")).hexdigest()
+
+    def _rebuild_history_index_locked(self) -> None:
+        counts: Dict[str, int] = {}
+        for item in self.clipboard_history:
+            text = item.get("text", "") or ""
+            if not text:
+                continue
+            h = self._calc_text_hash(text)
+            counts[h] = counts.get(h, 0) + 1
+        self._history_hash_counts = counts
+
+    def _cancel_pending_save_locked(self) -> None:
+        timer = self._save_timer
+        self._save_timer = None
+        if timer is None:
+            return
+        try:
+            timer.cancel()
+        except Exception:
+            pass
+
+    def _schedule_save_locked(self) -> None:
+        if self._save_timer is not None:
+            return
+
+        def _flush() -> None:
+            try:
+                self.save_history()
+            finally:
+                with self.history_lock:
+                    self._save_timer = None
+
+        timer = threading.Timer(self._save_debounce_s, _flush)
+        timer.daemon = True
+        self._save_timer = timer
+        timer.start()
 
     def set_max_history_items(self, max_items: int) -> None:
         try:
@@ -62,7 +107,8 @@ class ClipboardManager:
                     self.clipboard_history = self.clipboard_history[
                         -self.max_history_items :
                     ]
-                    self._write_history_locked()
+                    self._rebuild_history_index_locked()
+                    self._schedule_save_locked()
         except Exception:
             pass
 
@@ -117,7 +163,14 @@ class ClipboardManager:
             return True
 
     def _write_history_locked(self, *, force: bool = False) -> None:
+        now = time.time()
         if self._history_write_disabled and not force:
+            return
+        if (
+            self._history_write_disabled_until
+            and self._history_write_disabled_until > now
+            and not force
+        ):
             return
         try:
             plain = json.dumps(self.clipboard_history, ensure_ascii=False).encode(
@@ -128,21 +181,29 @@ class ClipboardManager:
                 "dpapi": 1,
                 "blob": b64encode_bytes(blob),
             }
+            if os.path.exists(HISTORY_FILE):
+                try:
+                    shutil.copy2(HISTORY_FILE, HISTORY_FILE + ".bak")
+                except Exception:
+                    pass
             atomic_write_json(HISTORY_FILE, payload)
             self._history_write_disabled = False
             self._history_write_disabled_reason = ""
+            self._history_write_disabled_until = 0.0
         except Exception as e:
             if force and not self.clipboard_history and os.path.exists(HISTORY_FILE):
                 try:
                     os.remove(HISTORY_FILE)
                     self._history_write_disabled = False
                     self._history_write_disabled_reason = ""
+                    self._history_write_disabled_until = 0.0
                     return
                 except Exception:
                     pass
 
             self._history_write_disabled = True
             self._history_write_disabled_reason = str(e)
+            self._history_write_disabled_until = now + 30.0
 
     def toggle_pause(self) -> bool:
         """Alterna estado de pausa do monitoramento"""
@@ -172,8 +233,12 @@ class ClipboardManager:
                             loaded = json.loads(decrypted.decode("utf-8"))
                         except Exception as e:
                             loaded = []
-                            history_write_disabled = False
+                            history_write_disabled = True
                             history_write_disabled_reason = str(e)
+                            try:
+                                shutil.copy2(HISTORY_FILE, HISTORY_FILE + ".bak")
+                            except Exception:
+                                pass
                     else:
                         loaded = raw
                         needs_migration = isinstance(raw, list)
@@ -186,23 +251,99 @@ class ClipboardManager:
                     self.clipboard_history = self.clipboard_history[
                         -self.max_history_items :
                     ]
+                self._rebuild_history_index_locked()
                 self._history_write_disabled = history_write_disabled
                 self._history_write_disabled_reason = history_write_disabled_reason
         except FileNotFoundError:
-            self.clipboard_history = []
-            self._history_write_disabled = False
-            self._history_write_disabled_reason = ""
+            try:
+                with open(HISTORY_FILE + ".bak", "r", encoding="utf-8") as f:
+                    raw = json.load(f)
+                if isinstance(raw, dict) and raw.get("dpapi") == 1:
+                    blob_str = raw.get("blob")
+                    if isinstance(blob_str, str):
+                        decrypted = dpapi_decrypt_bytes(
+                            b64decode_str(blob_str), self._dpapi_entropy
+                        )
+                        loaded = json.loads(decrypted.decode("utf-8"))
+                    else:
+                        loaded = raw
+                else:
+                    loaded = raw
+                self.clipboard_history = loaded if isinstance(loaded, list) else []
+                if len(self.clipboard_history) > self.max_history_items:
+                    self.clipboard_history = self.clipboard_history[
+                        -self.max_history_items :
+                    ]
+                with self.history_lock:
+                    self._rebuild_history_index_locked()
+                    self._history_write_disabled = False
+                    self._history_write_disabled_reason = ""
+            except Exception:
+                self.clipboard_history = []
+                self._history_hash_counts = {}
+                self._history_write_disabled = False
+                self._history_write_disabled_reason = ""
         except json.JSONDecodeError as e:
             logging.warning(f"Falha ao carregar histórico (JSON inválido): {e}")
-            self.clipboard_history = []
-            self._history_write_disabled = False
-            self._history_write_disabled_reason = ""
+            try:
+                with open(HISTORY_FILE + ".bak", "r", encoding="utf-8") as f:
+                    raw = json.load(f)
+                if isinstance(raw, dict) and raw.get("dpapi") == 1:
+                    blob_str = raw.get("blob")
+                    if isinstance(blob_str, str):
+                        decrypted = dpapi_decrypt_bytes(
+                            b64decode_str(blob_str), self._dpapi_entropy
+                        )
+                        loaded = json.loads(decrypted.decode("utf-8"))
+                    else:
+                        loaded = raw
+                else:
+                    loaded = raw
+                self.clipboard_history = loaded if isinstance(loaded, list) else []
+                if len(self.clipboard_history) > self.max_history_items:
+                    self.clipboard_history = self.clipboard_history[
+                        -self.max_history_items :
+                    ]
+                with self.history_lock:
+                    self._rebuild_history_index_locked()
+                    self._history_write_disabled = False
+                    self._history_write_disabled_reason = ""
+            except Exception:
+                self.clipboard_history = []
+                self._history_hash_counts = {}
+                self._history_write_disabled = False
+                self._history_write_disabled_reason = ""
         except Exception as e:
             logging.warning(f"Falha ao carregar histórico: {e}")
-            self.clipboard_history = []
-            if os.path.exists(HISTORY_FILE):
-                self._history_write_disabled = True
-                self._history_write_disabled_reason = str(e)
+            try:
+                with open(HISTORY_FILE + ".bak", "r", encoding="utf-8") as f:
+                    raw = json.load(f)
+                if isinstance(raw, dict) and raw.get("dpapi") == 1:
+                    blob_str = raw.get("blob")
+                    if isinstance(blob_str, str):
+                        decrypted = dpapi_decrypt_bytes(
+                            b64decode_str(blob_str), self._dpapi_entropy
+                        )
+                        loaded = json.loads(decrypted.decode("utf-8"))
+                    else:
+                        loaded = raw
+                else:
+                    loaded = raw
+                self.clipboard_history = loaded if isinstance(loaded, list) else []
+                if len(self.clipboard_history) > self.max_history_items:
+                    self.clipboard_history = self.clipboard_history[
+                        -self.max_history_items :
+                    ]
+                with self.history_lock:
+                    self._rebuild_history_index_locked()
+                    self._history_write_disabled = False
+                    self._history_write_disabled_reason = ""
+            except Exception:
+                self.clipboard_history = []
+                self._history_hash_counts = {}
+                if os.path.exists(HISTORY_FILE):
+                    self._history_write_disabled = True
+                    self._history_write_disabled_reason = str(e)
 
         if needs_migration and not self._history_write_disabled:
             try:
@@ -214,9 +355,18 @@ class ClipboardManager:
         """Salva o histórico no arquivo"""
         try:
             with self.history_lock:
+                self._cancel_pending_save_locked()
                 self._write_history_locked()
         except Exception as e:
             logging.warning(f"Falha ao salvar histórico: {e}")
+
+    def flush_history(self) -> None:
+        try:
+            with self.history_lock:
+                self._cancel_pending_save_locked()
+                self._write_history_locked()
+        except Exception as e:
+            logging.warning(f"Falha ao flush do histórico: {e}")
 
     def add_to_history(self, text: str) -> None:
         """
@@ -229,10 +379,10 @@ class ClipboardManager:
             return
 
         with self.history_lock:
-            # Verifica se já existe
-            for item in self.clipboard_history:
-                if item.get("text") == text:
-                    return
+            text = text.strip()
+            text_hash_full = self._calc_text_hash(text)
+            if self._history_hash_counts.get(text_hash_full, 0) > 0:
+                return
 
             # Adiciona novo item
             new_item = {
@@ -241,20 +391,29 @@ class ClipboardManager:
                 "app": "Dahora App",
             }
             self.clipboard_history.append(new_item)
+            self._history_hash_counts[text_hash_full] = (
+                self._history_hash_counts.get(text_hash_full, 0) + 1
+            )
 
             # Mantém tamanho máximo
             if len(self.clipboard_history) > self.max_history_items:
-                self.clipboard_history = self.clipboard_history[
-                    -self.max_history_items :
-                ]
+                overflow = len(self.clipboard_history) - self.max_history_items
+                removed = self.clipboard_history[:overflow]
+                self.clipboard_history = self.clipboard_history[overflow:]
+                for item in removed:
+                    removed_text = item.get("text", "") or ""
+                    if not removed_text:
+                        continue
+                    h = self._calc_text_hash(removed_text)
+                    current = self._history_hash_counts.get(h, 0)
+                    if current <= 1:
+                        self._history_hash_counts.pop(h, None)
+                    else:
+                        self._history_hash_counts[h] = current - 1
 
-            self._write_history_locked()
-            text_len = len(text) if text else 0
-            text_hash = (
-                hashlib.sha256(text.encode("utf-8", errors="replace")).hexdigest()[:12]
-                if text_len
-                else "vazio"
-            )
+            self._schedule_save_locked()
+            text_len = len(text)
+            text_hash = text_hash_full[:12] if text_len else "vazio"
             logging.info(
                 f"Histórico atualizado: total={len(self.clipboard_history)}; last_len={text_len}, last_sha256={text_hash}"
             )
@@ -270,7 +429,9 @@ class ClipboardManager:
         with self.history_lock:
             total_items = len(self.clipboard_history)
             self.clipboard_history = []
+            self._history_hash_counts = {}
             try:
+                self._cancel_pending_save_locked()
                 self._write_history_locked(force=True)
                 logging.info(
                     f"Histórico limpo com sucesso! {total_items} itens removidos"

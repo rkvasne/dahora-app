@@ -1,12 +1,12 @@
-# 📌 PRD — Dahora App (v0.2.13)
+# 📌 PRD — Dahora App (v0.2.14)
 
 > Navegação: [Documentação](README.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
 **Documento:** Product Requirements Document (PRD)  
 **Produto:** Dahora App — utilitário Windows para timestamps e clipboard  
-**Versão do produto (referência):** v0.2.13  
+**Versão do produto (referência):** v0.2.14  
 **Status:** Final  
-**Data:** 13/01/2026
+**Data:** 15/01/2026
 
 ---
 

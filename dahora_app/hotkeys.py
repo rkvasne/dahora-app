@@ -64,16 +64,31 @@ class HotkeyManager:
         self.hotkey_search_history = (
             hotkey_search_history or ""
         ).strip().lower() or "ctrl+shift+f"
-        self.hotkey_refresh_menu = (
-            hotkey_refresh_menu or ""
-        ).strip().lower() or HOTKEY_REFRESH_MENU
+        self.hotkey_refresh_menu = (hotkey_refresh_menu or "").strip().lower()
 
         # Atualiza reservados para evitar conflito com custom shortcuts
         reserved = set(self._reserved_base)
         reserved.add(self.hotkey_copy_datetime)
         reserved.add(self.hotkey_search_history)
-        reserved.add(self.hotkey_refresh_menu)
+        if self.hotkey_refresh_menu:
+            reserved.add(self.hotkey_refresh_menu)
         self.reserved_hotkeys = sorted(reserved)
+
+    def _unregister_app_hotkey(self, key: str) -> None:
+        with self._lock:
+            old_handle = self._app_hotkey_handles.pop(key, None)
+            old_hotkey = self._app_hotkey_strings.pop(key, None)
+            if old_handle is not None:
+                try:
+                    keyboard.remove_hotkey(old_handle)
+                except Exception:
+                    pass
+
+            if old_hotkey and old_hotkey in self.registered_hotkeys:
+                try:
+                    self.registered_hotkeys.remove(old_hotkey)
+                except ValueError:
+                    pass
 
     def set_copy_datetime_callback(self, callback: Callable) -> None:
         """Define callback para copiar data/hora"""
@@ -99,7 +114,7 @@ class HotkeyManager:
     def _on_refresh_menu_triggered(self) -> None:
         """Callback interno para hotkey de refresh do menu"""
         try:
-            logging.info("[Hotkey] Recarregar Itens acionado (CTRL+SHIFT+R)")
+            logging.info("[Hotkey] Recarregar itens do menu acionado")
             if self.refresh_menu_callback:
                 self.refresh_menu_callback()
         except Exception as e:
@@ -188,9 +203,13 @@ class HotkeyManager:
         }
         normalized = {k: (v or "").strip().lower() for k, v in desired.items()}
 
+        if not normalized.get("refresh_menu"):
+            self._unregister_app_hotkey("refresh_menu")
+            results["refresh_menu"] = "disabled"
+
         defaults = {
             "copy_datetime": HOTKEY_COPY_DATETIME,
-            "refresh_menu": HOTKEY_REFRESH_MENU,
+            "refresh_menu": "",
             "search_history": "ctrl+shift+f",
         }
 
@@ -253,7 +272,7 @@ class HotkeyManager:
         """Configura hotkeys do sistema (TODOS agora são opcionais/configuráveis)"""
         # REMOVIDO: Todos os atalhos fixos
         # Agora TUDO é configurado pelo usuário via custom shortcuts
-        # Incluindo refresh (Ctrl+Shift+R) e busca (Ctrl+Shift+F)
+        # Incluindo refresh do menu e busca no histórico
 
         # Hotkeys configuráveis do app
         results = self.apply_configured_hotkeys()

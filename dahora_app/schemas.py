@@ -80,7 +80,7 @@ class SettingsSchema(BaseModel):
         default="ctrl+shift+f", description="Hotkey para buscar histórico"
     )
     hotkey_refresh_menu: str = Field(
-        default="ctrl+shift+r", description="Hotkey para recarregar menu"
+        default="", description="Hotkey para recarregar menu"
     )
 
     # Limites e intervalos

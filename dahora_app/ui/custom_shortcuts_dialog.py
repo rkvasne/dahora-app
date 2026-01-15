@@ -11,6 +11,7 @@ from typing import Callable, Optional, List, Dict, Any
 from datetime import datetime
 from dahora_app.ui.styles import Windows11Style
 from dahora_app.ui.shortcut_editor import ShortcutEditorDialog
+from dahora_app.ui.icon_manager import IconManager
 
 # keyboard será importado apenas quando necessário (lazy import)
 
@@ -113,6 +114,10 @@ class CustomShortcutsDialog:
         Windows11Style.configure_window(
             self.window, "Dahora App - Configurações", "850x700"
         )
+        try:
+            self.window.iconbitmap(IconManager.resolve_icon_path())
+        except Exception as e:
+            logging.warning(f"Não foi possível definir ícone da janela: {e}")
         Windows11Style.configure_styles(self.window)
 
         self.window.resizable(True, True)
@@ -551,7 +556,7 @@ class CustomShortcutsDialog:
             anchor="w", pady=(0, 6)
         )
         self.var_hotkey_refresh = tk.StringVar(
-            value=self.current_settings.get("hotkey_refresh_menu", "ctrl+shift+r")
+            value=self.current_settings.get("hotkey_refresh_menu", "")
         )
         self.var_hotkey_refresh.trace_add(
             "write", lambda *args: self._mark_needs_restart()
@@ -812,7 +817,7 @@ class CustomShortcutsDialog:
                     "hotkey_refresh_menu": (
                         self.var_hotkey_refresh.get().strip()
                         if self.var_hotkey_refresh
-                        else "ctrl+shift+r"
+                        else ""
                     ),
                 }
                 self.on_save_callback(settings)

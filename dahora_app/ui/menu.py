@@ -40,7 +40,7 @@ class MenuBuilder:
         self.is_paused_callback: Optional[Callable[[], bool]] = None
         self.hotkey_copy_datetime: str = "ctrl+shift+q"  # Padrão (ação principal)
         self.hotkey_search_history: str = "ctrl+shift+f"  # Padrão
-        self.hotkey_refresh_menu: str = "ctrl+shift+r"  # Padrão
+        self.hotkey_refresh_menu: str = ""  # Padrão
         self.tray_menu_cache_window_ms: int = 200
         self._last_dynamic_items: Optional[List] = None
         self._last_dynamic_items_at: float = 0.0

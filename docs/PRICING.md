@@ -16,18 +16,18 @@
 
 **Data da Análise:** Novembro 2025  
 **Versão do Aplicativo (na época da análise):** 0.0.2  
-**Versão atual do projeto (referência):** 0.2.13  
+**Versão atual do projeto (referência):** 0.2.14  
 **Tipo:** Utilitário Windows - system tray
 
 > Este documento é **histórico** e serve como estudo de caso. Alguns números e comparações podem não refletir o estado atual do produto.
 >
-> **Revisão de aderência ao repositório:** 13/01/2026 (v0.2.13)
+> **Revisão de aderência ao repositório:** 15/01/2026 (v0.2.14)
 
 ---
 
 ## 📋 Sumário Executivo
 
-O **Dahora App** é um utilitário leve para Windows que reside no system tray, permitindo copiar e/ou colar data e hora formatada instantaneamente. Na versão atual (v0.2.13), além do core de timestamp, o app inclui histórico de clipboard com busca, hotkeys configuráveis (incluindo atalhos personalizados) e persistência local com proteção de histórico via DPAPI (quando aplicável).
+O **Dahora App** é um utilitário leve para Windows que reside no system tray, permitindo copiar e/ou colar data e hora formatada instantaneamente. Na versão atual (v0.2.14), além do core de timestamp, o app inclui histórico de clipboard com busca, hotkeys configuráveis (incluindo atalhos personalizados) e persistência local com proteção de histórico via DPAPI (quando aplicável).
 
 > **Premissas (2026):** estimativas abaixo assumem um(a) dev solo, Windows, Python, com testes + documentação + processo de release. Valores são faixas **indicativas** (não são “cotação de mercado”).
 
@@ -75,7 +75,7 @@ O **Dahora App** é um utilitário leve para Windows que reside no system tray, 
 
 ---
 
-## ✅ Estado atual (v0.2.13) vs. análise original (v0.0.2)
+## ✅ Estado atual (v0.2.14) vs. análise original (v0.0.2)
 
 Esta análise foi feita no começo do projeto. Hoje, o repositório inclui (além do core):
 - UI moderna de configurações (múltiplas abas), busca no histórico e editor de atalhos personalizados
@@ -111,7 +111,7 @@ Isso não invalida o estudo de mercado, mas significa que as estimativas de esfo
 #### B) Desenvolvedores Autônomos
 - **Brasil:**
   - Taxa horária (referência): R$ 120 - R$ 220/hora
-  - Projeto completo (escopo similar ao v0.2.13): R$ 10.000 - R$ 33.000
+-  - Projeto completo (escopo similar ao v0.2.14): R$ 10.000 - R$ 33.000
   - Com suporte 3 meses: R$ 12.000 - R$ 45.000
 
 - **Internacional (Leste Europeu/Ásia):**
@@ -136,7 +136,7 @@ Isso não invalida o estudo de mercado, mas significa que as estimativas de esfo
 
 ### 2. Software Pronto (Revenda)
 
-> Nota: os modelos e faixas abaixo são **hipotéticos** (estudo) e não significam que o Dahora App ofereça hoje planos pagos ou recursos adicionais além do v0.2.13.
+> Nota: os modelos e faixas abaixo são **hipotéticos** (estudo) e não significam que o Dahora App ofereça hoje planos pagos ou recursos adicionais além do v0.2.14.
 
 #### A) Modelo One-Time (Compra Única)
 - **Versão Básica (sem histórico):**

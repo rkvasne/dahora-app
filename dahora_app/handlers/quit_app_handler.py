@@ -60,6 +60,11 @@ class QuitAppHandler(CallbackHandler):
 
             logger.info("Encerrando Dahora App...")
 
+            try:
+                self.app.clipboard_manager.flush_history()
+            except Exception:
+                pass
+
             # Para o tray o quanto antes
             try:
                 if icon:

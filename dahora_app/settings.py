@@ -39,7 +39,7 @@ class SettingsManager:
         # Configurações avançadas
         self.hotkey_copy_datetime = "ctrl+shift+q"
         self.hotkey_search_history = "ctrl+shift+f"
-        self.hotkey_refresh_menu = "ctrl+shift+r"
+        self.hotkey_refresh_menu = ""
         self.max_history_items = 100
         self.clipboard_monitor_interval = 3
         self.clipboard_idle_threshold = 30
@@ -88,7 +88,7 @@ class SettingsManager:
                     "hotkey_search_history", "ctrl+shift+f"
                 ),
                 hotkey_refresh_menu=settings_dict.get(
-                    "hotkey_refresh_menu", "ctrl+shift+r"
+                    "hotkey_refresh_menu", ""
                 ),
                 max_history_items=settings_dict.get("max_history_items", 100),
                 clipboard_monitor_interval=settings_dict.get(
@@ -135,9 +135,84 @@ class SettingsManager:
             }
 
         except ValidationError as e:
-            # Validação Pydantic falhou - usa defaults em vez de fallback manual
             logging.warning(f"Validação Pydantic falhou, usando defaults: {e}")
-            return self._get_default_settings()
+            try:
+                schema = SettingsSchema(
+                    prefix=settings_dict.get("prefix", ""),
+                    hotkey_copy_datetime=settings_dict.get(
+                        "hotkey_copy_datetime", "ctrl+shift+q"
+                    ),
+                    hotkey_search_history=settings_dict.get(
+                        "hotkey_search_history", "ctrl+shift+f"
+                    ),
+                    hotkey_refresh_menu=settings_dict.get("hotkey_refresh_menu", ""),
+                    max_history_items=settings_dict.get("max_history_items", 100),
+                    clipboard_monitor_interval=settings_dict.get(
+                        "clipboard_monitor_interval", 3.0
+                    ),
+                    clipboard_idle_threshold=settings_dict.get(
+                        "clipboard_idle_threshold", 30
+                    ),
+                    datetime_format=settings_dict.get(
+                        "datetime_format", "%d.%m.%Y-%H:%M"
+                    ),
+                    bracket_open=settings_dict.get("bracket_open", "["),
+                    bracket_close=settings_dict.get("bracket_close", "]"),
+                    notification_duration=settings_dict.get("notification_duration", 2),
+                    notification_enabled=settings_dict.get("notification_enabled", True),
+                    log_max_bytes=settings_dict.get("log_max_bytes", 1 * 1024 * 1024),
+                    log_backup_count=settings_dict.get("log_backup_count", 1),
+                    ui_prewarm_delay_ms=settings_dict.get("ui_prewarm_delay_ms", 700),
+                    tray_menu_cache_window_ms=settings_dict.get(
+                        "tray_menu_cache_window_ms", 200
+                    ),
+                    custom_shortcuts=[],
+                    default_shortcut_id=None,
+                )
+
+                validated = {
+                    "prefix": schema.prefix,
+                    "hotkey_copy_datetime": schema.hotkey_copy_datetime,
+                    "hotkey_search_history": schema.hotkey_search_history,
+                    "hotkey_refresh_menu": schema.hotkey_refresh_menu,
+                    "max_history_items": schema.max_history_items,
+                    "clipboard_monitor_interval": schema.clipboard_monitor_interval,
+                    "clipboard_idle_threshold": schema.clipboard_idle_threshold,
+                    "datetime_format": schema.datetime_format,
+                    "notification_duration": schema.notification_duration,
+                    "notification_enabled": schema.notification_enabled,
+                    "log_max_bytes": schema.log_max_bytes,
+                    "log_backup_count": schema.log_backup_count,
+                    "ui_prewarm_delay_ms": schema.ui_prewarm_delay_ms,
+                    "tray_menu_cache_window_ms": schema.tray_menu_cache_window_ms,
+                    "bracket_open": schema.bracket_open,
+                    "bracket_close": schema.bracket_close,
+                    "custom_shortcuts": [],
+                    "default_shortcut_id": None,
+                }
+            except Exception:
+                validated = self._get_default_settings()
+
+            raw_shortcuts = settings_dict.get("custom_shortcuts", [])
+            if isinstance(raw_shortcuts, list):
+                validated_shortcuts = self._validate_custom_shortcuts(raw_shortcuts)
+            else:
+                validated_shortcuts = []
+
+            validated["custom_shortcuts"] = validated_shortcuts
+
+            raw_default_shortcut_id = _parse_int(settings_dict.get("default_shortcut_id"))
+            if raw_default_shortcut_id is not None:
+                ids = {
+                    i
+                    for s in validated_shortcuts
+                    for i in [_parse_int(s.get("id"))]
+                    if i is not None
+                }
+                if raw_default_shortcut_id in ids:
+                    validated["default_shortcut_id"] = raw_default_shortcut_id
+
+            return validated
 
         except Exception as e:
             logging.error(f"Erro ao validar settings: {e}")
@@ -149,7 +224,7 @@ class SettingsManager:
             "prefix": "",
             "hotkey_copy_datetime": "ctrl+shift+q",
             "hotkey_search_history": "ctrl+shift+f",
-            "hotkey_refresh_menu": "ctrl+shift+r",
+            "hotkey_refresh_menu": "",
             "max_history_items": 100,
             "clipboard_monitor_interval": 3.0,
             "clipboard_idle_threshold": 30,
@@ -180,6 +255,9 @@ class SettingsManager:
                     "hotkey_search_history", "ctrl+shift+f"
                 )
                 self.hotkey_refresh_menu = validated["hotkey_refresh_menu"]
+                if (self.hotkey_refresh_menu or "").strip().lower() == "ctrl+shift+r":
+                    self.hotkey_refresh_menu = ""
+                    self.save()
                 self.max_history_items = validated["max_history_items"]
                 self.clipboard_monitor_interval = validated[
                     "clipboard_monitor_interval"
@@ -198,9 +276,39 @@ class SettingsManager:
                 self.bracket_close = validated.get("bracket_close", "]")
                 self.custom_shortcuts = validated.get("custom_shortcuts", [])
                 self.default_shortcut_id = validated.get("default_shortcut_id", None)
+                self.next_shortcut_id = 1
+                for shortcut in self.custom_shortcuts:
+                    sid = _parse_int(shortcut.get("id"))
+                    if sid is not None and sid >= self.next_shortcut_id:
+                        self.next_shortcut_id = sid + 1
 
                 # Migração automática do prefixo legado para custom shortcuts (necessário para retrocompatibilidade)
                 self._migrate_legacy_prefix_if_needed(data)
+
+                bak_path = SETTINGS_FILE + ".bak"
+                if (not self.custom_shortcuts) and os.path.exists(bak_path):
+                    try:
+                        with open(bak_path, "r", encoding="utf-8") as f:
+                            bak_data = json.load(f)
+                        bak_validated = self.validate_settings(bak_data)
+                        bak_shortcuts = bak_validated.get("custom_shortcuts", [])
+                        if bak_shortcuts:
+                            try:
+                                shutil.copy2(bak_path, SETTINGS_FILE)
+                            except Exception:
+                                pass
+
+                            self.custom_shortcuts = bak_shortcuts
+                            self.default_shortcut_id = bak_validated.get(
+                                "default_shortcut_id", None
+                            )
+                            self.next_shortcut_id = 1
+                            for shortcut in self.custom_shortcuts:
+                                sid = _parse_int(shortcut.get("id"))
+                                if sid is not None and sid >= self.next_shortcut_id:
+                                    self.next_shortcut_id = sid + 1
+                    except Exception:
+                        pass
 
                 # Garante que o default_shortcut_id ainda é válido após migração
                 if self.custom_shortcuts:
@@ -223,6 +331,43 @@ class SettingsManager:
             pass  # Usa padrões do __init__
         except json.JSONDecodeError as e:
             logging.error(f"Settings corrompido, usando padrão: {e}")
+            try:
+                bak_path = SETTINGS_FILE + ".bak"
+                with open(bak_path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                validated = self.validate_settings(data)
+                with self.settings_lock:
+                    self.date_prefix = validated["prefix"]
+                    self.hotkey_copy_datetime = validated["hotkey_copy_datetime"]
+                    self.hotkey_search_history = validated.get(
+                        "hotkey_search_history", "ctrl+shift+f"
+                    )
+                    self.hotkey_refresh_menu = validated["hotkey_refresh_menu"]
+                    self.max_history_items = validated["max_history_items"]
+                    self.clipboard_monitor_interval = validated[
+                        "clipboard_monitor_interval"
+                    ]
+                    self.clipboard_idle_threshold = validated["clipboard_idle_threshold"]
+                    self.datetime_format = validated["datetime_format"]
+                    self.notification_duration = validated["notification_duration"]
+                    self.notification_enabled = validated["notification_enabled"]
+                    self.log_max_bytes = validated.get("log_max_bytes", 1 * 1024 * 1024)
+                    self.log_backup_count = validated.get("log_backup_count", 1)
+                    self.ui_prewarm_delay_ms = validated.get("ui_prewarm_delay_ms", 700)
+                    self.tray_menu_cache_window_ms = validated.get(
+                        "tray_menu_cache_window_ms", 200
+                    )
+                    self.bracket_open = validated.get("bracket_open", "[")
+                    self.bracket_close = validated.get("bracket_close", "]")
+                    self.custom_shortcuts = validated.get("custom_shortcuts", [])
+                    self.default_shortcut_id = validated.get("default_shortcut_id", None)
+                    self.next_shortcut_id = 1
+                    for shortcut in self.custom_shortcuts:
+                        sid = _parse_int(shortcut.get("id"))
+                        if sid is not None and sid >= self.next_shortcut_id:
+                            self.next_shortcut_id = sid + 1
+            except Exception:
+                pass
         except Exception as e:
             logging.warning(f"Falha ao carregar settings: {e}")
 
@@ -230,6 +375,11 @@ class SettingsManager:
         """Salva configurações no arquivo"""
         try:
             with self.settings_lock:
+                if os.path.exists(SETTINGS_FILE):
+                    try:
+                        shutil.copy2(SETTINGS_FILE, SETTINGS_FILE + ".bak")
+                    except Exception:
+                        pass
                 atomic_write_json(
                     SETTINGS_FILE,
                     {

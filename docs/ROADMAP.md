@@ -2,13 +2,13 @@
 
 > Navegação: [Documentação](README.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
-> **Última atualização:** 13 de janeiro de 2026 | **Versão atual:** v0.2.13
+> **Última atualização:** 15 de janeiro de 2026 | **Versão atual:** v0.2.14
 
 Roadmap de alto nível para próximas melhorias. Detalhes específicos devem ser documentados em [Issues](https://github.com/rkvasne/dahora-app/issues) e/ou [Discussions](https://github.com/rkvasne/dahora-app/discussions) no GitHub.
 
 ---
 
-## ✅ Concluído (até v0.2.13 - Janeiro 2026)
+## ✅ Concluído (até v0.2.14 - Janeiro 2026)
 
 ### Arquitetura e Qualidade
 

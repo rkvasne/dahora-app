@@ -1,10 +1,10 @@
 # 📚 Índice de Documentação - Dahora App
 
-> **Ponto central de navegação** para toda documentação do projeto Dahora App v0.2.13
+> **Ponto central de navegação** para toda documentação do projeto Dahora App v0.2.14
 
 > Navegação: [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
-> **Última atualização:** 13 de janeiro de 2026
+> **Última atualização:** 15 de janeiro de 2026
 
 ---
 
@@ -171,4 +171,4 @@ raiz/
 
 ---
 
-**Última atualização:** 13 de janeiro de 2026 | **Versão:** v0.2.13
+**Última atualização:** 15 de janeiro de 2026 | **Versão:** v0.2.14

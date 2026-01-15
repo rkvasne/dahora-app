@@ -7,6 +7,13 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [0.2.14] - 2026-01-15
+
+### 🐛 Corrigido
+- Ícone consistente aplicado em todas as janelas do app (Windows).
+- Configurações: evita resetar atalhos em falhas de validação.
+- Histórico: evita sobrescrever/limpar dados quando DPAPI falha; backups adicionados.
+
 ## [0.2.13] - 2026-01-13
 
 ### 🔖 Versionamento

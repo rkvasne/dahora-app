@@ -73,6 +73,10 @@ class ModernAboutDialog:
         # Evita renderização progressiva (mostra apenas no final)
         self.window.withdraw()
         self.window.title("Sobre - Dahora App")
+        try:
+            self.window.iconbitmap(IconManager.resolve_icon_path())
+        except Exception:
+            pass
         self.window.geometry("420x510")
         self.window.resizable(False, False)
         self.window.configure(fg_color=self.colors["bg"])

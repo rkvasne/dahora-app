@@ -294,7 +294,7 @@ class SettingsDialog:
                 style="Card.TLabel",
             ).pack(anchor=tk.W)
             var_hotkey_refresh = tk.StringVar(
-                value=self.current_settings.get("hotkey_refresh_menu", "ctrl+shift+r")
+                value=self.current_settings.get("hotkey_refresh_menu", "")
             )
             ttk.Entry(frame_refresh, textvariable=var_hotkey_refresh, width=30).pack(
                 anchor=tk.W, pady=(2, 0)
@@ -398,7 +398,7 @@ class SettingsDialog:
                     var_notifications_enabled.set(True)
                     var_notification_duration.set(2)
                     var_hotkey_copy.set("ctrl+shift+q")
-                    var_hotkey_refresh.set("ctrl+shift+r")
+                    var_hotkey_refresh.set("")
 
             # Botões
             buttons = ttk.Frame(main)

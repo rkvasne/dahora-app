@@ -9,6 +9,7 @@ from dahora_app.utils import format_hotkey_display
 from typing import Callable, Optional, Dict, Any
 from datetime import datetime
 from dahora_app.ui.styles import Windows11Style
+from dahora_app.ui.icon_manager import IconManager
 
 
 class ShortcutEditorDialog:
@@ -68,6 +69,10 @@ class ShortcutEditorDialog:
 
             # Aplica estilo Windows 11
             Windows11Style.configure_window(window, title, "600x500")
+            try:
+                window.iconbitmap(IconManager.resolve_icon_path())
+            except Exception as e:
+                logging.warning(f"Não foi possível definir ícone da janela: {e}")
             Windows11Style.configure_styles(window)
             logging.info("Estilos aplicados")
 
@@ -423,6 +428,44 @@ class ShortcutEditorDialog:
                 return
 
             key_name = event.name.lower()
+            symbols = {
+                "exclam": "!",
+                "at": "@",
+                "numbersign": "#",
+                "number_sign": "#",
+                "hash": "#",
+                "dollar": "$",
+                "percent": "%",
+                "asciicircum": "^",
+                "caret": "^",
+                "ampersand": "&",
+                "asterisk": "*",
+                "parenleft": "(",
+                "parenright": ")",
+                "minus": "-",
+                "underscore": "_",
+                "equal": "=",
+                "comma": ",",
+                "period": ".",
+                "dot": ".",
+                "slash": "/",
+                "backslash": "\\",
+                "question": "?",
+                "quotedbl": '"',
+                "apostrophe": "'",
+                "grave": "`",
+                "tilde": "~",
+                "bracketleft": "[",
+                "bracketright": "]",
+                "braceleft": "{",
+                "braceright": "}",
+                "semicolon": ";",
+                "colon": ":",
+                "less": "<",
+                "greater": ">",
+                "bar": "|",
+            }
+            key_name = symbols.get(key_name, key_name)
 
             # Adiciona modificadores
             if key_name in ["ctrl", "shift", "alt"]:

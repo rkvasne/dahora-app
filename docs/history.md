@@ -1,7 +1,7 @@
 # 📜 HISTÓRICO DE DESENVOLVIMENTO - DAHORA APP
 
 **Projeto:** Dahora App - System tray para Data/Hora  
-**Última atualização:** 13 de janeiro de 2026
+**Última atualização:** 15 de janeiro de 2026
 
 > Navegação: [Documentação](README.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
@@ -11,20 +11,34 @@
 
 ## 📋 ÍNDICE
 
-1. [v0.2.13 - Patch (versão alinhada + rebuild)](#v0213---patch-versão-alinhada--rebuild) 🚀 **ATUAL**
-2. [v0.2.12 - Documentação & Atalhos Ilimitados](#v0212---documentação--atalhos-ilimitados)
-3. [v0.2.11 - Patch (manifest + rebuild)](#v0211---patch-manifest--rebuild)
-4. [v0.2.8 - Documentação (revisão)](#v028---documentação-revisão)
-5. [v0.2.7 - Documentação & Landing](#v027---documentação--landing)
-6. [v0.2.6 - Configurações Avançadas na UI & Monitoramento Configurável](#v026---configurações-avançadas-na-ui--monitoramento-configurável)
-7. [v0.2.5 - Privacidade (DPAPI) & Ajustes de UI/Landing](#v025---privacidade-dpapi--ajustes-de-uilanding)
-8. [v0.2.3 - Documentação Unificada & Release](#v023---documentação-unificada--release)
-9. [v0.2.2 - Produtividade & Dark Mode Web](#v022---produtividade--dark-mode-web)
-10. [v0.2.0 - Revolução: Cola Automaticamente](#v020---revolução-cola-automaticamente)
-10. [Migração CSS (Fases 1-3)](#migração-css-fases-1-3)
-11. [Correção de Ícone](#correção-de-ícone)
-12. [Padronização do Projeto](#padronização-do-projeto)
-13. [Customizações de UI](#customizações-de-ui)
+1. [v0.2.14 - Patch (ícone + persistência)](#v0214---patch-ícone--persistência) 🚀 **ATUAL**
+2. [v0.2.13 - Patch (versão alinhada + rebuild)](#v0213---patch-versão-alinhada--rebuild)
+3. [v0.2.12 - Documentação & Atalhos Ilimitados](#v0212---documentação--atalhos-ilimitados)
+4. [v0.2.11 - Patch (manifest + rebuild)](#v0211---patch-manifest--rebuild)
+5. [v0.2.8 - Documentação (revisão)](#v028---documentação-revisão)
+6. [v0.2.7 - Documentação & Landing](#v027---documentação--landing)
+7. [v0.2.6 - Configurações Avançadas na UI & Monitoramento Configurável](#v026---configurações-avançadas-na-ui--monitoramento-configurável)
+8. [v0.2.5 - Privacidade (DPAPI) & Ajustes de UI/Landing](#v025---privacidade-dpapi--ajustes-de-uilanding)
+9. [v0.2.3 - Documentação Unificada & Release](#v023---documentação-unificada--release)
+10. [v0.2.2 - Produtividade & Dark Mode Web](#v022---produtividade--dark-mode-web)
+11. [v0.2.0 - Revolução: Cola Automaticamente](#v020---revolução-cola-automaticamente)
+12. [Migração CSS (Fases 1-3)](#migração-css-fases-1-3)
+13. [Correção de Ícone](#correção-de-ícone)
+14. [Padronização do Projeto](#padronização-do-projeto)
+15. [Customizações de UI](#customizações-de-ui)
+
+---
+
+## 🚀 V0.2.14 - PATCH (ÍCONE + PERSISTÊNCIA)
+
+**Data:** 15/01/2026  
+**Status:** ✅ COMPLETA
+
+### ✨ Principais Mudanças
+
+- Ícone consistente aplicado em todas as janelas do app (alinhado com o tray).
+- Persistência reforçada: atalhos não são apagados em falhas de validação.
+- Histórico protegido: fallback seguro quando DPAPI falha; backups adicionados.
 
 ---
 
