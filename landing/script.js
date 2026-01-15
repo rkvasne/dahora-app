@@ -1,6 +1,44 @@
 // VERSÃO: v0.2.14
 console.log('🎨 Landing Page v0.2.14 carregada! Ícones monocromáticos ativos.');
 
+// Mobile Menu Logic
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const navMenu = document.getElementById('nav-menu');
+const menuOverlay = document.createElement('div');
+menuOverlay.className = 'menu-overlay';
+menuOverlay.id = 'menu-overlay';
+document.body.appendChild(menuOverlay);
+const navLinks = document.querySelectorAll('.nav-link');
+
+function toggleMenu() {
+    navMenu.classList.toggle('active');
+    menuOverlay.classList.toggle('active');
+    
+    // Alterna ícone
+    const icon = mobileMenuBtn.querySelector('i');
+    if (navMenu.classList.contains('active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+    } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+    }
+}
+
+if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', toggleMenu);
+    menuOverlay.addEventListener('click', toggleMenu);
+
+    // Fecha menu ao clicar em um link
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (navMenu.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+    });
+}
+
 // FAQ Toggle
 function toggleFAQ(button) {
     const faqItem = button.parentElement;
