@@ -84,6 +84,7 @@ h6 {
 }
 
 .nav {
+    width: 100%;
     max-width: var(--nav-max-width);
     margin: 0 auto;
     padding: 0 var(--page-gutter);
