@@ -43,7 +43,7 @@ function Write-Section([string]$Title) {
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 Set-Location $RepoRoot
 
-Write-Section "Dahora App — Preparar artefatos de release"
+Write-Section "Dahora App - Preparar artefatos de release"
 Write-Host "Repo: $RepoRoot"
 
 $DistDir = Join-Path $RepoRoot 'dist'
@@ -129,9 +129,11 @@ Write-Host "ZIP: $zipPath"
 
 # 3) Ensure zip exists and contains only dist artifact
 if (-not (Test-Path $zipPath)) {
-  Write-Host "ZIP não existe — criando..."
+  Write-Host "ZIP não existe - criando..."
   if ($Force -or $PSCmdlet.ShouldProcess($zipPath, 'Criar ZIP')) {
-    if (Test-Path $zipPath) { Remove-Item -LiteralPath $zipPath -Force }
+    if (Test-Path $zipPath) {
+      Remove-Item -LiteralPath $zipPath -Force
+    }
     Compress-Archive -Path $exe.FullName -DestinationPath $zipPath
   }
 } else {

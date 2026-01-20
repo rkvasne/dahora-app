@@ -282,4 +282,15 @@ O workflow compila e anexa o `.exe` + `.sha256.txt` ao release.
 - Faça commit do `.zip` (e opcionalmente do `.exe`) e faça push normalmente.
 - Use um link raw para download.
 
+### C) Verificação pós-release (GitHub CLI)
+
+```powershell
+gh release view vX.Y.Z --repo rkvasne/dahora-app --json assets,url
+```
+
+```powershell
+gh run list --repo rkvasne/dahora-app --workflow release.yml --limit 1
+gh run view <RUN_ID> --repo rkvasne/dahora-app
+```
+
 Obs.: manter apenas o `.zip` geralmente reduz ruído no repositório.
