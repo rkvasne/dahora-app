@@ -1,8 +1,8 @@
 # 🔒 Política de Privacidade — Dahora App
 
 **Resumo:** O Dahora App opera **totalmente offline** e **não coleta telemetria**.  
-**Versão:** v0.2.14  
-**Data:** 15/01/2026
+**Versão:** v0.2.15  
+**Data:** 19/01/2026
 
 ---
 

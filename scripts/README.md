@@ -53,6 +53,9 @@ Limpa cache relacionado a ícones (Windows/build).
 #### **debug_dahora.py**
 Script de debug do app em ambiente de desenvolvimento.
 
+#### **verify_refactor.py**
+Verificação rápida/manual para validar refatorações recentes (clipboard e handler de timestamp).
+
 #### **test_minimal.py**
 Execução mínima para isolar problemas de import/importações/UI/system tray.
 
@@ -97,6 +100,7 @@ scripts/
 ├── standardize_releases.ps1
 ├── test_menu.py
 ├── test_minimal.py
+├── verify_refactor.py
 └── update_releases.py
 ```
 

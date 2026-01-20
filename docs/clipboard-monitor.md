@@ -1,7 +1,8 @@
 # 🔍 Pesquisa: Otimização de Clipboard Monitor com Windows API Events
 
 **Data da Pesquisa:** 13 de janeiro de 2026  
-**Versão:** v0.2.12  
+**Versão (na época da pesquisa):** v0.2.12  
+**Versão atual (referência do repo):** v0.2.15  
 **Status:** ✅ **PESQUISA CONCLUÍDA** - Implementação futura recomendada
 
 ---

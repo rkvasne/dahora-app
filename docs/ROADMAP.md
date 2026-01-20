@@ -2,47 +2,16 @@
 
 > Navegação: [Documentação](README.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
-> **Última atualização:** 15 de janeiro de 2026 | **Versão atual:** v0.2.14
+> **Última atualização:** 19 de janeiro de 2026 | **Versão atual:** v0.2.15
 
 Roadmap de alto nível para próximas melhorias. Detalhes específicos devem ser documentados em [Issues](https://github.com/rkvasne/dahora-app/issues) e/ou [Discussions](https://github.com/rkvasne/dahora-app/discussions) no GitHub.
 
 ---
 
-## ✅ Concluído (até v0.2.14 - Janeiro 2026)
+## Registro oficial de mudanças (por versão)
 
-### Arquitetura e Qualidade
-
-| Item | Descrição | Status |
-|------|-----------|--------|
-| Migração para Handlers | Callbacks migrados para CallbackRegistry | ✅ Completo |
-| Consolidação de Callbacks | `_sync_all_components()` centralizado | ✅ Completo |
-| UI Root Thread-Safety | Lock implementado em `_ensure_ui_root()` | ✅ Completo |
-| Type Hints (Protocols) | 8 Protocols em `callback_manager.py` | ✅ Completo |
-| Single Instance | 21 testes, implementação completa | ✅ Verificado |
-| Limpeza de Código | flake8 verificado, sem imports não usados | ✅ Verificado |
-
-### Handlers Implementados
-
-| Handler | Funcionalidade | Status |
-|---------|----------------|--------|
-| `CopyDateTimeHandler` | Ctrl+V automático | ✅ Completo |
-| `ShowSearchHandler` | Diálogo de busca (UI moderna) | ✅ Completo |
-| `ShowSettingsHandler` | Diálogo de configurações | ✅ Completo |
-| `QuitAppHandler` | Shutdown seguro | ✅ Completo |
-
-### Documentação
-
-- ✅ `architecture.md` - Seções 3.7 (Handlers) e 3.8 (Otimizações) adicionadas
-- ✅ `implementation-details.md` - Tabela de status atualizada
-- ✅ `project-analysis.md` - Relatório completo de melhorias
-
-### Métricas
-
-- **Testes:** suíte automatizada (veja `tests/` e rode `py -m pytest tests/`)
-- **Cobertura:** Handlers, schemas, validadores
-- **Hacks resolvidos:** 14 de 14 (100%)
-
----
+- O registro oficial do que foi alterado por versão fica em [CHANGELOG.md](../CHANGELOG.md).
+- Auditoria, alinhamentos e dívida técnica (Jan/2026): [technical_audit_2026_01.md](technical_audit_2026_01.md).
 
 ## 🎯 Foco Atual
 
@@ -96,4 +65,4 @@ Roadmap de alto nível para próximas melhorias. Detalhes específicos devem ser
 
 Este arquivo substitui o antigo checklist longo de melhorias, que era útil no início do projeto, mas ficou difícil de manter sincronizado com o estado real do código.
 
-**Relatório detalhado:** Consulte `docs/project-analysis.md` na pasta `docs/` para análise completa das implementações de Janeiro 2026.
+**Relatório detalhado:** Consulte `docs/technical_audit_2026_01.md` na pasta `docs/` para auditoria, alinhamentos e próximos passos.

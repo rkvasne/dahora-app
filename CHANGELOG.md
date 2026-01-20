@@ -7,6 +7,14 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [0.2.15] - 2026-01-19
+
+### 🔖 Versionamento
+- Bump de versão do app: `0.2.14` → `0.2.15`
+
+### 📚 Documentação
+- Versões alinhadas em docs, políticas e landing page.
+
 ## [0.2.14] - 2026-01-15
 
 ### 🐛 Corrigido
@@ -77,9 +85,9 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - **Validação única com Pydantic** - removida `_validate_settings_manual()` (~190 linhas)
 
 ### 📚 Documentação
-- Novo arquivo `ANALISE_PROJETO.md` com relatório completo de análise
+- Auditoria e alinhamentos de documentação consolidados em `docs/technical_audit_2026_01.md`
 - `architecture.md` - Seções 3.7 (Handlers) e 3.8 (Otimizações)
-- `hacks.md` - 100% dos hacks tratados (14 de 14)
+- `implementation-details.md` - Workarounds e decisões de design (hacks tratados)
 - `roadmap.md` - Seção "Concluído" com métricas
 - Consolidação e unificação de toda documentação
 - Removida pasta vazia `docs/GUIDES/`
@@ -131,7 +139,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Documentação
 - Revisão geral: versões e referências alinhadas para `0.2.8`.
-- Exemplos em `docs/release.md` padronizados com `X.Y.Z` (sem hardcode por release).
+- Exemplos em `docs/release-process.md` padronizados com `X.Y.Z` (sem hardcode por release).
 
 ## [0.2.7] - 2026-01-08
 

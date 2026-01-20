@@ -7,7 +7,7 @@
 **O gerenciador de timestamps definitivo para Windows.**  
 *Cole datas e horas formatadas instantaneamente com atalhos personalizáveis.*
 
-[![Version](https://img.shields.io/badge/version-0.2.14-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
+[![Version](https://img.shields.io/badge/version-0.2.15-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
 [![Python](https://img.shields.io/badge/python-3.12+-green.svg?style=for-the-badge)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
 [![Tests](https://img.shields.io/badge/tests-automated-brightgreen.svg?style=for-the-badge)](tests/README.md)
@@ -23,7 +23,7 @@
 
 Cansado de digitar datas manualmente? O **Dahora App** é um utilitário de sistema leve e poderoso que revoluciona como você lida com timestamps. Ele roda silenciosamente no system tray e permite que você cole a data e hora atual formatada em qualquer lugar, com uma única hotkey.
 
-**Novidades (Janeiro 2026):** Migração completa para handlers, 8 Protocols para type hints e UI thread-safe. Veja [project-analysis.md](docs/project-analysis.md) para detalhes.
+**Novidades (Janeiro 2026):** Migração completa para handlers, 8 Protocols para type hints e UI thread-safe. Veja [technical_audit_2026_01.md](docs/technical_audit_2026_01.md) para auditoria e próximos passos.
 
 > **Terminologia:** a UI/landing usam PT‑BR 100% (ex.: “área de transferência”, “bandeja do sistema”, “atalhos”).
 > A documentação técnica pode usar termos comuns em inglês (ex.: `clipboard`, `system tray`, `hotkeys`). Veja [Glossário por superfície (terminologia)](docs/README.md#glossário-por-superfície-terminologia).
@@ -90,7 +90,7 @@ py main.py
 ### Menu do system tray
 Clique com o botão direito no ícone do relógio na barra de tarefas:
 
-- **Copiar Data/Hora:** Copia o timestamp para o clipboard (sem colar).
+- **Copiar Data/Hora:** Copia o timestamp para o clipboard e tenta colar automaticamente (preserva o clipboard original).
 - **Buscar no Histórico:** Abre a janela de busca.
 - **Configurações:** Abre o painel de controle completo.
 - **Últimos Itens:** Acesso rápido aos 5 últimos textos copiados.
@@ -130,12 +130,12 @@ Toda documentação está organizada em `docs/` com entrada centralizada:
 ### 👉 **[docs/README.md](docs/README.md)** - Documentação (comece aqui!)
 
 ### Destaques:
-- **[history.md](docs/history.md)** - Histórico narrativo de desenvolvimento
+- **[CHANGELOG.md](CHANGELOG.md)** - Registro oficial de mudanças por versão
 - **[architecture.md](docs/architecture.md)** - Arquitetura técnica e componentes
 - **[release-process.md](docs/release-process.md)** - Processo de build, release e Git LFS
 - **[pricing.md](docs/pricing.md)** - Estudo histórico de precificação
 - **[implementation-details.md](docs/implementation-details.md)** - Soluções criativas documentadas (14 de 14 tratados - 100%)
-- **[project-analysis.md](docs/project-analysis.md)** - Relatório de análise completo (Janeiro 2026)
+- **[technical_audit_2026_01.md](docs/technical_audit_2026_01.md)** - Auditoria técnica e dívida técnica (Janeiro 2026)
 - **[roadmap.md](docs/roadmap.md)** - Próximos passos e backlog
 - **[github-guide.md](docs/github-guide.md)** - Guia completo de GitHub CLI
 - **[windows-setup.md](docs/windows-setup.md)** - Guia de configuração Python no Windows (use `py`)
@@ -182,7 +182,6 @@ dahora-app/
 └── docs/                        # Documentação Centralizada
     ├── README.md                # Índice centralizado (comece aqui!)
     ├── architecture.md          # Arquitetura técnica
-    ├── history.md               # Histórico narrativo
     ├── github-guide.md          # GitHub CLI (autenticação, releases, workflows)
     ├── implementation-details.md # Workarounds e decisões não-ideais
     ├── pricing.md               # Estudo histórico de precificação
@@ -213,7 +212,7 @@ dahora-app/
   - 8 Protocols para type hints
   - `_sync_all_components()` centralizado
   
-**Testes:** 267 testes automatizados via pytest (veja [tests/README.md](tests/README.md)).
+**Testes:** 273 testes automatizados via pytest (veja [tests/README.md](tests/README.md)).
 
 ### Documentação
 Comece por [docs/README.md](docs/README.md).

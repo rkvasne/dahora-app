@@ -54,6 +54,7 @@ py -m pytest tests/ --lf  # Roda apenas os últimos que falharam
 tests/
 ├── __init__.py                      # Marca como pacote Python
 ├── conftest.py                      # Fixtures compartilhadas
+├── test_clipboard_manager.py        # Testes de histórico e load_history
 ├── test_datetime_formatter.py       # Testes de formatação de data/hora
 ├── test_settings.py                 # Testes de validação de settings
 └── README.md                        # Este arquivo
@@ -116,6 +117,14 @@ Factory fixture para criar arquivos JSON corrompidos (útil para testar tratamen
 - ✅ Caracteres especiais
 - ✅ Unicode
 - ✅ Escrita atômica
+
+### 🧩 Testes de Handlers
+- ✅ Fluxo de `CopyDateTimeHandler` (inclui falha de clipboard e restauração)
+- ✅ Integração básica com `CallbackRegistry`
+
+### 📋 Testes de ClipboardManager
+- ✅ Sanitização e migração do histórico legado
+- ✅ Fallback de `.bak` e cenários de falha ao carregar/decriptar
 
 ## 📈 Cobertura de Código
 

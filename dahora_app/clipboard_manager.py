@@ -11,7 +11,7 @@ import threading
 import time
 from datetime import datetime
 from threading import Lock
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Any
 import pyperclip
 from dahora_app.constants import (
     HISTORY_FILE,
@@ -213,6 +213,79 @@ class ClipboardManager:
         )
         return self.paused
 
+    def _load_from_file(self) -> Any:
+        """Carrega dados brutos do arquivo"""
+        with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+
+    def _load_from_backup_file(self) -> Any:
+        with open(HISTORY_FILE + ".bak", "r", encoding="utf-8") as f:
+            return json.load(f)
+
+    def _try_load_raw_history_data(self) -> Any:
+        try:
+            return self._load_from_file()
+        except FileNotFoundError:
+            try:
+                return self._load_from_backup_file()
+            except Exception:
+                return None
+        except json.JSONDecodeError as e:
+            logging.warning(f"Falha ao carregar histórico (JSON inválido): {e}")
+            try:
+                return self._load_from_backup_file()
+            except Exception:
+                return None
+
+    def _decrypt_data(self, blob_str: str) -> List:
+        """Decripta dados DPAPI"""
+        decrypted = dpapi_decrypt_bytes(
+            b64decode_str(blob_str), self._dpapi_entropy
+        )
+        return json.loads(decrypted.decode("utf-8"))
+
+    def _sanitize_history_items(self, items: Any) -> List[Dict[str, str]]:
+        if not isinstance(items, list):
+            return []
+
+        sanitized: List[Dict[str, str]] = []
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+
+            text = item.get("text")
+            if not isinstance(text, str) or not text.strip():
+                continue
+
+            timestamp = item.get("timestamp")
+            app = item.get("app")
+
+            sanitized.append(
+                {
+                    "text": text,
+                    "timestamp": timestamp if isinstance(timestamp, str) else "",
+                    "app": app if isinstance(app, str) else "",
+                }
+            )
+
+        return sanitized
+
+    def _parse_json(self, raw_data: Any) -> List[Dict[str, str]]:
+        """Processa os dados carregados do JSON"""
+        if isinstance(raw_data, dict) and raw_data.get("dpapi") == 1:
+            blob_str = raw_data.get("blob")
+            if isinstance(blob_str, str):
+                return self._sanitize_history_items(self._decrypt_data(blob_str))
+            else:
+                # Formato inválido ou corrompido no blob
+                return []
+        
+        # Formato legado (lista plana)
+        if isinstance(raw_data, list):
+            return self._sanitize_history_items(raw_data)
+            
+        return []
+
     def load_history(self) -> None:
         """Carrega o histórico do arquivo ou inicia com lista vazia"""
         needs_migration = False
@@ -220,31 +293,29 @@ class ClipboardManager:
             with self.history_lock:
                 history_write_disabled = False
                 history_write_disabled_reason = ""
-                with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-                    raw = json.load(f)
-
-                if isinstance(raw, dict) and raw.get("dpapi") == 1:
-                    blob_str = raw.get("blob")
-                    if isinstance(blob_str, str):
-                        try:
-                            decrypted = dpapi_decrypt_bytes(
-                                b64decode_str(blob_str), self._dpapi_entropy
-                            )
-                            loaded = json.loads(decrypted.decode("utf-8"))
-                        except Exception as e:
-                            loaded = []
-                            history_write_disabled = True
-                            history_write_disabled_reason = str(e)
-                            try:
-                                shutil.copy2(HISTORY_FILE, HISTORY_FILE + ".bak")
-                            except Exception:
-                                pass
+                
+                try:
+                    raw = self._try_load_raw_history_data()
+                    if raw is None:
+                        loaded = []
                     else:
-                        loaded = raw
-                        needs_migration = isinstance(raw, list)
-                else:
-                    loaded = raw
-                    needs_migration = isinstance(raw, list)
+                        loaded = self._parse_json(raw)
+                    
+                    # Verifica se precisa migrar (era legado e agora carregou como lista)
+                    if isinstance(raw, list):
+                        needs_migration = True
+                        
+                except Exception as e:
+                    # Erro genérico na leitura/parse (ex: permissão, decriptação)
+                    logging.warning(f"Erro ao processar histórico: {e}")
+                    loaded = []
+                    history_write_disabled = True
+                    history_write_disabled_reason = str(e)
+                    # Tenta backup de segurança
+                    try:
+                        shutil.copy2(HISTORY_FILE, HISTORY_FILE + ".bak")
+                    except Exception:
+                        pass
 
                 self.clipboard_history = loaded if isinstance(loaded, list) else []
                 if len(self.clipboard_history) > self.max_history_items:
@@ -254,97 +325,11 @@ class ClipboardManager:
                 self._rebuild_history_index_locked()
                 self._history_write_disabled = history_write_disabled
                 self._history_write_disabled_reason = history_write_disabled_reason
-        except FileNotFoundError:
-            try:
-                with open(HISTORY_FILE + ".bak", "r", encoding="utf-8") as f:
-                    raw = json.load(f)
-                if isinstance(raw, dict) and raw.get("dpapi") == 1:
-                    blob_str = raw.get("blob")
-                    if isinstance(blob_str, str):
-                        decrypted = dpapi_decrypt_bytes(
-                            b64decode_str(blob_str), self._dpapi_entropy
-                        )
-                        loaded = json.loads(decrypted.decode("utf-8"))
-                    else:
-                        loaded = raw
-                else:
-                    loaded = raw
-                self.clipboard_history = loaded if isinstance(loaded, list) else []
-                if len(self.clipboard_history) > self.max_history_items:
-                    self.clipboard_history = self.clipboard_history[
-                        -self.max_history_items :
-                    ]
-                with self.history_lock:
-                    self._rebuild_history_index_locked()
-                    self._history_write_disabled = False
-                    self._history_write_disabled_reason = ""
-            except Exception:
-                self.clipboard_history = []
-                self._history_hash_counts = {}
-                self._history_write_disabled = False
-                self._history_write_disabled_reason = ""
-        except json.JSONDecodeError as e:
-            logging.warning(f"Falha ao carregar histórico (JSON inválido): {e}")
-            try:
-                with open(HISTORY_FILE + ".bak", "r", encoding="utf-8") as f:
-                    raw = json.load(f)
-                if isinstance(raw, dict) and raw.get("dpapi") == 1:
-                    blob_str = raw.get("blob")
-                    if isinstance(blob_str, str):
-                        decrypted = dpapi_decrypt_bytes(
-                            b64decode_str(blob_str), self._dpapi_entropy
-                        )
-                        loaded = json.loads(decrypted.decode("utf-8"))
-                    else:
-                        loaded = raw
-                else:
-                    loaded = raw
-                self.clipboard_history = loaded if isinstance(loaded, list) else []
-                if len(self.clipboard_history) > self.max_history_items:
-                    self.clipboard_history = self.clipboard_history[
-                        -self.max_history_items :
-                    ]
-                with self.history_lock:
-                    self._rebuild_history_index_locked()
-                    self._history_write_disabled = False
-                    self._history_write_disabled_reason = ""
-            except Exception:
-                self.clipboard_history = []
-                self._history_hash_counts = {}
-                self._history_write_disabled = False
-                self._history_write_disabled_reason = ""
-        except Exception as e:
-            logging.warning(f"Falha ao carregar histórico: {e}")
-            try:
-                with open(HISTORY_FILE + ".bak", "r", encoding="utf-8") as f:
-                    raw = json.load(f)
-                if isinstance(raw, dict) and raw.get("dpapi") == 1:
-                    blob_str = raw.get("blob")
-                    if isinstance(blob_str, str):
-                        decrypted = dpapi_decrypt_bytes(
-                            b64decode_str(blob_str), self._dpapi_entropy
-                        )
-                        loaded = json.loads(decrypted.decode("utf-8"))
-                    else:
-                        loaded = raw
-                else:
-                    loaded = raw
-                self.clipboard_history = loaded if isinstance(loaded, list) else []
-                if len(self.clipboard_history) > self.max_history_items:
-                    self.clipboard_history = self.clipboard_history[
-                        -self.max_history_items :
-                    ]
-                with self.history_lock:
-                    self._rebuild_history_index_locked()
-                    self._history_write_disabled = False
-                    self._history_write_disabled_reason = ""
-            except Exception:
-                self.clipboard_history = []
-                self._history_hash_counts = {}
-                if os.path.exists(HISTORY_FILE):
-                    self._history_write_disabled = True
-                    self._history_write_disabled_reason = str(e)
 
+        except Exception as e:
+            logging.error(f"Erro crítico em load_history: {e}")
+            self.clipboard_history = []
+            
         if needs_migration and not self._history_write_disabled:
             try:
                 self.save_history()
@@ -467,7 +452,17 @@ class ClipboardManager:
         Args:
             text: Texto a ser copiado
         """
-        pyperclip.copy(text)
+        try:
+            pyperclip.copy(text)
+        except Exception as e:
+            logging.error(f"Erro ao copiar para clipboard: {e}")
+
+    def set_text(self, text: str) -> None:
+        """
+        Define texto na clipboard
+        Alias para copy_text para melhor semântica
+        """
+        self.copy_text(text)
 
     def paste_text(self) -> str:
         """
@@ -477,10 +472,18 @@ class ClipboardManager:
             Texto da clipboard
         """
         try:
-            return pyperclip.paste()
+            text = pyperclip.paste()
+            return text if text is not None else ""
         except Exception as e:
             logging.warning(f"Erro ao obter clipboard: {e}")
             return ""
+
+    def get_text(self) -> str:
+        """
+        Obtém texto atual da clipboard
+        Alias para paste_text para melhor semântica
+        """
+        return self.paste_text()
 
     def initialize_last_content(self) -> None:
         """Inicializa o último conteúdo da clipboard"""

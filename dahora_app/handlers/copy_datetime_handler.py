@@ -1,7 +1,3 @@
-"""
-CopyDateTimeHandler - Handler para copiar data/hora formatada e colar automaticamente
-"""
-
 import logging
 import time
 import threading
@@ -15,9 +11,7 @@ if TYPE_CHECKING:
     from dahora_app.datetime_formatter import DateTimeFormatter
     from dahora_app.clipboard_manager import ClipboardManager
 
-
 logger = logging.getLogger(__name__)
-
 
 class CopyDateTimeHandler(CallbackHandler):
     """Handler para copiar timestamp atual para clipboard"""
@@ -27,7 +21,7 @@ class CopyDateTimeHandler(CallbackHandler):
         Inicializa o handler de copy
 
         Args:
-            app: Referência à instância de DahoraApp (pode ser injetada depois)
+            app: Referência à instância de DahoraApp
         """
         self.app = app
         self.prefix: str = ""
@@ -50,6 +44,61 @@ class CopyDateTimeHandler(CallbackHandler):
         """
         self.prefix = prefix
 
+    def _get_clipboard_text(self) -> str:
+        """Obtém texto atual do clipboard de forma segura"""
+        if not self.app or not self.app.clipboard_manager:
+            return ""
+        return self.app.clipboard_manager.get_text()
+
+    def _copy_to_clipboard(self, text: str) -> None:
+        """Copia texto para clipboard de forma segura"""
+        if self.app and self.app.clipboard_manager:
+            self.app.clipboard_manager.set_text(text)
+
+    def _mark_own_content(self, text: str) -> None:
+        """Marca conteúdo como próprio para evitar histórico"""
+        if self.app and self.app.clipboard_manager:
+            self.app.clipboard_manager.mark_own_content(text, ttl_seconds=2.0)
+
+    def _get_separator(self) -> str:
+        """Obtém separador configurado"""
+        try:
+            if self.app and self.app.settings_manager and self.app.settings_manager.settings:
+                sep = self.app.settings_manager.settings.separator
+                if isinstance(sep, str) and sep:
+                    return sep
+        except Exception:
+            pass
+        return "-"
+
+    def _restore_clipboard(self, text: str) -> None:
+        time.sleep(0.1)
+        try:
+            self._mark_own_content(text)
+            self._copy_to_clipboard(text)
+            logger.debug("Clipboard restored to original content")
+        except Exception as e:
+            logger.debug(f"Could not restore clipboard: {e}")
+
+    def _restore_clipboard_async(self, text: str) -> None:
+        """Restaura clipboard original em background"""
+        def restore_task():
+            self._restore_clipboard(text)
+
+        if self.app and hasattr(self.app, "_sync_manager"):
+            sync_manager = self.app._sync_manager
+            if sync_manager and hasattr(sync_manager, "start_daemon_thread"):
+                start_daemon_thread = sync_manager.start_daemon_thread
+                if callable(start_daemon_thread):
+                    try:
+                        start_daemon_thread(restore_task)
+                        return
+                    except Exception:
+                        pass
+
+        thread = threading.Thread(target=restore_task, daemon=True)
+        thread.start()
+
     def handle(self, hotkey_name: Optional[str] = None) -> bool:
         """
         Copia o timestamp formatado para clipboard
@@ -65,55 +114,9 @@ class CopyDateTimeHandler(CallbackHandler):
             return False
 
         try:
-
-            def get_clipboard_text() -> str:
-                clipboard_get = getattr(clipboard_manager, "get_clipboard", None)
-                if callable(clipboard_get):
-                    try:
-                        value = clipboard_get()
-                        return value if isinstance(value, str) else ""
-                    except Exception:
-                        return ""
-
-                clipboard_paste = getattr(clipboard_manager, "paste_text", None)
-                if callable(clipboard_paste):
-                    try:
-                        value = clipboard_paste()
-                        return value if isinstance(value, str) else ""
-                    except Exception:
-                        return ""
-
-                return ""
-
-            def copy_to_clipboard(text: str) -> None:
-                clipboard_copy = getattr(clipboard_manager, "copy_to_clipboard", None)
-                if callable(clipboard_copy):
-                    clipboard_copy(text)
-                    return
-
-                clipboard_copy_text = getattr(clipboard_manager, "copy_text", None)
-                if callable(clipboard_copy_text):
-                    clipboard_copy_text(text)
-                    return
-
-                raise RuntimeError(
-                    "ClipboardManager não possui método de cópia suportado"
-                )
-
-            def get_separator() -> str:
-                try:
-                    settings = getattr(self.app, "settings_manager", None)
-                    settings_obj = getattr(settings, "settings", None)
-                    sep = getattr(settings_obj, "separator", None)
-                    if isinstance(sep, str) and sep:
-                        return sep
-                except Exception:
-                    pass
-                return "-"
-
             # Obter componentes
-            datetime_formatter: "DateTimeFormatter" = self.app.datetime_formatter
-            clipboard_manager: "ClipboardManager" = self.app.clipboard_manager
+            datetime_formatter = self.app.datetime_formatter
+            clipboard_manager = self.app.clipboard_manager
 
             if not datetime_formatter or not clipboard_manager:
                 logger.error("CopyDateTimeHandler: missing dependencies")
@@ -125,18 +128,27 @@ class CopyDateTimeHandler(CallbackHandler):
                 return False
 
             if self.prefix:
-                timestamp = f"{self.prefix}{get_separator()}{timestamp}"
+                timestamp = f"{self.prefix}{self._get_separator()}{timestamp}"
 
             # Guardar clipboard atual para preservação
-            old_clipboard = get_clipboard_text()
+            old_clipboard = self._get_clipboard_text()
 
-            # Marcar conteúdo como próprio (evita ir para histórico)
-            mark_own_content = getattr(clipboard_manager, "mark_own_content", None)
-            if callable(mark_own_content):
-                mark_own_content(timestamp, ttl_seconds=2.0)
+            # Marcar conteúdo como próprio
+            self._mark_own_content(timestamp)
 
             # Copiar timestamp para clipboard
-            copy_to_clipboard(timestamp)
+            self._copy_to_clipboard(timestamp)
+
+            clipboard_ok = False
+            for _ in range(3):
+                if self._get_clipboard_text() == timestamp:
+                    clipboard_ok = True
+                    break
+                time.sleep(0.02)
+
+            if not clipboard_ok:
+                logger.warning("CopyDateTimeHandler: clipboard copy failed")
+                return False
             
             # Aguarda clipboard estar pronto e envia Ctrl+V para colar automaticamente
             time.sleep(0.05)
@@ -150,20 +162,9 @@ class CopyDateTimeHandler(CallbackHandler):
             
             time.sleep(0.05)  # Aguarda colagem completar
 
-            # Restaurar clipboard original após pequeno delay (preservação inteligente)
+            # Restaurar clipboard original se for diferente
             if old_clipboard and old_clipboard != timestamp:
-                def restore_clipboard():
-                    time.sleep(0.1)  # Pequeno delay para garantir colagem
-                    try:
-                        if callable(mark_own_content):
-                            mark_own_content(old_clipboard, ttl_seconds=2.0)
-                        copy_to_clipboard(old_clipboard)
-                        logger.debug("Clipboard restored to original content")
-                    except Exception as e:
-                        logger.debug(f"Could not restore clipboard: {e}")
-
-                thread = threading.Thread(target=restore_clipboard, daemon=True)
-                thread.start()
+                self._restore_clipboard_async(old_clipboard)
 
             return True
 

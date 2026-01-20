@@ -1,10 +1,10 @@
 # 📚 Índice de Documentação - Dahora App
 
-> **Ponto central de navegação** para toda documentação do projeto Dahora App v0.2.14
+> **Ponto central de navegação** para toda documentação do projeto Dahora App v0.2.15
 
 > Navegação: [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
-> **Última atualização:** 15 de janeiro de 2026
+> **Última atualização:** 19 de janeiro de 2026
 
 ---
 
@@ -17,7 +17,7 @@
 - ✅ **Suíte de testes automatizada** (pytest) — rode `py -m pytest tests/` para validar
 - ✅ **100% dos hacks tratados** (14 de 14)
 - ✅ **UI refinada** - Spinbox com setas proporcionais
-- 📊 Relatório completo: **[project-analysis.md](project-analysis.md)**
+- 📋 Auditoria e dívida técnica: **[technical_audit_2026_01.md](technical_audit_2026_01.md)**
 
 ---
 
@@ -31,8 +31,8 @@
 ### Para Desenvolvedores
 - **[windows-setup.md](windows-setup.md)** - ⚠️ **LEIA PRIMEIRO!** Use `py` no Windows
 - **[architecture.md](architecture.md)** - 🏗️ Arquitetura técnica e componentes
-- **[project-analysis.md](project-analysis.md)** - 📊 Relatório de análise e melhorias (13/01/2026)
-- **[history.md](history.md)** - 📜 Histórico narrativo do desenvolvimento
+- **[technical_audit_2026_01.md](technical_audit_2026_01.md)** - 📋 Auditoria técnica e dívida técnica priorizada (Jan/2026)
+- **[CHANGELOG.md](../CHANGELOG.md)** - 📝 Registro oficial de mudanças por versão
 
 ### Para Manutenedores
 - **[release-process.md](release-process.md)** - 🚀 Processo completo de build e release
@@ -49,7 +49,9 @@
 - **[architecture.md](architecture.md)** - Estrutura, componentes e padrões
 - **[implementation-details.md](implementation-details.md)** - Workarounds e detalhes de implementação
 - **[clipboard-monitor.md](clipboard-monitor.md)** - Pesquisa sobre otimização de clipboard com Windows API Events
-- **[security-logging.md](security-logging.md)** - Auditoria de segurança dos logs do aplicativo
+
+### Qualidade e Auditorias
+- **[technical_audit_2026_01.md](technical_audit_2026_01.md)** - Auditoria técnica, alinhamento de docs e auditoria de logs (Jan/2026)
 
 ### Planejamento e Negócio
 - **[roadmap.md](roadmap.md)** - Próximos passos e melhorias planejadas
@@ -88,19 +90,15 @@
 docs/
 ├── README.md                   ← Você está aqui!
 ├── architecture.md             # Arquitetura técnica (atualizado 12/01/2026)
-├── history.md                  # Histórico narrativo
 ├── implementation-details.md   # Workarounds documentados (atualizado 12/01/2026)
+├── technical_audit_2026_01.md  # Auditoria técnica e dívida técnica (Jan/2026)
 ├── prd.md                      # Requisitos do produto (formal)
 ├── pricing.md                  # Análise de mercado
 ├── release-process.md          # Processo de build e release
 ├── roadmap.md                  # Próximos passos (atualizado 12/01/2026)
 ├── github-guide.md             # GitHub CLI completo
 ├── clipboard-monitor.md        # Pesquisa: clipboard monitor (Windows API Events)
-├── logs-security.md            # Auditoria de segurança de logs
-└── python-windows.md           # Configuração do Python no Windows
-
-raiz/
-└── project-analysis.md         # Relatório de análise completo (NOVO)
+└── windows-setup.md            # Configuração do Python no Windows (use `py`)
 ```
 
 ---
@@ -125,14 +123,14 @@ raiz/
 3. Consulte [CHANGELOG.md](../CHANGELOG.md) - Novidades
 
 ### 👨‍💻 Desenvolvedor
-1. Leia [python-windows.md](python-windows.md) - **IMPORTANTE**
+1. Leia [windows-setup.md](windows-setup.md) - **IMPORTANTE**
 2. Explore [architecture.md](architecture.md) - Estrutura técnica
-3. Veja [development-history.md](development-history.md) - Contexto
-4. Consulte [hacks.md](hacks.md) - Soluções conhecidas
+3. Veja [technical_audit_2026_01.md](technical_audit_2026_01.md) - Auditoria, alinhamentos e dívida técnica
+4. Consulte [implementation-details.md](implementation-details.md) - Workarounds e detalhes
 
 ### 🚀 Manutenedor/Release
-1. Configure [github-cli-guide.md](github-cli-guide.md) - Autenticação
-2. Siga [release.md](release.md) - Processo completo
+1. Configure [github-guide.md](github-guide.md) - Autenticação e comandos
+2. Siga [release-process.md](release-process.md) - Processo completo
 3. Atualize [CHANGELOG.md](../CHANGELOG.md) - Sempre!
 
 ---
@@ -168,7 +166,3 @@ raiz/
 - ✅ Verificar links internos
 - ✅ Atualizar `CHANGELOG.md`
 - ✅ Versão consistente em todos os arquivos
-
----
-
-**Última atualização:** 15 de janeiro de 2026 | **Versão:** v0.2.14

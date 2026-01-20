@@ -2,7 +2,7 @@
 
 > Navegação: [Documentação](README.md) • [README do projeto](../README.md) • [CHANGELOG](../CHANGELOG.md)
 
-> **Última atualização:** 15 de janeiro de 2026 | **Versão atual:** v0.2.14
+> **Última atualização:** 19 de janeiro de 2026 | **Versão atual:** v0.2.15
 
 Este guia descreve o fluxo recomendado para gerar um executável, empacotar em ZIP e versionar os artefatos (incluindo Git LFS), mantendo o repositório consistente.
 

@@ -153,7 +153,16 @@ class TestCopyDateTimeHandler:
         """Cópia bem-sucedida"""
         app = MockApp()
         app.datetime_formatter.format_datetime.return_value = "2025-12-30 10:30:00"
-        app.clipboard_manager.get_clipboard.return_value = "old content"
+        clipboard_state = {"value": "old content"}
+
+        def get_text():
+            return clipboard_state["value"]
+
+        def set_text(value: str):
+            clipboard_state["value"] = value
+
+        app.clipboard_manager.get_text.side_effect = get_text
+        app.clipboard_manager.set_text.side_effect = set_text
         app.settings_manager.settings.template = "%Y-%m-%d %H:%M:%S"
         app.settings_manager.settings.separator = "-"
         
@@ -161,13 +170,22 @@ class TestCopyDateTimeHandler:
         result = handler.handle()
         
         assert result is True
-        app.clipboard_manager.copy_to_clipboard.assert_called()
+        app.clipboard_manager.set_text.assert_called()
     
     def test_handle_with_prefix(self):
         """Cópia com prefixo"""
         app = MockApp()
         app.datetime_formatter.format_datetime.return_value = "2025-12-30 10:30:00"
-        app.clipboard_manager.get_clipboard.return_value = "old content"
+        clipboard_state = {"value": "old content"}
+
+        def get_text():
+            return clipboard_state["value"]
+
+        def set_text(value: str):
+            clipboard_state["value"] = value
+
+        app.clipboard_manager.get_text.side_effect = get_text
+        app.clipboard_manager.set_text.side_effect = set_text
         app.settings_manager.settings.template = "%Y-%m-%d %H:%M:%S"
         app.settings_manager.settings.separator = "-"
         
@@ -177,7 +195,7 @@ class TestCopyDateTimeHandler:
         
         assert result is True
         # Verifica se prefix foi adicionado
-        call_args = app.clipboard_manager.copy_to_clipboard.call_args
+        call_args = app.clipboard_manager.set_text.call_args
         assert "log" in call_args[0][0]
     
     def test_handle_error_handling(self):
@@ -194,7 +212,16 @@ class TestCopyDateTimeHandler:
         """Clipboard é preservado após delay"""
         app = MockApp()
         app.datetime_formatter.format_datetime.return_value = "2025-12-30"
-        app.clipboard_manager.get_clipboard.return_value = "old content"
+        clipboard_state = {"value": "old content"}
+
+        def get_text():
+            return clipboard_state["value"]
+
+        def set_text(value: str):
+            clipboard_state["value"] = value
+
+        app.clipboard_manager.get_text.side_effect = get_text
+        app.clipboard_manager.set_text.side_effect = set_text
         app.settings_manager.settings.template = "%Y-%m-%d"
         app.settings_manager.settings.separator = "-"
         
@@ -203,7 +230,43 @@ class TestCopyDateTimeHandler:
         
         assert result is True
         # Cópia original é feita
-        app.clipboard_manager.copy_to_clipboard.assert_called_with("2025-12-30")
+        app.clipboard_manager.set_text.assert_any_call("2025-12-30")
+    
+    def test_restore_clipboard_uses_sync_manager_when_available(self):
+        """Restauração usa ThreadSyncManager se disponível na app"""
+        app = MockApp()
+        app._sync_manager = MagicMock()
+        app.datetime_formatter.format_datetime.return_value = "2025-12-30"
+        clipboard_state = {"value": "old content"}
+
+        def get_text():
+            return clipboard_state["value"]
+
+        def set_text(value: str):
+            clipboard_state["value"] = value
+
+        app.clipboard_manager.get_text.side_effect = get_text
+        app.clipboard_manager.set_text.side_effect = set_text
+        app.settings_manager.settings.separator = "-"
+
+        handler = CopyDateTimeHandler(app)
+        result = handler.handle()
+
+        assert result is True
+        app._sync_manager.start_daemon_thread.assert_called_once()
+
+    def test_handle_returns_false_when_clipboard_copy_fails(self):
+        """Retorna False quando a cópia no clipboard falha"""
+        app = MockApp()
+        app.datetime_formatter.format_datetime.return_value = "2025-12-30"
+        app.clipboard_manager.get_text.return_value = "old content"
+        app.clipboard_manager.set_text = MagicMock()
+        app.settings_manager.settings.separator = "-"
+
+        handler = CopyDateTimeHandler(app)
+        result = handler.handle()
+
+        assert result is False
 
 
 class TestShowSettingsHandler:

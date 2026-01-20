@@ -474,6 +474,8 @@ def _ensure_ui_root(self):
 - Timestamp é copiado, colado via Ctrl+V, e clipboard original restaurado
 - Operação transparente para o usuário
 - Implementado em `CopyDateTimeHandler`
+- Se a cópia falhar (clipboard não reflete o timestamp), o handler retorna `False`
+- Restauração pode usar `ThreadSyncManager` quando disponível (fallback para thread daemon)
 
 ## 4. Fluxo de Dados
 
@@ -648,7 +650,7 @@ if not valid:
 
 ## 9. Testes
 
-### Suite de Testes Total: 267+ testes
+### Suite de Testes Total: 273 testes
 
 #### Handlers (35 testes) - `test_handlers.py`
 - QuitAppHandler (9 testes)
@@ -656,6 +658,9 @@ if not valid:
 - ShowSettingsHandler (8 testes)
 - ShowSearchHandler (8 testes)
 - Integração de Handlers (2 testes)
+
+#### ClipboardManager - `test_clipboard_manager.py`
+- Cenários de carga legada, fallback de backup e falha de decriptação
 
 #### HotkeyValidator (37 testes) - `test_hotkey_validator.py`
 - Normalização (10 testes)
@@ -790,7 +795,7 @@ Validado e aplicado
 **v1.1 (12/01/2026):**
 - Adicionada seção 3.7: Handlers e CallbackRegistry
 - Adicionada seção 3.8: Otimizações de Performance
-- Atualizado total de testes (267+)
+- Atualizado total de testes (273)
 - Documentados handlers: CopyDateTimeHandler, ShowSearchHandler, ShowSettingsHandler, QuitAppHandler
 - Documentadas otimizações: UI Prewarm, Cache de Menu, Thread-Safety
 

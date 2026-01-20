@@ -162,23 +162,15 @@ No chat do Copilot, digite **`/`** seguido do nome do modo:
 
 | Contexto | Comando | Descrição |
 |----------|---------|-----------|
-| 🐛 **Debugging** | `/depurador` | Bugs, erros, fixes |
-| 🗄️ **Banco de Dados** | `/banco-dados` | SQL, Prisma, schemas |
-| 🏗️ **Arquitetura** | `/arquiteto` | Design, patterns, componentes |
-| 🔒 **Segurança** | `/seguranca` | Auth, OWASP, vulnerabilidades |
-| 🎨 **Frontend/UI** | `/frontend` | React, CSS, componentes |
-| 🔌 **API** | `/api` | Endpoints, REST, requests |
-| ⚡ **Performance** | `/performance` | Otimização, lentidão, cache |
-| 📋 **Documentação** | `/documentacao` | Docs, README, guias |
-| 🔀 **Git/VCS** | `/git` | Commits, branches, merges |
-| 🛠️ **Admin/DevOps** | `/admin` | Setup, deploy, configuração |
-| 📊 **Planejador** | `/planejador` | Estimativas, priorização |
-| ✅ **Qualidade** | `/qualidade` | Testes, QA, coverage |
-| 🏢 **Multi-tenant** | `/multi-tenant` | SaaS, isolamento, RLS |
-| 🌐 **Debug Web** | `/depurador-web` | Frontend, CORS, React |
-| 🖥️ **Debug Backend** | `/depurador-backend` | APIs, Node, Python |
-| ☁️ **Debug DevOps** | `/depurador-devops` | CI/CD, containers |
-| 📱 **Debug Mobile** | `/depurador-mobile` | React Native, iOS, Android |
+| 🏗️ **Arquitetura** | `/modo-arquiteto` | Design, planejamento, roadmap |
+| � **Backend** | `/modo-backend` | API, Banco de Dados, Lógica |
+| 🐛 **Debugging** | `/modo-depurador` | Debug unificado (Web/Back/Mobile/DevOps) |
+| � **DevOps** | `/modo-devops` | Infra, CI/CD, Admin |
+| 📋 **Documentação** | `/modo-documentacao` | Docs, README, guias |
+| 🎨 **Frontend/UI** | `/modo-frontend` | React, CSS, componentes |
+| � **Git/VCS** | `/modo-git` | Commits, branches, merges |
+| ✅ **Qualidade** | `/modo-qualidade` | Testes, QA, performance |
+| 🔒 **Segurança** | `/modo-seguranca` | Auth, OWASP, vulnerabilidades |
 
 ---
 
@@ -257,7 +249,7 @@ dahora-app/
 │   ├── test_handlers.py
 │   └── ... (13 arquivos de teste)
 │
-├── docs/project-analysis.md   # Relatório de análise (12/01/2026)
+├── docs/technical_audit_2026_01.md # Auditoria técnica e dívida técnica (Jan/2026)
 │
 ├── docs/                      # Documentação
 │   ├── architecture.md        # Arquitetura detalhada (atualizado 12/01/2026)
@@ -278,7 +270,7 @@ dahora-app/
 │
 ├── .github/
 │   └── prompts/               # Prompt Files para Copilot
-│       └── modo-*.prompt.md   # 17 modos de trabalho
+│       └── modo-*.prompt.md   # 9 modos de trabalho
 │
 └── dist/                      # Executáveis gerados (Git LFS)
 ```
@@ -287,7 +279,7 @@ dahora-app/
 
 ## 🛠️ Comandos do Projeto
 
-⚠️ **IMPORTANTE:** Use `py` ao invés de `python` neste projeto (ver [python-windows.md](docs/python-windows.md))
+⚠️ **IMPORTANTE:** Use `py` ao invés de `python` neste projeto (ver [windows-setup.md](docs/windows-setup.md))
 
 ```powershell
 # Instalar dependências
@@ -461,20 +453,24 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 
 ### Docs do Projeto (em `docs/`)
 - [architecture.md](docs/architecture.md) - Arquitetura detalhada
-- [release.md](docs/release.md) - Processo de release e Git LFS
+- [release-process.md](docs/release-process.md) - Processo de release e Git LFS
 - [roadmap.md](docs/roadmap.md) - Plano de desenvolvimento
-- [python-windows.md](docs/python-windows.md) - Configuração Python
-- [history.md](docs/history.md) - Histórico de mudanças
+- [windows-setup.md](docs/windows-setup.md) - Configuração Python no Windows
+- [CHANGELOG.md](CHANGELOG.md) - Registro oficial de mudanças por versão
 
 ### Modos de Trabalho (digite `/` no chat)
 
 | Modo | Comando | Uso no Dahora |
 |------|---------|---------------|
-| Debug | `/depurador` | Bugs em handlers, hotkeys |
-| Qualidade | `/qualidade` | Testes, cobertura |
-| Arquitetura | `/arquiteto` | Design de novos módulos |
-| Performance | `/performance` | Otimização de clipboard |
-| Git | `/git` | Commits, releases |
+| Arquitetura | `/modo-arquiteto` | Design e planejamento |
+| Backend | `/modo-backend` | Lógica, settings, storage |
+| Debug | `/modo-depurador` | Bugs em handlers, hotkeys |
+| DevOps | `/modo-devops` | Setup, CI/CD, release |
+| Documentação | `/modo-documentacao` | Docs e textos do projeto |
+| Frontend | `/modo-frontend` | UI da landing (HTML/CSS/JS) |
+| Git | `/modo-git` | Commits, releases |
+| Qualidade | `/modo-qualidade` | Testes, cobertura, performance |
+| Segurança | `/modo-seguranca` | Revisão OWASP e mitigação |
 
 ---
 
@@ -486,15 +482,17 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 | Rodar testes | `py -m pytest` |
 | Build executável | `py build.py` |
 | Verificar tipos | `py -m mypy dahora_app/` |
-| Modo Segurança | `/seguranca` |
-| Modo Debug | `/depurador` |
-| Modo Arquitetura | `/arquiteto` |
-| Modo Qualidade | `/qualidade` |
-| Modo Git | `/git` |
+| Lint | `py -m flake8 dahora_app/` |
+| Formatação | `py -m black dahora_app/` |
+| Modo Segurança | `/modo-seguranca` |
+| Modo Debug | `/modo-depurador` |
+| Modo Arquitetura | `/modo-arquiteto` |
+| Modo Qualidade | `/modo-qualidade` |
+| Modo Git | `/modo-git` |
 
 ---
 
-**Última atualização:** 15 de janeiro de 2026  
-**Versão do App:** 0.2.14  
+**Última atualização:** 19 de janeiro de 2026  
+**Versão do App:** 0.2.15  
 **Status:** ✅ Projeto configurado com Prompt Files  
 **Testes:** suíte automatizada (pytest) | **Hacks tratados:** 14 de 14 (100%)

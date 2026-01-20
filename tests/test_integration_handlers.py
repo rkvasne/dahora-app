@@ -110,8 +110,17 @@ class TestHandlerIntegrationInApp:
     def test_execute_copy_datetime_from_registry(self):
         """Testa execução do copy handler via registry"""
         app = MockDahoraApp()
-        app.clipboard_manager.copy_text = MagicMock()
-        app.datetime_formatter.format_now = MagicMock(return_value="2025-12-30")
+        clipboard_state = {"value": "old content"}
+
+        def get_text():
+            return clipboard_state["value"]
+
+        def set_text(value: str):
+            clipboard_state["value"] = value
+
+        app.clipboard_manager.get_text.side_effect = get_text
+        app.clipboard_manager.set_text.side_effect = set_text
+        app.datetime_formatter.format_datetime = MagicMock(return_value="2025-12-30")
         
         handler = CopyDateTimeHandler()
         handler.set_app(app)
@@ -189,8 +198,17 @@ class TestHandlerIntegrationInApp:
         """Testa execução de todos os handlers via registry"""
         app = MockDahoraApp()
         app._sync_manager.request_shutdown.return_value = True
-        app.clipboard_manager.copy_text = MagicMock()
-        app.datetime_formatter.format_now = MagicMock(return_value="2025-12-30")
+        clipboard_state = {"value": "old content"}
+
+        def get_text():
+            return clipboard_state["value"]
+
+        def set_text(value: str):
+            clipboard_state["value"] = value
+
+        app.clipboard_manager.get_text.side_effect = get_text
+        app.clipboard_manager.set_text.side_effect = set_text
+        app.datetime_formatter.format_datetime = MagicMock(return_value="2025-12-30")
         
         registry = CallbackRegistry()
         
@@ -259,6 +277,17 @@ class TestHandlerIntegrationInApp:
     def test_menu_callbacks_replaced_with_registry(self):
         """Testa que callbacks do menu podem usar registry"""
         app = MockDahoraApp()
+        clipboard_state = {"value": "old content"}
+
+        def get_text():
+            return clipboard_state["value"]
+
+        def set_text(value: str):
+            clipboard_state["value"] = value
+
+        app.clipboard_manager.get_text.side_effect = get_text
+        app.clipboard_manager.set_text.side_effect = set_text
+        app.datetime_formatter.format_datetime = MagicMock(return_value="2025-12-30")
         
         registry = CallbackRegistry()
         
