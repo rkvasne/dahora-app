@@ -7,7 +7,7 @@
 **O gerenciador de timestamps definitivo para Windows.**  
 *Cole datas e horas formatadas instantaneamente com atalhos personalizáveis.*
 
-[![Version](https://img.shields.io/badge/version-0.2.15-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
+[![Version](https://img.shields.io/badge/version-0.2.16-blue.svg?style=for-the-badge)](https://github.com/rkvasne/dahora-app/releases)
 [![Python](https://img.shields.io/badge/python-3.12+-green.svg?style=for-the-badge)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
 [![Tests](https://img.shields.io/badge/tests-automated-brightgreen.svg?style=for-the-badge)](tests/README.md)

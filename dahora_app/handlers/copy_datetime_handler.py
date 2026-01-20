@@ -63,8 +63,11 @@ class CopyDateTimeHandler(CallbackHandler):
     def _get_separator(self) -> str:
         """Obtém separador configurado"""
         try:
-            if self.app and self.app.settings_manager and self.app.settings_manager.settings:
-                sep = self.app.settings_manager.settings.separator
+            if self.app and self.app.settings_manager:
+                settings_container = getattr(
+                    self.app.settings_manager, "settings", None
+                )
+                sep = getattr(settings_container, "separator", None)
                 if isinstance(sep, str) and sep:
                     return sep
         except Exception:

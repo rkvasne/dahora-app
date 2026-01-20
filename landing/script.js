@@ -1,5 +1,5 @@
-// VERSÃO: v0.2.15
-console.log('🎨 Landing Page v0.2.15 carregada! Ícones monocromáticos ativos.');
+// VERSÃO: v0.2.16
+console.log('🎨 Landing Page v0.2.16 carregada! Ícones monocromáticos ativos.');
 
 // Mobile Menu Logic
 const mobileMenuBtn = document.getElementById('mobile-menu-btn');

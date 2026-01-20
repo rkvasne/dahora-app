@@ -3,7 +3,7 @@ ShowSettingsHandler - Handler para exibir janela de configurações
 """
 
 import logging
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Any
 
 from dahora_app.callback_manager import CallbackHandler
 
@@ -63,11 +63,17 @@ class ShowSettingsHandler(CallbackHandler):
         try:
             # Verifica qual UI usar baseado em settings
             try:
-                use_modern = self.app.settings_manager.settings.use_modern_ui
+                settings_container = getattr(
+                    self.app.settings_manager, "settings", None
+                )
+                use_modern = getattr(
+                    settings_container, "use_modern_ui", self.use_modern_ui
+                )
             except (AttributeError, KeyError):
                 use_modern = self.use_modern_ui
 
             # Seleciona o dialog apropriado
+            settings_dialog: Optional[Any] = None
             if use_modern:
                 settings_dialog = self.app.modern_settings_dialog
                 logger.debug("Opening modern settings dialog")

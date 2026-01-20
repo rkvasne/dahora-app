@@ -2,7 +2,7 @@
 
 **Data da Pesquisa:** 13 de janeiro de 2026  
 **Versão (na época da pesquisa):** v0.2.12  
-**Versão atual (referência do repo):** v0.2.15  
+**Versão atual (referência do repo):** v0.2.16  
 **Status:** ✅ **PESQUISA CONCLUÍDA** - Implementação futura recomendada
 
 ---

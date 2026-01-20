@@ -497,7 +497,7 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 
 ---
 
-**Última atualização:** 19 de janeiro de 2026  
-**Versão do App:** 0.2.15  
+**Última atualização:** 20 de janeiro de 2026  
+**Versão do App:** 0.2.16  
 **Status:** ✅ Projeto configurado com Prompt Files  
 **Testes:** suíte automatizada (pytest) | **Hacks tratados:** 14 de 14 (100%)

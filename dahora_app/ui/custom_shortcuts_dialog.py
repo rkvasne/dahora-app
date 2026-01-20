@@ -19,7 +19,7 @@ from dahora_app.ui.icon_manager import IconManager
 class CustomShortcutsDialog:
     """Dialog de configurações com tabs e CRUD de prefixos"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Inicializa o dialog"""
         self.window: Optional[tk.Tk] = None
         self.shortcuts_listbox: Optional[tk.Listbox] = (
@@ -41,23 +41,23 @@ class CustomShortcutsDialog:
 
         # Estado
         self.is_detecting_hotkey = False
-        self.detected_keys = set()
+        self.detected_keys: set[str] = set()
 
         # Variáveis para configurações gerais (tabs)
-        self.var_datetime_format = None
-        self.var_bracket_open = None
-        self.var_bracket_close = None
-        self.var_max_history = None
-        self.var_monitor_interval = None
-        self.var_idle_threshold = None
-        self.var_notifications_enabled = None
-        self.var_notification_duration = None
-        self.var_hotkey_search = None
-        self.var_hotkey_refresh = None
+        self.var_datetime_format: Optional[tk.StringVar] = None
+        self.var_bracket_open: Optional[tk.StringVar] = None
+        self.var_bracket_close: Optional[tk.StringVar] = None
+        self.var_max_history: Optional[tk.IntVar] = None
+        self.var_monitor_interval: Optional[tk.DoubleVar] = None
+        self.var_idle_threshold: Optional[tk.DoubleVar] = None
+        self.var_notifications_enabled: Optional[tk.BooleanVar] = None
+        self.var_notification_duration: Optional[tk.IntVar] = None
+        self.var_hotkey_search: Optional[tk.StringVar] = None
+        self.var_hotkey_refresh: Optional[tk.StringVar] = None
 
         # Rastreio de mudanças que requerem reinício
         self.needs_restart = False
-        self.restart_warning_label = None
+        self.restart_warning_label: Optional[ttk.Label] = None
 
     def set_shortcuts(self, shortcuts: List[Dict[str, Any]]) -> None:
         """Define lista de shortcuts para exibir"""
@@ -541,13 +541,14 @@ class CustomShortcutsDialog:
         ttk.Label(content, text="🔍 Buscar no Histórico", style="TLabel").pack(
             anchor="w", pady=(0, 6)
         )
-        self.var_hotkey_search = tk.StringVar(
+        hotkey_search_var = tk.StringVar(
             value=self.current_settings.get("hotkey_search_history", "ctrl+shift+f")
         )
-        self.var_hotkey_search.trace_add(
+        self.var_hotkey_search = hotkey_search_var
+        hotkey_search_var.trace_add(
             "write", lambda *args: self._mark_needs_restart()
         )
-        ttk.Entry(content, textvariable=self.var_hotkey_search, width=30).pack(
+        ttk.Entry(content, textvariable=hotkey_search_var, width=30).pack(
             fill=tk.X, pady=(0, 16)
         )
 
@@ -555,13 +556,14 @@ class CustomShortcutsDialog:
         ttk.Label(content, text="🔄 Recarregar Menu", style="TLabel").pack(
             anchor="w", pady=(0, 6)
         )
-        self.var_hotkey_refresh = tk.StringVar(
+        hotkey_refresh_var = tk.StringVar(
             value=self.current_settings.get("hotkey_refresh_menu", "")
         )
-        self.var_hotkey_refresh.trace_add(
+        self.var_hotkey_refresh = hotkey_refresh_var
+        hotkey_refresh_var.trace_add(
             "write", lambda *args: self._mark_needs_restart()
         )
-        ttk.Entry(content, textvariable=self.var_hotkey_refresh, width=30).pack(
+        ttk.Entry(content, textvariable=hotkey_refresh_var, width=30).pack(
             fill=tk.X, pady=(0, 24)
         )
 

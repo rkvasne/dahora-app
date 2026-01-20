@@ -30,7 +30,7 @@ from dahora_app.constants import RESERVED_HOTKEYS_BASE
 class ModernSettingsDialog:
     """Dialog de configurações moderno com CustomTkinter"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.parent: Optional[ctk.CTk] = None
         self.window: Optional[ctk.CTk] = None
         self.shortcuts_data: List[Dict[str, Any]] = []
@@ -63,8 +63,8 @@ class ModernSettingsDialog:
 
         # Estado
         self.needs_restart = False
-        self.shortcuts_listbox = None
-        self.count_label = None
+        self.shortcuts_listbox: Optional[ctk.CTkTextbox] = None
+        self.count_label: Optional[ModernLabel] = None
         self.selected_shortcut_index: int = -1
         self.default_shortcut_id: Optional[int] = None
 
@@ -594,7 +594,7 @@ class ModernSettingsDialog:
         except Exception:
             pass
 
-        self.shortcuts_listbox = ctk.CTkTextbox(
+        shortcuts_listbox = ctk.CTkTextbox(
             list_frame,
             fg_color=self.colors["surface"],
             text_color=self.colors["text"],
@@ -605,15 +605,28 @@ class ModernSettingsDialog:
             height=170,
         )
         # Padding vertical menor para a listbox caber na moldura (que sobe só +5px)
-        self.shortcuts_listbox.pack(fill="both", expand=True, padx=8, pady=2)
+        self.shortcuts_listbox = shortcuts_listbox
+        shortcuts_listbox.pack(fill="both", expand=True, padx=8, pady=2)
 
         # Seleção por clique (mantém read-only via bloqueio de teclas)
         text_widget = self._get_shortcuts_text_widget()
         if text_widget is not None:
+            accent_color = (
+                self.colors.get("accent")
+                or self.colors.get("surface")
+                or self.colors.get("text")
+                or ""
+            )
+            text_color = (
+                self.colors.get("text_bright")
+                or self.colors.get("text")
+                or self.colors.get("surface")
+                or ""
+            )
             text_widget.tag_configure(
                 "dahora_selected",
-                background=self.colors.get("accent", self.colors.get("surface")),
-                foreground=self.colors.get("text_bright", self.colors.get("text")),
+                background=accent_color,
+                foreground=text_color,
             )
             text_widget.bind("<Button-1>", self._on_shortcut_list_click)
             text_widget.bind("<Double-Button-1>", lambda e: self._on_edit_clicked())
@@ -622,10 +635,11 @@ class ModernSettingsDialog:
             text_widget.bind("<<Cut>>", lambda e: "break")
 
         # Contador
-        self.count_label = ModernLabel(
+        count_label = ModernLabel(
             inner, text="0 atalhos configurados", style="muted"
         )
-        self.count_label.pack(anchor="w", pady=(0, 10))
+        self.count_label = count_label
+        count_label.pack(anchor="w", pady=(0, 10))
 
         # Botões
         buttons = ctk.CTkFrame(inner, fg_color="transparent")

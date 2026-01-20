@@ -54,7 +54,7 @@ global_icon = None
 class DahoraApp:
     """Aplicação principal do Dahora App"""
 
-    def __init__(self, file_handler=None):
+    def __init__(self, file_handler: Optional[logging.Handler] = None) -> None:
         """Inicializa a aplicação"""
         self._file_handler = file_handler
         self.settings_manager = SettingsManager()
@@ -759,7 +759,9 @@ class DahoraApp:
                 if getattr(self.modern_search_dialog, "window", None) is None:
                     self.modern_search_dialog._create_window()
                     try:
-                        self.modern_search_dialog.window.withdraw()
+                        window = self.modern_search_dialog.window
+                        if window is not None:
+                            window.withdraw()
                     except Exception:
                         pass
                 search_ms = (time.perf_counter() - search_start) * 1000
@@ -783,7 +785,9 @@ class DahoraApp:
             if getattr(self.modern_settings_dialog, "window", None) is None:
                 self.modern_settings_dialog._create_window()
                 try:
-                    self.modern_settings_dialog.window.withdraw()
+                    window = self.modern_settings_dialog.window
+                    if window is not None:
+                        window.withdraw()
                 except Exception:
                     pass
             settings_ms = (time.perf_counter() - settings_start) * 1000

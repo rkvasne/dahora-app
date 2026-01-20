@@ -7,6 +7,11 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [0.2.16] - 2026-01-20
+
+### 🔖 Versionamento
+- Bump de versão do app: `0.2.15` → `0.2.16`
+
 ### 📚 Documentação
 - Prompts de modo alinhados ao repositório global e front matter ajustado para evitar avisos.
 

@@ -3,7 +3,7 @@ ShowSearchHandler - Handler para exibir janela de busca
 """
 
 import logging
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Any
 
 from dahora_app.callback_manager import CallbackHandler
 
@@ -63,11 +63,17 @@ class ShowSearchHandler(CallbackHandler):
         try:
             # Verifica qual UI usar baseado em settings
             try:
-                use_modern = self.app.settings_manager.settings.use_modern_ui
+                settings_container = getattr(
+                    self.app.settings_manager, "settings", None
+                )
+                use_modern = getattr(
+                    settings_container, "use_modern_ui", self.use_modern_ui
+                )
             except (AttributeError, KeyError):
                 use_modern = self.use_modern_ui
 
             # Seleciona o dialog apropriado
+            search_dialog: Optional[Any] = None
             if use_modern:
                 search_dialog = self.app.modern_search_dialog
                 logger.debug("Opening modern search dialog")
