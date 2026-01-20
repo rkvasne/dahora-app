@@ -163,12 +163,13 @@ No chat do Copilot, digite **`/`** seguido do nome do modo:
 | Contexto | Comando | Descrição |
 |----------|---------|-----------|
 | 🏗️ **Arquitetura** | `/modo-arquiteto` | Design, planejamento, roadmap |
-| � **Backend** | `/modo-backend` | API, Banco de Dados, Lógica |
-| 🐛 **Debugging** | `/modo-depurador` | Debug unificado (Web/Back/Mobile/DevOps) |
-| � **DevOps** | `/modo-devops` | Infra, CI/CD, Admin |
-| 📋 **Documentação** | `/modo-documentacao` | Docs, README, guias |
+| � **Backend** | `/modo-backend` | APIs, banco de dados, lógica |
+| � **Debugging** | `/modo-depurador` | Debug unificado |
+| � **DevOps** | `/modo-devops` | Infra, CI/CD, administração |
+| � **Documentação** | `/modo-documentacao` | Docs, README, guias |
 | 🎨 **Frontend/UI** | `/modo-frontend` | React, CSS, componentes |
-| � **Git/VCS** | `/modo-git` | Commits, branches, merges |
+| 🧐 **Code Review** | `/modo-code-review` | Revisões de PR e boas práticas |
+| 🔀 **Git/VCS** | `/modo-git` | Commits, branches, merges |
 | ✅ **Qualidade** | `/modo-qualidade` | Testes, QA, performance |
 | 🔒 **Segurança** | `/modo-seguranca` | Auth, OWASP, vulnerabilidades |
 
@@ -270,7 +271,7 @@ dahora-app/
 │
 ├── .github/
 │   └── prompts/               # Prompt Files para Copilot
-│       └── modo-*.prompt.md   # 9 modos de trabalho
+│       └── modo-*.prompt.md   # 10 modos de trabalho
 │
 └── dist/                      # Executáveis gerados (Git LFS)
 ```
@@ -468,6 +469,7 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 | DevOps | `/modo-devops` | Setup, CI/CD, release |
 | Documentação | `/modo-documentacao` | Docs e textos do projeto |
 | Frontend | `/modo-frontend` | UI da landing (HTML/CSS/JS) |
+| Code Review | `/modo-code-review` | Revisões de PR e boas práticas |
 | Git | `/modo-git` | Commits, releases |
 | Qualidade | `/modo-qualidade` | Testes, cobertura, performance |
 | Segurança | `/modo-seguranca` | Revisão OWASP e mitigação |
@@ -487,6 +489,9 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 | Modo Segurança | `/modo-seguranca` |
 | Modo Debug | `/modo-depurador` |
 | Modo Arquitetura | `/modo-arquiteto` |
+| Modo Backend | `/modo-backend` |
+| Modo DevOps | `/modo-devops` |
+| Modo Code Review | `/modo-code-review` |
 | Modo Qualidade | `/modo-qualidade` |
 | Modo Git | `/modo-git` |
 

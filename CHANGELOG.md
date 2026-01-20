@@ -7,6 +7,12 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### 📚 Documentação
+- Prompts de modo alinhados ao repositório global e front matter ajustado para evitar avisos.
+
+### 🧹 Limpeza
+- Remoção de arquivos redundantes da pasta `.cursor`.
+
 ## [0.2.15] - 2026-01-19
 
 ### 🔖 Versionamento
@@ -144,9 +150,9 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [0.2.7] - 2026-01-08
 
 ### Adicionado
-- **Prompt Files para VS Code Copilot** - 17 modos de trabalho em `.github/prompts/`
-  - Uso: digite `/` no chat e selecione o modo (ex: `/depurador`, `/seguranca`)
-  - Modos: admin, api, arquiteto, banco-dados, depurador, depurador-backend, depurador-devops, depurador-mobile, depurador-web, documentacao, frontend, git, multi-tenant, performance, planejador, qualidade, seguranca
+- **Prompt Files para VS Code Copilot** - 10 modos de trabalho em `.github/prompts/`
+  - Uso: digite `/` no chat e selecione o modo (ex: `/modo-depurador`, `/modo-seguranca`)
+  - Modos: arquiteto, backend, code-review, depurador, devops, documentacao, frontend, git, qualidade, seguranca
 
 ### Corrigido
 - Landing: enquadramento da foto do dev na seção "Sobre o dev".

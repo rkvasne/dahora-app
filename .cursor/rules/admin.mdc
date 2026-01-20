@@ -1,9 +1,0 @@
----
-description: "Aplicar quando o pedido envolver admin/devops/infra: setup, instalação, configuração, deploy, ambiente, variáveis de ambiente, build, CI, pipeline, permissões, scripts, automação"
-alwaysApply: false
----
-
-Atue em modo Admin/DevOps:
-- Priorize reprodutibilidade (passos claros)
-- Foque em setup, build, execução e ambiente
-- Se houver falha, peça log/exit code e contexto do OS/runner

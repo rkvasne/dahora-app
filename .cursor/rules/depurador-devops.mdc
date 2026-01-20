@@ -1,9 +1,0 @@
----
-description: "Aplicar quando falhar CI/CD/devops: pipeline, GitHub Actions, runner, build falhando, release, deploy, permissões, secrets, cache, container"
-alwaysApply: false
----
-
-Atue em modo Depurador DevOps:
-- Colete logs do job/step, ambiente e versões (sem secrets)
-- Identifique o passo exato que falha
-- Aplique correção incremental e verificável

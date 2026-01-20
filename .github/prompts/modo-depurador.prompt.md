@@ -1,75 +1,127 @@
 ---
-name: depurador
-description: Modo Depurador - Debug e correção de bugs
-agent: agent
+description: Guia unificado de debug para Web, Backend, Mobile e DevOps.
 ---
 
-# Modo Depurador
+# 🕵️‍♂️ Modo Depurador Unificado
 
-> **Princípio:** Sem reprodução, não há debug.
+> **Princípio Fundamental:** Sem reprodução, não há debug.
 
-## ⚠️ REGRAS DE OURO
+Este modo centraliza estratégias de depuração para todas as camadas. Use a seção relevante para o seu problema.
+
+---
+
+## ⚠️ REGRAS DE OURO (Universais)
 
 ### ❌ NUNCA
-
 - ❌ **Mudar código sem reproduzir** → pode criar bug novo
 - ❌ **Múltiplas mudanças de uma vez** → não saberá qual resolveu
 - ❌ **Fix sem teste de regressão** → bug voltará
-- ❌ **Assumir a causa** → "deve ser X" sem verificar
-- ❌ **Debug em produção sem logs** → cego
-- ❌ **Ignorar stack trace** → a resposta geralmente está ali
-- ❌ **"Funciona na minha máquina"** → compare ambientes
+- ❌ **Assumir a causa** → "deve ser X" sem verificar (Zero Achismo)
 
 ### ✅ SEMPRE
-
 - ✅ **Reproduzir primeiro** → passos exatos, ambiente, frequência
 - ✅ **Uma hipótese por vez** → método científico
 - ✅ **Isolar o problema** → menor código que falha
-- ✅ **Verificar logs** → servidor, browser console, network
-- ✅ **Git bisect** → encontrar commit que introduziu bug
-- ✅ **Teste que falha** → escreva ANTES do fix
-- ✅ **Fix mínimo** → não refatore junto com fix
+- ✅ **Verificar logs** → servidor, browser console, network, logcat
 
-## 🚨 Armadilhas Comuns
+---
 
-| Armadilha | Consequência | Solução |
-|-----------|--------------|---------|
-| "Já sei o que é" | Perde tempo no lugar errado | Prove com dados |
-| Fix + refactor junto | Não sabe o que resolveu | Commits separados |
-| Console.log em excesso | Poluição, difícil achar | Logs estruturados |
-| Não verificar staging | Bug só em prod | Ambiente similar |
-| Cache não invalidado | "Mas eu mudei!" | Limpar cache, hard refresh |
-| Timezone/locale diferente | Funciona local, falha em prod | Testar com TZ diferente |
+## 🌐 1. Depuração Web / Frontend
+*Para: Tela branca, hydration error, CORS, requests falhando, UI quebrada.*
 
-## 📋 Processo de Debug (7 Passos)
+### Ferramentas Essenciais
+- **Console:** Erros de JS, warnings de React.
+- **Network Tab:** Status HTTP, payload, headers, timing.
+- **React DevTools:** Props, State, Context.
 
-1. Reproduzir consistentemente
-2. Coletar info (logs, stack trace, network)
-3. Isolar (menor código que falha)
-4. Listar hipóteses
-5. Testar UMA hipótese
-6. Aplicar fix mínimo
-7. Adicionar teste de regressão
+### Checklist Web
+- [ ] Verificou o Console por erros vermelhos?
+- [ ] Verificou a aba Network (requests falhando ou pendentes)?
+- [ ] Limpou o cache (Hard Refresh `Ctrl+Shift+R`)?
+- [ ] Testou em aba anônima (sem extensões)?
+- [ ] O erro acontece em produção e staging?
 
-## 🔧 Onde Olhar por Contexto
+**Causas Comuns:**
+- `Hydration Mismatch`: HTML do servidor diferente do cliente.
+- `CORS`: Falta de headers no backend.
+- `Undefined is not a function`: Import circular ou nulo.
 
-| Sintoma | Verificar |
-|---------|-----------|
-| Erro 500 | Logs do servidor, stack trace |
-| Tela branca | Console do browser, Network |
-| "Não carrega" | Network tab, CORS, API response |
-| Lento | Performance tab, queries N+1 |
-| Intermitente | Race condition, cache, timezone |
-| "Só em prod" | Env vars, HTTPS, domínio |
+---
 
-## 📍 Quando Aplicar / Quando Relaxar
+## 🔙 2. Depuração Backend / API
+*Para: Erro 500, timeout, dados incorretos, performance.*
 
-### Aplique rigorosamente:
-- Bug em produção
-- Bug recorrente
-- Bug em área crítica (auth, pagamento)
+### Ferramentas Essenciais
+- **Logs Estruturados:** JSON logs (não `console.log` solto).
+- **Stack Trace:** Leia a primeira linha do erro e a linha do seu código.
+- **DB Client:** Verifique se a query SQL retorna o esperado.
 
-### Pode relaxar:
-- Bug cosmético óbvio
-- Typo evidente
-- Dev local, código seu
+### Checklist Backend
+- [ ] Reproduziu o erro com um cURL ou Postman?
+- [ ] Analisou o Stack Trace completo?
+- [ ] Verificou variáveis de ambiente (`.env`)?
+- [ ] O banco de dados está acessível e respondendo?
+- [ ] Há logs de "Connection Timeout" ou "Pool Exhausted"?
+
+**Causas Comuns:**
+- `N+1 Queries`: Loop fazendo queries no banco.
+- `Env Var Missing`: Chave de API faltando ou errada.
+- `Unhandled Promise Rejection`: Falta de `catch` ou `try/await`.
+
+---
+
+## 📱 3. Depuração Mobile
+*Para: Crash no boot, build falhando, layout quebrado no device.*
+
+### Ferramentas Essenciais
+- **Logcat (Android) / Console.app (iOS):** Logs nativos reais.
+- **Device Físico:** Emuladores mentem (especialmente sobre performance e câmera).
+- **Metro Bundler:** Logs de JS do React Native.
+
+### Checklist Mobile
+- [ ] Testou em dispositivo físico?
+- [ ] Limpou caches (`gradlew clean`, `pod install`, `metro reset`)?
+- [ ] Verificou permissões (Câmera, Localização) no manifesto?
+- [ ] O erro acontece no iOS E no Android?
+
+**Causas Comuns:**
+- `Cache`: Metro bundler ou Gradle com lixo antigo.
+- `Permissões`: App crasha ao tentar acessar recurso sem pedir permissão.
+- `Estilos`: `flex: 1` faltando faz conteúdo sumir.
+
+---
+
+## 🚀 4. Depuração DevOps / Infra
+*Para: Pipeline CI falhando, Docker crashando, SSL, DNS.*
+
+### Ferramentas Essenciais
+- **CI Logs:** GitHub Actions / GitLab CI output.
+- **Docker Logs:** `docker logs <container_id>`.
+- **Curl/Dig:** Testar conectividade e DNS.
+
+### Checklist DevOps
+- [ ] O erro é reproduzível localmente (Docker)?
+- [ ] As Secrets do CI estão configuradas corretamente?
+- [ ] O container tem memória/CPU suficientes (OOM Killed)?
+- [ ] O certificado SSL é válido (`openssl s_client`)?
+
+**Causas Comuns:**
+- `Secrets`: Variável vazia no CI mas presente localmente.
+- `Network`: Container não consegue acessar banco (host incorreto).
+- `Disk Space`: Runner ou servidor sem espaço.
+
+---
+
+## 📋 Processo Universal (7 Passos)
+
+1. **Reproduzir:** Crie um cenário onde o erro acontece 100% das vezes.
+2. **Coletar:** Junte logs, screenshots e contexto.
+3. **Isolar:** Remova variáveis até sobrar só o erro.
+4. **Hipótese:** "Acho que é X porque Y".
+5. **Teste:** Valide a hipótese.
+6. **Fix:** Aplique a correção mínima.
+7. **Regressão:** Garanta que não quebrou outra coisa.
+
+---
+
+*Versão Unificada 1.0*

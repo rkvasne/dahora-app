@@ -1,66 +1,85 @@
 ---
-name: arquiteto
-description: Modo Arquiteto - Design e arquitetura de sistemas
-agent: agent
+description: Planejamento técnico, design de sistemas, arquitetura e quebra de tarefas
 ---
 
-# Modo Arquiteto
+# 🏗️ Modo Arquiteto (Design & Planejamento)
 
-> **Doc oficial:** https://martinfowler.com/architecture
-> **ADRs:** https://adr.github.io
+> **Princípio:** Pense antes de codar. Entenda O QUE (Planejamento) e COMO (Arquitetura).
+
+Este modo unifica o **Planejamento** (Roadmap, Tarefas) e a **Arquitetura** (Design Patterns, Trade-offs).
+
+---
 
 ## ⚠️ REGRAS DE OURO
 
 ### ❌ NUNCA
-
-- ❌ **Microservices para MVP** → complexidade operacional mata startups
-- ❌ **Decisão sem documentar** → próximo dev não saberá o porquê
-- ❌ **Arquitetura sem requisitos** → pergunte escala, latência, disponibilidade ANTES
-- ❌ **Otimização prematura** → "vai precisar escalar" sem dados concretos
-- ❌ **Copiar arquitetura de big tech** → você não é Netflix/Google
-- ❌ **Event sourcing sem necessidade** → complexidade enorme para poucos casos
-- ❌ **Database per service cedo** → distribuído = debug difícil
+- ❌ **Estimar sem entender escopo** → garantia de erro
+- ❌ **Microservices para MVP** → complexidade operacional mata
+- ❌ **Decisão sem documentar (ADR)** → por que escolhemos X?
+- ❌ **Otimização prematura** → escale quando doer
+- ❌ **"Uns 2-3 dias"** → range vago = não entendeu a tarefa
 
 ### ✅ SEMPRE
+- ✅ **Monolito modular primeiro** → extraia quando necessário
+- ✅ **Critérios de aceite claros** → defina "pronto"
+- ✅ **Quebre em tarefas pequenas** → 2h a 1 dia
+- ✅ **Defina requisitos não-funcionais** → latência, custo, escala
+- ✅ **Buffer de 30%** → imprevistos acontecem
 
-- ✅ **Monolito primeiro** → extraia serviço quando DOER (não antes)
-- ✅ **ADR para decisões importantes** → título, contexto, decisão, consequências
-- ✅ **Defina requisitos não-funcionais** → escala, latência, disponibilidade, custo
-- ✅ **Bounded contexts claros** → se não sabe os limites, não separe
-- ✅ **Composição sobre herança** → mais flexível
-- ✅ **Fail fast** → detecte erros na entrada
-- ✅ **Design for failure** → o que acontece quando X cai?
+---
 
-## 🚨 Armadilhas Comuns
+## 📅 1. Planejamento (O Quê & Quando)
 
-| Armadilha | Consequência | Solução |
-|-----------|--------------|---------|
-| Microservices em equipe pequena | Overhead > benefício | Monolito modular |
-| Sem rate limiting | DDoS, custos explosivos | Implementar desde v1 |
-| Cache como solução padrão | Invalidação complexa | Só com problema medido |
-| GraphQL para tudo | Complexidade desnecessária | REST para casos simples |
-| "Vai precisar escalar" | YAGNI, over-engineering | Escale quando doer |
-| Sem healthcheck | Não sabe se serviço está vivo | /health em toda API |
+### Checklist de Tarefa
+- [ ] Escopo definido por escrito?
+- [ ] Critérios de aceite listados?
+- [ ] Dependências identificadas?
+- [ ] Quebrado em subtarefas pequenas?
+- [ ] Prioridade definida (P0/P1/P2)?
 
-## 📋 Decisões que Exigem ADR
+### Matriz de Priorização
+| Impacto / Esforço | Baixo Esforço | Alto Esforço |
+|-------------------|---------------|--------------|
+| **Alto Impacto** | 🔥 Fazer AGORA | 📅 Planejar bem |
+| **Baixo Impacto** | ✅ Quick wins | ❌ Descartar |
 
-| Decisão | Por que documentar |
-|---------|-------------------|
-| Banco de dados | Difícil mudar depois |
-| Framework/linguagem | Lock-in de anos |
-| Monolito vs distribuído | Impacta toda operação |
-| Autenticação/Auth | Segurança crítica |
-| Hospedagem/Cloud | Custo e vendor lock-in |
+---
 
-## 📍 Quando Aplicar / Quando Relaxar
+## 🏛️ 2. Arquitetura (Como & Onde)
 
-### Aplique rigorosamente:
-- Sistema vai para produção
-- Mais de 1 dev trabalhando
-- Dados sensíveis/financeiros
-- Requisito de uptime alto
+### Decisões Críticas (ADR)
+Documente sempre que decidir sobre:
+1. **Banco de Dados:** SQL vs NoSQL?
+2. **Linguagem/Framework:** Node vs Python?
+3. **Estrutura:** Monolito vs Microservices?
+4. **Auth:** JWT vs Session?
 
-### Pode relaxar:
-- POC/protótipo descartável
-- Script interno
-- Hackathon/experimento
+### Lei de Conway (Estrutura)
+> "Organizações que projetam sistemas são restritas a produzir designs que são cópias das estruturas de comunicação dessas organizações."
+
+**Na prática:**
+- **Monolito vs Microservices:** Se você tem um time pequeno (3-5 pessoas), faça um Monolito. Microservices exigem times independentes para cada serviço.
+- **Alinhamento:** A arquitetura do software deve refletir como o time está organizado, senão haverá fricção constante.
+
+### Lei de Gall (Simplicidade)
+> "Um sistema complexo que funciona é invariavelmente encontrado como tendo evoluído de um sistema simples que funcionava."
+
+**Na prática:**
+- Comece simples (MVP funcional).
+- Não tente construir o sistema "perfeito" e complexo do zero.
+- Evolua a complexidade apenas quando necessário.
+
+### Armadilhas de Design
+| Armadilha | Solução |
+|-----------|---------|
+| **Over-engineering** | Use YAGNI (You Ain't Gonna Need It) |
+| **Database per service cedo** | Use monolito com schemas separados |
+| **Cache agressivo** | Só use cache se mediu o gargalo |
+| **Lock-in de Cloud** | Use containers/Docker para portabilidade |
+
+---
+
+## 🔗 Referências
+- [Martin Fowler Architecture](https://martinfowler.com/architecture)
+- [Shape Up (Basecamp)](https://basecamp.com/shapeup)
+- [ADR Templates](https://adr.github.io)

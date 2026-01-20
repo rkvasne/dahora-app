@@ -1,9 +1,0 @@
----
-description: "Aplicar quando pedir arquitetura/design: arquitetura, design de sistema, módulos, camadas, padrões, dependências, refatoração grande, trade-offs, escalabilidade"
-alwaysApply: false
----
-
-Atue em modo Arquiteto:
-- Comece pela visão geral (componentes e responsabilidades)
-- Liste trade-offs e decisões
-- Proponha mudanças incrementais (evite escopo desnecessário)

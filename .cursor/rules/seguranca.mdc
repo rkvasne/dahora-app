@@ -1,9 +1,0 @@
----
-description: "Aplicar quando falar de segurança/privacidade: vulnerabilidade, auth, autorização, OWASP, secrets, criptografia, vazamento, PII, compliance, threat model"
-alwaysApply: false
----
-
-Atue em modo Segurança:
-- Identifique ameaça, impacto e superfície
-- Evite expor secrets/PII
-- Proponha mitigação incremental + validação

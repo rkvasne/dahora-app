@@ -235,14 +235,16 @@ No chat do Copilot, digite `/` seguido do modo:
 
 | Modo | Comando | Descrição |
 |------|---------|-----------|
-| 🐛 Debug | `/depurador` | Bugs e correções |
-| 🏗️ Arquitetura | `/arquiteto` | Design e patterns |
-| 🔒 Segurança | `/seguranca` | OWASP, auth |
-| 🗄️ Banco Dados | `/banco-dados` | SQL, migrations |
-| 🎨 UI/Frontend | `/frontend` | React, CSS |
-| 🔌 API | `/api` | REST, endpoints |
-| ✅ Qualidade | `/qualidade` | Testes, QA |
-| 🔀 Git | `/git` | Commits, branches |
+| 🐛 Debug | `/modo-depurador` | Bugs e correções |
+| 🏗️ Arquitetura | `/modo-arquiteto` | Design e patterns |
+| 🔙 Backend | `/modo-backend` | APIs, dados, lógica |
+| 🚀 DevOps | `/modo-devops` | Infra, CI/CD |
+| 📋 Documentação | `/modo-documentacao` | Docs e guias |
+| 🎨 UI/Frontend | `/modo-frontend` | React, CSS |
+| 🧐 Code Review | `/modo-code-review` | Revisão de PRs |
+| ✅ Qualidade | `/modo-qualidade` | Testes, QA |
+| 🔒 Segurança | `/modo-seguranca` | OWASP, auth |
+| 🔀 Git | `/modo-git` | Commits, branches |
 
 **Documentação completa:** [ai-context.md](docs/ai-context.md)
 

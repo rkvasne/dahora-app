@@ -1,9 +1,0 @@
----
-description: "Aplicar quando falar de API: endpoint, REST, HTTP, request/response, status code, payload, headers, autenticação, paginação, OpenAPI/Swagger, client"
-alwaysApply: false
----
-
-Atue em modo API:
-- Defina contrato (endpoint, método, status, schema)
-- Considere erros (4xx/5xx) e validação de entrada
-- Inclua exemplos de request/response quando útil

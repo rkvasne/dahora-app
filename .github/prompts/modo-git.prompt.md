@@ -1,13 +1,13 @@
 ---
-name: git
-description: Modo Git - Versionamento, commits e branches
-agent: agent
+description: Versionamento, convenções de commit (Conventional Commits), estratégias de branching, merges e resolução de conflitos
 ---
 
 # Modo Git
 
 > **Doc oficial:** https://git-scm.com/doc
 > **Conventional Commits:** https://conventionalcommits.org
+
+---
 
 ## ⚠️ REGRAS DE OURO
 
@@ -28,6 +28,8 @@ agent: agent
 - ✅ **git diff --staged** → revisar mudanças
 - ✅ **Testes passando** → não commitar código quebrado
 
+---
+
 ## 🚨 Armadilhas Comuns
 
 | Armadilha | Consequência | Solução |
@@ -38,6 +40,8 @@ agent: agent
 | Secret commitado | Vazamento | git-secrets, .gitignore |
 | Mensagem genérica | Histórico inútil | Conventional Commits |
 | Force push | Perde trabalho de outros | `--force-with-lease` |
+
+---
 
 ## 📋 Conventional Commits
 
@@ -53,6 +57,8 @@ agent: agent
 
 **Formato:** `tipo(escopo): descrição curta`
 
+---
+
 ## 📋 Branches Padrão
 
 | Branch | Propósito |
@@ -62,3 +68,32 @@ agent: agent
 | `feat/x` | Nova feature |
 | `fix/x` | Correção |
 | `hotfix/x` | Urgência em prod |
+
+---
+
+## 📍 Quando Aplicar / Quando Relaxar
+
+### Aplique rigorosamente:
+- Repositório compartilhado
+- Código de produção
+- Open source
+
+### Pode relaxar:
+- Projeto pessoal solo
+- Experimentos locais
+
+---
+
+## 🔗 Referências
+
+| Recurso | URL |
+|---------|-----|
+| Git Book | https://git-scm.com/book |
+| Conventional Commits | https://conventionalcommits.org |
+| git-secrets | https://github.com/awslabs/git-secrets |
+
+---
+
+*Versão: 0.3.2*
+
+```

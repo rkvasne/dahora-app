@@ -1,61 +1,81 @@
 ---
-name: qualidade
-description: Modo Qualidade - Testes, QA e garantia de qualidade
-agent: agent
+description: Testes, QA, performance e otimização de código
 ---
 
-# Modo Qualidade
+# 💎 Modo Qualidade (Testes & Performance)
 
-> **Doc oficial:** https://testing-library.com | https://jestjs.io
-> **Princípio:** Teste comportamento, não implementação.
+> **Princípio:** Se não tem teste, está quebrado. Se não mediu, não é lento.
+
+Este modo unifica **Garantia de Qualidade (QA)** e **Engenharia de Performance**.
+
+---
 
 ## ⚠️ REGRAS DE OURO
 
 ### ❌ NUNCA
-
-- ❌ **Testar implementação** → teste o QUE faz, não COMO
-- ❌ **Mock de tudo** → perde valor do teste
-- ❌ **Testes que quebram em refactor** → sinal de teste ruim
-- ❌ **Coverage como meta única** → 100% coverage ≠ qualidade
-- ❌ **Testes lentos ignorados** → teste lento = teste não rodado
-- ❌ **Testes sem assertion** → `expect()` obrigatório
-- ❌ **Copiar código de prod no teste** → teste vira espelho, não validação
+- ❌ **Testar implementação** → teste o COMPORTAMENTO
+- ❌ **Otimizar sem medir** → "acho que está lento" não vale
+- ❌ **Mock de tudo** → teste perde valor real
+- ❌ **Ignorar testes lentos/flaky** → corrija ou delete
+- ❌ **Otimização prematura** → código complexo sem ganho real
 
 ### ✅ SEMPRE
+- ✅ **Arrange-Act-Assert** → estrutura padrão de teste
+- ✅ **Caminho triste** → teste erros e edge cases
+- ✅ **Medir antes e depois** → use Profiler/Lighthouse
+- ✅ **Identificar gargalo real** → CPU? Memória? I/O?
+- ✅ **Testes em CI** → bloqueie PR se quebrar
 
-- ✅ **Teste comportamento observável** → output, efeitos, UI
-- ✅ **Um conceito por teste** → falhou = sabe o que quebrou
-- ✅ **Nomes descritivos** → `should_reject_invalid_email` não `test1`
-- ✅ **Arrange-Act-Assert** → setup, execução, verificação
-- ✅ **Testes rápidos** → <100ms por teste unitário
-- ✅ **Teste o caminho triste** → erros, edge cases, limites
-- ✅ **Testes em CI** → PR não merga se teste falha
+---
 
-## 🚨 Armadilhas Comuns
+## 🧪 1. Estratégia de Testes
 
-| Armadilha | Consequência | Solução |
-|-----------|--------------|---------|
-| Testar método privado | Quebra em refactor | Teste via interface pública |
-| Snapshot de tudo | Aceita mudança sem revisar | Snapshot só para regressão visual |
-| Mock de Date/Math.random | Flaky tests | Injetar dependência |
-| Dados de teste hardcoded | Teste passa por coincidência | Factory/fixture com variação |
-| Ordem de testes importa | Flaky, difícil debugar | Testes isolados |
-| `any` em mocks | Perde type safety | Mock tipado |
+### Pirâmide de Testes
+1.  **Unitários (Base):** Rápidos, testam funções isoladas. Muitos.
+2.  **Integração (Meio):** Testam API+DB, Componente+Store. Alguns.
+3.  **E2E (Topo):** Testam fluxo completo do usuário. Poucos.
 
-## 📋 Pirâmide de Testes
+### Checklist de Qualidade
+- [ ] Testes passam no CI?
+- [ ] Coverage cobre regras de negócio críticas?
+- [ ] Inputs inválidos são rejeitados?
+- [ ] Erros são tratados graciosamente?
 
-| Tipo | Quantidade | Velocidade | Custo |
-|------|------------|------------|-------|
-| **E2E** | Poucos | Lentos | Alto |
-| **Integração** | Alguns | Médios | Médio |
-| **Unitário** | Muitos | Rápidos | Baixo |
+### Teoria das Janelas Quebradas
+> "Uma janela quebrada, se não consertada, passa a ideia de que ninguém se importa, levando a mais vandalismo."
 
-**Regra:** Mais testes na base (unitário), menos no topo (E2E).
+**Na prática (Dívida Técnica):**
+- **Corrija imediatamente:** Um teste falhando ("flaky"), um warning de lint ou um erro "ignorado" no console.
+- **Tolerância Zero:** Se você deixar passar "só hoje", semana que vem o código estará um caos. Mantenha o padrão alto.
 
-## 📋 O que Testar (Prioridade)
+---
 
-| Prioridade | O que | Por quê |
-|------------|-------|---------|
-| 🔴 Alta | Auth, pagamento, dados | Risco de negócio |
-| 🟡 Média | Regras de negócio | Lógica crítica |
-| 🟢 Baixa | UI simples, CRUD básico | Baixo risco |
+## ⚡ 2. Engenharia de Performance
+
+### Onde Otimizar (Regra 80/20)
+Foque nos 20% do código que executam 80% do tempo (hot paths).
+
+### Ferramentas & Métricas
+| Contexto | Ferramenta | Métricas Chave |
+|----------|------------|----------------|
+| **Web** | Lighthouse | LCP, CLS, INP (Core Web Vitals) |
+| **Backend** | APM / Profiler | Latência p95, Throughput |
+| **DB** | EXPLAIN ANALYZE | Tempo de execução, Rows scan |
+
+### Checklist de Performance
+- [ ] N+1 queries eliminadas?
+- [ ] Índices de banco verificados?
+- [ ] Imagens otimizadas (WebP, Lazy Load)?
+- [ ] Caching configurado (Redis/CDN) onde faz sentido?
+- [ ] Bundle size do frontend auditado?
+
+---
+
+## 🔗 Referências
+- **Guias Internos:**
+  - [Jest (Unitário)](../../rules/tecnologias/testing/jest.md)
+  - [Vitest (Moderno)](../../rules/tecnologias/testing/vitest.md)
+  - [Playwright (E2E)](../../rules/tecnologias/testing/playwright.md)
+- **Externos:**
+  - [Testing Library](https://testing-library.com)
+  - [Web Vitals](https://web.dev/vitals)

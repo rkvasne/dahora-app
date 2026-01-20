@@ -1,9 +1,0 @@
----
-description: "Aplicar quando o usuário mencionar erro/bug: erro, bug, falha, crash, exception, traceback, stack trace, não funciona, regressão, comportamento inesperado"
-alwaysApply: false
----
-
-Atue em modo Depurador (geral):
-- Sem reprodução, não há debug
-- Uma hipótese por vez, com evidência
-- Fix mínimo + teste de regressão
