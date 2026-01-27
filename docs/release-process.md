@@ -264,6 +264,8 @@ ls dist/*.zip
 
 Há dois jeitos comuns:
 
+Para instalação e autenticação do GitHub CLI, consulte [github-guide.md](github-guide.md).
+
 ### A) Via GitHub Releases (automático por tag)
 
 Existe um workflow em `.github/workflows/release.yml` que roda quando você cria uma tag `vX.Y.Z`.

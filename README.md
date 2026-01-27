@@ -133,27 +133,9 @@ Toda documentação está organizada em `docs/` com entrada centralizada:
 - **[CHANGELOG.md](CHANGELOG.md)** - Registro oficial de mudanças por versão
 - **[architecture.md](docs/architecture.md)** - Arquitetura técnica e componentes
 - **[release-process.md](docs/release-process.md)** - Processo de build, release e Git LFS
-- **[pricing.md](docs/pricing.md)** - Estudo histórico de precificação
-- **[implementation-details.md](docs/implementation-details.md)** - Soluções criativas documentadas (14 de 14 tratados - 100%)
-- **[technical_audit_2026_01.md](docs/technical_audit_2026_01.md)** - Auditoria técnica e dívida técnica (Janeiro 2026)
-- **[roadmap.md](docs/roadmap.md)** - Próximos passos e backlog
-- **[github-guide.md](docs/github-guide.md)** - Guia completo de GitHub CLI
-- **[windows-setup.md](docs/windows-setup.md)** - Guia de configuração Python no Windows (use `py`)
 
 ### 🤖 IA Context
-- **[AGENTS.md](AGENTS.md)** - Instruções técnicas para agentes de IA
-
-**Para usar modos especializados no chat do Copilot:**
-
-Digite `/` seguido do modo:
-```
-/depurador      - Debug e correção de bugs
-/seguranca      - Segurança (OWASP)
-/arquiteto      - Design e arquitetura
-/banco-dados    - SQL, migrations
-/qualidade      - Testes e QA
-/git            - Commits, branches
-```
+- **[AGENTS.md](AGENTS.md)** - Instruções técnicas para agentes de IA e modos disponíveis
 
 ---
 
@@ -229,24 +211,7 @@ Veja [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Este projeto usa **Prompt Files** (`.github/prompts/`) para integração com VS Code Copilot.
 
-### Como Usar
-
-No chat do Copilot, digite `/` seguido do modo:
-
-| Modo | Comando | Descrição |
-|------|---------|-----------|
-| 🐛 Debug | `/modo-depurador` | Bugs e correções |
-| 🏗️ Arquitetura | `/modo-arquiteto` | Design e patterns |
-| 🔙 Backend | `/modo-backend` | APIs, dados, lógica |
-| 🚀 DevOps | `/modo-devops` | Infra, CI/CD |
-| 📋 Documentação | `/modo-documentacao` | Docs e guias |
-| 🎨 UI/Frontend | `/modo-frontend` | React, CSS |
-| 🧐 Code Review | `/modo-code-review` | Revisão de PRs |
-| ✅ Qualidade | `/modo-qualidade` | Testes, QA |
-| 🔒 Segurança | `/modo-seguranca` | OWASP, auth |
-| 🔀 Git | `/modo-git` | Commits, branches |
-
-**Documentação completa:** [ai-context.md](docs/ai-context.md)
+**Documentação completa:** [AGENTS.md](AGENTS.md)
 
 ---
 

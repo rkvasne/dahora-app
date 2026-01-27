@@ -17,6 +17,8 @@
 
 **GitHub CLI** (`gh`) é uma ferramenta oficial do GitHub que permite gerenciar seu repositório e projeto **diretamente do terminal**, sem precisar abrir o navegador.
 
+Para o processo de release específico deste projeto, use o guia em [release-process.md](release-process.md).
+
 ### Funcionalidades Principais:
 - ✅ Criar, editar e deletar **releases**
 - ✅ Criar e gerenciar **pull requests (PRs)**

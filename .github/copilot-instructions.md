@@ -7,50 +7,9 @@
 
 ## 📌 Referência Rápida de Modos
 
-### Como Usar Prompt Files
+Os modos estão disponíveis como **Prompt Files** em `.github/prompts/`.
 
-Os modos estão disponíveis como **Prompt Files** em `.github/prompts/`. 
-
-✅ **COMO USAR NO VS CODE:**
-```
-No chat do Copilot, digite / e selecione o modo:
-
-/depurador          - Debug e correção de bugs
-/seguranca          - Segurança de aplicações (OWASP)
-/arquiteto          - Design e arquitetura
-/banco-dados        - Modelagem e otimização de bancos
-/frontend           - UI, componentes (React, CSS)
-/api                - Design de APIs REST/GraphQL
-/performance        - Otimização de performance
-/documentacao       - Criação e manutenção de docs
-/git                - Versionamento e commits
-/admin              - Administração e deploy
-/planejador         - Planejamento e estimativas
-/qualidade          - Testes e QA
-/multi-tenant       - Isolamento SaaS
-/depurador-web      - Debug frontend específico
-/depurador-backend  - Debug APIs/servidor
-/depurador-devops   - Debug CI/CD e infra
-/depurador-mobile   - Debug React Native
-```
-
-**Referência completa de modos disponíveis:**
-
-| Contexto | Comando | Descrição |
-|----------|---------|-----------|
-| 🔒 Segurança | `/seguranca` | Auth, OWASP, vulnerabilidades |
-| 🗄️ Banco de Dados | `/banco-dados` | SQL, migrations, índices |
-| 🏗️ Arquitetura | `/arquiteto` | Design, patterns, ADRs |
-| 🐛 Debugging | `/depurador` | Bugs, erros, fixes |
-| 🎨 Frontend/UI | `/frontend` | React, CSS, componentes |
-| 🔌 API | `/api` | REST, endpoints, validação |
-| ⚡ Performance | `/performance` | Otimização, cache, métricas |
-| 📋 Documentação | `/documentacao` | README, docs, guias |
-| 🔀 Git | `/git` | Commits, branches, merges |
-| 🛠️ Admin | `/admin` | Deploy, config, infra |
-| 📊 Planejador | `/planejador` | Estimativas, priorização |
-| ✅ Qualidade | `/qualidade` | Testes, QA, coverage |
-| 🏢 Multi-tenant | `/multi-tenant` | SaaS, isolamento, RLS |
+Para a lista atualizada de modos e instruções completas, consulte **[AGENTS.md](../AGENTS.md)**.
 
 ---
 
@@ -103,9 +62,9 @@ dahora-app/
 │   └── ...
 ├── tests/                       # Testes unitários
 ├── docs/                        # Documentação
-│   ├── ARCHITECTURE.md          # Design da aplicação
-│   ├── RELEASE.md               # Processo de release
-│   └── ...
+│   ├── architecture.md          # Design da aplicação
+│   ├── release-process.md       # Processo de release
+│   └── README.md                # Índice centralizado
 └── scripts/                     # Scripts utilitários
 ```
 
@@ -115,16 +74,12 @@ dahora-app/
 
 ```bash
 # Desenvolvimento
-python main.py                  # Executar aplicação
-python -m pytest                # Rodar testes
-python -m mypy dahora_app/      # Verificar tipos
+py main.py                  # Executar aplicação
+py -m pytest                # Rodar testes
+py -m mypy dahora_app/      # Verificar tipos
 
 # Build
-python build.py                 # Gerar executável
-python scripts/prepare_release_artifacts.ps1  # Preparar release
-
-# Limpeza
-python scripts/limpar_cache_icones.ps1  # Limpar cache
+py build.py                 # Gerar executável
 ```
 
 ---
@@ -209,10 +164,10 @@ docs: atualizar guia de instalação
 
 ## 📚 Documentação Complementar
 
-- **Arquitetura:** [`docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md)
-- **Release:** [`docs/RELEASE.md`](../docs/RELEASE.md)
-- **Desenvolvimento:** [`docs/DEVELOPMENT_HISTORY.md`](../docs/DEVELOPMENT_HISTORY.md)
-- **Setup Windows/Python:** [`docs/WINDOWS_PYTHON_SETUP.md`](../docs/WINDOWS_PYTHON_SETUP.md)
+- **Índice de docs:** [`docs/README.md`](../docs/README.md)
+- **Arquitetura:** [`docs/architecture.md`](../docs/architecture.md)
+- **Release:** [`docs/release-process.md`](../docs/release-process.md)
+- **Setup Windows/Python:** [`docs/windows-setup.md`](../docs/windows-setup.md)
 
 ---
 

@@ -7,6 +7,13 @@
 
 ---
 
+## ✅ Fontes Canônicas
+
+- **Documentação do projeto:** [docs/README.md](docs/README.md)
+- **Comandos Python no Windows:** [docs/windows-setup.md](docs/windows-setup.md)
+
+---
+
 ## 📋 Instruções de Uso
 
 **Para monorepos/projetos grandes:**

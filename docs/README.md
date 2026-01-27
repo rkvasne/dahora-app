@@ -66,6 +66,7 @@
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** - Como contribuir
 - **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** - Código de conduta
 - **[LICENSE.md](../LICENSE.md)** - Licença (MIT)
+- **[AGENTS.md](../AGENTS.md)** - Instruções para agentes de IA e modos
 
 ---
 

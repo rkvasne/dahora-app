@@ -4,6 +4,7 @@
 **Versão (na época da pesquisa):** v0.2.12  
 **Versão atual (referência do repo):** v0.2.16  
 **Status:** ✅ **PESQUISA CONCLUÍDA** - Implementação futura recomendada
+**Status (documento):** Histórico — pesquisa concluída; não é guia operacional
 
 ---
 
