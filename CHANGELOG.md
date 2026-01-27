@@ -7,6 +7,9 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### 📚 Documentação
+- Prompt Files passam a ser referenciados a partir do repositório canônico `E:\Agents` (multi-root); pasta local `.github/prompts/` removida.
+
 ## [0.2.16] - 2026-01-20
 
 ### 🔖 Versionamento

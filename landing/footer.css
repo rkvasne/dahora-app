@@ -1,12 +1,14 @@
 /* Footer Styling */
-.main-footer {
+.main-footer,
+.footer {
     border-top: 1px solid rgba(255, 255, 255, 0.03);
     padding: 60px 0 20px;
     background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
     margin-top: 0;
 }
 
-.footer-content {
+.footer-content,
+.footer-grid {
     width: 100%;
     max-width: var(--content-max-width);
     margin: 0 auto;

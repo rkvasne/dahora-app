@@ -99,7 +99,8 @@
         line-height: 1.2;
     }
 
-    .hero-container {
+    .hero-container,
+    .hero-content {
         padding: 0;
     }
 

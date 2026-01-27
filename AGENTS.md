@@ -161,7 +161,7 @@ Qual é o caso específico do projeto?
 
 ## 🎯 Modos de Trabalho
 
-**Este projeto usa Prompt Files em `.github/prompts/` para modos especializados.**
+**Este projeto usa Prompt Files do repositório canônico `E:\Agents` (pasta `.github/prompts/`) via workspace multi-root.**
 
 ### Usar Modos de Trabalho Especializados
 
@@ -276,9 +276,7 @@ dahora-app/
 │   ├── variables.css
 │   └── responsive.css
 │
-├── .github/
-│   └── prompts/               # Prompt Files para Copilot
-│       └── modo-*.prompt.md   # 10 modos de trabalho
+├── .github/                   # Configurações do GitHub
 │
 └── dist/                      # Executáveis gerados (Git LFS)
 ```
@@ -506,5 +504,5 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 
 **Última atualização:** 20 de janeiro de 2026  
 **Versão do App:** 0.2.16  
-**Status:** ✅ Projeto configurado com Prompt Files  
+**Status:** ✅ Projeto configurado com Prompt Files via `E:\Agents`  
 **Testes:** suíte automatizada (pytest) | **Hacks tratados:** 14 de 14 (100%)

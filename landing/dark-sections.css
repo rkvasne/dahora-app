@@ -11,7 +11,7 @@
         radial-gradient(circle at top right, rgba(56, 189, 248, 0.1), transparent 40%),
         radial-gradient(circle at bottom left, rgba(0, 120, 212, 0.08), transparent 40%),
         linear-gradient(180deg, #0f172a 0%, #1e293b 100%); /* Slate Gradient */
-    padding: 8rem var(--page-gutter) 6rem; /* Inelegis spacing */
+    padding: calc(var(--header-height) + 4rem) var(--page-gutter) 6rem;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -32,7 +32,8 @@
     pointer-events: none;
 }
 
-.hero-container {
+.hero-container,
+.hero-content {
     max-width: 900px;
     margin: 0 auto;
 }

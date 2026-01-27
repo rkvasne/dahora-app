@@ -209,7 +209,7 @@ Veja [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## 🤖 Desenvolvimento com Agentes de IA
 
-Este projeto usa **Prompt Files** (`.github/prompts/`) para integração com VS Code Copilot.
+Este projeto usa **Prompt Files** do repositório canônico `E:\Agents` (pasta `.github/prompts/`) via workspace multi-root para integração com VS Code Copilot.
 
 **Documentação completa:** [AGENTS.md](AGENTS.md)
 

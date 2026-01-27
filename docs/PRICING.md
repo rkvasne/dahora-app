@@ -2,6 +2,8 @@
 
 > Navegação: [Documentação](README.md) • [README do projeto](../README.md)
 
+> Status: Histórico — estudo de viabilidade; não é guia operacional
+
 > **ℹ️ NOTA INFORMATIVA:**  
 > Este documento é um **estudo de viabilidade e análise de mercado** realizado durante o desenvolvimento do projeto.  
 > O **Dahora App é 100% GRATUITO e OPEN SOURCE**.  
