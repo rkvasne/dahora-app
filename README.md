@@ -273,6 +273,8 @@ Desenvolvido por **Raphael Kvasne**.
 - 📧 **Email**: [raphael@kvasne.com](mailto:raphael@kvasne.com)
 - 💼 **LinkedIn**: [Raphael Kvasne](https://www.linkedin.com/in/rkvasne/)
 
+---
+
 ## 📄 Licença
 
 Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE.md](LICENSE.md) para detalhes.
