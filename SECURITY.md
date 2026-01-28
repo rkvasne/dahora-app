@@ -10,10 +10,7 @@ Obrigado por ajudar a manter este projeto seguro.
 
 ## ✅ Versões Suportadas
 
-| Versão | Suportada |
-|--------|-----------|
-| 0.2.x | ✅ |
-| < 0.2.0 | ❌ |
+Apenas a versão mais recente (latest) recebe atualizações de segurança. Por favor, mantenha seu aplicativo sempre atualizado.
 
 ---
 
