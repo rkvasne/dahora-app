@@ -1,19 +1,25 @@
 # 🤝 Contribuindo - Dahora App
 
-Obrigado por considerar contribuir com o Dahora App.
+# 🤝 Contribuindo - Dahora App
 
 > Navegação: [README do projeto](README.md) • [Documentação](docs/README.md) • [Testes](tests/README.md)
 
 ---
 
-## 1) Comece aqui
+Obrigado por investir seu tempo contribuindo com o **Dahora App**! 🎉
+
+Siga este guia para entender como contribuir com o Dahora App, melhorar a aplicação e manter a documentação alinhada.
+
+---
+
+## 🧭 Comece Aqui
 
 - Documentação: [docs/README.md](docs/README.md)
 - Configuração Windows/Python: [docs/windows-setup.md](docs/windows-setup.md) (use `py`)
 
 ---
 
-## 2) Configuração do ambiente (Windows)
+## 💻 Configuração do Ambiente (Windows)
 
 1. Clone o repositório:
 
@@ -37,7 +43,7 @@ py -m pytest
 
 ---
 
-## 3) Padrões de contribuição
+## 📏 Padrões de Contribuição
 
 - Mantenha mudanças pequenas e objetivas.
 - Não altere arquivos não relacionados ao objetivo do PR.
@@ -46,7 +52,7 @@ py -m pytest
 
 ---
 
-## 4) Pull Requests
+## 🔧 Pull Requests
 
 Antes do PR:
 - `py -m pytest` deve passar.
@@ -55,7 +61,7 @@ Antes do PR:
 
 ---
 
-## 5) Reportar bugs
+## 🐛 Reportar Bugs
 
 Abra uma issue com:
 - Passos para reproduzir

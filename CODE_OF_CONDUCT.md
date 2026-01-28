@@ -1,56 +1,38 @@
-# 💜 Código de Conduta - Dahora App
+# 📜 Código de Conduta - Dahora App
 
 > Navegação: [README do projeto](README.md) • [Documentação](docs/README.md)
 
 ---
 
-Este projeto adota o **Contributor Covenant** como código de conduta.
-
-Texto oficial (pt-BR) e versão mais recente:
-https://www.contributor-covenant.org/
+Este projeto é um espaço aberto e inclusivo. Esperamos respeito e colaboração.
 
 ---
 
-## Compromisso
+## ✅ Comportamentos Esperados
 
-Nós, como membros, contribuidores e líderes, nos comprometemos a tornar a participação em nossa comunidade uma experiência livre de assédio para todos.
-
----
-
-## Padrões
-
-Exemplos de comportamento que contribuem para um ambiente positivo:
-- Demonstrar empatia e gentileza
-- Respeitar opiniões e experiências diferentes
-- Dar e receber feedback de forma construtiva
-
-Exemplos de comportamento inaceitável:
-- Assédio, discriminação ou ataques pessoais
-- Publicação de informações privadas de terceiros
-- Condutas deliberadamente hostis em espaços do projeto
+- Respeito às pessoas e opiniões diferentes.
+- Comunicação clara e profissional.
+- Colaboração construtiva e objetiva.
+- Feedback com foco no problema, não na pessoa.
 
 ---
 
-## Responsabilidade de Aplicação
+## ❌ Comportamentos Inaceitáveis
 
-Líderes do projeto são responsáveis por esclarecer e aplicar padrões de comportamento aceitáveis.
-
----
-
-## Escopo
-
-Este código de conduta se aplica em espaços do projeto e quando uma pessoa representa a comunidade em espaços públicos.
+- Assédio, discriminação ou intimidação.
+- Linguagem ofensiva ou ataques pessoais.
+- Divulgação de informações privadas de terceiros.
+- Qualquer conduta que prejudique a comunidade.
 
 ---
 
-## Como reportar
+## 🛡️ Aplicação
 
-Para reportar violações, utilize os canais do repositório:
-https://github.com/rkvasne/dahora-app/issues
+Violações podem resultar em advertência, remoção de conteúdo ou banimento.
 
 ---
 
-## Atribuição
+## 📬 Contato
 
-Este Código de Conduta é adaptado do **Contributor Covenant**.
+Para relatar incidentes, contate: [raphael@kvasne.com]
 
