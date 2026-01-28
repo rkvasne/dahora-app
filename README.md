@@ -264,8 +264,15 @@ Detalhes em [PRIVACY.md](PRIVACY.md).
 
 ---
 
-<div align="center">
+## 👨‍💻 Autor
 
-**Desenvolvido por [Raphael Kvasne](https://github.com/rkvasne)**
+Desenvolvido por **Raphael Kvasne**.
 
-</div>
+- 🌐 **Projeto**: [github.com/rkvasne/dahora-app](https://github.com/rkvasne/dahora-app)
+- 👨‍💻 **Portfolio**: [kvasne.com](https://kvasne.com)
+- 📧 **Email**: [raphael@kvasne.com](mailto:raphael@kvasne.com)
+- 💼 **LinkedIn**: [Raphael Kvasne](https://www.linkedin.com/in/rkvasne/)
+
+## 📄 Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE.md](LICENSE.md) para detalhes.
