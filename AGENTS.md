@@ -267,7 +267,7 @@ dahora-app/
 │   ├── test_handlers.py
 │   └── ... (13 arquivos de teste)
 │
-├── docs/technical_audit_2026_01.md # Auditoria técnica e dívida técnica (Jan/2026)
+├── docs/technical-audit-2026-01.md # Auditoria técnica e dívida técnica (Jan/2026)
 │   ├── docs/prd.md            # Product Requirements Document (v0.2.16)
 │
 ├── docs/                      # Documentação

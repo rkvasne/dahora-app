@@ -17,7 +17,7 @@
 - ✅ **Suíte de testes automatizada** (pytest) — rode `py -m pytest tests/` para validar
 - ✅ **100% dos hacks tratados** (14 de 14)
 - ✅ **UI refinada** - Spinbox com setas proporcionais
-- 📋 Auditoria e dívida técnica: **[technical_audit_2026_01.md](technical_audit_2026_01.md)**
+- 📋 Auditoria e dívida técnica: **[technical-audit-2026-01.md](technical-audit-2026-01.md)**
 
 ---
 
@@ -31,7 +31,7 @@
 ### Para Desenvolvedores
 - **[windows-setup.md](windows-setup.md)** - ⚠️ **LEIA PRIMEIRO!** Use `py` no Windows
 - **[architecture.md](architecture.md)** - 🏗️ Arquitetura técnica e componentes
-- **[technical_audit_2026_01.md](technical_audit_2026_01.md)** - 📋 Auditoria técnica e dívida técnica priorizada (Jan/2026)
+- **[technical-audit-2026-01.md](technical-audit-2026-01.md)** - 📋 Auditoria técnica e dívida técnica priorizada (Jan/2026)
 - **[CHANGELOG.md](../CHANGELOG.md)** - 📝 Registro oficial de mudanças por versão
 
 ### Para Manutenedores
@@ -51,7 +51,7 @@
 - **[clipboard-monitor.md](clipboard-monitor.md)** - Pesquisa sobre otimização de clipboard com Windows API Events
 
 ### Qualidade e Auditorias
-- **[technical_audit_2026_01.md](technical_audit_2026_01.md)** - Auditoria técnica, alinhamento de docs e auditoria de logs (Jan/2026)
+- **[technical-audit-2026-01.md](technical-audit-2026-01.md)** - Auditoria técnica, alinhamento de docs e auditoria de logs (Jan/2026)
 
 ### Planejamento e Negócio
 - **[roadmap.md](roadmap.md)** - Próximos passos e melhorias planejadas
@@ -92,7 +92,7 @@ docs/
 ├── README.md                   ← Você está aqui!
 ├── architecture.md             # Arquitetura técnica (atualizado 12/01/2026)
 ├── implementation-details.md   # Workarounds documentados (atualizado 12/01/2026)
-├── technical_audit_2026_01.md  # Auditoria técnica e dívida técnica (Jan/2026)
+├── technical-audit-2026-01.md  # Auditoria técnica e dívida técnica (Jan/2026)
 ├── prd.md                      # Requisitos do produto (formal)
 ├── pricing.md                  # Análise de mercado
 ├── release-process.md          # Processo de build e release
@@ -126,7 +126,7 @@ docs/
 ### 👨‍💻 Desenvolvedor
 1. Leia [windows-setup.md](windows-setup.md) - **IMPORTANTE**
 2. Explore [architecture.md](architecture.md) - Estrutura técnica
-3. Veja [technical_audit_2026_01.md](technical_audit_2026_01.md) - Auditoria, alinhamentos e dívida técnica
+3. Veja [technical-audit-2026-01.md](technical-audit-2026-01.md) - Auditoria, alinhamentos e dívida técnica
 4. Consulte [implementation-details.md](implementation-details.md) - Workarounds e detalhes
 
 ### 🚀 Manutenedor/Release

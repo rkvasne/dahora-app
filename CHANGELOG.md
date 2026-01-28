@@ -12,6 +12,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   - `build.py`, `debug_hotkey.py`, `install.bat` movidos para `scripts/`
   - Ícones (.ico) movidos para `assets/`
   - Raiz limpa para manter apenas arquivos de configuração essenciais
+  - `docs/technical_audit_2026_01.md` renomeado para `docs/technical-audit-2026-01.md` (kebab-case)
 - **CI/CD:** Workflow de release atualizado para usar `scripts/build.py`
 
 ### 📚 Documentação

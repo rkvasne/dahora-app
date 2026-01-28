@@ -11,7 +11,7 @@ Roadmap de alto nível para próximas melhorias. Detalhes específicos devem ser
 ## Registro oficial de mudanças (por versão)
 
 - O registro oficial do que foi alterado por versão fica em [CHANGELOG.md](../CHANGELOG.md).
-- Auditoria, alinhamentos e dívida técnica (Jan/2026): [technical_audit_2026_01.md](technical_audit_2026_01.md).
+- Auditoria, alinhamentos e dívida técnica (Jan/2026): [technical-audit-2026-01.md](technical-audit-2026-01.md).
 
 ## 🎯 Foco Atual
 
