@@ -1,4 +1,4 @@
-# ⚖️ Licença MIT — Dahora App
+# ⚖️ Licença - Dahora App
 
 > Navegação: [README do projeto](README.md) • [Documentação](docs/README.md)
 
