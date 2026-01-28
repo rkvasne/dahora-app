@@ -1,7 +1,5 @@
 # 🤝 Contribuindo - Dahora App
 
-# 🤝 Contribuindo - Dahora App
-
 > Navegação: [README do projeto](README.md) • [Documentação](docs/README.md) • [Testes](tests/README.md)
 
 ---
