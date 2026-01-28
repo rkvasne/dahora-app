@@ -43,7 +43,7 @@
 ## 📖 Documentação Técnica
 
 ### Frontend (Landing)
-- **[Design System](../landing/README.md)** - Kit de UI, tokens e template reutilizável
+- **[Design System](../landing/README.md)** - Kit de UI e tokens reutilizáveis
 
 ### Arquitetura e Design
 - **[architecture.md](architecture.md)** - Estrutura, componentes e padrões

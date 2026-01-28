@@ -212,11 +212,21 @@ No chat do Copilot, digite **`/`** seguido do nome do modo:
 ```text
 dahora-app/
 ├── main.py                    # Ponto de entrada da aplicação
-├── build.py                   # Script de build (PyInstaller)
-├── icon.ico                   # Ícone principal do app
 ├── requirements.txt           # Dependências de produção
 ├── requirements-dev.txt       # Dependências de desenvolvimento
 ├── settings.json.example      # Exemplo de configuração
+│
+├── assets/                    # Recursos estáticos
+│   ├── icon.ico
+│   └── icon_paused.ico
+│
+├── scripts/                   # Scripts utilitários e de build
+│   ├── build.py               # Script de build (PyInstaller)
+│   ├── debug_hotkey.py        # Ferramenta de debug de hotkeys
+│   ├── install.bat            # Instalação rápida no Windows
+│   ├── prepare_release_artifacts.ps1
+│   ├── push_release_lfs.ps1
+│   └── clean_icons.ps1
 │
 ├── dahora_app/                # Código-fonte principal
 │   ├── __init__.py
@@ -258,12 +268,14 @@ dahora-app/
 │   └── ... (13 arquivos de teste)
 │
 ├── docs/technical_audit_2026_01.md # Auditoria técnica e dívida técnica (Jan/2026)
+│   ├── docs/prd.md            # Product Requirements Document (v0.2.16)
 │
 ├── docs/                      # Documentação
-│   ├── architecture.md        # Arquitetura detalhada (atualizado 12/01/2026)
+│   ├── architecture.md        # Arquitetura detalhada (atualizado 13/01/2026)
+│   ├── clipboard-monitor.md   # Pesquisa sobre otimização (concluída)
 │   ├── implementation-details.md # Workarounds (14 de 14 resolvidos)
 │   ├── release-process.md     # Processo de release
-│   ├── roadmap.md             # Plano futuro (atualizado 12/01/2026)
+│   ├── roadmap.md             # Plano futuro (atualizado 20/01/2026)
 │   └── windows-setup.md       # Setup Python no Windows
 │
 ├── scripts/                   # Scripts utilitários
@@ -296,7 +308,7 @@ py -m pip install -r requirements-dev.txt
 py main.py
 
 # Build executável (PyInstaller)
-py build.py
+py scripts/build.py
 
 # Rodar testes
 py -m pytest                    # Todos os testes
@@ -449,7 +461,7 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 
 1. **Logs:** Verifique `%APPDATA%/DahoraApp/dahora.log`
 2. **Breakpoints:** Use VS Code (F5 com `main.py`)
-3. **Debug manual:** `py debug_hotkey.py` (testa hotkeys)
+3. **Debug manual:** `py scripts/debug_hotkey.py` (testa hotkeys)
 4. **Testes isolados:** `py scripts/test_minimal.py`
 5. **Inspecionar settings:** Abra `%APPDATA%/DahoraApp/settings.json`
 
@@ -459,8 +471,11 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 
 ### Docs do Projeto (em `docs/`)
 - [architecture.md](docs/architecture.md) - Arquitetura detalhada
+- [prd.md](docs/prd.md) - Product Requirements Document (v0.2.16)
 - [release-process.md](docs/release-process.md) - Processo de release e Git LFS
 - [roadmap.md](docs/roadmap.md) - Plano de desenvolvimento
+- [clipboard-monitor.md](docs/clipboard-monitor.md) - Pesquisa de otimização de clipboard
+- [pricing.md](docs/pricing.md) - Estudo de precificação
 - [windows-setup.md](docs/windows-setup.md) - Configuração Python no Windows
 - [CHANGELOG.md](CHANGELOG.md) - Registro oficial de mudanças por versão
 
@@ -487,7 +502,7 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 |------|---------|
 | Rodar app | `py main.py` |
 | Rodar testes | `py -m pytest` |
-| Build executável | `py build.py` |
+| Build executável | `py scripts/build.py` |
 | Verificar tipos | `py -m mypy dahora_app/` |
 | Lint | `py -m flake8 dahora_app/` |
 | Formatação | `py -m black dahora_app/` |
@@ -502,7 +517,7 @@ Se o projeto mantiver changelog, use um padrão consistente (ex.: Keep a Changel
 
 ---
 
-**Última atualização:** 20 de janeiro de 2026  
+**Última atualização:** 27 de janeiro de 2026  
 **Versão do App:** 0.2.16  
 **Status:** ✅ Projeto configurado com Prompt Files via `E:\Agents`  
 **Testes:** suíte automatizada (pytest) | **Hacks tratados:** 14 de 14 (100%)

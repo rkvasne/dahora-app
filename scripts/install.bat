@@ -5,7 +5,9 @@ echo ========================================
 echo.
 
 echo [1/2] Instalando dependencias...
+pushd ..
 python -m pip install -r requirements.txt
+popd
 
 if %errorlevel% neq 0 (
     echo.
@@ -30,8 +32,8 @@ echo ========================================
 echo   Instalacao concluida com sucesso!
 echo ========================================
 echo.
-echo Para executar: python dahora_app.py
-echo Para criar o .exe: python build.py
+echo Para executar (da raiz): python main.py
+echo Para criar o .exe: python scripts/build.py
 echo.
 pause
 

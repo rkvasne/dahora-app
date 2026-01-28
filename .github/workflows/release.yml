@@ -28,7 +28,7 @@ jobs:
 
       - name: Build executable
         shell: pwsh
-        run: python build.py
+        run: python scripts/build.py
 
       - name: Locate artifacts
         id: locate

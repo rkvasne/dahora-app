@@ -106,18 +106,21 @@ class IconManager:
         Returns:
             Caminho para o arquivo de ícone
         """
+        filename = "icon_paused.ico" if is_paused else "icon.ico"
+
         if getattr(sys, "frozen", False):
             # Se estiver rodando como executável (PyInstaller)
+            # Os ícones são adicionados na raiz do bundle (ver build.py)
             base_dir = getattr(sys, "_MEIPASS", "")
+            icon_path = os.path.join(base_dir, filename)
         else:
             # Se estiver rodando do código fonte
             # ui -> dahora_app -> raiz
             base_dir = os.path.dirname(
                 os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
             )
+            icon_path = os.path.join(base_dir, "assets", filename)
 
-        filename = "icon_paused.ico" if is_paused else "icon.ico"
-        icon_path = os.path.join(base_dir, filename)
         return icon_path
 
     @staticmethod

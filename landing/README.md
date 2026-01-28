@@ -4,7 +4,7 @@ Este diretório contém o **Design System** da landing page do Dahora App, pront
 
 ## 📁 Estrutura de Arquivos
 
-- **`template.html`**: ✨ **Comece por aqui!** Um arquivo base limpo com toda a estrutura necessária.
+- **`index.html`**: Página principal da landing.
 - **`variables.css`**: 🎨 **Personalize aqui.** Define cores, fontes e espaçamentos globais.
 - **`styles.css`**: O CSS base (reset, tipografia, botões, containers).
 - **`footer.css`**: Estilos específicos para o rodapé (layout de grid, alinhamento).
@@ -14,8 +14,8 @@ Este diretório contém o **Design System** da landing page do Dahora App, pront
 ## 🚀 Como Usar
 
 ### 1. Criando uma Nova Página
-1. Copie o arquivo `template.html`.
-2. Renomeie para o nome desejado (ex: `promo.html` ou `index.html` em outro projeto).
+1. Use `index.html` como base.
+2. Renomeie para o nome desejado (ex: `promo.html`).
 3. Certifique-se de que os arquivos `.css` e `.js` estejam na mesma pasta (ou ajuste os caminhos no `<head>`).
 
 ### 2. Personalizando Cores e Fontes

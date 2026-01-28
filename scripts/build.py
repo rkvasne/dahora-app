@@ -8,6 +8,7 @@ import subprocess
 import sys
 import os
 import time
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 
 def _create_release_zip(exe_name: str) -> str | None:
@@ -107,7 +108,7 @@ def build_executable():
             from pathlib import Path
             import re
 
-            constants_src = Path(__file__).resolve().parent / "dahora_app" / "constants.py"
+            constants_src = Path(__file__).resolve().parent.parent / "dahora_app" / "constants.py"
             content = constants_src.read_text(encoding="utf-8", errors="replace")
             match = re.search(r'^\s*APP_VERSION\s*=\s*["\']([^"\']+)["\']\s*$', content, flags=re.MULTILINE)
             app_version = match.group(1) if match else None
@@ -160,17 +161,17 @@ def build_executable():
             print(f">>> Aviso ao remover executavel antigo: {e}")
 
     # Verifica se icon.ico existe
-    if not os.path.exists('icon.ico'):
-        print(">>> ERRO: icon.ico não encontrado!")
-        print(">>> Build cancelado. Certifique-se de que icon.ico existe.")
+    if not os.path.exists('assets/icon.ico'):
+        print(">>> ERRO: assets/icon.ico não encontrado!")
+        print(">>> Build cancelado. Certifique-se de que assets/icon.ico existe.")
         return
 
     console_build = ('--console' in sys.argv) or ('--debug' in sys.argv)
     debug_build = ('--debug' in sys.argv)
 
-    repo_root = os.path.abspath(os.path.dirname(__file__))
-    icon_path = os.path.join(repo_root, 'icon.ico')
-    icon_paused_path = os.path.join(repo_root, 'icon_paused.ico')
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    icon_path = os.path.join(repo_root, 'assets', 'icon.ico')
+    icon_paused_path = os.path.join(repo_root, 'assets', 'icon_paused.ico')
     manifest_path = os.path.join(repo_root, 'manifest.xml')
     main_path = os.path.join(repo_root, 'main.py')
 

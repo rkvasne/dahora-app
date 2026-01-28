@@ -32,7 +32,7 @@ Isso é importante para automações que extraem notas de release por versão.
 Da raiz do projeto:
 
 ```powershell
-py build.py
+py scripts/build.py
 ```
 
 O build gera o `.exe` em `dist/`.
@@ -46,16 +46,16 @@ Isso indica que o executável foi gerado sem embutir o `pydantic`.
 Checklist:
 - `pydantic` está listado em `requirements.txt`
 - O ambiente de build tem as deps instaladas: `py -m pip install -r requirements.txt`
-- O `build.py` inclui `pydantic`/`pydantic_core` como dependências/hidden imports do PyInstaller
+- O `scripts/build.py` inclui `pydantic`/`pydantic_core` como dependências/hidden imports do PyInstaller
 
 ## 3) Gerar ZIP para download
 
-✅ Recomendado: o `build.py` já gera automaticamente um ZIP **somente com o artefato final** em `dist/`.
+✅ Recomendado: o `scripts/build.py` já gera automaticamente um ZIP **somente com o artefato final** em `dist/`.
 
 ```powershell
-py build.py
+py scripts/build.py
 # (opcional) desabilitar zip automático:
-# py build.py --no-zip
+# py scripts/build.py --no-zip
 ```
 
 Alternativa (PowerShell):

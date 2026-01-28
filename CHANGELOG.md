@@ -7,8 +7,17 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### ♻️ Refatoração & Estrutura
+- **Reorganização de Pastas:** Projeto reestruturado para seguir o padrão `PROJECT_STRUCTURE_STANDARD.md` (Padrão Python)
+  - `build.py`, `debug_hotkey.py`, `install.bat` movidos para `scripts/`
+  - Ícones (.ico) movidos para `assets/`
+  - Raiz limpa para manter apenas arquivos de configuração essenciais
+- **CI/CD:** Workflow de release atualizado para usar `scripts/build.py`
+
 ### 📚 Documentação
 - Prompt Files passam a ser referenciados a partir do repositório canônico `E:\Agents` (multi-root); pasta local `.github/prompts/` removida.
+- `README.md` atualizado com a nova árvore de diretórios e comandos
+- `AGENTS.md` atualizado com novos caminhos de scripts
 
 ## [0.2.16] - 2026-01-20
 
@@ -36,7 +45,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Configurações: evita resetar atalhos em falhas de validação.
 - Histórico: evita sobrescrever/limpar dados quando DPAPI falha; backups adicionados.
 - Landing: alinhamento e responsividade do rodapé (CSS Grid 3 colunas, menu mobile, layout consistente com template).
-- Docs: atualizado `landing/README.md` e `template.html` para refletir correções de design system.
+- Docs: atualizado `landing/README.md` para refletir correções de design system.
 
 ## [0.2.13] - 2026-01-13
 

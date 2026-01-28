@@ -82,8 +82,8 @@ except Exception as e:
 def main():
     """Função principal"""
     # Verifica se icon.ico existe
-    if not os.path.exists('icon.ico'):
-        print("[AVISO] Arquivo icon.ico não encontrado. O app usará ícone padrão.")
+    if not os.path.exists('assets/icon.ico'):
+        print("[AVISO] Arquivo assets/icon.ico não encontrado. O app usará ícone padrão.")
     
     # Cria e executa aplicação
     from dahora_app.app import DahoraApp

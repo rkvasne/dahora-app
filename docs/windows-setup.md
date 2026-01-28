@@ -14,14 +14,14 @@ Agentes de IA frequentemente tentam:
 ```powershell
 python --version          # ❌ NÃO FUNCIONA neste projeto
 python -m pip install X   # ❌ NÃO FUNCIONA neste projeto
-python build.py          # ❌ NÃO FUNCIONA neste projeto
+python scripts/build.py          # ❌ NÃO FUNCIONA neste projeto
 ```
 
 Depois de falhas, tentam:
 ```powershell
 py --version             # ✅ FUNCIONA
 py -m pip install X      # ✅ FUNCIONA
-py build.py             # ✅ FUNCIONA
+py scripts/build.py             # ✅ FUNCIONA
 ```
 
 ---
@@ -35,14 +35,14 @@ py build.py             # ✅ FUNCIONA
 py --version
 py -m pip install requests
 py -m pytest
-py build.py
+py scripts/build.py
 py -m http.server 8000
 
 # ❌ ERRADO (não funciona neste ambiente)
 python --version
 python -m pip install requests
 python -m pytest
-python build.py
+python scripts/build.py
 python -m http.server 8000
 ```
 
@@ -74,7 +74,7 @@ Se vir um comando com `python`, substitua por `py`:
 | `python --version` | `py --version` |
 | `python -m pip install X` | `py -m pip install X` |
 | `python -m pytest` | `py -m pytest` |
-| `python build.py` | `py build.py` |
+| `python scripts/build.py` | `py scripts/build.py` |
 | `python -c "..."` | `py -c "..."` |
 | `python -m http.server` | `py -m http.server` |
 
@@ -103,7 +103,7 @@ py -m pip install -r requirements.txt
 py -m pytest
 
 # Build
-py build.py
+py scripts/build.py
 
 # Servidor local
 py -m http.server 8000
@@ -120,7 +120,7 @@ py --version
 python --version
 python -m pip install requests
 python -m pytest
-python build.py
+python scripts/build.py
 python -m http.server 8000
 ```
 

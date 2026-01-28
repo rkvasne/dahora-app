@@ -73,6 +73,7 @@ cd dahora-app
 py -m pip install -r requirements.txt
 
 # 3. Execute
+# 3. Execute
 py main.py
 ```
 
@@ -144,10 +145,14 @@ Toda documentação está organizada em `docs/` com entrada centralizada:
 ```
 dahora-app/
 ├── main.py                      # Entry point
-├── build.py                     # Script de build (PyInstaller)
 ├── index.html                   # Landing page (site)
-├── assets/                      # Imagens e recursos
-├── scripts/                     # Scripts utilitários (ícones, debug)
+├── assets/                      # Imagens e ícones
+│   ├── icon.ico
+│   └── dahora_icon.png
+│
+├── scripts/                     # Scripts utilitários e de build
+│   ├── build.py                 # Script de build (PyInstaller)
+│   ├── install.bat              # Script de instalação rápida
 │   └── README.md                # Doc dos scripts
 │
 ├── tests/                       # Testes automatizados

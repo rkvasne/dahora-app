@@ -23,11 +23,11 @@ uxtheme = cast(Any, ctypes.windll.uxtheme)
 # Tenta SetPreferredAppMode (Ordinal 135) - Win 10 1903+ / Win 11
 # 2 = Force Dark Mode
 try:
-    uxtheme[135](2)
+    uxtheme[135] (2)
 except:
     # Fallback: Tenta AllowDarkModeForApp (Ordinal 132) - Win 10 1809
     try:
-        uxtheme[132](True)
+        uxtheme[132] (True)
     except:
         pass
 ```
